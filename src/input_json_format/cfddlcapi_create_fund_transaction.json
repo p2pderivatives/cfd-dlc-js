@@ -1,0 +1,51 @@
+{
+  "namespace": [
+    "cfd",
+    "dlc",
+    "js",
+    "api",
+    "json"
+  ],
+  "request": {
+    ":class": "CreateFundTransactionRequest",
+    ":class:comment": "Create a fund transaction",
+    "localPubkey": "",
+    "remotePubkey": "",
+    "outputAmount": 0,
+    "outputAmount:type": "uint64_t",
+    "localInputs": [
+      {
+        ":class": "TxInRequestA",
+        "txid": "",
+        "vout": 0,
+        "vout:type": "uint32_t"
+      }
+    ],
+    "localChange": {
+      ":class": "TxOutRequestA",
+      "amount": 0,
+      "amount:type": "uint64_t",
+      "address": ""
+    },
+    "remoteInputs": [
+      {
+        ":class": "TxInRequestA",
+        "txid": "",
+        "vout": 0,
+        "vout:type": "uint32_t"
+      }
+    ],
+    "remoteChange": {
+      ":class": "TxOutRequestA",
+      "amount": 0,
+      "amount:type": "uint64_t",
+      "address": ""
+    },
+    "nLockTime": 0,
+    "nLockTime:type": "uint64_t"
+  },
+  "response": {
+    ":class": "CreateFundTransactionResponse",
+    "hex": ""
+  }
+}

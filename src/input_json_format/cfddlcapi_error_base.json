@@ -1,0 +1,21 @@
+{
+  "namespace": [
+    "cfd",
+    "dlc",
+    "js",
+    "api",
+    "json"
+  ],
+  "priority": "high",
+  "response": {
+    ":class": "ErrorResponseBase",
+    ":isOutputStruct": false,
+    "error": {
+      ":class": "InnerErrorResponse",
+      "code": 0,
+      "code:type": "uint32_t",
+      "type": "",
+      "message": ""
+    }
+  }
+}

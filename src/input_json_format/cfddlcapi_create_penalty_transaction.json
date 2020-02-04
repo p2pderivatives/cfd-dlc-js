@@ -1,0 +1,23 @@
+{
+    "namespace": [
+        "cfd",
+        "dlc",
+        "js",
+        "api",
+        "json"
+    ],
+    "request": {
+        ":class": "CreatePenaltyTransactionRequest",
+        ":class:comment": "Create a fund transaction",
+        "finalAddress": "",
+        "amount": 0,
+        "amount:type": "uint64_t",
+        "cetId": "",
+        "cetVout": 0,
+        "cetVout:type": "uint64_t"
+    },
+    "response": {
+        ":class": "CreatePenaltyTransactionResponse",
+        "hex": ""
+    }
+}

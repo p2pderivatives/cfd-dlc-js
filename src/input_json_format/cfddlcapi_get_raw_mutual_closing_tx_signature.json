@@ -1,0 +1,26 @@
+{
+    "namespace": [
+        "cfd",
+        "dlc",
+        "js",
+        "api",
+        "json"
+    ],
+    "request": {
+        ":class": "GetRawMutualClosingTxSignatureRequest",
+        ":class:comment": "Get a signature for a CET",
+        "mutualClosingHex": "",
+        "privkey": "",
+        "fundTxId": "",
+        "fundTxVout": 0,
+        "fundTxVout:type": "uint32_t",
+        "localFundPubkey": "",
+        "remoteFundPubkey": "",
+        "fundAmount": 0,
+        "fundAmount:type": "uint64_t"
+    },
+    "response": {
+        ":class": "GetRawMutualClosingTxSignatureResponse",
+        "hex": ""
+    }
+}

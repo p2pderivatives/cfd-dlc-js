@@ -1,0 +1,23 @@
+{
+    "namespace": [
+        "cfd",
+        "dlc",
+        "js",
+        "api",
+        "json"
+    ],
+    "request": {
+        ":class": "CreateClosingTransactionRequest",
+        ":class:comment": "Create a closing transaction",
+        "address": "",
+        "amount": 0,
+        "amount:type": "uint64_t",
+        "cetTxid": "",
+        "cetVout": 0,
+        "cetVout:type": "uint32_t"
+    },
+    "response": {
+        ":class": "CreateClosingTransactionResponse",
+        "hex": ""
+    }
+}

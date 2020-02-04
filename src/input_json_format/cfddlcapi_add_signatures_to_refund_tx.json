@@ -1,0 +1,26 @@
+{
+    "namespace": [
+        "cfd",
+        "dlc",
+        "js",
+        "api",
+        "json"
+    ],
+    "request": {
+        ":class": "AddSignaturesToRefundTxRequest",
+        ":class:comment": "Add signatures to a refund transaction",
+        "refundTxHex": "",
+        "signatures": [
+            ""
+        ],
+        "fundTxId": "",
+        "fundTxVout": 0,
+        "fundTxVout:type": "uint32_t",
+        "localFundPubkey": "",
+        "remoteFundPubkey": ""
+    },
+    "response": {
+        ":class": "AddSignaturesToRefundTxResponse",
+        "hex": ""
+    }
+}
