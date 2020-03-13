@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  compatibility:
+    container_name: 'cfd-dlc-js_compatibility-test'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - "./:/tmp/workspace/cfd-dlc-js/"
+      - "./tmp/cfd-dlc:/tmp/workspace/cfd-dlc-js/external/cfd-dlc"
+      - "/tmp/workspace/cfd-dlc-js/wrap_js/build/"
+    command: bash -c "npm link cfd-js && npm install && npm run cmake_all && ts-node ./wrap_js/compatibility_test.ts"

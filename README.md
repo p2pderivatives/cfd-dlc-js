@@ -17,7 +17,8 @@ Running this code however requires the `cfd-js` library (and I have not yet foun
 To install it:
 
 ```
-git clone https://github.com/cryptogarageinc/cfd-core
+git clone https://github.com/cryptogarageinc/cfd-js
+cd cfd-js
 git checkout v0.0.17
 npm install
 npm link
