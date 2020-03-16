@@ -1,29 +1,50 @@
-FROM ubuntu:18.04
+FROM debian:stable-slim
 
 ENV WORKSPACE /tmp/workspace
+
+# Pass ssh keys from the host machine using build-arg
+ARG ssh_prv_key
+ARG ssh_pub_key
+
+RUN apt-get update -y && apt-get install -y \
+    python3-dev \
+    curl \
+    git \
+    build-essential \
+    libssl-dev
+
+# Install cmake 3.17.0-rc2
 WORKDIR ${WORKSPACE}
+RUN curl -L \
+    https://github.com/Kitware/CMake/releases/download/v3.17.0-rc2/cmake-3.17.0-rc2.tar.gz \
+    --output cmake-3.17.0-rc2.tar.gz
+RUN tar -zxvf ./cmake-3.17.0-rc2.tar.gz
 
-# 
-RUN apt-get update -y && \
-  apt-get install -y git wget curl python build-essential libusb-1.0-0-dev lcov && \
-  rm -rf /var/lib/apt/lists/*
+WORKDIR ${WORKSPACE}/cmake-3.17.0-rc2
+RUN ./bootstrap && make && make install
 
-# install latest cmake
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.15.2/cmake-3.15.2-Linux-x86_64.tar.gz && \
-  tar -xvf cmake-3.15.2-Linux-x86_64.tar.gz && \
-  cp cmake-3.15.2-Linux-x86_64/bin/* /usr/local/bin && cp -r cmake-3.15.2-Linux-x86_64/share/* /usr/local/share && \
-  rm -rf cmake-3.15.2-Linux-x86_64/ cmake-3.15.2-Linux-x86_64.tar.gz
-
-# install nodejs
+# Install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_13.x | bash
 RUN apt-get install -y nodejs
 
-#install ts-node
-RUN npm install ts-node
+# Authorize SSH Host
+RUN mkdir -p /root/.ssh && \
+    chmod 0700 /root/.ssh && \
+    ssh-keyscan github.com > /root/.ssh/known_hosts
+
+# Add the keys and set permissions
+RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
+    echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && \
+    chmod 600 /root/.ssh/id_rsa && \
+    chmod 600 /root/.ssh/id_rsa.pub
 
 # install cfd-js
+WORKDIR ${WORKSPACE}
 RUN git clone https://github.com/cryptogarageinc/cfd-js
-RUN cd cfd-js && npm install && npm link
+WORKDIR ${WORKSPACE}/cfd-js
+RUN npm install && npm link
 
-# move mount directory
+# Remove SSH keys
+RUN rm -rf /root/.ssh/
+
 WORKDIR ${WORKSPACE}/cfd-dlc-js
