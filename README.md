@@ -31,7 +31,7 @@ npm link
 
 Then you should be able to run the example using `ts-node` (`npm install ts-node`):
 ```
-ts-node ./wrap_js/compatibility_test_ts.ts
+ts-node ./wrap_js/compatibility_test.ts
 ```
 # Code generation
 
