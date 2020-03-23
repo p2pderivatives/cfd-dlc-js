@@ -7,13 +7,12 @@
 #include <functional>
 #include <string>
 
+#include "cfd_dlc_js_api_json_autogen.h"  // NOLINT
 #include "cfdcore/cfdcore_exception.h"
-
+#include "cfddlcapi_error_json.h"  // NOLINT
 #include "cfddlcjs/cfddlcjs_api_common.h"
 #include "cfddlcjs/cfddlcjs_api_json.h"
 #include "cfddlcjs/cfddlcjs_transactions.h"
-#include "cfddlcapi_error_json.h"         // NOLINT
-#include "cfd_dlc_js_api_json_autogen.h"  // NOLINT
 
 // using
 
@@ -90,6 +89,15 @@ std::string JsonMappingApi::CreateFundTransaction(
                         api::CreateFundTransactionRequestStruct,
                         api::CreateFundTransactionResponseStruct>(
       request_message, DlcTransactionsApi::CreateFundTransaction);
+}
+
+std::string JsonMappingApi::GetRawFundTxSignature(
+    const std::string &request_message) {
+  return ExecuteJsonApi<api::json::GetRawFundTxSignatureRequest,
+                        api::json::GetRawFundTxSignatureResponse,
+                        api::GetRawFundTxSignatureRequestStruct,
+                        api::GetRawFundTxSignatureResponseStruct>(
+      request_message, DlcTransactionsApi::GetRawFundTxSignature);
 }
 
 std::string JsonMappingApi::SignFundTransaction(

@@ -1880,6 +1880,112 @@ GetRawMutualClosingTxSignatureResponseStruct GetRawMutualClosingTxSignatureRespo
 }
 
 // ------------------------------------------------------------------------
+// GetRawFundTxSignatureRequest
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<GetRawFundTxSignatureRequest>
+  GetRawFundTxSignatureRequest::json_mapper;
+std::vector<std::string> GetRawFundTxSignatureRequest::item_list;
+
+void GetRawFundTxSignatureRequest::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<GetRawFundTxSignatureRequest> func_table;  // NOLINT
+
+  func_table = {
+    GetRawFundTxSignatureRequest::GetFundTxHexString,
+    GetRawFundTxSignatureRequest::SetFundTxHexString,
+    GetRawFundTxSignatureRequest::GetFundTxHexFieldType,
+  };
+  json_mapper.emplace("fundTxHex", func_table);
+  item_list.push_back("fundTxHex");
+  func_table = {
+    GetRawFundTxSignatureRequest::GetPrivkeyString,
+    GetRawFundTxSignatureRequest::SetPrivkeyString,
+    GetRawFundTxSignatureRequest::GetPrivkeyFieldType,
+  };
+  json_mapper.emplace("privkey", func_table);
+  item_list.push_back("privkey");
+  func_table = {
+    GetRawFundTxSignatureRequest::GetPrevTxIdString,
+    GetRawFundTxSignatureRequest::SetPrevTxIdString,
+    GetRawFundTxSignatureRequest::GetPrevTxIdFieldType,
+  };
+  json_mapper.emplace("prevTxId", func_table);
+  item_list.push_back("prevTxId");
+  func_table = {
+    GetRawFundTxSignatureRequest::GetPrevTxVoutString,
+    GetRawFundTxSignatureRequest::SetPrevTxVoutString,
+    GetRawFundTxSignatureRequest::GetPrevTxVoutFieldType,
+  };
+  json_mapper.emplace("prevTxVout", func_table);
+  item_list.push_back("prevTxVout");
+  func_table = {
+    GetRawFundTxSignatureRequest::GetAmountString,
+    GetRawFundTxSignatureRequest::SetAmountString,
+    GetRawFundTxSignatureRequest::GetAmountFieldType,
+  };
+  json_mapper.emplace("amount", func_table);
+  item_list.push_back("amount");
+}
+
+void GetRawFundTxSignatureRequest::ConvertFromStruct(
+    const GetRawFundTxSignatureRequestStruct& data) {
+  fund_tx_hex_ = data.fund_tx_hex;
+  privkey_ = data.privkey;
+  prev_tx_id_ = data.prev_tx_id;
+  prev_tx_vout_ = data.prev_tx_vout;
+  amount_ = data.amount;
+  ignore_items = data.ignore_items;
+}
+
+GetRawFundTxSignatureRequestStruct GetRawFundTxSignatureRequest::ConvertToStruct() const {  // NOLINT
+  GetRawFundTxSignatureRequestStruct result;
+  result.fund_tx_hex = fund_tx_hex_;
+  result.privkey = privkey_;
+  result.prev_tx_id = prev_tx_id_;
+  result.prev_tx_vout = prev_tx_vout_;
+  result.amount = amount_;
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
+// GetRawFundTxSignatureResponse
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<GetRawFundTxSignatureResponse>
+  GetRawFundTxSignatureResponse::json_mapper;
+std::vector<std::string> GetRawFundTxSignatureResponse::item_list;
+
+void GetRawFundTxSignatureResponse::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<GetRawFundTxSignatureResponse> func_table;  // NOLINT
+
+  func_table = {
+    GetRawFundTxSignatureResponse::GetHexString,
+    GetRawFundTxSignatureResponse::SetHexString,
+    GetRawFundTxSignatureResponse::GetHexFieldType,
+  };
+  json_mapper.emplace("hex", func_table);
+  item_list.push_back("hex");
+}
+
+void GetRawFundTxSignatureResponse::ConvertFromStruct(
+    const GetRawFundTxSignatureResponseStruct& data) {
+  hex_ = data.hex;
+  ignore_items = data.ignore_items;
+}
+
+GetRawFundTxSignatureResponseStruct GetRawFundTxSignatureResponse::ConvertToStruct() const {  // NOLINT
+  GetRawFundTxSignatureResponseStruct result;
+  result.hex = hex_;
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
 // GetRawRefundTxSignatureRequest
 // ------------------------------------------------------------------------
 cfd::core::JsonTableMap<GetRawRefundTxSignatureRequest>

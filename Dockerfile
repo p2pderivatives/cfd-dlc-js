@@ -38,13 +38,10 @@ RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
     chmod 600 /root/.ssh/id_rsa && \
     chmod 600 /root/.ssh/id_rsa.pub
 
-# install cfd-js
-WORKDIR ${WORKSPACE}
-RUN git clone https://github.com/cryptogarageinc/cfd-js
-WORKDIR ${WORKSPACE}/cfd-js
-RUN npm install && npm link
+WORKDIR ${WORKSPACE}/cfd-dlc-js
+RUN git clone git@github.com:cryptogarageinc/cfd-dlc-js.git && git checkout wip && npm install && npm run cmake_all
 
 # Remove SSH keys
 RUN rm -rf /root/.ssh/
 
-WORKDIR ${WORKSPACE}/cfd-dlc-js
+CMD ["ts-node", "./wrap_js/compatibility_test.ts"]

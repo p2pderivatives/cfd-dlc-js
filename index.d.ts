@@ -224,6 +224,18 @@ export interface GetRawMutualClosingTxSignatureResponse {
     hex: string;
 }
 
+export interface GetRawFundTxSignatureRequest {
+    fundTxHex: string;
+    privkey: string;
+    prevTxId: string;
+    prevTxVout: number;
+    amount: bigint;
+}
+
+export interface GetRawFundTxSignatureResponse {
+    hex: string;
+}
+
 export interface GetRawRefundTxSignatureRequest {
     refundTxHex: string;
     privkey: string;
@@ -351,6 +363,8 @@ export function CreateRefundTransaction(jsonObject: CreateRefundTransactionReque
 export function GetRawCetSignature(jsonObject: GetRawCetSignatureRequest): GetRawCetSignatureResponse;
 
 export function GetRawMutualClosingTxSignature(jsonObject: GetRawMutualClosingTxSignatureRequest): GetRawMutualClosingTxSignatureResponse;
+
+export function GetRawFundTxSignature(jsonObject: GetRawFundTxSignatureRequest): GetRawFundTxSignatureResponse;
 
 export function GetRawRefundTxSignature(jsonObject: GetRawRefundTxSignatureRequest): GetRawRefundTxSignatureResponse;
 

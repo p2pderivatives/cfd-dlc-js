@@ -5,6 +5,7 @@
  * @brief cfdのnode.js向けAPI実装ファイル
  */
 #include <napi.h>  // NOLINT
+
 #include <string>
 
 #include "cfd/cfd_common.h"
@@ -98,6 +99,10 @@ Value SignFundTransaction(const CallbackInfo &information) {
   return NodeAddonJsonApi(information, JsonMappingApi::SignFundTransaction);
 }
 
+Value GetRawFundTxSignature(const CallbackInfo &information) {
+  return NodeAddonJsonApi(information, JsonMappingApi::GetRawFundTxSignature);
+}
+
 Value CreateCet(const CallbackInfo &information) {
   return NodeAddonJsonApi(information, JsonMappingApi::CreateCet);
 }
@@ -178,6 +183,8 @@ void InitializeJsonApi(Env env, Object *exports) {
                Function::New(env, CreateFundTransaction));
   exports->Set(String::New(env, "SignFundTransaction"),
                Function::New(env, SignFundTransaction));
+  exports->Set(String::New(env, "GetRawFundTxSignature"),
+               Function::New(env, GetRawFundTxSignature));
   exports->Set(String::New(env, "VerifyFundTxSignature"),
                Function::New(env, VerifyFundTxSignature));
   exports->Set(String::New(env, "CreateCet"), Function::New(env, CreateCet));

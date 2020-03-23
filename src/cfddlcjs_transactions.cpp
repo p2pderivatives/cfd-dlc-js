@@ -5,11 +5,12 @@
  * @brief cfd-dlc-apiで利用するTransaction作成の実装ファイル
  */
 
+#include "cfddlcjs/cfddlcjs_transactions.h"
+
 #include <vector>
 
 #include "cfdcore/cfdcore_key.h"
 #include "cfddlcjs/cfddlcjs_struct.h"
-#include "cfddlcjs/cfddlcjs_transactions.h"
 #include "cfddlcjs_internal.h"  // NOLINT
 #include "dlc/dlc_transactions.h"
 
@@ -106,6 +107,27 @@ SignFundTransactionResponseStruct DlcTransactionsApi::SignFundTransaction(
   SignFundTransactionResponseStruct result;
   result = ExecuteStructApi<SignFundTransactionRequestStruct,
                             SignFundTransactionResponseStruct>(
+      request, call_func, std::string(__FUNCTION__));
+  return result;
+}
+
+GetRawFundTxSignatureResponseStruct DlcTransactionsApi::GetRawFundTxSignature(
+    const GetRawFundTxSignatureRequestStruct& request) {
+  auto call_func = [](const GetRawFundTxSignatureRequestStruct& request)
+      -> GetRawFundTxSignatureResponseStruct {
+    GetRawFundTxSignatureResponseStruct response;
+    TransactionController refund_tx(request.fund_tx_hex);
+    Privkey privkey(request.privkey);
+    Txid prev_txid(request.prev_tx_id);
+    auto amount = Amount::CreateBySatoshiAmount(request.amount);
+    auto signature = DlcManager::GetRawFundingTransactionInputSignature(
+        refund_tx, privkey, prev_txid, request.prev_tx_vout, amount);
+    response.hex = signature.GetHex();
+    return response;
+  };
+  GetRawFundTxSignatureResponseStruct result;
+  result = ExecuteStructApi<GetRawFundTxSignatureRequestStruct,
+                            GetRawFundTxSignatureResponseStruct>(
       request, call_func, std::string(__FUNCTION__));
   return result;
 }

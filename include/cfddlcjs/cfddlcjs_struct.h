@@ -442,6 +442,33 @@ struct GetRawMutualClosingTxSignatureResponseStruct {
 };
 
 // ------------------------------------------------------------------------
+// GetRawFundTxSignatureRequestStruct
+// ------------------------------------------------------------------------
+/**
+ * @brief GetRawFundTxSignatureRequestStruct struct
+ */
+struct GetRawFundTxSignatureRequestStruct {
+  std::string fund_tx_hex = "";  //!< fund_tx_hex  // NOLINT
+  std::string privkey = "";      //!< privkey  // NOLINT
+  std::string prev_tx_id = "";   //!< prev_tx_id  // NOLINT
+  uint32_t prev_tx_vout = 0;     //!< prev_tx_vout  // NOLINT
+  uint64_t amount = 0;           //!< amount  // NOLINT
+  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
+};
+
+// ------------------------------------------------------------------------
+// GetRawFundTxSignatureResponseStruct
+// ------------------------------------------------------------------------
+/**
+ * @brief GetRawFundTxSignatureResponseStruct struct
+ */
+struct GetRawFundTxSignatureResponseStruct {
+  std::string hex = "";  //!< hex  // NOLINT
+  cfd::dlc::js::api::InnerErrorResponseStruct error;   //!< error information
+  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
+};
+
+// ------------------------------------------------------------------------
 // GetRawRefundTxSignatureRequestStruct
 // ------------------------------------------------------------------------
 /**

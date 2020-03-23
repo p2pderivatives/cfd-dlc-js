@@ -156,6 +156,32 @@ function ParseRawTransaction(rawTransaction: string) {
     return cfdjs.DecodeRawTransaction(reqJson);
 }
 
+function GetRawFundTransactionInputSignature(transaction: string, utxo: models.DlcTestVectors.Utxo) {
+    const reqJson: cfddlcjs.GetRawFundTxSignatureRequest = {
+        fundTxHex: transaction,
+        privkey: utxo.keys[0],
+        prevTxId: utxo.outPoint.txid,
+        prevTxVout: utxo.outPoint.vout,
+        amount: BigInt(utxo.output.value),
+    }
+
+    return cfddlcjs.GetRawFundTxSignature(reqJson).hex;
+}
+
+function VerifyFundTransactionInputSignature(transaction: string,
+    utxo: models.DlcTestVectors.Utxo, signature: string) {
+    const reqJson: cfddlcjs.VerifyFundTxSignatureRequest = {
+        fundTxHex: transaction,
+        signature: signature,
+        pubkey: GetPubFromPriv(utxo.keys[0]),
+        prevTxId: utxo.outPoint.txid,
+        prevTxVout: utxo.outPoint.vout,
+        inputAmount: BigInt(utxo.output.value),
+    };
+
+    return cfddlcjs.VerifyFundTxSignature(reqJson).valid;
+}
+
 function SignFundTransactionInput(transaction: string, utxo: models.DlcTestVectors.Utxo) {
     const reqJson = {
         fundTxHex: transaction,
@@ -171,17 +197,28 @@ function SignFundTransactionInput(transaction: string, utxo: models.DlcTestVecto
 function SignFundTransactionInputs(transaction: string, input: models.DlcTestVectors.Inputs) {
     for (let utxo of input.localFundingUtxos) {
         transaction = SignFundTransactionInput(transaction, utxo);
+        let sig = GetRawFundTransactionInputSignature(transaction, utxo);
+        let isValid = VerifyFundTransactionInputSignature(transaction, utxo, sig);
+        console.log(`IsValid: ${isValid}`);
+        console.log(sig);
+        let der = EncodeSignatureToDER(sig);
+        console.log(der);
     }
 
     for (let utxo of input.remoteFundingUtxos) {
         transaction = SignFundTransactionInput(transaction, utxo);
+        let sig = GetRawFundTransactionInputSignature(transaction, utxo);
+        let isValid = VerifyFundTransactionInputSignature(transaction, utxo, sig);
+        console.log(`IsValid: ${isValid}`);
+        let der = EncodeSignatureToDER(sig);
+        console.log(der);
     }
 
     return transaction;
 }
 
 function GetRefundTxSignature(transaction: string, privkey: string, fundTxId: string,
-    localFundPubkey: string, remoteFundPubkey: string, fundAmount: number) {
+    localFundPubkey: string, remoteFundPubkey: string, fundAmount: BigInt) {
     const reqJson = {
         refundTxHex: transaction,
         privkey: privkey,
@@ -193,6 +230,15 @@ function GetRefundTxSignature(transaction: string, privkey: string, fundTxId: st
     };
 
     return cfddlcjs.GetRawRefundTxSignature(reqJson).hex;
+}
+
+function EncodeSignatureToDER(signature: string) {
+    const reqJson: cfdjs.EncodeSignatureByDerRequest = {
+        signature: signature,
+        sighashType: "all",
+    };
+
+    return cfdjs.EncodeSignatureByDer(reqJson).signature;
 }
 
 function SignRefundTx(transaction: string, rawFundTransaction: string, input: models.DlcTestVectors.Inputs) {
@@ -219,7 +265,7 @@ function SignRefundTx(transaction: string, rawFundTransaction: string, input: mo
 }
 
 function GetCetSignature(transaction: string, privkey: string, fundTxId: string,
-    localFundPubkey: string, remoteFundPubkey: string, fundAmount: number) {
+    localFundPubkey: string, remoteFundPubkey: string, fundAmount: BigInt) {
     const reqJson = {
         cetHex: transaction,
         privkey: privkey,
@@ -274,7 +320,7 @@ function CreateAndSignClosingTx(rawCet: string, input: models.DlcTestVectors.Inp
     let remoteExtPubkey = GetExtPubFromExtPriv(input.remoteExtPrivKey);
     let oraclePubkey = GetPubFromPriv(input.oracleKey);
     let reqJson = {
-        amount: BigInt(cet.vout[0].value - 122),
+        amount: BigInt(cet.vout[0].value) - BigInt(122),
         cetTxid: cet.txid,
         cetVout: 0,
         address: localFinalAddress,
@@ -301,6 +347,13 @@ function CreateAndSignClosingTx(rawCet: string, input: models.DlcTestVectors.Inp
     return cfddlcjs.SignClosingTransaction(reqJson2).hex;
 }
 
+function DecodeDerSignatureToRaw(der: string) {
+    const reqJson: cfdjs.DecodeDerSignatureToRawRequest = {
+        signature: der,
+    };
+
+    return cfdjs.DecodeDerSignatureToRaw(reqJson).signature;
+}
 
 function SaveTransactionToFile(raw: string, fileName: string) {
     let res = ParseRawTransaction(raw);
@@ -325,3 +378,6 @@ firstVector.outputs.localCets.forEach((cet, i) => SaveTransactionToFile(cet, `ex
 
 SaveTransactionToFile(closingTx, "actualClosingTx.json");
 SaveTransactionToFile(firstVector.outputs.localClosingTx, "expectedClosingTx.json");
+let rawSig = "ca158648dff9c55dc6ff0c7c387cb5313759faf424e775698f0837190591a8924a6ad245366f88b4952a16e4726d293ada1c78b73ac2b3e9e492a68cc63468da";
+let isValidSig = VerifyFundTransactionInputSignature(fundTx, firstVector.inputs.localFundingUtxos[0], rawSig);
+console.log(`IsValid: ${isValidSig}`);
