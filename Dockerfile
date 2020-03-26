@@ -41,6 +41,8 @@ RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
 WORKDIR ${WORKSPACE}/cfd-dlc-js
 RUN git clone git@github.com:cryptogarageinc/cfd-dlc-js.git . && git checkout wip && npm install && npm run cmake_all
 
+RUN npm install --global typescript ts-node
+
 # Remove SSH keys
 RUN rm -rf /root/.ssh/
 
