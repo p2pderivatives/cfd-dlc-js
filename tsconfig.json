@@ -1,11 +1,12 @@
 {
-    "compilerOptions": {
-        "target": "ESNext",
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "esModuleInterop": true
-    },
-    "files": [
-        "wrap_js/compatibility_test.ts"
-    ]
+  "compilerOptions": {
+    "target": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "files": [
+    "wrap_js/compatibility_test.ts",
+    "integration_tests/__tests__/dlctests.spec.ts"
+  ]
 }

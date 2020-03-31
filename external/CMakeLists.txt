@@ -10,14 +10,15 @@ endif()
 
 # cfd-core
 # TODO REMOVE LATER
-set(CFDCORE_TARGET_VERSION "master")
+set(CFDCORE_TARGET_URL cryptogarageinc/cfd-core.git)
+set(CFDCORE_TARGET_VERSION "v0.0.25")
 
 # cfd-dlc
 if(CFD_DLC_TARGET_VERSION)
 set(CFD_DLC_TARGET_TAG  ${CFD_DLC_TARGET_VERSION})
 message(STATUS "[external project debug] cfd dlc target=${CFD_DLC_TARGET_VERSION}")
 else()
-set(CFD_DLC_TARGET_TAG  vWIP)
+set(CFD_DLC_TARGET_TAG  10-setup-cfd-dlc-repository)
 endif()
 if(CFD_DLC_TARGET_URL)
 set(CFD_DLC_TARGET_REP  ${CFD_DLC_TARGET_URL})

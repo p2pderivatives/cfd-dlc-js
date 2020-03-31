@@ -1,99 +1,28 @@
 import * as cfddlcjs from '../index.js';
 import * as cfdjs from 'cfd-js';
 import * as models from "./models";
+import { CfdUtils } from "./cfd_utils";
 
 import * as fs from 'fs';
 import testVectors from './compatibility_input.json';
 
-function GetPubFromPriv(privkey: string) {
-    let reqPrivKey = {
-        privkey: privkey,
-        isCompressed: true,
-    };
-
-    return cfdjs.GetPubkeyFromPrivkey(reqPrivKey).pubkey;
-}
-
-function GetExtPubFromExtPriv(extPriv: string) {
-    const reqJson = {
-        extkey: extPriv,
-        network: 'testnet',
-    };
-
-    let resp = cfdjs.CreateExtPubkey(reqJson);
-    return resp.extkey;
-}
-
-function GetPrivKeyFromExtPriv(extPriv: string) {
-    const reqJson = {
-        extkey: extPriv,
-        network: 'testnet',
-        wif: false,
-        isCompressed: true,
-    }
-
-    let resp = cfdjs.GetPrivkeyFromExtkey(reqJson);
-    return resp.privkey;
-}
-
-function GetPubkeyFromExtPriv(extPriv: string) {
-    let priv = GetPrivKeyFromExtPriv(extPriv);
-    return GetPubFromPriv(priv);
-}
-
-function GetChildPrivKeyFromExtPriv(extPriv: string, index: number) {
-    let reqJson: cfdjs.CreateExtkeyFromParentPathRequest = {
-        extkey: extPriv,
-        network: "regtest",
-        path: `m/0/${index}`,
-        extkeyType: "extPrivkey",
-        childNumberArray: [],
-    }
-    let extChild = cfdjs.CreateExtkeyFromParentPath(reqJson).extkey;
-
-    let reqJson2: cfdjs.GetPrivkeyFromExtkeyRequest = {
-        extkey: extChild,
-        network: "regtest",
-        wif: false,
-        isCompressed: false,
-    };
-
-    let priv = cfdjs.GetPrivkeyFromExtkey(reqJson2).privkey;
-    return priv;
-}
-
-function GetAddressFromPubkey(pubkey: string) {
-    let data: cfdjs.CreateAddressKeyData = {
-        hex: pubkey,
-        type: "pubkey",
-    };
-    let reqJson: cfdjs.CreateAddressRequest = {
-        isElements: false,
-        keyData: data,
-        network: "regtest",
-        hashType: "p2wpkh",
-    };
-
-    return cfdjs.CreateAddress(reqJson).address;
-}
-
 
 function CreateDlcTxs(input: models.DlcTestVectors.Inputs): models.DlcTestVectors.DlcTransactions {
-    let oraclePubKey = GetPubFromPriv(input.oracleKey);
-    let localFundPrivkey = GetChildPrivKeyFromExtPriv(input.localExtPrivKey, 0);
-    let localSweepPrivkey = GetChildPrivKeyFromExtPriv(input.localExtPrivKey, 1);
-    let localFinalPrivkey = GetChildPrivKeyFromExtPriv(input.localExtPrivKey, 2);
-    let remoteFundPrivkey = GetChildPrivKeyFromExtPriv(input.remoteExtPrivKey, 0);
-    let remoteSweepPrivkey = GetChildPrivKeyFromExtPriv(input.remoteExtPrivKey, 1);
-    let remoteFinalPrivkey = GetChildPrivKeyFromExtPriv(input.remoteExtPrivKey, 2);
-    let localFundPubkey = GetPubFromPriv(localFundPrivkey);
-    let localSweepPubkey = GetPubFromPriv(localSweepPrivkey);
-    let localFinalPubkey = GetPubFromPriv(localFinalPrivkey);
-    let remoteFundPubkey = GetPubFromPriv(remoteFundPrivkey);
-    let remoteSweepPubkey = GetPubFromPriv(remoteSweepPrivkey);
-    let remoteFinalPubkey = GetPubFromPriv(remoteFinalPrivkey);
-    let remoteFinalAddress = GetAddressFromPubkey(remoteFinalPubkey);
-    let localFinalAddress = GetAddressFromPubkey(localFinalPubkey);
+    let oraclePubKey = CfdUtils.GetPubFromPriv(input.oracleKey);
+    let localFundPrivkey = CfdUtils.GetChildPrivKeyFromExtPriv(input.localExtPrivKey, 0);
+    let localSweepPrivkey = CfdUtils.GetChildPrivKeyFromExtPriv(input.localExtPrivKey, 1);
+    let localFinalPrivkey = CfdUtils.GetChildPrivKeyFromExtPriv(input.localExtPrivKey, 2);
+    let remoteFundPrivkey = CfdUtils.GetChildPrivKeyFromExtPriv(input.remoteExtPrivKey, 0);
+    let remoteSweepPrivkey = CfdUtils.GetChildPrivKeyFromExtPriv(input.remoteExtPrivKey, 1);
+    let remoteFinalPrivkey = CfdUtils.GetChildPrivKeyFromExtPriv(input.remoteExtPrivKey, 2);
+    let localFundPubkey = CfdUtils.GetPubFromPriv(localFundPrivkey);
+    let localSweepPubkey = CfdUtils.GetPubFromPriv(localSweepPrivkey);
+    let localFinalPubkey = CfdUtils.GetPubFromPriv(localFinalPrivkey);
+    let remoteFundPubkey = CfdUtils.GetPubFromPriv(remoteFundPrivkey);
+    let remoteSweepPubkey = CfdUtils.GetPubFromPriv(remoteSweepPrivkey);
+    let remoteFinalPubkey = CfdUtils.GetPubFromPriv(remoteFinalPrivkey);
+    let remoteFinalAddress = CfdUtils.GetAddressFromPubkey(remoteFinalPubkey);
+    let localFinalAddress = CfdUtils.GetAddressFromPubkey(localFinalPubkey);
 
     const reqJson: cfddlcjs.CreateDlcTransactionsRequest = {
         outcomes: [
@@ -173,7 +102,7 @@ function VerifyFundTransactionInputSignature(transaction: string,
     const reqJson: cfddlcjs.VerifyFundTxSignatureRequest = {
         fundTxHex: transaction,
         signature: signature,
-        pubkey: GetPubFromPriv(utxo.keys[0]),
+        pubkey: CfdUtils.GetPubFromPriv(utxo.keys[0]),
         prevTxId: utxo.outPoint.txid,
         prevTxVout: utxo.outPoint.vout,
         inputAmount: BigInt(utxo.output.value),
@@ -236,6 +165,7 @@ function EncodeSignatureToDER(signature: string) {
     const reqJson: cfdjs.EncodeSignatureByDerRequest = {
         signature: signature,
         sighashType: "all",
+        sighashAnyoneCanPay: false,
     };
 
     return cfdjs.EncodeSignatureByDer(reqJson).signature;
@@ -243,14 +173,14 @@ function EncodeSignatureToDER(signature: string) {
 
 function SignRefundTx(transaction: string, rawFundTransaction: string, input: models.DlcTestVectors.Inputs) {
     let fundTx = ParseRawTransaction(rawFundTransaction);
-    let localFundPrivkey = GetPrivKeyFromExtPriv(input.localExtPrivKey);
-    let remoteFundPrivkey = GetPrivKeyFromExtPriv(input.remoteExtPrivKey);
-    let localFundPubkey = GetPubFromPriv(localFundPrivkey);
-    let remoteFundPubkey = GetPubFromPriv(remoteFundPrivkey);
+    let localFundPrivkey = CfdUtils.GetPrivKeyFromExtPriv(input.localExtPrivKey);
+    let remoteFundPrivkey = CfdUtils.GetPrivKeyFromExtPriv(input.remoteExtPrivKey);
+    let localFundPubkey = CfdUtils.GetPubFromPriv(localFundPrivkey);
+    let remoteFundPubkey = CfdUtils.GetPubFromPriv(remoteFundPrivkey);
     let localSignature = GetRefundTxSignature(transaction, localFundPrivkey,
-        fundTx.txid, localFundPubkey, remoteFundPubkey, fundTx.vout[0].value);
+        fundTx.txid, localFundPubkey, remoteFundPubkey, BigInt(fundTx.vout[0].value));
     let remoteSignature = GetRefundTxSignature(transaction, remoteFundPrivkey,
-        fundTx.txid, localFundPubkey, remoteFundPubkey, fundTx.vout[0].value);
+        fundTx.txid, localFundPubkey, remoteFundPubkey, BigInt(fundTx.vout[0].value));
     let reqJson = {
         refundTxHex: transaction,
         signatures: [localSignature, remoteSignature],
@@ -281,12 +211,12 @@ function GetCetSignature(transaction: string, privkey: string, fundTxId: string,
 
 function SignCet(transaction: string, rawFundTransaction: string, input: models.DlcTestVectors.Inputs) {
     let fundTx = ParseRawTransaction(rawFundTransaction);
-    let localFundPubkey = GetPubkeyFromExtPriv(input.localExtPrivKey);
-    let remoteFundPubkey = GetPubkeyFromExtPriv(input.remoteExtPrivKey);
-    let localSignature = GetCetSignature(transaction, GetPrivKeyFromExtPriv(input.localExtPrivKey),
-        fundTx.txid, localFundPubkey, remoteFundPubkey, fundTx.vout[0].value);
-    let remoteSignature = GetCetSignature(transaction, GetPrivKeyFromExtPriv(input.remoteExtPrivKey),
-        fundTx.txid, localFundPubkey, remoteFundPubkey, fundTx.vout[0].value);
+    let localFundPubkey = CfdUtils.GetPubkeyFromExtPriv(input.localExtPrivKey);
+    let remoteFundPubkey = CfdUtils.GetPubkeyFromExtPriv(input.remoteExtPrivKey);
+    let localSignature = GetCetSignature(transaction, CfdUtils.GetPrivKeyFromExtPriv(input.localExtPrivKey),
+        fundTx.txid, localFundPubkey, remoteFundPubkey, BigInt(fundTx.vout[0].value));
+    let remoteSignature = GetCetSignature(transaction, CfdUtils.GetPrivKeyFromExtPriv(input.remoteExtPrivKey),
+        fundTx.txid, localFundPubkey, remoteFundPubkey, BigInt(fundTx.vout[0].value));
     let reqJson = {
         cetHex: transaction,
         signatures: [localSignature, remoteSignature],
@@ -302,23 +232,23 @@ function SignCet(transaction: string, rawFundTransaction: string, input: models.
 
 function CreateAndSignClosingTx(rawCet: string, input: models.DlcTestVectors.Inputs) {
     let cet = ParseRawTransaction(rawCet);
-    let oraclePubKey = GetPubFromPriv(input.oracleKey);
-    let localFundPrivkey = GetChildPrivKeyFromExtPriv(input.localExtPrivKey, 0);
-    let localSweepPrivkey = GetChildPrivKeyFromExtPriv(input.localExtPrivKey, 1);
-    let localFinalPrivkey = GetChildPrivKeyFromExtPriv(input.localExtPrivKey, 2);
-    let remoteFundPrivkey = GetChildPrivKeyFromExtPriv(input.remoteExtPrivKey, 0);
-    let remoteSweepPrivkey = GetChildPrivKeyFromExtPriv(input.remoteExtPrivKey, 1);
-    let remoteFinalPrivkey = GetChildPrivKeyFromExtPriv(input.remoteExtPrivKey, 2);
-    let localFundPubkey = GetPubFromPriv(localFundPrivkey);
-    let localSweepPubkey = GetPubFromPriv(localSweepPrivkey);
-    let localFinalPubkey = GetPubFromPriv(localFinalPrivkey);
-    let remoteFundPubkey = GetPubFromPriv(remoteFundPrivkey);
-    let remoteSweepPubkey = GetPubFromPriv(remoteSweepPrivkey);
-    let remoteFinalPubkey = GetPubFromPriv(remoteFinalPrivkey);
-    let remoteFinalAddress = GetAddressFromPubkey(remoteFinalPubkey);
-    let localFinalAddress = GetAddressFromPubkey(localFinalPubkey);
-    let remoteExtPubkey = GetExtPubFromExtPriv(input.remoteExtPrivKey);
-    let oraclePubkey = GetPubFromPriv(input.oracleKey);
+    let oraclePubKey = CfdUtils.GetPubFromPriv(input.oracleKey);
+    let localFundPrivkey = CfdUtils.GetChildPrivKeyFromExtPriv(input.localExtPrivKey, 0);
+    let localSweepPrivkey = CfdUtils.GetChildPrivKeyFromExtPriv(input.localExtPrivKey, 1);
+    let localFinalPrivkey = CfdUtils.GetChildPrivKeyFromExtPriv(input.localExtPrivKey, 2);
+    let remoteFundPrivkey = CfdUtils.GetChildPrivKeyFromExtPriv(input.remoteExtPrivKey, 0);
+    let remoteSweepPrivkey = CfdUtils.GetChildPrivKeyFromExtPriv(input.remoteExtPrivKey, 1);
+    let remoteFinalPrivkey = CfdUtils.GetChildPrivKeyFromExtPriv(input.remoteExtPrivKey, 2);
+    let localFundPubkey = CfdUtils.GetPubFromPriv(localFundPrivkey);
+    let localSweepPubkey = CfdUtils.GetPubFromPriv(localSweepPrivkey);
+    let localFinalPubkey = CfdUtils.GetPubFromPriv(localFinalPrivkey);
+    let remoteFundPubkey = CfdUtils.GetPubFromPriv(remoteFundPrivkey);
+    let remoteSweepPubkey = CfdUtils.GetPubFromPriv(remoteSweepPrivkey);
+    let remoteFinalPubkey = CfdUtils.GetPubFromPriv(remoteFinalPrivkey);
+    let remoteFinalAddress = CfdUtils.GetAddressFromPubkey(remoteFinalPubkey);
+    let localFinalAddress = CfdUtils.GetAddressFromPubkey(localFinalPubkey);
+    let remoteExtPubkey = CfdUtils.GetExtPubFromExtPriv(input.remoteExtPrivKey);
+    let oraclePubkey = CfdUtils.GetPubFromPriv(input.oracleKey);
     let reqJson = {
         amount: BigInt(cet.vout[0].value) - BigInt(122),
         cetTxid: cet.txid,
@@ -347,13 +277,13 @@ function CreateAndSignClosingTx(rawCet: string, input: models.DlcTestVectors.Inp
     return cfddlcjs.SignClosingTransaction(reqJson2).hex;
 }
 
-function DecodeDerSignatureToRaw(der: string) {
-    const reqJson: cfdjs.DecodeDerSignatureToRawRequest = {
-        signature: der,
-    };
+// function DecodeDerSignatureToRaw(der: string) {
+//     const reqJson: cfdjs.DecodeDerSignatureToRawRequest = {
+//         signature: der,
+//     };
 
-    return cfdjs.DecodeDerSignatureToRaw(reqJson).signature;
-}
+//     return cfdjs.DecodeDerSignatureToRaw(reqJson).signature;
+// }
 
 function SaveTransactionToFile(raw: string, fileName: string) {
     let res = ParseRawTransaction(raw);
@@ -381,3 +311,45 @@ SaveTransactionToFile(firstVector.outputs.localClosingTx, "expectedClosingTx.jso
 let rawSig = "ca158648dff9c55dc6ff0c7c387cb5313759faf424e775698f0837190591a8924a6ad245366f88b4952a16e4726d293ada1c78b73ac2b3e9e492a68cc63468da";
 let isValidSig = VerifyFundTransactionInputSignature(fundTx, firstVector.inputs.localFundingUtxos[0], rawSig);
 console.log(`IsValid: ${isValidSig}`);
+
+let reqJson =
+{
+    outcomes: [
+        { local: 9990000n, remote: 10000n, messages: ["WIN"] },
+        { local: 10000n, remote: 9990000n, messages: ["LOSE"] }
+    ],
+    oracleRPoints: [
+        '03d6348ec791ea75ee5a68694f36d95eee59957f64e31c1f6986592fe34401591b'
+    ],
+    oraclePubkey: '0367f66d3ecb36dee9c6d45c6c8df8af21d093ba064ef3011554f5b27daa5b5d06',
+    localFundPubkey: '02607240d25e4257f384bf092bf10bce6a5b1778aff3375fde4c4b48996daf357a',
+    remoteFundPubkey: '027635bd0677cc5466ab49d7edeb410f35fa657f0bf5a8200e32fab6501d708fd8',
+    localSweepPubkey: '03487f070c2200ea03c64a3ae407ad82877882b737b553b153afd1dda175846093',
+    remoteSweepPubkey: '021ef9ce817be8b66c5f17158a0618ef862ff0a5f2decf2e51a15c2653dfe4b620',
+    localInputAmount: 312500000n,
+    localCollateralAmount: 5000000n,
+    remoteInputAmount: 156250000n,
+    remoteCollateralAmount: 5000000n,
+    timeout: 50,
+    localInputs: [
+        {
+            txid: '2e1e22ddcdb91006759414c1f73190ad2e7303f43cad691125aa00d41a7b6c40',
+            vout: 0
+        }
+    ],
+    localChangeAddress: 'bcrt1qufw7any7u0e7y4833k5mawwhdynldqjnuqvmhn',
+    remoteInputs: [
+        {
+            txid: '9b513201be30cdfe97f2059be5c6a8a007fae2d6d2410f449e6dcb27b35ee669',
+            vout: 0
+        }
+    ],
+    remoteChangeAddress: 'bcrt1qdtecxyu6ss4vszwmyt9z7nza2nqsr9700zhlpf',
+    maturityTime: 1579072156n,
+    feeRate: 1,
+    localFinalAddress: 'bcrt1qgk023q3rpc8dmsgcvu7d8gj0rrvhc8qftq5rcl',
+    remoteFinalAddress: 'bcrt1qxugdafuxyk4s67phmavc9pqjxw0nfakc6jhatw'
+};
+
+let res = cfddlcjs.CreateDlcTransactions(reqJson);
+console.log(res);

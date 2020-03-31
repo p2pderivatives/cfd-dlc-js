@@ -125,16 +125,19 @@
     "tape": "^4.11.0"
   },
   "devDependencies": {
+    "@types/jest": "^25.1.4",
     "@types/node": "^13.9.0",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "cfd-js": "git+https://github.com/cryptogarageinc/cfd-js#v0.0.21",
     "eslint": "^6.5.1",
     "eslint-config-google": "^0.14.0",
     "jest": "^24.8.0",
+    "ts-jest": "^25.3.0",
     "ts-morph": "^6.0.2",
     "ts-node": "^8.6.2",
-    "cfd-js": "git+https://github.com/cryptogarageinc/cfd-js#master"
+    "wallet-for-testing-js": "git+https://github.com/cryptogarageinc/wallet-for-testing-js#v0.0.1"
   }
 }
