@@ -229,6 +229,14 @@ describe("dlc tests", () => {
 
     await aliceWallet.generate(20);
     await bobWallet.generate(20);
+
+    // wait update
+    try {
+      await timeout(2000);
+    } catch (tmerr) {
+      // ignore error
+    }
+
     await aliceWallet.forceUpdateUtxoData();
     await bobWallet.forceUpdateUtxoData();
 
