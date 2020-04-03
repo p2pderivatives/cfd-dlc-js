@@ -135,6 +135,7 @@ beforeAll(async () => {
 
 describe("dlc tests", () => {
   it("test full execution", async () => {
+    jest.setTimeout(30000);
 
     const winAmount = 9990000;
     const loseAmount = 10000;
@@ -256,7 +257,7 @@ describe("dlc tests", () => {
       fundTxId, fundTx.vout[0].value,
       aliceFundPrivkey,
       bobFundPrivkey);
-    const cet = DecodeRawTransaction(fundTxHex);
+    const cet = DecodeRawTransaction(cetHex);
 
     const cetId = await aliceWallet.sendRawTransaction(cetHex);
 
