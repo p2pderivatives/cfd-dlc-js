@@ -2,7 +2,7 @@ const WalletManager = require('wallet-for-testing-js');
 import * as fs from 'fs';
 import * as cfd from 'cfd-js';
 import * as cfddlcjs from '../../index.js';
-// const path = require('path');
+import path from 'path';
 
 function SignFundTransactionInput(transaction: string, input: any, prv: any) {
   const reqJson = {
@@ -101,7 +101,7 @@ const timeout = async function (ms: any) {
 
 beforeAll(async () => {
   console.log("initialize node");
-  const dbDir = __dirname + "/dbdir";
+  const dbDir = path.join(__dirname, 'dbdir');
   // initialize db dir
   try {
     fs.statSync(dbDir);
@@ -116,7 +116,13 @@ beforeAll(async () => {
   } catch (err) {
     if (err.code !== "ENOENT") throw err;
   }
-  fs.mkdirSync(dbDir);
+
+  try {
+    fs.mkdirSync(dbDir);
+  } catch (tmerr) {
+    await timeout(1000);
+    fs.mkdirSync(dbDir);
+  }
 
   // initialize walletManager
   walletMgr = new WalletManager(configFilePath, dbDir, network, testSeed);
