@@ -4,6 +4,24 @@ import * as cfd from 'cfd-js';
 import * as cfddlcjs from '../../index.js';
 import path from 'path';
 
+function GetSchnorrPublicNonce(kValue: string) {
+  const reqJson: cfddlcjs.GetSchnorrPublicNonceRequest = {
+    kValue: kValue,
+  };
+
+  return cfddlcjs.GetSchnorrPublicNonce(reqJson).hex;
+}
+
+function SchnorrSign(message: string, oraclePrivkey: string, oracleKValue: string) {
+  const reqJson: cfddlcjs.SchnorrSignRequest = {
+    message: message,
+    privkey: oraclePrivkey,
+    kValue: oracleKValue,
+  };
+
+  return cfddlcjs.SchnorrSign(reqJson).hex;
+}
+
 function SignFundTransactionInput(transaction: string, input: any, prv: any) {
   const reqJson = {
     fundTxHex: transaction,
@@ -43,6 +61,40 @@ function SignCet(
   };
 
   return cfddlcjs.AddSignaturesToCet(addSigReq).hex;
+}
+
+function CreateClosingTx(finalAddress: string, amount: bigint,
+  cetid: string, cetVout: number) {
+  const reqJson: cfddlcjs.CreateClosingTransactionRequest = {
+    address: finalAddress,
+    amount: amount,
+    cetTxid: cetid,
+    cetVout: cetVout,
+  };
+
+  return cfddlcjs.CreateClosingTransaction(reqJson).hex;
+}
+
+function SignClosingTx(transaction: string, localFundPrivkey: string,
+  localSweepPubkey: string, remoteSweepPubkey: string, oraclePubkey: string,
+  oracleRPoints: string[], messages: string[], oracleSigs: string[], delay: bigint,
+  cetId: string, amount: bigint) {
+  const reqJson: cfddlcjs.SignClosingTransactionRequest = {
+    closingTxHex: transaction,
+    localFundPrivkey: localFundPrivkey,
+    localSweepPubkey: localSweepPubkey,
+    remoteSweepPubkey: remoteSweepPubkey,
+    oraclePubkey: oraclePubkey,
+    oracleRPoints: oracleRPoints,
+    messages: messages,
+    oracleSigs: oracleSigs,
+    delay: delay,
+    cetTxid: cetId,
+    cetVout: 0,
+    amount: amount,
+  };
+
+  return cfddlcjs.SignClosingTransaction(reqJson).hex;
 }
 
 function GetPrivkeyFromWif(wif: string) {
@@ -88,7 +140,7 @@ const testSeed =
 const oracleKey = "85e9cf11bd33a4ccc6abf6c5078e2a7e44aff9c456934976cb86cffe3e1e13dc";
 const oracleKValue = "8864177b5ec22563e9b325c11726a270d259b7adc16a2051d9d9256eede64c79";
 const oraclePubkey = GetPubkeyFromPrivkey(oracleKey);
-const oracleRValue = GetPubkeyFromPrivkey(oracleKValue);
+const oracleRValue = GetSchnorrPublicNonce(oracleKValue);
 
 let walletMgr: any;
 let aliceWallet: any;
@@ -133,6 +185,15 @@ beforeAll(async () => {
   bobWallet = await walletMgr.createWallet(2, "bob", "bitcoin");
 });
 
+async function SyncWait() {
+  // wait update
+  try {
+    await timeout(2000);
+  } catch (tmerr) {
+    // ignore error
+  }
+}
+
 describe("dlc tests", () => {
   it("test full execution", async () => {
     jest.setTimeout(30000);
@@ -152,6 +213,7 @@ describe("dlc tests", () => {
     const bobSweepPubkey = GetPubkeyFromPrivkey(bobSweepPrivkey);
     const bobFinalAddress = await GetP2WPKHAddress(bobWallet);
     const bobChangeAddress = await GetP2WPKHAddress(bobWallet);
+    const dlc_timeout = 50;
 
     const amount = 200000000; // 2BTC
     await aliceWallet.generate(100);
@@ -169,21 +231,22 @@ describe("dlc tests", () => {
     const bobInputWif = await bobWallet.dumpPrivkey(bobInput.address);
     const bobInputPrv = GetPrivkeyFromWif(bobInputWif);
 
-    console.log(aliceInput.amount);
-    console.log(collateral)
-    console.log(winAmount)
+    const winMessages = ["WIN"];
+    const loseMessages = ["LOSE"];
+
+    const oracleSignature = SchnorrSign(winMessages[0], oracleKey, oracleKValue);
 
     const reqJson: cfddlcjs.CreateDlcTransactionsRequest = {
       outcomes: [
         {
           local: BigInt(winAmount),
           remote: BigInt(loseAmount),
-          messages: ["WIN"],
+          messages: winMessages,
         },
         {
           local: BigInt(loseAmount),
           remote: BigInt(winAmount),
-          messages: ["LOSE"]
+          messages: loseMessages,
         }
       ],
       oracleRPoints: [oracleRValue],
@@ -196,7 +259,7 @@ describe("dlc tests", () => {
       localCollateralAmount: BigInt(collateral),
       remoteInputAmount: BigInt(bobInput.amount),
       remoteCollateralAmount: BigInt(collateral),
-      timeout: 50,
+      timeout: dlc_timeout,
       localInputs:
         [{
           txid: aliceInput.txid,
@@ -220,36 +283,24 @@ describe("dlc tests", () => {
     let fundTxHex = SignFundTransactionInput(dlctxs.fundTxHex, aliceInput, aliceInputPrv);
     fundTxHex = SignFundTransactionInput(fundTxHex, bobInput, bobInputPrv);
 
-    console.log(fundTxHex);
     const fundTx = DecodeRawTransaction(fundTxHex);
 
     const fundTxId = await aliceWallet.sendRawTransaction(fundTxHex);
 
-    console.log(fundTxId + " " + fundTx.txid);
     expect(fundTxId).toBe(fundTx.txid);
 
     await aliceWallet.generate(20);
     await bobWallet.generate(20);
 
-    // wait update
-    try {
-      await timeout(2000);
-    } catch (tmerr) {
-      // ignore error
-    }
+    await SyncWait();
 
     await aliceWallet.forceUpdateUtxoData();
     await bobWallet.forceUpdateUtxoData();
 
-    console.log(aliceChangeAddress)
-    console.log(bobChangeAddress)
-
     const aliceChangeBalance = await aliceWallet.getBalance(1, aliceChangeAddress);
-    console.log(aliceChangeBalance);
     expect(aliceChangeBalance.bitcoin).toBeGreaterThan(0);
 
     const bobChangeBalance = await bobWallet.getBalance(1, bobChangeAddress);
-    console.log(bobChangeBalance);
     expect(bobChangeBalance.bitcoin).toBeGreaterThan(0);
 
     let cetHex = SignCet(
@@ -261,7 +312,32 @@ describe("dlc tests", () => {
 
     const cetId = await aliceWallet.sendRawTransaction(cetHex);
 
-    console.log(cetId + " " + cet.txid);
     expect(cetId).toBe(cet.txid);
+
+    let closingHex = CreateClosingTx(
+      aliceFinalAddress, BigInt(cet.vout[0].value) - BigInt(122 * 2), cet.txid, 0);
+    closingHex = SignClosingTx(
+      closingHex, aliceFundPrivkey, aliceSweepPubkey, bobSweepPubkey,
+      oraclePubkey, [oracleRValue], winMessages, [oracleSignature], BigInt(dlc_timeout),
+      cet.txid, cet.vout[0].value);
+
+    const closingTxid = await bobWallet.sendRawTransaction(closingHex);
+
+    const closingTx = DecodeRawTransaction(closingHex);
+    await aliceWallet.generate(1);
+    await bobWallet.generate(1);
+
+    await SyncWait();
+
+    await aliceWallet.forceUpdateUtxoData();
+    await bobWallet.forceUpdateUtxoData();
+
+    await SyncWait();
+
+    const aliceFinalBalance = await aliceWallet.getBalance(1, aliceFinalAddress);
+    const bobFinalBalance = await bobWallet.getBalance(1, bobFinalAddress);
+
+    expect(aliceFinalBalance.bitcoin).toBe(winAmount);
+    expect(bobFinalBalance.bitcoin).toBe(loseAmount);
   });
 });

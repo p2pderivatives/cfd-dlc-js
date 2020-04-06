@@ -413,6 +413,33 @@ struct GetRawCetSignatureResponseStruct {
 };
 
 // ------------------------------------------------------------------------
+// GetRawFundTxSignatureRequestStruct
+// ------------------------------------------------------------------------
+/**
+ * @brief GetRawFundTxSignatureRequestStruct struct
+ */
+struct GetRawFundTxSignatureRequestStruct {
+  std::string fund_tx_hex = "";  //!< fund_tx_hex  // NOLINT
+  std::string privkey = "";      //!< privkey  // NOLINT
+  std::string prev_tx_id = "";   //!< prev_tx_id  // NOLINT
+  uint32_t prev_tx_vout = 0;     //!< prev_tx_vout  // NOLINT
+  uint64_t amount = 0;           //!< amount  // NOLINT
+  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
+};
+
+// ------------------------------------------------------------------------
+// GetRawFundTxSignatureResponseStruct
+// ------------------------------------------------------------------------
+/**
+ * @brief GetRawFundTxSignatureResponseStruct struct
+ */
+struct GetRawFundTxSignatureResponseStruct {
+  std::string hex = "";  //!< hex  // NOLINT
+  cfd::dlc::js::api::InnerErrorResponseStruct error;   //!< error information
+  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
+};
+
+// ------------------------------------------------------------------------
 // GetRawMutualClosingTxSignatureRequestStruct
 // ------------------------------------------------------------------------
 /**
@@ -436,33 +463,6 @@ struct GetRawMutualClosingTxSignatureRequestStruct {
  * @brief GetRawMutualClosingTxSignatureResponseStruct struct
  */
 struct GetRawMutualClosingTxSignatureResponseStruct {
-  std::string hex = "";  //!< hex  // NOLINT
-  cfd::dlc::js::api::InnerErrorResponseStruct error;   //!< error information
-  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
-};
-
-// ------------------------------------------------------------------------
-// GetRawFundTxSignatureRequestStruct
-// ------------------------------------------------------------------------
-/**
- * @brief GetRawFundTxSignatureRequestStruct struct
- */
-struct GetRawFundTxSignatureRequestStruct {
-  std::string fund_tx_hex = "";  //!< fund_tx_hex  // NOLINT
-  std::string privkey = "";      //!< privkey  // NOLINT
-  std::string prev_tx_id = "";   //!< prev_tx_id  // NOLINT
-  uint32_t prev_tx_vout = 0;     //!< prev_tx_vout  // NOLINT
-  uint64_t amount = 0;           //!< amount  // NOLINT
-  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
-};
-
-// ------------------------------------------------------------------------
-// GetRawFundTxSignatureResponseStruct
-// ------------------------------------------------------------------------
-/**
- * @brief GetRawFundTxSignatureResponseStruct struct
- */
-struct GetRawFundTxSignatureResponseStruct {
   std::string hex = "";  //!< hex  // NOLINT
   cfd::dlc::js::api::InnerErrorResponseStruct error;   //!< error information
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
@@ -498,6 +498,54 @@ struct GetRawRefundTxSignatureResponseStruct {
 };
 
 // ------------------------------------------------------------------------
+// GetSchnorrPublicNonceRequestStruct
+// ------------------------------------------------------------------------
+/**
+ * @brief GetSchnorrPublicNonceRequestStruct struct
+ */
+struct GetSchnorrPublicNonceRequestStruct {
+  std::string k_value = "";  //!< k_value  // NOLINT
+  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
+};
+
+// ------------------------------------------------------------------------
+// GetSchnorrPublicNonceResponseStruct
+// ------------------------------------------------------------------------
+/**
+ * @brief GetSchnorrPublicNonceResponseStruct struct
+ */
+struct GetSchnorrPublicNonceResponseStruct {
+  std::string hex = "";  //!< hex  // NOLINT
+  cfd::dlc::js::api::InnerErrorResponseStruct error;   //!< error information
+  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
+};
+
+// ------------------------------------------------------------------------
+// SchnorrSignRequestStruct
+// ------------------------------------------------------------------------
+/**
+ * @brief SchnorrSignRequestStruct struct
+ */
+struct SchnorrSignRequestStruct {
+  std::string privkey = "";  //!< privkey  // NOLINT
+  std::string k_value = "";  //!< k_value  // NOLINT
+  std::string message = "";  //!< message  // NOLINT
+  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
+};
+
+// ------------------------------------------------------------------------
+// SchnorrSignResponseStruct
+// ------------------------------------------------------------------------
+/**
+ * @brief SchnorrSignResponseStruct struct
+ */
+struct SchnorrSignResponseStruct {
+  std::string hex = "";  //!< hex  // NOLINT
+  cfd::dlc::js::api::InnerErrorResponseStruct error;   //!< error information
+  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
+};
+
+// ------------------------------------------------------------------------
 // SignClosingTransactionRequestStruct
 // ------------------------------------------------------------------------
 /**
@@ -512,10 +560,9 @@ struct SignClosingTransactionRequestStruct {
   std::vector<std::string> oracle_r_points;  //!< oracle_r_points  // NOLINT
   std::vector<std::string> messages;         //!< messages  // NOLINT
   uint64_t delay = 0;                        //!< delay  // NOLINT
-  std::string oracle_sig = "";               //!< oracle_sig  // NOLINT
+  std::vector<std::string> oracle_sigs;      //!< oracle_sigs  // NOLINT
   std::string cet_txid = "";                 //!< cet_txid  // NOLINT
   uint32_t cet_vout = 0;                     //!< cet_vout  // NOLINT
-  std::string cet_script = "";               //!< cet_script  // NOLINT
   uint64_t amount = 0;                       //!< amount  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };

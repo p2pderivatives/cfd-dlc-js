@@ -260,6 +260,22 @@ std::string JsonMappingApi::VerifyRefundTxSignature(
       request_message, DlcTransactionsApi::VerifyRefundTxSignature);
 }
 
+std::string JsonMappingApi::SchnorrSign(const std::string &request_message) {
+  return ExecuteJsonApi<
+      api::json::SchnorrSignRequest, api::json::SchnorrSignResponse,
+      api::SchnorrSignRequestStruct, api::SchnorrSignResponseStruct>(
+      request_message, DlcTransactionsApi::SchnorrSign);
+}
+
+std::string JsonMappingApi::GetSchnorrPublicNonce(
+    const std::string &request_message) {
+  return ExecuteJsonApi<api::json::GetSchnorrPublicNonceRequest,
+                        api::json::GetSchnorrPublicNonceResponse,
+                        api::GetSchnorrPublicNonceRequestStruct,
+                        api::GetSchnorrPublicNonceResponseStruct>(
+      request_message, DlcTransactionsApi::GetSchnorrPublicNonce);
+}
+
 }  // namespace json
 }  // namespace api
 }  // namespace js

@@ -67,6 +67,8 @@ class CFD_DLC_JS_API_EXPORT JsonMappingApi {
       const std::string &request_message);
   static std::string VerifyRefundTxSignature(
       const std::string &request_message);
+  static std::string SchnorrSign(const std::string &request_message);
+  static std::string GetSchnorrPublicNonce(const std::string &request_message);
 
  private:
   JsonMappingApi();

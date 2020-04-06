@@ -210,6 +210,18 @@ export interface GetRawCetSignatureResponse {
     hex: string;
 }
 
+export interface GetRawFundTxSignatureRequest {
+    fundTxHex: string;
+    privkey: string;
+    prevTxId: string;
+    prevTxVout: number;
+    amount: bigint;
+}
+
+export interface GetRawFundTxSignatureResponse {
+    hex: string;
+}
+
 export interface GetRawMutualClosingTxSignatureRequest {
     mutualClosingHex: string;
     privkey: string;
@@ -221,18 +233,6 @@ export interface GetRawMutualClosingTxSignatureRequest {
 }
 
 export interface GetRawMutualClosingTxSignatureResponse {
-    hex: string;
-}
-
-export interface GetRawFundTxSignatureRequest {
-    fundTxHex: string;
-    privkey: string;
-    prevTxId: string;
-    prevTxVout: number;
-    amount: bigint;
-}
-
-export interface GetRawFundTxSignatureResponse {
     hex: string;
 }
 
@@ -250,6 +250,24 @@ export interface GetRawRefundTxSignatureResponse {
     hex: string;
 }
 
+export interface GetSchnorrPublicNonceRequest {
+    kValue: string;
+}
+
+export interface GetSchnorrPublicNonceResponse {
+    hex: string;
+}
+
+export interface SchnorrSignRequest {
+    privkey: string;
+    kValue: string;
+    message: string;
+}
+
+export interface SchnorrSignResponse {
+    hex: string;
+}
+
 export interface SignClosingTransactionRequest {
     closingTxHex: string;
     localFundPrivkey: string;
@@ -259,10 +277,9 @@ export interface SignClosingTransactionRequest {
     oracleRPoints: string[];
     messages: string[];
     delay: bigint;
-    oracleSig: string;
+    oracleSigs: string[];
     cetTxid: string;
     cetVout: number;
-    cetScript: string;
     amount: bigint;
 }
 
@@ -362,11 +379,15 @@ export function CreateRefundTransaction(jsonObject: CreateRefundTransactionReque
 
 export function GetRawCetSignature(jsonObject: GetRawCetSignatureRequest): GetRawCetSignatureResponse;
 
-export function GetRawMutualClosingTxSignature(jsonObject: GetRawMutualClosingTxSignatureRequest): GetRawMutualClosingTxSignatureResponse;
-
 export function GetRawFundTxSignature(jsonObject: GetRawFundTxSignatureRequest): GetRawFundTxSignatureResponse;
 
+export function GetRawMutualClosingTxSignature(jsonObject: GetRawMutualClosingTxSignatureRequest): GetRawMutualClosingTxSignatureResponse;
+
 export function GetRawRefundTxSignature(jsonObject: GetRawRefundTxSignatureRequest): GetRawRefundTxSignatureResponse;
+
+export function GetSchnorrPublicNonce(jsonObject: GetSchnorrPublicNonceRequest): GetSchnorrPublicNonceResponse;
+
+export function SchnorrSign(jsonObject: SchnorrSignRequest): SchnorrSignResponse;
 
 export function SignClosingTransaction(jsonObject: SignClosingTransactionRequest): SignClosingTransactionResponse;
 

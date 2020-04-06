@@ -172,6 +172,14 @@ Value VerifyRefundTxSignature(const CallbackInfo &information) {
   return NodeAddonJsonApi(information, JsonMappingApi::VerifyRefundTxSignature);
 }
 
+Value SchnorrSign(const CallbackInfo &information) {
+  return NodeAddonJsonApi(information, JsonMappingApi::SchnorrSign);
+}
+
+Value GetSchnorrPublicNonce(const CallbackInfo &information) {
+  return NodeAddonJsonApi(information, JsonMappingApi::GetSchnorrPublicNonce);
+}
+
 /**
  * @brief JSON APIの生成初期化関数.
  * @param[in] env         環境情報
@@ -216,6 +224,10 @@ void InitializeJsonApi(Env env, Object *exports) {
                Function::New(env, AddSignaturesToRefundTx));
   exports->Set(String::New(env, "VerifyRefundTxSignature"),
                Function::New(env, VerifyRefundTxSignature));
+  exports->Set(String::New(env, "SchnorrSign"),
+               Function::New(env, SchnorrSign));
+  exports->Set(String::New(env, "GetSchnorrPublicNonce"),
+               Function::New(env, GetSchnorrPublicNonce));
 }
 
 }  // namespace json

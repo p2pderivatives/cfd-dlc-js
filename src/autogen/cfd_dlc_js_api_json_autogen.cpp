@@ -1756,6 +1756,112 @@ GetRawCetSignatureResponseStruct GetRawCetSignatureResponse::ConvertToStruct() c
 }
 
 // ------------------------------------------------------------------------
+// GetRawFundTxSignatureRequest
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<GetRawFundTxSignatureRequest>
+  GetRawFundTxSignatureRequest::json_mapper;
+std::vector<std::string> GetRawFundTxSignatureRequest::item_list;
+
+void GetRawFundTxSignatureRequest::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<GetRawFundTxSignatureRequest> func_table;  // NOLINT
+
+  func_table = {
+    GetRawFundTxSignatureRequest::GetFundTxHexString,
+    GetRawFundTxSignatureRequest::SetFundTxHexString,
+    GetRawFundTxSignatureRequest::GetFundTxHexFieldType,
+  };
+  json_mapper.emplace("fundTxHex", func_table);
+  item_list.push_back("fundTxHex");
+  func_table = {
+    GetRawFundTxSignatureRequest::GetPrivkeyString,
+    GetRawFundTxSignatureRequest::SetPrivkeyString,
+    GetRawFundTxSignatureRequest::GetPrivkeyFieldType,
+  };
+  json_mapper.emplace("privkey", func_table);
+  item_list.push_back("privkey");
+  func_table = {
+    GetRawFundTxSignatureRequest::GetPrevTxIdString,
+    GetRawFundTxSignatureRequest::SetPrevTxIdString,
+    GetRawFundTxSignatureRequest::GetPrevTxIdFieldType,
+  };
+  json_mapper.emplace("prevTxId", func_table);
+  item_list.push_back("prevTxId");
+  func_table = {
+    GetRawFundTxSignatureRequest::GetPrevTxVoutString,
+    GetRawFundTxSignatureRequest::SetPrevTxVoutString,
+    GetRawFundTxSignatureRequest::GetPrevTxVoutFieldType,
+  };
+  json_mapper.emplace("prevTxVout", func_table);
+  item_list.push_back("prevTxVout");
+  func_table = {
+    GetRawFundTxSignatureRequest::GetAmountString,
+    GetRawFundTxSignatureRequest::SetAmountString,
+    GetRawFundTxSignatureRequest::GetAmountFieldType,
+  };
+  json_mapper.emplace("amount", func_table);
+  item_list.push_back("amount");
+}
+
+void GetRawFundTxSignatureRequest::ConvertFromStruct(
+    const GetRawFundTxSignatureRequestStruct& data) {
+  fund_tx_hex_ = data.fund_tx_hex;
+  privkey_ = data.privkey;
+  prev_tx_id_ = data.prev_tx_id;
+  prev_tx_vout_ = data.prev_tx_vout;
+  amount_ = data.amount;
+  ignore_items = data.ignore_items;
+}
+
+GetRawFundTxSignatureRequestStruct GetRawFundTxSignatureRequest::ConvertToStruct() const {  // NOLINT
+  GetRawFundTxSignatureRequestStruct result;
+  result.fund_tx_hex = fund_tx_hex_;
+  result.privkey = privkey_;
+  result.prev_tx_id = prev_tx_id_;
+  result.prev_tx_vout = prev_tx_vout_;
+  result.amount = amount_;
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
+// GetRawFundTxSignatureResponse
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<GetRawFundTxSignatureResponse>
+  GetRawFundTxSignatureResponse::json_mapper;
+std::vector<std::string> GetRawFundTxSignatureResponse::item_list;
+
+void GetRawFundTxSignatureResponse::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<GetRawFundTxSignatureResponse> func_table;  // NOLINT
+
+  func_table = {
+    GetRawFundTxSignatureResponse::GetHexString,
+    GetRawFundTxSignatureResponse::SetHexString,
+    GetRawFundTxSignatureResponse::GetHexFieldType,
+  };
+  json_mapper.emplace("hex", func_table);
+  item_list.push_back("hex");
+}
+
+void GetRawFundTxSignatureResponse::ConvertFromStruct(
+    const GetRawFundTxSignatureResponseStruct& data) {
+  hex_ = data.hex;
+  ignore_items = data.ignore_items;
+}
+
+GetRawFundTxSignatureResponseStruct GetRawFundTxSignatureResponse::ConvertToStruct() const {  // NOLINT
+  GetRawFundTxSignatureResponseStruct result;
+  result.hex = hex_;
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
 // GetRawMutualClosingTxSignatureRequest
 // ------------------------------------------------------------------------
 cfd::core::JsonTableMap<GetRawMutualClosingTxSignatureRequest>
@@ -1874,112 +1980,6 @@ void GetRawMutualClosingTxSignatureResponse::ConvertFromStruct(
 
 GetRawMutualClosingTxSignatureResponseStruct GetRawMutualClosingTxSignatureResponse::ConvertToStruct() const {  // NOLINT
   GetRawMutualClosingTxSignatureResponseStruct result;
-  result.hex = hex_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// GetRawFundTxSignatureRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<GetRawFundTxSignatureRequest>
-  GetRawFundTxSignatureRequest::json_mapper;
-std::vector<std::string> GetRawFundTxSignatureRequest::item_list;
-
-void GetRawFundTxSignatureRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<GetRawFundTxSignatureRequest> func_table;  // NOLINT
-
-  func_table = {
-    GetRawFundTxSignatureRequest::GetFundTxHexString,
-    GetRawFundTxSignatureRequest::SetFundTxHexString,
-    GetRawFundTxSignatureRequest::GetFundTxHexFieldType,
-  };
-  json_mapper.emplace("fundTxHex", func_table);
-  item_list.push_back("fundTxHex");
-  func_table = {
-    GetRawFundTxSignatureRequest::GetPrivkeyString,
-    GetRawFundTxSignatureRequest::SetPrivkeyString,
-    GetRawFundTxSignatureRequest::GetPrivkeyFieldType,
-  };
-  json_mapper.emplace("privkey", func_table);
-  item_list.push_back("privkey");
-  func_table = {
-    GetRawFundTxSignatureRequest::GetPrevTxIdString,
-    GetRawFundTxSignatureRequest::SetPrevTxIdString,
-    GetRawFundTxSignatureRequest::GetPrevTxIdFieldType,
-  };
-  json_mapper.emplace("prevTxId", func_table);
-  item_list.push_back("prevTxId");
-  func_table = {
-    GetRawFundTxSignatureRequest::GetPrevTxVoutString,
-    GetRawFundTxSignatureRequest::SetPrevTxVoutString,
-    GetRawFundTxSignatureRequest::GetPrevTxVoutFieldType,
-  };
-  json_mapper.emplace("prevTxVout", func_table);
-  item_list.push_back("prevTxVout");
-  func_table = {
-    GetRawFundTxSignatureRequest::GetAmountString,
-    GetRawFundTxSignatureRequest::SetAmountString,
-    GetRawFundTxSignatureRequest::GetAmountFieldType,
-  };
-  json_mapper.emplace("amount", func_table);
-  item_list.push_back("amount");
-}
-
-void GetRawFundTxSignatureRequest::ConvertFromStruct(
-    const GetRawFundTxSignatureRequestStruct& data) {
-  fund_tx_hex_ = data.fund_tx_hex;
-  privkey_ = data.privkey;
-  prev_tx_id_ = data.prev_tx_id;
-  prev_tx_vout_ = data.prev_tx_vout;
-  amount_ = data.amount;
-  ignore_items = data.ignore_items;
-}
-
-GetRawFundTxSignatureRequestStruct GetRawFundTxSignatureRequest::ConvertToStruct() const {  // NOLINT
-  GetRawFundTxSignatureRequestStruct result;
-  result.fund_tx_hex = fund_tx_hex_;
-  result.privkey = privkey_;
-  result.prev_tx_id = prev_tx_id_;
-  result.prev_tx_vout = prev_tx_vout_;
-  result.amount = amount_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// GetRawFundTxSignatureResponse
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<GetRawFundTxSignatureResponse>
-  GetRawFundTxSignatureResponse::json_mapper;
-std::vector<std::string> GetRawFundTxSignatureResponse::item_list;
-
-void GetRawFundTxSignatureResponse::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<GetRawFundTxSignatureResponse> func_table;  // NOLINT
-
-  func_table = {
-    GetRawFundTxSignatureResponse::GetHexString,
-    GetRawFundTxSignatureResponse::SetHexString,
-    GetRawFundTxSignatureResponse::GetHexFieldType,
-  };
-  json_mapper.emplace("hex", func_table);
-  item_list.push_back("hex");
-}
-
-void GetRawFundTxSignatureResponse::ConvertFromStruct(
-    const GetRawFundTxSignatureResponseStruct& data) {
-  hex_ = data.hex;
-  ignore_items = data.ignore_items;
-}
-
-GetRawFundTxSignatureResponseStruct GetRawFundTxSignatureResponse::ConvertToStruct() const {  // NOLINT
-  GetRawFundTxSignatureResponseStruct result;
   result.hex = hex_;
   result.ignore_items = ignore_items;
   return result;
@@ -2110,6 +2110,164 @@ GetRawRefundTxSignatureResponseStruct GetRawRefundTxSignatureResponse::ConvertTo
 }
 
 // ------------------------------------------------------------------------
+// GetSchnorrPublicNonceRequest
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<GetSchnorrPublicNonceRequest>
+  GetSchnorrPublicNonceRequest::json_mapper;
+std::vector<std::string> GetSchnorrPublicNonceRequest::item_list;
+
+void GetSchnorrPublicNonceRequest::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<GetSchnorrPublicNonceRequest> func_table;  // NOLINT
+
+  func_table = {
+    GetSchnorrPublicNonceRequest::GetKValueString,
+    GetSchnorrPublicNonceRequest::SetKValueString,
+    GetSchnorrPublicNonceRequest::GetKValueFieldType,
+  };
+  json_mapper.emplace("kValue", func_table);
+  item_list.push_back("kValue");
+}
+
+void GetSchnorrPublicNonceRequest::ConvertFromStruct(
+    const GetSchnorrPublicNonceRequestStruct& data) {
+  k_value_ = data.k_value;
+  ignore_items = data.ignore_items;
+}
+
+GetSchnorrPublicNonceRequestStruct GetSchnorrPublicNonceRequest::ConvertToStruct() const {  // NOLINT
+  GetSchnorrPublicNonceRequestStruct result;
+  result.k_value = k_value_;
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
+// GetSchnorrPublicNonceResponse
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<GetSchnorrPublicNonceResponse>
+  GetSchnorrPublicNonceResponse::json_mapper;
+std::vector<std::string> GetSchnorrPublicNonceResponse::item_list;
+
+void GetSchnorrPublicNonceResponse::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<GetSchnorrPublicNonceResponse> func_table;  // NOLINT
+
+  func_table = {
+    GetSchnorrPublicNonceResponse::GetHexString,
+    GetSchnorrPublicNonceResponse::SetHexString,
+    GetSchnorrPublicNonceResponse::GetHexFieldType,
+  };
+  json_mapper.emplace("hex", func_table);
+  item_list.push_back("hex");
+}
+
+void GetSchnorrPublicNonceResponse::ConvertFromStruct(
+    const GetSchnorrPublicNonceResponseStruct& data) {
+  hex_ = data.hex;
+  ignore_items = data.ignore_items;
+}
+
+GetSchnorrPublicNonceResponseStruct GetSchnorrPublicNonceResponse::ConvertToStruct() const {  // NOLINT
+  GetSchnorrPublicNonceResponseStruct result;
+  result.hex = hex_;
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
+// SchnorrSignRequest
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<SchnorrSignRequest>
+  SchnorrSignRequest::json_mapper;
+std::vector<std::string> SchnorrSignRequest::item_list;
+
+void SchnorrSignRequest::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<SchnorrSignRequest> func_table;  // NOLINT
+
+  func_table = {
+    SchnorrSignRequest::GetPrivkeyString,
+    SchnorrSignRequest::SetPrivkeyString,
+    SchnorrSignRequest::GetPrivkeyFieldType,
+  };
+  json_mapper.emplace("privkey", func_table);
+  item_list.push_back("privkey");
+  func_table = {
+    SchnorrSignRequest::GetKValueString,
+    SchnorrSignRequest::SetKValueString,
+    SchnorrSignRequest::GetKValueFieldType,
+  };
+  json_mapper.emplace("kValue", func_table);
+  item_list.push_back("kValue");
+  func_table = {
+    SchnorrSignRequest::GetMessageString,
+    SchnorrSignRequest::SetMessageString,
+    SchnorrSignRequest::GetMessageFieldType,
+  };
+  json_mapper.emplace("message", func_table);
+  item_list.push_back("message");
+}
+
+void SchnorrSignRequest::ConvertFromStruct(
+    const SchnorrSignRequestStruct& data) {
+  privkey_ = data.privkey;
+  k_value_ = data.k_value;
+  message_ = data.message;
+  ignore_items = data.ignore_items;
+}
+
+SchnorrSignRequestStruct SchnorrSignRequest::ConvertToStruct() const {  // NOLINT
+  SchnorrSignRequestStruct result;
+  result.privkey = privkey_;
+  result.k_value = k_value_;
+  result.message = message_;
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
+// SchnorrSignResponse
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<SchnorrSignResponse>
+  SchnorrSignResponse::json_mapper;
+std::vector<std::string> SchnorrSignResponse::item_list;
+
+void SchnorrSignResponse::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<SchnorrSignResponse> func_table;  // NOLINT
+
+  func_table = {
+    SchnorrSignResponse::GetHexString,
+    SchnorrSignResponse::SetHexString,
+    SchnorrSignResponse::GetHexFieldType,
+  };
+  json_mapper.emplace("hex", func_table);
+  item_list.push_back("hex");
+}
+
+void SchnorrSignResponse::ConvertFromStruct(
+    const SchnorrSignResponseStruct& data) {
+  hex_ = data.hex;
+  ignore_items = data.ignore_items;
+}
+
+SchnorrSignResponseStruct SchnorrSignResponse::ConvertToStruct() const {  // NOLINT
+  SchnorrSignResponseStruct result;
+  result.hex = hex_;
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
 // SignClosingTransactionRequest
 // ------------------------------------------------------------------------
 cfd::core::JsonTableMap<SignClosingTransactionRequest>
@@ -2179,12 +2337,12 @@ void SignClosingTransactionRequest::CollectFieldName() {
   json_mapper.emplace("delay", func_table);
   item_list.push_back("delay");
   func_table = {
-    SignClosingTransactionRequest::GetOracleSigString,
-    SignClosingTransactionRequest::SetOracleSigString,
-    SignClosingTransactionRequest::GetOracleSigFieldType,
+    SignClosingTransactionRequest::GetOracleSigsString,
+    SignClosingTransactionRequest::SetOracleSigsString,
+    SignClosingTransactionRequest::GetOracleSigsFieldType,
   };
-  json_mapper.emplace("oracleSig", func_table);
-  item_list.push_back("oracleSig");
+  json_mapper.emplace("oracleSigs", func_table);
+  item_list.push_back("oracleSigs");
   func_table = {
     SignClosingTransactionRequest::GetCetTxidString,
     SignClosingTransactionRequest::SetCetTxidString,
@@ -2199,13 +2357,6 @@ void SignClosingTransactionRequest::CollectFieldName() {
   };
   json_mapper.emplace("cetVout", func_table);
   item_list.push_back("cetVout");
-  func_table = {
-    SignClosingTransactionRequest::GetCetScriptString,
-    SignClosingTransactionRequest::SetCetScriptString,
-    SignClosingTransactionRequest::GetCetScriptFieldType,
-  };
-  json_mapper.emplace("cetScript", func_table);
-  item_list.push_back("cetScript");
   func_table = {
     SignClosingTransactionRequest::GetAmountString,
     SignClosingTransactionRequest::SetAmountString,
@@ -2225,10 +2376,9 @@ void SignClosingTransactionRequest::ConvertFromStruct(
   oracle_r_points_.ConvertFromStruct(data.oracle_r_points);
   messages_.ConvertFromStruct(data.messages);
   delay_ = data.delay;
-  oracle_sig_ = data.oracle_sig;
+  oracle_sigs_.ConvertFromStruct(data.oracle_sigs);
   cet_txid_ = data.cet_txid;
   cet_vout_ = data.cet_vout;
-  cet_script_ = data.cet_script;
   amount_ = data.amount;
   ignore_items = data.ignore_items;
 }
@@ -2243,10 +2393,9 @@ SignClosingTransactionRequestStruct SignClosingTransactionRequest::ConvertToStru
   result.oracle_r_points = oracle_r_points_.ConvertToStruct();
   result.messages = messages_.ConvertToStruct();
   result.delay = delay_;
-  result.oracle_sig = oracle_sig_;
+  result.oracle_sigs = oracle_sigs_.ConvertToStruct();
   result.cet_txid = cet_txid_;
   result.cet_vout = cet_vout_;
-  result.cet_script = cet_script_;
   result.amount = amount_;
   result.ignore_items = ignore_items;
   return result;

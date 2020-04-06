@@ -7893,6 +7893,470 @@ class GetRawCetSignatureResponse
 };
 
 // ------------------------------------------------------------------------
+// GetRawFundTxSignatureRequest
+// ------------------------------------------------------------------------
+/**
+ * @brief JSON-API (GetRawFundTxSignatureRequest) class
+ */
+class GetRawFundTxSignatureRequest
+  : public cfd::core::JsonClassBase<GetRawFundTxSignatureRequest> {
+ public:
+  GetRawFundTxSignatureRequest() {
+    CollectFieldName();
+  }
+  virtual ~GetRawFundTxSignatureRequest() {
+    // do nothing
+  }
+  /**
+   * @brief collect field name.
+   */
+  static void CollectFieldName();
+
+  /**
+   * @brief Get of fundTxHex
+   * @return fundTxHex
+   */
+  std::string GetFundTxHex() const {
+    return fund_tx_hex_;
+  }
+  /**
+   * @brief Set to fundTxHex
+   * @param[in] fund_tx_hex    setting value.
+   */
+  void SetFundTxHex(  // line separate
+    const std::string& fund_tx_hex) {  // NOLINT
+    this->fund_tx_hex_ = fund_tx_hex;
+  }
+  /**
+   * @brief Get data type of fundTxHex
+   * @return Data type of fundTxHex
+   */
+  static std::string GetFundTxHexFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of fundTxHex field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetFundTxHexString(  // line separate
+      const GetRawFundTxSignatureRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.fund_tx_hex_);
+  }
+  /**
+   * @brief Set json object to fundTxHex field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetFundTxHexString(  // line separate
+      GetRawFundTxSignatureRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.fund_tx_hex_, json_value);
+  }
+
+  /**
+   * @brief Get of privkey
+   * @return privkey
+   */
+  std::string GetPrivkey() const {
+    return privkey_;
+  }
+  /**
+   * @brief Set to privkey
+   * @param[in] privkey    setting value.
+   */
+  void SetPrivkey(  // line separate
+    const std::string& privkey) {  // NOLINT
+    this->privkey_ = privkey;
+  }
+  /**
+   * @brief Get data type of privkey
+   * @return Data type of privkey
+   */
+  static std::string GetPrivkeyFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of privkey field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetPrivkeyString(  // line separate
+      const GetRawFundTxSignatureRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.privkey_);
+  }
+  /**
+   * @brief Set json object to privkey field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetPrivkeyString(  // line separate
+      GetRawFundTxSignatureRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.privkey_, json_value);
+  }
+
+  /**
+   * @brief Get of prevTxId
+   * @return prevTxId
+   */
+  std::string GetPrevTxId() const {
+    return prev_tx_id_;
+  }
+  /**
+   * @brief Set to prevTxId
+   * @param[in] prev_tx_id    setting value.
+   */
+  void SetPrevTxId(  // line separate
+    const std::string& prev_tx_id) {  // NOLINT
+    this->prev_tx_id_ = prev_tx_id;
+  }
+  /**
+   * @brief Get data type of prevTxId
+   * @return Data type of prevTxId
+   */
+  static std::string GetPrevTxIdFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of prevTxId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetPrevTxIdString(  // line separate
+      const GetRawFundTxSignatureRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.prev_tx_id_);
+  }
+  /**
+   * @brief Set json object to prevTxId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetPrevTxIdString(  // line separate
+      GetRawFundTxSignatureRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.prev_tx_id_, json_value);
+  }
+
+  /**
+   * @brief Get of prevTxVout
+   * @return prevTxVout
+   */
+  uint32_t GetPrevTxVout() const {
+    return prev_tx_vout_;
+  }
+  /**
+   * @brief Set to prevTxVout
+   * @param[in] prev_tx_vout    setting value.
+   */
+  void SetPrevTxVout(  // line separate
+    const uint32_t& prev_tx_vout) {  // NOLINT
+    this->prev_tx_vout_ = prev_tx_vout;
+  }
+  /**
+   * @brief Get data type of prevTxVout
+   * @return Data type of prevTxVout
+   */
+  static std::string GetPrevTxVoutFieldType() {
+    return "uint32_t";
+  }
+  /**
+   * @brief Get json string of prevTxVout field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetPrevTxVoutString(  // line separate
+      const GetRawFundTxSignatureRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.prev_tx_vout_);
+  }
+  /**
+   * @brief Set json object to prevTxVout field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetPrevTxVoutString(  // line separate
+      GetRawFundTxSignatureRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.prev_tx_vout_, json_value);
+  }
+
+  /**
+   * @brief Get of amount
+   * @return amount
+   */
+  uint64_t GetAmount() const {
+    return amount_;
+  }
+  /**
+   * @brief Set to amount
+   * @param[in] amount    setting value.
+   */
+  void SetAmount(  // line separate
+    const uint64_t& amount) {  // NOLINT
+    this->amount_ = amount;
+  }
+  /**
+   * @brief Get data type of amount
+   * @return Data type of amount
+   */
+  static std::string GetAmountFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of amount field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetAmountString(  // line separate
+      const GetRawFundTxSignatureRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.amount_);
+  }
+  /**
+   * @brief Set json object to amount field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetAmountString(  // line separate
+      GetRawFundTxSignatureRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.amount_, json_value);
+  }
+
+  /**
+   * @brief Set ignore item.
+   * @param[in] key   ignore target key name.
+   */
+  void SetIgnoreItem(const std::string& key) {
+    ignore_items.insert(key);
+  }
+
+  /**
+   * @brief Convert struct to class.
+   * @param[in] data   struct data.
+   */
+  void ConvertFromStruct(
+      const GetRawFundTxSignatureRequestStruct& data);
+
+  /**
+   * @brief Convert class to struct.
+   * @return  struct data.
+   */
+  GetRawFundTxSignatureRequestStruct ConvertToStruct()  const;
+
+ protected:
+  /**
+   * @brief definition type of Map table.
+   */
+  using GetRawFundTxSignatureRequestMapTable =
+    cfd::core::JsonTableMap<GetRawFundTxSignatureRequest>;
+
+  /**
+   * @brief Get JSON mapping object.
+   * @return JSON mapping object.
+   * @see cfd::core::JsonClassBase::GetJsonMapper()
+   */
+  virtual const GetRawFundTxSignatureRequestMapTable& GetJsonMapper() const {  // NOLINT
+    return json_mapper;
+  }
+  /**
+   * @brief Get item lists of JSON mapping.
+   * Fetch a list of target variable names in the order of definition.
+   * @return Item lists of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetJsonItemList()
+   */
+  virtual const std::vector<std::string>& GetJsonItemList() const {
+    return item_list;
+  }
+  /**
+   * @brief Get ignore item lists of JSON mnapping.
+   * Ignore the target variable at Serialize.
+   * @return Item list of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetIgnoreItem()
+   */
+  virtual const std::set<std::string>& GetIgnoreItem() const {
+    return ignore_items;
+  }
+
+ private:
+ /**
+  * @brief JsonFunctionMap table
+  */
+  static GetRawFundTxSignatureRequestMapTable json_mapper;
+  /**
+   * @brief field name list.
+   */
+  static std::vector<std::string> item_list;
+  /**
+   * @brief ignore item list.
+   */
+  std::set<std::string> ignore_items;
+
+  /**
+   * @brief JsonAPI(fundTxHex) value
+   */
+  std::string fund_tx_hex_ = "";
+  /**
+   * @brief JsonAPI(privkey) value
+   */
+  std::string privkey_ = "";
+  /**
+   * @brief JsonAPI(prevTxId) value
+   */
+  std::string prev_tx_id_ = "";
+  /**
+   * @brief JsonAPI(prevTxVout) value
+   */
+  uint32_t prev_tx_vout_ = 0;
+  /**
+   * @brief JsonAPI(amount) value
+   */
+  uint64_t amount_ = 0;
+};
+
+// ------------------------------------------------------------------------
+// GetRawFundTxSignatureResponse
+// ------------------------------------------------------------------------
+/**
+ * @brief JSON-API (GetRawFundTxSignatureResponse) class
+ */
+class GetRawFundTxSignatureResponse
+  : public cfd::core::JsonClassBase<GetRawFundTxSignatureResponse> {
+ public:
+  GetRawFundTxSignatureResponse() {
+    CollectFieldName();
+  }
+  virtual ~GetRawFundTxSignatureResponse() {
+    // do nothing
+  }
+  /**
+   * @brief collect field name.
+   */
+  static void CollectFieldName();
+
+  /**
+   * @brief Get of hex
+   * @return hex
+   */
+  std::string GetHex() const {
+    return hex_;
+  }
+  /**
+   * @brief Set to hex
+   * @param[in] hex    setting value.
+   */
+  void SetHex(  // line separate
+    const std::string& hex) {  // NOLINT
+    this->hex_ = hex;
+  }
+  /**
+   * @brief Get data type of hex
+   * @return Data type of hex
+   */
+  static std::string GetHexFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of hex field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetHexString(  // line separate
+      const GetRawFundTxSignatureResponse& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.hex_);
+  }
+  /**
+   * @brief Set json object to hex field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetHexString(  // line separate
+      GetRawFundTxSignatureResponse& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.hex_, json_value);
+  }
+
+  /**
+   * @brief Set ignore item.
+   * @param[in] key   ignore target key name.
+   */
+  void SetIgnoreItem(const std::string& key) {
+    ignore_items.insert(key);
+  }
+
+  /**
+   * @brief Convert struct to class.
+   * @param[in] data   struct data.
+   */
+  void ConvertFromStruct(
+      const GetRawFundTxSignatureResponseStruct& data);
+
+  /**
+   * @brief Convert class to struct.
+   * @return  struct data.
+   */
+  GetRawFundTxSignatureResponseStruct ConvertToStruct()  const;
+
+ protected:
+  /**
+   * @brief definition type of Map table.
+   */
+  using GetRawFundTxSignatureResponseMapTable =
+    cfd::core::JsonTableMap<GetRawFundTxSignatureResponse>;
+
+  /**
+   * @brief Get JSON mapping object.
+   * @return JSON mapping object.
+   * @see cfd::core::JsonClassBase::GetJsonMapper()
+   */
+  virtual const GetRawFundTxSignatureResponseMapTable& GetJsonMapper() const {  // NOLINT
+    return json_mapper;
+  }
+  /**
+   * @brief Get item lists of JSON mapping.
+   * Fetch a list of target variable names in the order of definition.
+   * @return Item lists of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetJsonItemList()
+   */
+  virtual const std::vector<std::string>& GetJsonItemList() const {
+    return item_list;
+  }
+  /**
+   * @brief Get ignore item lists of JSON mnapping.
+   * Ignore the target variable at Serialize.
+   * @return Item list of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetIgnoreItem()
+   */
+  virtual const std::set<std::string>& GetIgnoreItem() const {
+    return ignore_items;
+  }
+
+ private:
+ /**
+  * @brief JsonFunctionMap table
+  */
+  static GetRawFundTxSignatureResponseMapTable json_mapper;
+  /**
+   * @brief field name list.
+   */
+  static std::vector<std::string> item_list;
+  /**
+   * @brief ignore item list.
+   */
+  std::set<std::string> ignore_items;
+
+  /**
+   * @brief JsonAPI(hex) value
+   */
+  std::string hex_ = "";
+};
+
+// ------------------------------------------------------------------------
 // GetRawMutualClosingTxSignatureRequest
 // ------------------------------------------------------------------------
 /**
@@ -8435,470 +8899,6 @@ class GetRawMutualClosingTxSignatureResponse
   * @brief JsonFunctionMap table
   */
   static GetRawMutualClosingTxSignatureResponseMapTable json_mapper;
-  /**
-   * @brief field name list.
-   */
-  static std::vector<std::string> item_list;
-  /**
-   * @brief ignore item list.
-   */
-  std::set<std::string> ignore_items;
-
-  /**
-   * @brief JsonAPI(hex) value
-   */
-  std::string hex_ = "";
-};
-
-// ------------------------------------------------------------------------
-// GetRawFundTxSignatureRequest
-// ------------------------------------------------------------------------
-/**
- * @brief JSON-API (GetRawFundTxSignatureRequest) class
- */
-class GetRawFundTxSignatureRequest
-  : public cfd::core::JsonClassBase<GetRawFundTxSignatureRequest> {
- public:
-  GetRawFundTxSignatureRequest() {
-    CollectFieldName();
-  }
-  virtual ~GetRawFundTxSignatureRequest() {
-    // do nothing
-  }
-  /**
-   * @brief collect field name.
-   */
-  static void CollectFieldName();
-
-  /**
-   * @brief Get of fundTxHex
-   * @return fundTxHex
-   */
-  std::string GetFundTxHex() const {
-    return fund_tx_hex_;
-  }
-  /**
-   * @brief Set to fundTxHex
-   * @param[in] fund_tx_hex    setting value.
-   */
-  void SetFundTxHex(  // line separate
-    const std::string& fund_tx_hex) {  // NOLINT
-    this->fund_tx_hex_ = fund_tx_hex;
-  }
-  /**
-   * @brief Get data type of fundTxHex
-   * @return Data type of fundTxHex
-   */
-  static std::string GetFundTxHexFieldType() {
-    return "std::string";
-  }
-  /**
-   * @brief Get json string of fundTxHex field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetFundTxHexString(  // line separate
-      const GetRawFundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.fund_tx_hex_);
-  }
-  /**
-   * @brief Set json object to fundTxHex field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetFundTxHexString(  // line separate
-      GetRawFundTxSignatureRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.fund_tx_hex_, json_value);
-  }
-
-  /**
-   * @brief Get of privkey
-   * @return privkey
-   */
-  std::string GetPrivkey() const {
-    return privkey_;
-  }
-  /**
-   * @brief Set to privkey
-   * @param[in] privkey    setting value.
-   */
-  void SetPrivkey(  // line separate
-    const std::string& privkey) {  // NOLINT
-    this->privkey_ = privkey;
-  }
-  /**
-   * @brief Get data type of privkey
-   * @return Data type of privkey
-   */
-  static std::string GetPrivkeyFieldType() {
-    return "std::string";
-  }
-  /**
-   * @brief Get json string of privkey field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetPrivkeyString(  // line separate
-      const GetRawFundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.privkey_);
-  }
-  /**
-   * @brief Set json object to privkey field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetPrivkeyString(  // line separate
-      GetRawFundTxSignatureRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.privkey_, json_value);
-  }
-
-  /**
-   * @brief Get of prevTxId
-   * @return prevTxId
-   */
-  std::string GetPrevTxId() const {
-    return prev_tx_id_;
-  }
-  /**
-   * @brief Set to prevTxId
-   * @param[in] prev_tx_id    setting value.
-   */
-  void SetPrevTxId(  // line separate
-    const std::string& prev_tx_id) {  // NOLINT
-    this->prev_tx_id_ = prev_tx_id;
-  }
-  /**
-   * @brief Get data type of prevTxId
-   * @return Data type of prevTxId
-   */
-  static std::string GetPrevTxIdFieldType() {
-    return "std::string";
-  }
-  /**
-   * @brief Get json string of prevTxId field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetPrevTxIdString(  // line separate
-      const GetRawFundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.prev_tx_id_);
-  }
-  /**
-   * @brief Set json object to prevTxId field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetPrevTxIdString(  // line separate
-      GetRawFundTxSignatureRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.prev_tx_id_, json_value);
-  }
-
-  /**
-   * @brief Get of prevTxVout
-   * @return prevTxVout
-   */
-  uint32_t GetPrevTxVout() const {
-    return prev_tx_vout_;
-  }
-  /**
-   * @brief Set to prevTxVout
-   * @param[in] prev_tx_vout    setting value.
-   */
-  void SetPrevTxVout(  // line separate
-    const uint32_t& prev_tx_vout) {  // NOLINT
-    this->prev_tx_vout_ = prev_tx_vout;
-  }
-  /**
-   * @brief Get data type of prevTxVout
-   * @return Data type of prevTxVout
-   */
-  static std::string GetPrevTxVoutFieldType() {
-    return "uint32_t";
-  }
-  /**
-   * @brief Get json string of prevTxVout field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetPrevTxVoutString(  // line separate
-      const GetRawFundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.prev_tx_vout_);
-  }
-  /**
-   * @brief Set json object to prevTxVout field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetPrevTxVoutString(  // line separate
-      GetRawFundTxSignatureRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.prev_tx_vout_, json_value);
-  }
-
-  /**
-   * @brief Get of amount
-   * @return amount
-   */
-  uint64_t GetAmount() const {
-    return amount_;
-  }
-  /**
-   * @brief Set to amount
-   * @param[in] amount    setting value.
-   */
-  void SetAmount(  // line separate
-    const uint64_t& amount) {  // NOLINT
-    this->amount_ = amount;
-  }
-  /**
-   * @brief Get data type of amount
-   * @return Data type of amount
-   */
-  static std::string GetAmountFieldType() {
-    return "uint64_t";
-  }
-  /**
-   * @brief Get json string of amount field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetAmountString(  // line separate
-      const GetRawFundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.amount_);
-  }
-  /**
-   * @brief Set json object to amount field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetAmountString(  // line separate
-      GetRawFundTxSignatureRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.amount_, json_value);
-  }
-
-  /**
-   * @brief Set ignore item.
-   * @param[in] key   ignore target key name.
-   */
-  void SetIgnoreItem(const std::string& key) {
-    ignore_items.insert(key);
-  }
-
-  /**
-   * @brief Convert struct to class.
-   * @param[in] data   struct data.
-   */
-  void ConvertFromStruct(
-      const GetRawFundTxSignatureRequestStruct& data);
-
-  /**
-   * @brief Convert class to struct.
-   * @return  struct data.
-   */
-  GetRawFundTxSignatureRequestStruct ConvertToStruct()  const;
-
- protected:
-  /**
-   * @brief definition type of Map table.
-   */
-  using GetRawFundTxSignatureRequestMapTable =
-    cfd::core::JsonTableMap<GetRawFundTxSignatureRequest>;
-
-  /**
-   * @brief Get JSON mapping object.
-   * @return JSON mapping object.
-   * @see cfd::core::JsonClassBase::GetJsonMapper()
-   */
-  virtual const GetRawFundTxSignatureRequestMapTable& GetJsonMapper() const {  // NOLINT
-    return json_mapper;
-  }
-  /**
-   * @brief Get item lists of JSON mapping.
-   * Fetch a list of target variable names in the order of definition.
-   * @return Item lists of JSON mapping.
-   * @see cfd::core::JsonClassBase::GetJsonItemList()
-   */
-  virtual const std::vector<std::string>& GetJsonItemList() const {
-    return item_list;
-  }
-  /**
-   * @brief Get ignore item lists of JSON mnapping.
-   * Ignore the target variable at Serialize.
-   * @return Item list of JSON mapping.
-   * @see cfd::core::JsonClassBase::GetIgnoreItem()
-   */
-  virtual const std::set<std::string>& GetIgnoreItem() const {
-    return ignore_items;
-  }
-
- private:
- /**
-  * @brief JsonFunctionMap table
-  */
-  static GetRawFundTxSignatureRequestMapTable json_mapper;
-  /**
-   * @brief field name list.
-   */
-  static std::vector<std::string> item_list;
-  /**
-   * @brief ignore item list.
-   */
-  std::set<std::string> ignore_items;
-
-  /**
-   * @brief JsonAPI(fundTxHex) value
-   */
-  std::string fund_tx_hex_ = "";
-  /**
-   * @brief JsonAPI(privkey) value
-   */
-  std::string privkey_ = "";
-  /**
-   * @brief JsonAPI(prevTxId) value
-   */
-  std::string prev_tx_id_ = "";
-  /**
-   * @brief JsonAPI(prevTxVout) value
-   */
-  uint32_t prev_tx_vout_ = 0;
-  /**
-   * @brief JsonAPI(amount) value
-   */
-  uint64_t amount_ = 0;
-};
-
-// ------------------------------------------------------------------------
-// GetRawFundTxSignatureResponse
-// ------------------------------------------------------------------------
-/**
- * @brief JSON-API (GetRawFundTxSignatureResponse) class
- */
-class GetRawFundTxSignatureResponse
-  : public cfd::core::JsonClassBase<GetRawFundTxSignatureResponse> {
- public:
-  GetRawFundTxSignatureResponse() {
-    CollectFieldName();
-  }
-  virtual ~GetRawFundTxSignatureResponse() {
-    // do nothing
-  }
-  /**
-   * @brief collect field name.
-   */
-  static void CollectFieldName();
-
-  /**
-   * @brief Get of hex
-   * @return hex
-   */
-  std::string GetHex() const {
-    return hex_;
-  }
-  /**
-   * @brief Set to hex
-   * @param[in] hex    setting value.
-   */
-  void SetHex(  // line separate
-    const std::string& hex) {  // NOLINT
-    this->hex_ = hex;
-  }
-  /**
-   * @brief Get data type of hex
-   * @return Data type of hex
-   */
-  static std::string GetHexFieldType() {
-    return "std::string";
-  }
-  /**
-   * @brief Get json string of hex field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetHexString(  // line separate
-      const GetRawFundTxSignatureResponse& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.hex_);
-  }
-  /**
-   * @brief Set json object to hex field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetHexString(  // line separate
-      GetRawFundTxSignatureResponse& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.hex_, json_value);
-  }
-
-  /**
-   * @brief Set ignore item.
-   * @param[in] key   ignore target key name.
-   */
-  void SetIgnoreItem(const std::string& key) {
-    ignore_items.insert(key);
-  }
-
-  /**
-   * @brief Convert struct to class.
-   * @param[in] data   struct data.
-   */
-  void ConvertFromStruct(
-      const GetRawFundTxSignatureResponseStruct& data);
-
-  /**
-   * @brief Convert class to struct.
-   * @return  struct data.
-   */
-  GetRawFundTxSignatureResponseStruct ConvertToStruct()  const;
-
- protected:
-  /**
-   * @brief definition type of Map table.
-   */
-  using GetRawFundTxSignatureResponseMapTable =
-    cfd::core::JsonTableMap<GetRawFundTxSignatureResponse>;
-
-  /**
-   * @brief Get JSON mapping object.
-   * @return JSON mapping object.
-   * @see cfd::core::JsonClassBase::GetJsonMapper()
-   */
-  virtual const GetRawFundTxSignatureResponseMapTable& GetJsonMapper() const {  // NOLINT
-    return json_mapper;
-  }
-  /**
-   * @brief Get item lists of JSON mapping.
-   * Fetch a list of target variable names in the order of definition.
-   * @return Item lists of JSON mapping.
-   * @see cfd::core::JsonClassBase::GetJsonItemList()
-   */
-  virtual const std::vector<std::string>& GetJsonItemList() const {
-    return item_list;
-  }
-  /**
-   * @brief Get ignore item lists of JSON mnapping.
-   * Ignore the target variable at Serialize.
-   * @return Item list of JSON mapping.
-   * @see cfd::core::JsonClassBase::GetIgnoreItem()
-   */
-  virtual const std::set<std::string>& GetIgnoreItem() const {
-    return ignore_items;
-  }
-
- private:
- /**
-  * @brief JsonFunctionMap table
-  */
-  static GetRawFundTxSignatureResponseMapTable json_mapper;
   /**
    * @brief field name list.
    */
@@ -9473,6 +9473,652 @@ class GetRawRefundTxSignatureResponse
 };
 
 // ------------------------------------------------------------------------
+// GetSchnorrPublicNonceRequest
+// ------------------------------------------------------------------------
+/**
+ * @brief JSON-API (GetSchnorrPublicNonceRequest) class
+ */
+class GetSchnorrPublicNonceRequest
+  : public cfd::core::JsonClassBase<GetSchnorrPublicNonceRequest> {
+ public:
+  GetSchnorrPublicNonceRequest() {
+    CollectFieldName();
+  }
+  virtual ~GetSchnorrPublicNonceRequest() {
+    // do nothing
+  }
+  /**
+   * @brief collect field name.
+   */
+  static void CollectFieldName();
+
+  /**
+   * @brief Get of kValue
+   * @return kValue
+   */
+  std::string GetKValue() const {
+    return k_value_;
+  }
+  /**
+   * @brief Set to kValue
+   * @param[in] k_value    setting value.
+   */
+  void SetKValue(  // line separate
+    const std::string& k_value) {  // NOLINT
+    this->k_value_ = k_value;
+  }
+  /**
+   * @brief Get data type of kValue
+   * @return Data type of kValue
+   */
+  static std::string GetKValueFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of kValue field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetKValueString(  // line separate
+      const GetSchnorrPublicNonceRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.k_value_);
+  }
+  /**
+   * @brief Set json object to kValue field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetKValueString(  // line separate
+      GetSchnorrPublicNonceRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.k_value_, json_value);
+  }
+
+  /**
+   * @brief Set ignore item.
+   * @param[in] key   ignore target key name.
+   */
+  void SetIgnoreItem(const std::string& key) {
+    ignore_items.insert(key);
+  }
+
+  /**
+   * @brief Convert struct to class.
+   * @param[in] data   struct data.
+   */
+  void ConvertFromStruct(
+      const GetSchnorrPublicNonceRequestStruct& data);
+
+  /**
+   * @brief Convert class to struct.
+   * @return  struct data.
+   */
+  GetSchnorrPublicNonceRequestStruct ConvertToStruct()  const;
+
+ protected:
+  /**
+   * @brief definition type of Map table.
+   */
+  using GetSchnorrPublicNonceRequestMapTable =
+    cfd::core::JsonTableMap<GetSchnorrPublicNonceRequest>;
+
+  /**
+   * @brief Get JSON mapping object.
+   * @return JSON mapping object.
+   * @see cfd::core::JsonClassBase::GetJsonMapper()
+   */
+  virtual const GetSchnorrPublicNonceRequestMapTable& GetJsonMapper() const {  // NOLINT
+    return json_mapper;
+  }
+  /**
+   * @brief Get item lists of JSON mapping.
+   * Fetch a list of target variable names in the order of definition.
+   * @return Item lists of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetJsonItemList()
+   */
+  virtual const std::vector<std::string>& GetJsonItemList() const {
+    return item_list;
+  }
+  /**
+   * @brief Get ignore item lists of JSON mnapping.
+   * Ignore the target variable at Serialize.
+   * @return Item list of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetIgnoreItem()
+   */
+  virtual const std::set<std::string>& GetIgnoreItem() const {
+    return ignore_items;
+  }
+
+ private:
+ /**
+  * @brief JsonFunctionMap table
+  */
+  static GetSchnorrPublicNonceRequestMapTable json_mapper;
+  /**
+   * @brief field name list.
+   */
+  static std::vector<std::string> item_list;
+  /**
+   * @brief ignore item list.
+   */
+  std::set<std::string> ignore_items;
+
+  /**
+   * @brief JsonAPI(kValue) value
+   */
+  std::string k_value_ = "";
+};
+
+// ------------------------------------------------------------------------
+// GetSchnorrPublicNonceResponse
+// ------------------------------------------------------------------------
+/**
+ * @brief JSON-API (GetSchnorrPublicNonceResponse) class
+ */
+class GetSchnorrPublicNonceResponse
+  : public cfd::core::JsonClassBase<GetSchnorrPublicNonceResponse> {
+ public:
+  GetSchnorrPublicNonceResponse() {
+    CollectFieldName();
+  }
+  virtual ~GetSchnorrPublicNonceResponse() {
+    // do nothing
+  }
+  /**
+   * @brief collect field name.
+   */
+  static void CollectFieldName();
+
+  /**
+   * @brief Get of hex
+   * @return hex
+   */
+  std::string GetHex() const {
+    return hex_;
+  }
+  /**
+   * @brief Set to hex
+   * @param[in] hex    setting value.
+   */
+  void SetHex(  // line separate
+    const std::string& hex) {  // NOLINT
+    this->hex_ = hex;
+  }
+  /**
+   * @brief Get data type of hex
+   * @return Data type of hex
+   */
+  static std::string GetHexFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of hex field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetHexString(  // line separate
+      const GetSchnorrPublicNonceResponse& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.hex_);
+  }
+  /**
+   * @brief Set json object to hex field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetHexString(  // line separate
+      GetSchnorrPublicNonceResponse& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.hex_, json_value);
+  }
+
+  /**
+   * @brief Set ignore item.
+   * @param[in] key   ignore target key name.
+   */
+  void SetIgnoreItem(const std::string& key) {
+    ignore_items.insert(key);
+  }
+
+  /**
+   * @brief Convert struct to class.
+   * @param[in] data   struct data.
+   */
+  void ConvertFromStruct(
+      const GetSchnorrPublicNonceResponseStruct& data);
+
+  /**
+   * @brief Convert class to struct.
+   * @return  struct data.
+   */
+  GetSchnorrPublicNonceResponseStruct ConvertToStruct()  const;
+
+ protected:
+  /**
+   * @brief definition type of Map table.
+   */
+  using GetSchnorrPublicNonceResponseMapTable =
+    cfd::core::JsonTableMap<GetSchnorrPublicNonceResponse>;
+
+  /**
+   * @brief Get JSON mapping object.
+   * @return JSON mapping object.
+   * @see cfd::core::JsonClassBase::GetJsonMapper()
+   */
+  virtual const GetSchnorrPublicNonceResponseMapTable& GetJsonMapper() const {  // NOLINT
+    return json_mapper;
+  }
+  /**
+   * @brief Get item lists of JSON mapping.
+   * Fetch a list of target variable names in the order of definition.
+   * @return Item lists of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetJsonItemList()
+   */
+  virtual const std::vector<std::string>& GetJsonItemList() const {
+    return item_list;
+  }
+  /**
+   * @brief Get ignore item lists of JSON mnapping.
+   * Ignore the target variable at Serialize.
+   * @return Item list of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetIgnoreItem()
+   */
+  virtual const std::set<std::string>& GetIgnoreItem() const {
+    return ignore_items;
+  }
+
+ private:
+ /**
+  * @brief JsonFunctionMap table
+  */
+  static GetSchnorrPublicNonceResponseMapTable json_mapper;
+  /**
+   * @brief field name list.
+   */
+  static std::vector<std::string> item_list;
+  /**
+   * @brief ignore item list.
+   */
+  std::set<std::string> ignore_items;
+
+  /**
+   * @brief JsonAPI(hex) value
+   */
+  std::string hex_ = "";
+};
+
+// ------------------------------------------------------------------------
+// SchnorrSignRequest
+// ------------------------------------------------------------------------
+/**
+ * @brief JSON-API (SchnorrSignRequest) class
+ */
+class SchnorrSignRequest
+  : public cfd::core::JsonClassBase<SchnorrSignRequest> {
+ public:
+  SchnorrSignRequest() {
+    CollectFieldName();
+  }
+  virtual ~SchnorrSignRequest() {
+    // do nothing
+  }
+  /**
+   * @brief collect field name.
+   */
+  static void CollectFieldName();
+
+  /**
+   * @brief Get of privkey
+   * @return privkey
+   */
+  std::string GetPrivkey() const {
+    return privkey_;
+  }
+  /**
+   * @brief Set to privkey
+   * @param[in] privkey    setting value.
+   */
+  void SetPrivkey(  // line separate
+    const std::string& privkey) {  // NOLINT
+    this->privkey_ = privkey;
+  }
+  /**
+   * @brief Get data type of privkey
+   * @return Data type of privkey
+   */
+  static std::string GetPrivkeyFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of privkey field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetPrivkeyString(  // line separate
+      const SchnorrSignRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.privkey_);
+  }
+  /**
+   * @brief Set json object to privkey field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetPrivkeyString(  // line separate
+      SchnorrSignRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.privkey_, json_value);
+  }
+
+  /**
+   * @brief Get of kValue
+   * @return kValue
+   */
+  std::string GetKValue() const {
+    return k_value_;
+  }
+  /**
+   * @brief Set to kValue
+   * @param[in] k_value    setting value.
+   */
+  void SetKValue(  // line separate
+    const std::string& k_value) {  // NOLINT
+    this->k_value_ = k_value;
+  }
+  /**
+   * @brief Get data type of kValue
+   * @return Data type of kValue
+   */
+  static std::string GetKValueFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of kValue field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetKValueString(  // line separate
+      const SchnorrSignRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.k_value_);
+  }
+  /**
+   * @brief Set json object to kValue field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetKValueString(  // line separate
+      SchnorrSignRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.k_value_, json_value);
+  }
+
+  /**
+   * @brief Get of message
+   * @return message
+   */
+  std::string GetMessage() const {
+    return message_;
+  }
+  /**
+   * @brief Set to message
+   * @param[in] message    setting value.
+   */
+  void SetMessage(  // line separate
+    const std::string& message) {  // NOLINT
+    this->message_ = message;
+  }
+  /**
+   * @brief Get data type of message
+   * @return Data type of message
+   */
+  static std::string GetMessageFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of message field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetMessageString(  // line separate
+      const SchnorrSignRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.message_);
+  }
+  /**
+   * @brief Set json object to message field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetMessageString(  // line separate
+      SchnorrSignRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.message_, json_value);
+  }
+
+  /**
+   * @brief Set ignore item.
+   * @param[in] key   ignore target key name.
+   */
+  void SetIgnoreItem(const std::string& key) {
+    ignore_items.insert(key);
+  }
+
+  /**
+   * @brief Convert struct to class.
+   * @param[in] data   struct data.
+   */
+  void ConvertFromStruct(
+      const SchnorrSignRequestStruct& data);
+
+  /**
+   * @brief Convert class to struct.
+   * @return  struct data.
+   */
+  SchnorrSignRequestStruct ConvertToStruct()  const;
+
+ protected:
+  /**
+   * @brief definition type of Map table.
+   */
+  using SchnorrSignRequestMapTable =
+    cfd::core::JsonTableMap<SchnorrSignRequest>;
+
+  /**
+   * @brief Get JSON mapping object.
+   * @return JSON mapping object.
+   * @see cfd::core::JsonClassBase::GetJsonMapper()
+   */
+  virtual const SchnorrSignRequestMapTable& GetJsonMapper() const {  // NOLINT
+    return json_mapper;
+  }
+  /**
+   * @brief Get item lists of JSON mapping.
+   * Fetch a list of target variable names in the order of definition.
+   * @return Item lists of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetJsonItemList()
+   */
+  virtual const std::vector<std::string>& GetJsonItemList() const {
+    return item_list;
+  }
+  /**
+   * @brief Get ignore item lists of JSON mnapping.
+   * Ignore the target variable at Serialize.
+   * @return Item list of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetIgnoreItem()
+   */
+  virtual const std::set<std::string>& GetIgnoreItem() const {
+    return ignore_items;
+  }
+
+ private:
+ /**
+  * @brief JsonFunctionMap table
+  */
+  static SchnorrSignRequestMapTable json_mapper;
+  /**
+   * @brief field name list.
+   */
+  static std::vector<std::string> item_list;
+  /**
+   * @brief ignore item list.
+   */
+  std::set<std::string> ignore_items;
+
+  /**
+   * @brief JsonAPI(privkey) value
+   */
+  std::string privkey_ = "";
+  /**
+   * @brief JsonAPI(kValue) value
+   */
+  std::string k_value_ = "";
+  /**
+   * @brief JsonAPI(message) value
+   */
+  std::string message_ = "";
+};
+
+// ------------------------------------------------------------------------
+// SchnorrSignResponse
+// ------------------------------------------------------------------------
+/**
+ * @brief JSON-API (SchnorrSignResponse) class
+ */
+class SchnorrSignResponse
+  : public cfd::core::JsonClassBase<SchnorrSignResponse> {
+ public:
+  SchnorrSignResponse() {
+    CollectFieldName();
+  }
+  virtual ~SchnorrSignResponse() {
+    // do nothing
+  }
+  /**
+   * @brief collect field name.
+   */
+  static void CollectFieldName();
+
+  /**
+   * @brief Get of hex
+   * @return hex
+   */
+  std::string GetHex() const {
+    return hex_;
+  }
+  /**
+   * @brief Set to hex
+   * @param[in] hex    setting value.
+   */
+  void SetHex(  // line separate
+    const std::string& hex) {  // NOLINT
+    this->hex_ = hex;
+  }
+  /**
+   * @brief Get data type of hex
+   * @return Data type of hex
+   */
+  static std::string GetHexFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of hex field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetHexString(  // line separate
+      const SchnorrSignResponse& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.hex_);
+  }
+  /**
+   * @brief Set json object to hex field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetHexString(  // line separate
+      SchnorrSignResponse& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.hex_, json_value);
+  }
+
+  /**
+   * @brief Set ignore item.
+   * @param[in] key   ignore target key name.
+   */
+  void SetIgnoreItem(const std::string& key) {
+    ignore_items.insert(key);
+  }
+
+  /**
+   * @brief Convert struct to class.
+   * @param[in] data   struct data.
+   */
+  void ConvertFromStruct(
+      const SchnorrSignResponseStruct& data);
+
+  /**
+   * @brief Convert class to struct.
+   * @return  struct data.
+   */
+  SchnorrSignResponseStruct ConvertToStruct()  const;
+
+ protected:
+  /**
+   * @brief definition type of Map table.
+   */
+  using SchnorrSignResponseMapTable =
+    cfd::core::JsonTableMap<SchnorrSignResponse>;
+
+  /**
+   * @brief Get JSON mapping object.
+   * @return JSON mapping object.
+   * @see cfd::core::JsonClassBase::GetJsonMapper()
+   */
+  virtual const SchnorrSignResponseMapTable& GetJsonMapper() const {  // NOLINT
+    return json_mapper;
+  }
+  /**
+   * @brief Get item lists of JSON mapping.
+   * Fetch a list of target variable names in the order of definition.
+   * @return Item lists of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetJsonItemList()
+   */
+  virtual const std::vector<std::string>& GetJsonItemList() const {
+    return item_list;
+  }
+  /**
+   * @brief Get ignore item lists of JSON mnapping.
+   * Ignore the target variable at Serialize.
+   * @return Item list of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetIgnoreItem()
+   */
+  virtual const std::set<std::string>& GetIgnoreItem() const {
+    return ignore_items;
+  }
+
+ private:
+ /**
+  * @brief JsonFunctionMap table
+  */
+  static SchnorrSignResponseMapTable json_mapper;
+  /**
+   * @brief field name list.
+   */
+  static std::vector<std::string> item_list;
+  /**
+   * @brief ignore item list.
+   */
+  std::set<std::string> ignore_items;
+
+  /**
+   * @brief JsonAPI(hex) value
+   */
+  std::string hex_ = "";
+};
+
+// ------------------------------------------------------------------------
 // SignClosingTransactionRequest
 // ------------------------------------------------------------------------
 /**
@@ -9839,46 +10485,47 @@ class SignClosingTransactionRequest
   }
 
   /**
-   * @brief Get of oracleSig
-   * @return oracleSig
+   * @brief Get of oracleSigs.
+   * @return oracleSigs
    */
-  std::string GetOracleSig() const {
-    return oracle_sig_;
+  JsonValueVector<std::string>& GetOracleSigs() {  // NOLINT
+    return oracle_sigs_;
   }
   /**
-   * @brief Set to oracleSig
-   * @param[in] oracle_sig    setting value.
+   * @brief Set to oracleSigs.
+   * @param[in] oracle_sigs    setting value.
    */
-  void SetOracleSig(  // line separate
-    const std::string& oracle_sig) {  // NOLINT
-    this->oracle_sig_ = oracle_sig;
+  void SetOracleSigs(  // line separate
+      const JsonValueVector<std::string>& oracle_sigs) {  // NOLINT
+    this->oracle_sigs_ = oracle_sigs;
   }
   /**
-   * @brief Get data type of oracleSig
-   * @return Data type of oracleSig
+   * @brief Get data type of oracleSigs.
+   * @return Data type of oracleSigs.
    */
-  static std::string GetOracleSigFieldType() {
-    return "std::string";
+  static std::string GetOracleSigsFieldType() {
+    return "JsonValueVector<std::string>";  // NOLINT
   }
   /**
-   * @brief Get json string of oracleSig field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
+   * @brief Get json string of oracleSigs field.
+   * @param[in,out] obj     class object
+   * @return JSON string.
    */
-  static std::string GetOracleSigString(  // line separate
+  static std::string GetOracleSigsString(  // line separate
       const SignClosingTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.oracle_sig_);
+    // Do not set to const, because substitution of member variables
+    // may occur in pre / post processing inside Serialize
+    return obj.oracle_sigs_.Serialize();
   }
   /**
-   * @brief Set json object to oracleSig field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
+   * @brief Set json object to oracleSigs field.
+   * @param[in,out] obj     class object
+   * @param[in] json_value  JSON object
    */
-  static void SetOracleSigString(  // line separate
+  static void SetOracleSigsString(  // line separate
       SignClosingTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.oracle_sig_, json_value);
+    obj.oracle_sigs_.DeserializeUniValue(json_value);
   }
 
   /**
@@ -9965,49 +10612,6 @@ class SignClosingTransactionRequest
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.cet_vout_, json_value);
-  }
-
-  /**
-   * @brief Get of cetScript
-   * @return cetScript
-   */
-  std::string GetCetScript() const {
-    return cet_script_;
-  }
-  /**
-   * @brief Set to cetScript
-   * @param[in] cet_script    setting value.
-   */
-  void SetCetScript(  // line separate
-    const std::string& cet_script) {  // NOLINT
-    this->cet_script_ = cet_script;
-  }
-  /**
-   * @brief Get data type of cetScript
-   * @return Data type of cetScript
-   */
-  static std::string GetCetScriptFieldType() {
-    return "std::string";
-  }
-  /**
-   * @brief Get json string of cetScript field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetCetScriptString(  // line separate
-      const SignClosingTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.cet_script_);
-  }
-  /**
-   * @brief Set json object to cetScript field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetCetScriptString(  // line separate
-      SignClosingTransactionRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.cet_script_, json_value);
   }
 
   /**
@@ -10155,9 +10759,9 @@ class SignClosingTransactionRequest
    */
   uint64_t delay_ = 0;
   /**
-   * @brief JsonAPI(oracleSig) value
+   * @brief JsonAPI(oracleSigs) value
    */
-  std::string oracle_sig_ = "";
+  JsonValueVector<std::string> oracle_sigs_;  // NOLINT
   /**
    * @brief JsonAPI(cetTxid) value
    */
@@ -10166,10 +10770,6 @@ class SignClosingTransactionRequest
    * @brief JsonAPI(cetVout) value
    */
   uint32_t cet_vout_ = 0;
-  /**
-   * @brief JsonAPI(cetScript) value
-   */
-  std::string cet_script_ = "";
   /**
    * @brief JsonAPI(amount) value
    */

@@ -13,6 +13,7 @@
 #include "cfddlcjs/cfddlcjs_struct.h"
 #include "cfddlcjs_internal.h"  // NOLINT
 #include "dlc/dlc_transactions.h"
+#include "dlc/dlc_util.h"
 
 namespace cfd {
 namespace dlc {
@@ -249,7 +250,7 @@ SignClosingTransactionResponseStruct DlcTransactionsApi::SignClosingTransaction(
     auto cet_id = Txid(request.cet_txid);
     auto value = Amount::CreateBySatoshiAmount(request.amount);
 
-    for (auto sig : oracle_sigs) {
+    for (auto sig : request.oracle_sigs) {
       oracle_sigs.push_back(ByteData(sig));
     }
 
@@ -635,6 +636,43 @@ DlcTransactionsApi::VerifyRefundTxSignature(
   VerifyRefundTxSignatureResponseStruct result;
   result = ExecuteStructApi<VerifyRefundTxSignatureRequestStruct,
                             VerifyRefundTxSignatureResponseStruct>(
+      request, call_func, std::string(__FUNCTION__));
+  return result;
+}
+
+SchnorrSignResponseStruct DlcTransactionsApi::SchnorrSign(
+    const SchnorrSignRequestStruct& request) {
+  auto call_func =
+      [](const SchnorrSignRequestStruct& request) -> SchnorrSignResponseStruct {
+    SchnorrSignResponseStruct response;
+    Privkey privkey(request.privkey);
+    Privkey k_value(request.k_value);
+
+    auto signature = DlcUtil::SchnorrSign(privkey, k_value, request.message);
+    response.hex = signature.GetHex();
+    return response;
+  };
+  SchnorrSignResponseStruct result;
+  result =
+      ExecuteStructApi<SchnorrSignRequestStruct, SchnorrSignResponseStruct>(
+          request, call_func, std::string(__FUNCTION__));
+  return result;
+}
+
+GetSchnorrPublicNonceResponseStruct DlcTransactionsApi::GetSchnorrPublicNonce(
+    const GetSchnorrPublicNonceRequestStruct& request) {
+  auto call_func = [](const GetSchnorrPublicNonceRequestStruct& request)
+      -> GetSchnorrPublicNonceResponseStruct {
+    GetSchnorrPublicNonceResponseStruct response;
+    Privkey k_value(request.k_value);
+
+    auto public_nonce = DlcUtil::GetSchnorrPublicNonce(k_value);
+    response.hex = public_nonce.GetHex();
+    return response;
+  };
+  GetSchnorrPublicNonceResponseStruct result;
+  result = ExecuteStructApi<GetSchnorrPublicNonceRequestStruct,
+                            GetSchnorrPublicNonceResponseStruct>(
       request, call_func, std::string(__FUNCTION__));
   return result;
 }

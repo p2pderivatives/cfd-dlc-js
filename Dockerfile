@@ -24,6 +24,6 @@ COPY . .
 RUN npm install && npm run cmake_all
 
 # Remove SSH keys
-RUN rm -rf /root/.ssh/
+# RUN rm -rf /root/.ssh/
 
 CMD ["ts-node", "./wrap_js/compatibility_test.ts"]

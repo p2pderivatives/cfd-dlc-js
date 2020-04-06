@@ -1,37 +1,26 @@
 {
-    "namespace": [
-        "cfd",
-        "dlc",
-        "js",
-        "api",
-        "json"
-    ],
-    "request": {
-        ":class": "SignClosingTransactionRequest",
-        ":class:comment": "Sign a closing transaction",
-        "closingTxHex": "",
-        "localFundPrivkey": "",
-        "localSweepPubkey": "",
-        "remoteSweepPubkey": "",
-        "oraclePubkey": "",
-        "oracleRPoints": [
-            ""
-        ],
-        "messages": [
-            ""
-        ],
-        "delay": 0,
-        "delay:type": "uint64_t",
-        "oracleSig": "",
-        "cetTxid": "",
-        "cetVout": 0,
-        "cetVout:type": "uint32_t",
-        "cetScript": "",
-        "amount": 0,
-        "amount:type": "uint64_t"
-    },
-    "response": {
-        ":class": "SignClosingTransactionResponse",
-        "hex": ""
-    }
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
+  "request": {
+    ":class": "SignClosingTransactionRequest",
+    ":class:comment": "Sign a closing transaction",
+    "closingTxHex": "",
+    "localFundPrivkey": "",
+    "localSweepPubkey": "",
+    "remoteSweepPubkey": "",
+    "oraclePubkey": "",
+    "oracleRPoints": [""],
+    "messages": [""],
+    "delay": 0,
+    "delay:type": "uint64_t",
+    "oracleSigs": [""],
+    "cetTxid": "",
+    "cetVout": 0,
+    "cetVout:type": "uint32_t",
+    "amount": 0,
+    "amount:type": "uint64_t"
+  },
+  "response": {
+    ":class": "SignClosingTransactionResponse",
+    "hex": ""
+  }
 }

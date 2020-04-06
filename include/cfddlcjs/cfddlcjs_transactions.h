@@ -74,6 +74,10 @@ class DlcTransactionsApi {
       const AddSignaturesToRefundTxRequestStruct& request);
   static VerifyRefundTxSignatureResponseStruct VerifyRefundTxSignature(
       const VerifyRefundTxSignatureRequestStruct& request);
+  static SchnorrSignResponseStruct SchnorrSign(
+      const SchnorrSignRequestStruct& request);
+  static GetSchnorrPublicNonceResponseStruct GetSchnorrPublicNonce(
+      const GetSchnorrPublicNonceRequestStruct& request);
 
  private:
   DlcTransactionsApi();
