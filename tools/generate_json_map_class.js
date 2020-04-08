@@ -515,19 +515,23 @@ class ${export_define}${map_data.type}
 // generate object function by header
 // ----------------------------------------------------------------------------
 const generateObjectFunctionByHeader = (map_data, child_data) => {
+  // Rename method name because equals windows macro's function.
+  const methodName = (child_data.method_name === 'KValue') ?
+      'K_Value' : child_data.method_name;
+
   const object_functions = `\
   /**
    * @brief Get of ${child_data.name}.
    * @return ${child_data.name}
    */
-  ${child_data.type}& Get${child_data.method_name}() {  // NOLINT
+  ${child_data.type}& Get${methodName}() {  // NOLINT
     return ${child_data.variable_name}_;
   }
   /**
    * @brief Set to ${child_data.name}.
    * @param[in] ${child_data.variable_name}    setting value.
    */
-  void Set${child_data.method_name}(  // line separate
+  void Set${methodName}(  // line separate
       const ${child_data.type}& ${child_data.variable_name}) {  // NOLINT
     this->${child_data.variable_name}_ = ${child_data.variable_name};
   }
@@ -567,19 +571,23 @@ const generateObjectFunctionByHeader = (map_data, child_data) => {
 // generate value function by header
 // ----------------------------------------------------------------------------
 const generateValueFunctionByHeader = (map_data, child_data) => {
+  // Rename method name because equals windows macro's function.
+  const methodName = (child_data.method_name === 'KValue') ?
+      'K_Value' : child_data.method_name;
+
   const value_functions = `\
   /**
    * @brief Get of ${child_data.name}
    * @return ${child_data.name}
    */
-  ${child_data.type} Get${child_data.method_name}() const {
+  ${child_data.type} Get${methodName}() const {
     return ${child_data.variable_name}_;
   }
   /**
    * @brief Set to ${child_data.name}
    * @param[in] ${child_data.variable_name}    setting value.
    */
-  void Set${child_data.method_name}(  // line separate
+  void Set${methodName}(  // line separate
     const ${child_data.type}& ${child_data.variable_name}) {  // NOLINT
     this->${child_data.variable_name}_ = ${child_data.variable_name};
   }
@@ -1129,17 +1137,18 @@ const generateStructHeader = (dirname, filename, json_list) => {
  * @param jsonClassMap {Object} - class object map.
  * @param jsonTypeList {string[]} - sorted class map keys.
  * @param functionList {string[]} - function names.
+ * @param loadCfdjsIndexFile {string} - cfd-js index.d.ts path.
  */
-const generateTsData = (dirname, filename, jsonClassMap, jsonTypeList, functionList) => {
-  let path = `${dirname}/${filename}`;
-  if (path.startsWith(__dirname)) {
-    path = path.substr(__dirname.length);
+const generateTsData = (dirname, filename, jsonClassMap, jsonTypeList, functionList, loadCfdjsIndexFile) => {
+  let outPath = `${dirname}/${filename}`;
+  if (outPath.startsWith(__dirname)) {
+    outPath = outPath.substr(__dirname.length);
   }
-  while (path.indexOf('/', 0) == 0) {
-    path = path.substr(1);
+  while (outPath.indexOf('/', 0) == 0) {
+    outPath = outPath.substr(1);
   }
-  while (path.indexOf('//') >= 0) {
-    path = path.replace('//', '/');
+  while (outPath.indexOf('//') >= 0) {
+    outPath = outPath.replace('//', '/');
   }
 
   // initialize
@@ -1148,8 +1157,24 @@ const generateTsData = (dirname, filename, jsonClassMap, jsonTypeList, functionL
       addFilesFromTsConfig: false,
   });
 
+  if (loadCfdjsIndexFile) {
+    fs.copyFileSync(loadCfdjsIndexFile, outPath);
+  }
+
   // add source files
-  const file = project.createSourceFile(path, '\n');
+  const file = (!loadCfdjsIndexFile) ? project.createSourceFile(outPath, '\n')
+      : project.addSourceFileAtPath(outPath);
+
+  if (loadCfdjsIndexFile) {
+    const internalErrorObj = file.getInterface('InnerErrorResponse');
+    if (internalErrorObj !== undefined) {
+      internalErrorObj.remove();
+    }
+    const errorObj = file.getInterface('ErrorResponse');
+    if (errorObj !== undefined) {
+      errorObj.remove();
+    }
+  }
 
   for (let i = 0; i < jsonTypeList.length; ++i) {
     const clsName = jsonTypeList[i];
@@ -1178,7 +1203,7 @@ const generateTsData = (dirname, filename, jsonClassMap, jsonTypeList, functionL
   }
 
   // asynchronously save all the changes above
-  project.save().then(() => console.log(`output: ${path}`));
+  project.save().then(() => console.log(`output: ${outPath}`));
 };
 
 
@@ -1194,6 +1219,7 @@ function convertFile() {
   const outJsonSourceFolderPath = `${__dirname}/../../cfd-dlc-js/src/autogen/`;
   const outJsonHeaderFolderPath = `${__dirname}/../../cfd-dlc-js/src/autogen/`;
   let outStructDirPath = `include/cfddlcjs/`;
+  let loadCfdjsIndexFile = '';
   let outTsFolderPath = ``;
   const outStructFileName = `cfddlcjs_struct.h`;
   const outTsFileName = `index.d.ts`;
@@ -1301,7 +1327,7 @@ function convertFile() {
       } catch (err) {
         // do nothing
       }
-      generateTsData(outTsFolderPath, outTsFileName, jsonClassMap, jsonTypeList, functionList);
+      generateTsData(outTsFolderPath, outTsFileName, jsonClassMap, jsonTypeList, functionList, loadCfdjsIndexFile);
     }
   });
 };
