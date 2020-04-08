@@ -9496,14 +9496,14 @@ class GetSchnorrPublicNonceRequest
    * @brief Get of kValue
    * @return kValue
    */
-  std::string GetKValue() const {
+  std::string GetK_Value() const {
     return k_value_;
   }
   /**
    * @brief Set to kValue
    * @param[in] k_value    setting value.
    */
-  void SetKValue(  // line separate
+  void SetK_Value(  // line separate
     const std::string& k_value) {  // NOLINT
     this->k_value_ = k_value;
   }
@@ -9815,14 +9815,14 @@ class SchnorrSignRequest
    * @brief Get of kValue
    * @return kValue
    */
-  std::string GetKValue() const {
+  std::string GetK_Value() const {
     return k_value_;
   }
   /**
    * @brief Set to kValue
    * @param[in] k_value    setting value.
    */
-  void SetKValue(  // line separate
+  void SetK_Value(  // line separate
     const std::string& k_value) {  // NOLINT
     this->k_value_ = k_value;
   }

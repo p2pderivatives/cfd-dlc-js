@@ -267,7 +267,7 @@ function CreateAndSignClosingTx(rawCet: string, input: models.DlcTestVectors.Inp
         oracleRPoints: [input.oracleRValue],
         messages: ["WIN"],
         delay: BigInt(input.penaltyTimeout),
-        oracleSig: input.oracleSig,
+        oracleSigs: [input.oracleSig],
         cetTxid: cet.txid,
         cetVout: 0,
         amount: BigInt(cet.vout[0].value),
