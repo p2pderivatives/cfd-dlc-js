@@ -26,6 +26,10 @@ set(TARGET_RPATH "")
 set(ENABLE_COVERAGE FALSE)
 endif()
 
+if(NOT APPLE)
+set(ENABLE_SHARED ON CACHE BOOL "" FORCE)
+endif()
+
 ####################
 # common setting
 ####################
