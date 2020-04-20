@@ -33,6 +33,9 @@ class CFD_DLC_JS_API_EXPORT JsonMappingApi {
 
   static std::string GetRawFundTxSignature(const std::string &request_message);
 
+  static std::string AddSignatureToFundTransaction(
+      const std::string &request_message);
+
   static std::string VerifyFundTxSignature(const std::string &request_message);
 
   static std::string CreateCet(const std::string &request_message);

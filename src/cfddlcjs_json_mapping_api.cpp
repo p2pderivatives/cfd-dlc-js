@@ -100,6 +100,15 @@ std::string JsonMappingApi::GetRawFundTxSignature(
       request_message, DlcTransactionsApi::GetRawFundTxSignature);
 }
 
+std::string JsonMappingApi::AddSignatureToFundTransaction(
+    const std::string &request_message) {
+  return ExecuteJsonApi<api::json::AddSignatureToFundTransactionRequest,
+                        api::json::AddSignatureToFundTransactionResponse,
+                        api::AddSignatureToFundTransactionRequestStruct,
+                        api::AddSignatureToFundTransactionResponseStruct>(
+      request_message, DlcTransactionsApi::AddSignatureToFundTransaction);
+}
+
 std::string JsonMappingApi::SignFundTransaction(
     const std::string &request_message) {
   return ExecuteJsonApi<api::json::SignFundTransactionRequest,
@@ -129,9 +138,9 @@ std::string JsonMappingApi::CreateRefundTransaction(
 
 std::string JsonMappingApi::CreateCet(const std::string &request_message) {
   return ExecuteJsonApi<
-      api::json::CreateCETRequest, api::json::CreateCETResponse,
-      api::CreateCETRequestStruct, api::CreateCETResponseStruct>(
-      request_message, DlcTransactionsApi::CreateCET);
+      api::json::CreateCetRequest, api::json::CreateCetResponse,
+      api::CreateCetRequestStruct, api::CreateCetResponseStruct>(
+      request_message, DlcTransactionsApi::CreateCet);
 }
 
 std::string JsonMappingApi::CreateDlcTransactions(

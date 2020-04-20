@@ -10,7 +10,7 @@ export class TestCase<TRequest, TResponse> {
   expected: TResponse | cfddlcjs.ErrorResponse;
   setupFunction: () => void;
   tearDownFunction: () => void;
-  convertFunction: (arg: any) => void;
+  convertFunction: (arg: any) => any;
 
   /**
    * constructor

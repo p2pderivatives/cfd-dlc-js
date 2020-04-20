@@ -1,75 +1,63 @@
 {
-    "namespace": [
-        "cfd",
-        "dlc",
-        "js",
-        "api",
-        "json"
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
+  "request": {
+    ":class": "CreateDlcTransactionsRequest",
+    ":class:comment": "Create Dlc transactions",
+    "outcomes": [
+      {
+        ":class": "PayoutRequest",
+        "local": 0,
+        "local:type": "uint64_t",
+        "remote": 0,
+        "remote:type": "uint64_t",
+        "messages": [""]
+      }
     ],
-    "request": {
-        ":class": "CreateDlcTransactionsRequest",
-        ":class:comment": "Create Dlc transactions",
-        "outcomes": [
-            {
-                ":class": "PayoutRequest",
-                "local": 0,
-                "local:type": "uint64_t",
-                "remote": 0,
-                "remote:type": "uint64_t",
-                "messages": [
-                    ""
-                ]
-            }
-        ],
-        "oracleRPoints": [
-            ""
-        ],
-        "oraclePubkey": "",
-        "localFundPubkey": "",
-        "localSweepPubkey": "",
-        "localFinalAddress": "",
-        "remoteFundPubkey": "",
-        "remoteSweepPubkey": "",
-        "remoteFinalAddress": "",
-        "localInputAmount": 0,
-        "localInputAmount:type": "uint64_t",
-        "localCollateralAmount": 0,
-        "localCollateralAmount:type": "uint64_t",
-        "remoteInputAmount": 0,
-        "remoteInputAmount:type": "uint64_t",
-        "remoteCollateralAmount": 0,
-        "remoteCollateralAmount:type": "uint64_t",
-        "timeout": 0,
-        "timeout:type": "uint32_t",
-        "localInputs": [
-            {
-                ":class": "TxInRequest",
-                "txid": "",
-                "vout": 0,
-                "vout:type": "uint32_t"
-            }
-        ],
-        "localChangeAddress": "",
-        "remoteInputs": [
-            {
-                ":class": "TxInRequest",
-                "txid": "",
-                "vout": 0,
-                "vout:type": "uint32_t"
-            }
-        ],
-        "remoteChangeAddress": "",
-        "feeRate": 0,
-        "feeRate:type": "uint32_t",
-        "maturityTime": 0,
-        "maturityTime:type": "uint64_t"
-    },
-    "response": {
-        ":class": "CreateDlcTransactionsResponse",
-        "fundTxHex": "",
-        "closingCetsHex": [
-            ""
-        ],
-        "refundTxHex": ""
-    }
+    "oracleRPoints": [""],
+    "oraclePubkey": "",
+    "localFundPubkey": "",
+    "localSweepPubkey": "",
+    "localFinalAddress": "",
+    "remoteFundPubkey": "",
+    "remoteSweepPubkey": "",
+    "remoteFinalAddress": "",
+    "localInputAmount": 0,
+    "localInputAmount:type": "uint64_t",
+    "localCollateralAmount": 0,
+    "localCollateralAmount:type": "uint64_t",
+    "remoteInputAmount": 0,
+    "remoteInputAmount:type": "uint64_t",
+    "remoteCollateralAmount": 0,
+    "remoteCollateralAmount:type": "uint64_t",
+    "timeout": 0,
+    "timeout:type": "uint32_t",
+    "localInputs": [
+      {
+        ":class": "TxInRequest",
+        "txid": "",
+        "vout": 0,
+        "vout:type": "uint32_t"
+      }
+    ],
+    "localChangeAddress": "",
+    "remoteInputs": [
+      {
+        ":class": "TxInRequest",
+        "txid": "",
+        "vout": 0,
+        "vout:type": "uint32_t"
+      }
+    ],
+    "remoteChangeAddress": "",
+    "feeRate": 0,
+    "feeRate:type": "uint32_t",
+    "maturityTime": 0,
+    "maturityTime:type": "uint64_t"
+  },
+  "response": {
+    ":class": "CreateDlcTransactionsResponse",
+    "fundTxHex": "",
+    "closingCetsHex": [""],
+    "refundTxHex": ""
+  }
 }

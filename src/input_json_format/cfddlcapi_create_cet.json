@@ -1,39 +1,30 @@
 {
-    "namespace": [
-        "cfd",
-        "dlc",
-        "js",
-        "api",
-        "json"
-    ],
-    "request": {
-        ":class": "CreateCETRequest",
-        ":class:comment": "Create a CET",
-        "localFundPubkey": "",
-        "localSweepPubkey": "",
-        "remoteSweepPubkey": "",
-        "remoteFinalAddress": "",
-        "oraclePubkey": "",
-        "oracleRPoints": [
-            ""
-        ],
-        "messages": [
-            ""
-        ],
-        "delay": 0,
-        "delay:type": "uint32_t",
-        "localPayout": 0,
-        "localPayout:type": "uint64_t",
-        "remotePayout": 0,
-        "remotePayout:type": "uint64_t",
-        "fundTxid": "",
-        "fundVout": 0,
-        "fundVout:type": "uint32_t",
-        "maturityTime": 0,
-        "maturityTime:type": "uint64_t"
-    },
-    "response": {
-        ":class": "CreateCETResponse",
-        "hex": ""
-    }
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
+  "request": {
+    ":class": "CreateCetRequest",
+    ":class:comment": "Create a CET",
+    "localFundPubkey": "",
+    "localSweepPubkey": "",
+    "remoteSweepPubkey": "",
+    "remoteFinalAddress": "",
+    "oraclePubkey": "",
+    "oracleRPoints": [""],
+    "messages": [""],
+    "delay": 0,
+    "delay:type": "uint32_t",
+    "localPayout": 0,
+    "localPayout:type": "uint64_t",
+    "remotePayout": 0,
+    "remotePayout:type": "uint64_t",
+    "fundTxId": "",
+    "fundVout": 0,
+    "fundVout:require": "optional",
+    "fundVout:type": "uint32_t",
+    "maturityTime": 0,
+    "maturityTime:type": "uint64_t"
+  },
+  "response": {
+    ":class": "CreateCetResponse",
+    "hex": ""
+  }
 }

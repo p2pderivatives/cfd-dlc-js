@@ -103,6 +103,11 @@ Value GetRawFundTxSignature(const CallbackInfo &information) {
   return NodeAddonJsonApi(information, JsonMappingApi::GetRawFundTxSignature);
 }
 
+Value AddSignatureToFundTransaction(const CallbackInfo &information) {
+  return NodeAddonJsonApi(information,
+                          JsonMappingApi::AddSignatureToFundTransaction);
+}
+
 Value CreateCet(const CallbackInfo &information) {
   return NodeAddonJsonApi(information, JsonMappingApi::CreateCet);
 }
@@ -143,6 +148,11 @@ Value AddSignaturesToCet(const CallbackInfo &information) {
 
 Value VerifyCetSignature(const CallbackInfo &information) {
   return NodeAddonJsonApi(information, JsonMappingApi::VerifyCetSignature);
+}
+
+Value CreateMutualClosingTransaction(const CallbackInfo &information) {
+  return NodeAddonJsonApi(information,
+                          JsonMappingApi::CreateMutualClosingTransaction);
 }
 
 Value GetRawMutualClosingTxSignature(const CallbackInfo &information) {
@@ -193,6 +203,8 @@ void InitializeJsonApi(Env env, Object *exports) {
                Function::New(env, SignFundTransaction));
   exports->Set(String::New(env, "GetRawFundTxSignature"),
                Function::New(env, GetRawFundTxSignature));
+  exports->Set(String::New(env, "AddSignatureToFundTransaction"),
+               Function::New(env, AddSignatureToFundTransaction));
   exports->Set(String::New(env, "VerifyFundTxSignature"),
                Function::New(env, VerifyFundTxSignature));
   exports->Set(String::New(env, "CreateCet"), Function::New(env, CreateCet));
@@ -212,6 +224,8 @@ void InitializeJsonApi(Env env, Object *exports) {
                Function::New(env, AddSignaturesToCet));
   exports->Set(String::New(env, "VerifyCetSignature"),
                Function::New(env, VerifyCetSignature));
+  exports->Set(String::New(env, "CreateMutualClosingTransaction"),
+               Function::New(env, CreateMutualClosingTransaction));
   exports->Set(String::New(env, "GetRawMutualClosingTxSignature"),
                Function::New(env, GetRawMutualClosingTxSignature));
   exports->Set(String::New(env, "AddSignaturesToMutualClosingTx"),

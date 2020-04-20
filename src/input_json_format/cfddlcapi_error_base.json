@@ -1,11 +1,5 @@
 {
-  "namespace": [
-    "cfd",
-    "dlc",
-    "js",
-    "api",
-    "json"
-  ],
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
   "priority": "high",
   "response": {
     ":class": "ErrorResponseBase",

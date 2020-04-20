@@ -1,75 +1,89 @@
-import * as cfdjs from 'cfd-js';
+import * as cfdjs from "cfd-js";
 
-export namespace CfdUtils {
-    export function GetPubFromPriv(privkey: string) {
-        let reqPrivKey = {
-            privkey: privkey,
-            isCompressed: true,
-        };
+export function GetPubkeyFromPrivkey(privkey: string) {
+  const reqPrivKey = {
+    privkey,
+    isCompressed: true,
+  };
 
-        return cfdjs.GetPubkeyFromPrivkey(reqPrivKey).pubkey;
-    }
+  return cfdjs.GetPubkeyFromPrivkey(reqPrivKey).pubkey;
+}
 
-    export function GetExtPubFromExtPriv(extPriv: string) {
-        const reqJson = {
-            extkey: extPriv,
-            network: 'testnet',
-        };
+export function GetExtPubFromExtPriv(extPriv: string) {
+  const reqJson = {
+    extkey: extPriv,
+    network: "testnet",
+  };
 
-        let resp = cfdjs.CreateExtPubkey(reqJson);
-        return resp.extkey;
-    }
+  const resp = cfdjs.CreateExtPubkey(reqJson);
+  return resp.extkey;
+}
 
-    export function GetPrivKeyFromExtPriv(extPriv: string) {
-        const reqJson = {
-            extkey: extPriv,
-            network: 'testnet',
-            wif: false,
-            isCompressed: true,
-        }
+export function GetPrivKeyFromExtPriv(extPriv: string) {
+  const reqJson = {
+    extkey: extPriv,
+    network: "testnet",
+    wif: false,
+    isCompressed: true,
+  };
 
-        let resp = cfdjs.GetPrivkeyFromExtkey(reqJson);
-        return resp.privkey;
-    }
+  const resp = cfdjs.GetPrivkeyFromExtkey(reqJson);
+  return resp.privkey;
+}
 
-    export function GetPubkeyFromExtPriv(extPriv: string) {
-        let priv = GetPrivKeyFromExtPriv(extPriv);
-        return GetPubFromPriv(priv);
-    }
+export function GetPubkeyFromExtPriv(extPriv: string) {
+  const priv = GetPrivKeyFromExtPriv(extPriv);
+  return GetPubkeyFromPrivkey(priv);
+}
 
-    export function GetChildPrivKeyFromExtPriv(extPriv: string, index: number) {
-        let reqJson: cfdjs.CreateExtkeyFromParentPathRequest = {
-            extkey: extPriv,
-            network: "regtest",
-            path: `m/0/${index}`,
-            extkeyType: "extPrivkey",
-            childNumberArray: [],
-        }
-        let extChild = cfdjs.CreateExtkeyFromParentPath(reqJson).extkey;
+export function GetChildPrivKeyFromExtPriv(extPriv: string, index: number) {
+  const reqJson: cfdjs.CreateExtkeyFromParentPathRequest = {
+    extkey: extPriv,
+    network: "regtest",
+    path: `m/0/${index}`,
+    extkeyType: "extPrivkey",
+    childNumberArray: [],
+  };
+  const extChild = cfdjs.CreateExtkeyFromParentPath(reqJson).extkey;
 
-        let reqJson2: cfdjs.GetPrivkeyFromExtkeyRequest = {
-            extkey: extChild,
-            network: "regtest",
-            wif: false,
-            isCompressed: false,
-        };
+  const reqJson2: cfdjs.GetPrivkeyFromExtkeyRequest = {
+    extkey: extChild,
+    network: "regtest",
+    wif: false,
+    isCompressed: false,
+  };
 
-        let priv = cfdjs.GetPrivkeyFromExtkey(reqJson2).privkey;
-        return priv;
-    }
+  const priv = cfdjs.GetPrivkeyFromExtkey(reqJson2).privkey;
+  return priv;
+}
 
-    export function GetAddressFromPubkey(pubkey: string) {
-        let data: cfdjs.CreateAddressKeyData = {
-            hex: pubkey,
-            type: "pubkey",
-        };
-        let reqJson: cfdjs.CreateAddressRequest = {
-            isElements: false,
-            keyData: data,
-            network: "regtest",
-            hashType: "p2wpkh",
-        };
+export function GetAddressFromPubkey(pubkey: string) {
+  const data: cfdjs.CreateAddressKeyData = {
+    hex: pubkey,
+    type: "pubkey",
+  };
+  const reqJson: cfdjs.CreateAddressRequest = {
+    isElements: false,
+    keyData: data,
+    network: "regtest",
+    hashType: "p2wpkh",
+  };
 
-        return cfdjs.CreateAddress(reqJson).address;
-    }
+  return cfdjs.CreateAddress(reqJson).address;
+}
+
+export function GetPrivkeyFromWif(wif: string) {
+  const req = {
+    wif,
+  };
+
+  return cfdjs.GetPrivkeyFromWif(req).hex;
+}
+
+export function DecodeRawTransaction(rawTransaction: string) {
+  const reqJson: cfdjs.DecodeRawTransactionRequest = {
+    hex: rawTransaction,
+  };
+
+  return cfdjs.DecodeRawTransaction(reqJson);
 }

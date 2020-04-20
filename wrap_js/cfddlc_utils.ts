@@ -31,8 +31,8 @@ export function SignFundTransactionInput(
   const reqJson = {
     fundTxHex: transaction,
     privkey: prv,
-    prevTxid: input.txid,
-    prevTxVout: input.vout,
+    prevTxId: input.txid,
+    prevVout: input.vout,
     amount: BigInt(input.amount),
   };
 
@@ -42,7 +42,7 @@ export function SignFundTransactionInput(
 export function SignCet(
   transaction: string,
   fundTxId: string,
-  fundAmount: bigint,
+  fundInputAmount: bigint,
   prv1: string,
   prv2: string
 ) {
@@ -50,8 +50,8 @@ export function SignCet(
     cetHex: transaction,
     privkey: prv1,
     fundTxId,
-    fundTxVout: 0,
-    fundAmount: BigInt(fundAmount),
+    fundVout: 0,
+    fundInputAmount: BigInt(fundInputAmount),
     localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
     remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
   };
@@ -64,7 +64,7 @@ export function SignCet(
     cetHex: transaction,
     signatures: [sig1, sig2],
     fundTxId,
-    fundTxVout: 0,
+    fundVout: 0,
     localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
     remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
   };
@@ -75,13 +75,13 @@ export function SignCet(
 export function CreateClosingTx(
   finalAddress: string,
   amount: bigint,
-  cetid: string,
+  cetTxId: string,
   cetVout: number
 ) {
   const reqJson: cfddlcjs.CreateClosingTransactionRequest = {
     address: finalAddress,
     amount,
-    cetTxid: cetid,
+    cetTxId,
     cetVout,
   };
 
@@ -111,7 +111,7 @@ export function SignClosingTx(
     messages,
     oracleSigs,
     delay,
-    cetTxid: cetId,
+    cetTxId: cetId,
     cetVout: 0,
     amount,
   };
@@ -122,7 +122,7 @@ export function SignClosingTx(
 export function SignRefundTransaction(
   transaction: string,
   fundTxId: string,
-  fundAmount: bigint,
+  fundInputAmount: bigint,
   prv1: string,
   prv2: string
 ) {
@@ -130,8 +130,8 @@ export function SignRefundTransaction(
     refundTxHex: transaction,
     privkey: prv1,
     fundTxId,
-    fundTxVout: 0,
-    fundAmount: BigInt(fundAmount),
+    fundVout: 0,
+    fundInputAmount: BigInt(fundInputAmount),
     localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
     remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
   };
@@ -142,8 +142,8 @@ export function SignRefundTransaction(
     refundTxHex: transaction,
     privkey: prv2,
     fundTxId,
-    fundTxVout: 0,
-    fundAmount: BigInt(fundAmount),
+    fundVout: 0,
+    fundInputAmount: BigInt(fundInputAmount),
     localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
     remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
   };
@@ -154,7 +154,7 @@ export function SignRefundTransaction(
     refundTxHex: transaction,
     signatures: [sig1, sig2],
     fundTxId,
-    fundTxVout: 0,
+    fundVout: 0,
     localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
     remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
   };
@@ -167,14 +167,14 @@ export function CreateMutualClosingTx(
   remoteFinalAddress: string,
   localAmount: bigint,
   remoteAmount: bigint,
-  fundTxid: string
+  fundTxId: string
 ) {
   const reqJson: cfddlcjs.CreateMutualClosingTransactionRequest = {
     localFinalAddress,
     remoteFinalAddress,
     localAmount,
     remoteAmount,
-    fundTxid,
+    fundTxId,
     fundVout: 0,
   };
 
@@ -184,7 +184,7 @@ export function CreateMutualClosingTx(
 export function SignMutualClosingTx(
   transaction: string,
   fundTxId: string,
-  fundAmount: bigint,
+  fundInputAmount: bigint,
   prv1: string,
   prv2: string
 ) {
@@ -192,8 +192,8 @@ export function SignMutualClosingTx(
     mutualClosingHex: transaction,
     privkey: prv1,
     fundTxId,
-    fundTxVout: 0,
-    fundAmount: BigInt(fundAmount),
+    fundVout: 0,
+    fundInputAmount: BigInt(fundInputAmount),
     localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
     remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
   };
@@ -204,8 +204,8 @@ export function SignMutualClosingTx(
     mutualClosingHex: transaction,
     privkey: prv2,
     fundTxId,
-    fundTxVout: 0,
-    fundAmount: BigInt(fundAmount),
+    fundVout: 0,
+    fundInputAmount: BigInt(fundInputAmount),
     localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
     remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
   };
@@ -216,7 +216,7 @@ export function SignMutualClosingTx(
     mutualClosingTxHex: transaction,
     signatures: [sig1, sig2],
     fundTxId,
-    fundTxVout: 0,
+    fundVout: 0,
     localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
     remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
   };

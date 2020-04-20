@@ -36,10 +36,13 @@ class DlcTransactionsApi {
       const SignFundTransactionRequestStruct& request);
   static GetRawFundTxSignatureResponseStruct GetRawFundTxSignature(
       const GetRawFundTxSignatureRequestStruct& request);
+  static AddSignatureToFundTransactionResponseStruct
+  AddSignatureToFundTransaction(
+      const AddSignatureToFundTransactionRequestStruct& request);
   static VerifyFundTxSignatureResponseStruct VerifyFundTxSignature(
       const VerifyFundTxSignatureRequestStruct& request);
-  static CreateCETResponseStruct CreateCET(
-      const CreateCETRequestStruct& request);
+  static CreateCetResponseStruct CreateCet(
+      const CreateCetRequestStruct& request);
   static CreateRefundTransactionResponseStruct CreateRefundTransaction(
       const CreateRefundTransactionRequestStruct& request);
   static CreateClosingTransactionResponseStruct CreateClosingTransaction(

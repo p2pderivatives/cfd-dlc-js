@@ -3,10 +3,8 @@
     "target": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "module": "commonjs"
   },
-  "files": [
-    "wrap_js/compatibility_test.ts",
-    "integration_tests/__tests__/dlctests.spec.ts"
-  ]
+  "include": ["wrap_js/**/*.ts", "integration_tests/__tests__/**/*.ts"]
 }

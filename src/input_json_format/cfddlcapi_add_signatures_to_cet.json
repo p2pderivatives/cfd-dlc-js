@@ -1,26 +1,19 @@
 {
-    "namespace": [
-        "cfd",
-        "dlc",
-        "js",
-        "api",
-        "json"
-    ],
-    "request": {
-        ":class": "AddSignaturesToCetRequest",
-        ":class:comment": "Add signatures to a CET",
-        "cetHex": "",
-        "signatures": [
-            ""
-        ],
-        "fundTxId": "",
-        "fundTxVout": 0,
-        "fundTxVout:type": "uint32_t",
-        "localFundPubkey": "",
-        "remoteFundPubkey": ""
-    },
-    "response": {
-        ":class": "AddSignaturesToCetResponse",
-        "hex": ""
-    }
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
+  "request": {
+    ":class": "AddSignaturesToCetRequest",
+    ":class:comment": "Add signatures to a CET",
+    "cetHex": "",
+    "signatures": [""],
+    "fundTxId": "",
+    "fundVout": 0,
+    "fundVout:require": "optional",
+    "fundVout:type": "uint32_t",
+    "localFundPubkey": "",
+    "remoteFundPubkey": ""
+  },
+  "response": {
+    ":class": "AddSignaturesToCetResponse",
+    "hex": ""
+  }
 }

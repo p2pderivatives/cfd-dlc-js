@@ -1,29 +1,26 @@
-FROM cryptogarageinc/elements-testing:v0.18.1.3 as cpp
+FROM cryptogarageinc/cfd-dlc-ci:v0.0.1
 
 ENV WORKSPACE /tmp/workspace
+WORKDIR ${WORKSPACE}
 
-# Pass ssh keys from the host machine using build-arg
-ARG ssh_prv_key
-ARG ssh_pub_key
+ENV GPG_KEY_SERVER hkp://keyserver.ubuntu.com:80
 
-# Authorize SSH Host
-RUN mkdir -p /root/.ssh && \
-    chmod 0700 /root/.ssh && \
-    ssh-keyscan github.com > /root/.ssh/known_hosts
+# setup bitcoin
+ARG BITCOIN_VERSION=0.18.1
+ENV BITCOIN_TARBALL bitcoin-${BITCOIN_VERSION}-x86_64-linux-gnu.tar.gz
+ENV BITCOIN_URL_BASE https://bitcoincore.org/bin/bitcoin-core-${BITCOIN_VERSION}
+ENV BITCOIN_PGP_KEY 01EA5486DE18A882D4C2684590C8019E36C2E964
+RUN wget -qO ${BITCOIN_TARBALL} ${BITCOIN_URL_BASE}/${BITCOIN_TARBALL} \
+    && gpg --keyserver ${GPG_KEY_SERVER} --recv-keys ${BITCOIN_PGP_KEY} \
+    && wget -qO SHA256SUMS.asc ${BITCOIN_URL_BASE}/SHA256SUMS.asc \
+    && gpg --verify SHA256SUMS.asc \
+    && sha256sum --ignore-missing --check SHA256SUMS.asc \
+    && tar -xzvf ${BITCOIN_TARBALL} --directory=/opt/ \
+    && ln -sfn /opt/bitcoin-${BITCOIN_VERSION}/bin/* /usr/bin \
+    && rm -f ${BITCOIN_TARBALL} SHA256SUMS.asc
 
-# Add the keys and set permissions
-RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
-    echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && \
-    chmod 600 /root/.ssh/id_rsa && \
-    chmod 600 /root/.ssh/id_rsa.pub
-
-RUN npm install --global typescript ts-node
+# install node
+RUN wget -qO - https://deb.nodesource.com/setup_12.x | bash && \
+    apt-get install -y nodejs
 
 WORKDIR ${WORKSPACE}/cfd-dlc-js
-COPY . .
-RUN npm install && npm run cmake_all
-
-# Remove SSH keys
-# RUN rm -rf /root/.ssh/
-
-CMD ["ts-node", "./wrap_js/compatibility_test.ts"]

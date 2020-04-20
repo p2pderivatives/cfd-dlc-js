@@ -13,9 +13,10 @@
     "delay": 0,
     "delay:type": "uint64_t",
     "oracleSigs": [""],
-    "cetTxid": "",
+    "cetTxId": "",
     "cetVout": 0,
     "cetVout:type": "uint32_t",
+    "cetVout:require": "optional",
     "amount": 0,
     "amount:type": "uint64_t"
   },

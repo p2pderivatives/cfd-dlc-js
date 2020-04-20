@@ -3,7 +3,7 @@ import { TestCase } from "./TestCase";
 /**
  * @class Utility class for running unit tests.
  */
-export class TestHelper {
+export default class TestHelper {
   /**
    * @param {String} testDescribe describe test suite
    * @param {Array.<TestCase>} testCases array of test_case
@@ -21,12 +21,20 @@ export class TestHelper {
       describe(testDescribe, () => {
         beforeEach(() => testCase.setupFunction());
         it(testCase.testCaseName, () => {
-          const response = testCase.testFunction(testCase.testRequest);
-          if (testCase.convertFunction !== null) {
-            const received2 = testCase.convertFunction(response);
-            expect(received2).toEqual(testCase.expected);
+          const expected = testCase.expected;
+          let received: TResponse;
+          try {
+            received = testCase.testFunction(testCase.testRequest);
+          } catch (error) {
+            received = JSON.parse(error.message);
+          }
+          if (testCase.convertFunction) {
+            received = testCase.convertFunction(received);
+          }
+          if (Array.isArray(expected)) {
+            expect(expected).toContain(received);
           } else {
-            expect(response).toEqual(testCase.expected);
+            expect(received).toEqual(expected);
           }
         });
         afterEach(() => testCase.tearDownFunction());
@@ -50,7 +58,7 @@ export class TestHelper {
     caseName: string,
     testFunction: (request: TRequest) => TResponse,
     request: TRequest,
-    expected: TResponse | cfddlcjs.ErrorResponse,
+    expected: TResponse | cfddlcjs.InnerErrorResponse,
     setupFunc: () => void | null = () => undefined,
     teardownFunc: () => void | null = () => undefined,
     convertFunc: () => void | null = null
@@ -66,16 +74,14 @@ export class TestHelper {
     );
   }
 
-  static createIllegalArgumentError(message: string): cfddlcjs.ErrorResponse {
+  static createIllegalArgumentError(
+    message: string
+  ): cfddlcjs.InnerErrorResponse {
     const error = {
-      error: {
-        code: 1,
-        type: "illegal_argument",
-        message,
-      },
+      code: 1,
+      type: "illegal_argument",
+      message,
     };
     return error;
   }
 }
-
-module.exports = TestHelper;

@@ -1,0 +1,169 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Autotools
+/bin
+autom4te.cache
+*.in
+/Makefile
+/config.h
+*.m4
+config.h.in~
+config.log
+config.status
+config.sub
+configure
+install-sh
+missing
+stamp-h1
+compile
+config.guess
+/config.h
+depcomp
+libtool
+ltmain.sh
+*.Tpo
+*.Plo
+*.Po
+.dirstamp
+test-driver
+build
+.libs
+node_modules
+package-lock.json
+html
+html_graph
+html_all
+html_all_graph
+html_all_quiet
+latex
+
+### https://raw.github.com/github/gitignore//Global/Eclipse.gitignore
+
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# PyDev specific (Python IDE for Eclipse)
+*.pydevproject
+
+# CDT-specific (C/C++ Development Tooling)
+.cproject
+
+# CDT- autotools
+.autotools
+
+# Java annotation processor (APT)
+.factorypath
+
+# PDT-specific (PHP Development Tools)
+.buildpath
+
+# sbteclipse plugin
+.target
+
+# Tern plugin
+.tern-project
+
+# TeXlipse plugin
+.texlipse
+
+# STS (Spring Tool Suite)
+.springBeans
+
+# Code Recommenders
+.recommenders/
+
+# Annotation Processing
+.apt_generated/
+
+# Scala IDE specific (Scala & Java development for Eclipse)
+.cache-main
+.scala_dependencies
+.worksheet
+
+### https://raw.github.com/github/gitignore/c4ed859434e4eb33c85ad8048fc907d470f8ae4b/Global/VisualStudioCode.gitignore
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+
+/wally.js
+/wrap_js/wally.js
+output
+
+m4
+ar-lib
+confdefs.h
+test-driver
+
+# User Definition
+/.cproject
+/.externalToolBuilders/org.eclipse.cdt.autotools.core.genmakebuilderV2.launch
+/.settings/language.settings.xml
+/test/test-suite.log
+/test/test_wallet.log
+/test/test_wallet.trs
+/pc/*.pc
+!/pc/cfd-js.pc.in
+
+external/*
+!external/CMakeLists.txt
+!external/googletest_CMakeLists.txt.in
+!external/template_CMakeLists.txt.in
+/external_project_debug.config
+
+/doc/*.bat
+/tools/*localdebug.bat
+
+/wrap_js/cfdjs*.zip
+/wrap_js/dl_lib
+
+.DS_Store

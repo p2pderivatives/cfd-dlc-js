@@ -1,8 +1,20 @@
+export interface AddSignatureToFundTransactionRequest {
+    fundTxHex: string;
+    signature: string;
+    prevTxId: string;
+    prevVout: number;
+    pubkey: string;
+}
+
+export interface AddSignatureToFundTransactionResponse {
+    hex: string;
+}
+
 export interface AddSignaturesToCetRequest {
     cetHex: string;
     signatures: string[];
     fundTxId: string;
-    fundTxVout: number;
+    fundVout: number;
     localFundPubkey: string;
     remoteFundPubkey: string;
 }
@@ -15,7 +27,7 @@ export interface AddSignaturesToMutualClosingTxRequest {
     mutualClosingTxHex: string;
     signatures: string[];
     fundTxId: string;
-    fundTxVout: number;
+    fundVout: number;
     localFundPubkey: string;
     remoteFundPubkey: string;
 }
@@ -28,7 +40,7 @@ export interface AddSignaturesToRefundTxRequest {
     refundTxHex: string;
     signatures: string[];
     fundTxId: string;
-    fundTxVout: number;
+    fundVout: number;
     localFundPubkey: string;
     remoteFundPubkey: string;
 }
@@ -37,7 +49,7 @@ export interface AddSignaturesToRefundTxResponse {
     hex: string;
 }
 
-export interface CreateCETRequest {
+export interface CreateCetRequest {
     localFundPubkey: string;
     localSweepPubkey: string;
     remoteSweepPubkey: string;
@@ -48,19 +60,19 @@ export interface CreateCETRequest {
     delay: number;
     localPayout: bigint;
     remotePayout: bigint;
-    fundTxid: string;
+    fundTxId: string;
     fundVout: number;
     maturityTime: bigint;
 }
 
-export interface CreateCETResponse {
+export interface CreateCetResponse {
     hex: string;
 }
 
 export interface CreateClosingTransactionRequest {
     address: string;
     amount: bigint;
-    cetTxid: string;
+    cetTxId: string;
     cetVout: number;
 }
 
@@ -153,7 +165,7 @@ export interface CreateMutualClosingTransactionRequest {
     remoteFinalAddress: string;
     localAmount: bigint;
     remoteAmount: bigint;
-    fundTxid: string;
+    fundTxId: string;
     fundVout: number;
 }
 
@@ -164,8 +176,8 @@ export interface CreateMutualClosingTransactionResponse {
 export interface CreatePenaltyTransactionRequest {
     finalAddress: string;
     amount: bigint;
-    cetId: string;
-    cetVout: bigint;
+    cetTxId: string;
+    cetVout: number;
 }
 
 export interface CreatePenaltyTransactionResponse {
@@ -178,7 +190,7 @@ export interface CreateRefundTransactionRequest {
     localAmount: bigint;
     remoteAmount: bigint;
     lockTime: bigint;
-    fundTxid: string;
+    fundTxId: string;
     fundVout: number;
 }
 
@@ -200,10 +212,10 @@ export interface GetRawCetSignatureRequest {
     cetHex: string;
     privkey: string;
     fundTxId: string;
-    fundTxVout: number;
+    fundVout: number;
     localFundPubkey: string;
     remoteFundPubkey: string;
-    fundAmount: bigint;
+    fundInputAmount: bigint;
 }
 
 export interface GetRawCetSignatureResponse {
@@ -214,7 +226,7 @@ export interface GetRawFundTxSignatureRequest {
     fundTxHex: string;
     privkey: string;
     prevTxId: string;
-    prevTxVout: number;
+    prevVout: number;
     amount: bigint;
 }
 
@@ -226,10 +238,10 @@ export interface GetRawMutualClosingTxSignatureRequest {
     mutualClosingHex: string;
     privkey: string;
     fundTxId: string;
-    fundTxVout: number;
+    fundVout: number;
     localFundPubkey: string;
     remoteFundPubkey: string;
-    fundAmount: bigint;
+    fundInputAmount: bigint;
 }
 
 export interface GetRawMutualClosingTxSignatureResponse {
@@ -240,10 +252,10 @@ export interface GetRawRefundTxSignatureRequest {
     refundTxHex: string;
     privkey: string;
     fundTxId: string;
-    fundTxVout: number;
+    fundVout: number;
     localFundPubkey: string;
     remoteFundPubkey: string;
-    fundAmount: bigint;
+    fundInputAmount: bigint;
 }
 
 export interface GetRawRefundTxSignatureResponse {
@@ -278,7 +290,7 @@ export interface SignClosingTransactionRequest {
     messages: string[];
     delay: bigint;
     oracleSigs: string[];
-    cetTxid: string;
+    cetTxId: string;
     cetVout: number;
     amount: bigint;
 }
@@ -290,8 +302,8 @@ export interface SignClosingTransactionResponse {
 export interface SignFundTransactionRequest {
     fundTxHex: string;
     privkey: string;
-    prevTxid: string;
-    prevTxVout: number;
+    prevTxId: string;
+    prevVout: number;
     amount: bigint;
 }
 
@@ -306,7 +318,7 @@ export interface VerifyCetSignatureRequest {
     remoteFundPubkey: string;
     fundTxId: string;
     fundVout: number;
-    inputAmount: bigint;
+    fundInputAmount: bigint;
     verifyRemote: boolean;
 }
 
@@ -319,8 +331,8 @@ export interface VerifyFundTxSignatureRequest {
     signature: string;
     pubkey: string;
     prevTxId: string;
-    prevTxVout: number;
-    inputAmount: bigint;
+    prevVout: number;
+    fundInputAmount: bigint;
 }
 
 export interface VerifyFundTxSignatureResponse {
@@ -334,7 +346,7 @@ export interface VerifyMutualClosingTxSignatureRequest {
     remoteFundPubkey: string;
     fundTxId: string;
     fundVout: number;
-    inputAmount: bigint;
+    fundInputAmount: bigint;
     verifyRemote: boolean;
 }
 
@@ -349,7 +361,7 @@ export interface VerifyRefundTxSignatureRequest {
     remoteFundPubkey: string;
     fundTxId: string;
     fundVout: number;
-    inputAmount: bigint;
+    fundInputAmount: bigint;
     verifyRemote: boolean;
 }
 
@@ -357,13 +369,15 @@ export interface VerifyRefundTxSignatureResponse {
     valid: boolean;
 }
 
+export function AddSignatureToFundTransaction(jsonObject: AddSignatureToFundTransactionRequest): AddSignatureToFundTransactionResponse;
+
 export function AddSignaturesToCet(jsonObject: AddSignaturesToCetRequest): AddSignaturesToCetResponse;
 
 export function AddSignaturesToMutualClosingTx(jsonObject: AddSignaturesToMutualClosingTxRequest): AddSignaturesToMutualClosingTxResponse;
 
 export function AddSignaturesToRefundTx(jsonObject: AddSignaturesToRefundTxRequest): AddSignaturesToRefundTxResponse;
 
-export function CreateCET(jsonObject: CreateCETRequest): CreateCETResponse;
+export function CreateCet(jsonObject: CreateCetRequest): CreateCetResponse;
 
 export function CreateClosingTransaction(jsonObject: CreateClosingTransactionRequest): CreateClosingTransactionResponse;
 

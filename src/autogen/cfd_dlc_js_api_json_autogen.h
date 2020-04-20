@@ -29,6 +29,470 @@ using cfd::core::JsonVector;
 // @formatter:off
 
 // ------------------------------------------------------------------------
+// AddSignatureToFundTransactionRequest
+// ------------------------------------------------------------------------
+/**
+ * @brief JSON-API (AddSignatureToFundTransactionRequest) class
+ */
+class AddSignatureToFundTransactionRequest
+  : public cfd::core::JsonClassBase<AddSignatureToFundTransactionRequest> {
+ public:
+  AddSignatureToFundTransactionRequest() {
+    CollectFieldName();
+  }
+  virtual ~AddSignatureToFundTransactionRequest() {
+    // do nothing
+  }
+  /**
+   * @brief collect field name.
+   */
+  static void CollectFieldName();
+
+  /**
+   * @brief Get of fundTxHex
+   * @return fundTxHex
+   */
+  std::string GetFundTxHex() const {
+    return fund_tx_hex_;
+  }
+  /**
+   * @brief Set to fundTxHex
+   * @param[in] fund_tx_hex    setting value.
+   */
+  void SetFundTxHex(  // line separate
+    const std::string& fund_tx_hex) {  // NOLINT
+    this->fund_tx_hex_ = fund_tx_hex;
+  }
+  /**
+   * @brief Get data type of fundTxHex
+   * @return Data type of fundTxHex
+   */
+  static std::string GetFundTxHexFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of fundTxHex field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetFundTxHexString(  // line separate
+      const AddSignatureToFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.fund_tx_hex_);
+  }
+  /**
+   * @brief Set json object to fundTxHex field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetFundTxHexString(  // line separate
+      AddSignatureToFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.fund_tx_hex_, json_value);
+  }
+
+  /**
+   * @brief Get of signature
+   * @return signature
+   */
+  std::string GetSignature() const {
+    return signature_;
+  }
+  /**
+   * @brief Set to signature
+   * @param[in] signature    setting value.
+   */
+  void SetSignature(  // line separate
+    const std::string& signature) {  // NOLINT
+    this->signature_ = signature;
+  }
+  /**
+   * @brief Get data type of signature
+   * @return Data type of signature
+   */
+  static std::string GetSignatureFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of signature field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetSignatureString(  // line separate
+      const AddSignatureToFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.signature_);
+  }
+  /**
+   * @brief Set json object to signature field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetSignatureString(  // line separate
+      AddSignatureToFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.signature_, json_value);
+  }
+
+  /**
+   * @brief Get of prevTxId
+   * @return prevTxId
+   */
+  std::string GetPrevTxId() const {
+    return prev_tx_id_;
+  }
+  /**
+   * @brief Set to prevTxId
+   * @param[in] prev_tx_id    setting value.
+   */
+  void SetPrevTxId(  // line separate
+    const std::string& prev_tx_id) {  // NOLINT
+    this->prev_tx_id_ = prev_tx_id;
+  }
+  /**
+   * @brief Get data type of prevTxId
+   * @return Data type of prevTxId
+   */
+  static std::string GetPrevTxIdFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of prevTxId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetPrevTxIdString(  // line separate
+      const AddSignatureToFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.prev_tx_id_);
+  }
+  /**
+   * @brief Set json object to prevTxId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetPrevTxIdString(  // line separate
+      AddSignatureToFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.prev_tx_id_, json_value);
+  }
+
+  /**
+   * @brief Get of prevVout
+   * @return prevVout
+   */
+  uint32_t GetPrevVout() const {
+    return prev_vout_;
+  }
+  /**
+   * @brief Set to prevVout
+   * @param[in] prev_vout    setting value.
+   */
+  void SetPrevVout(  // line separate
+    const uint32_t& prev_vout) {  // NOLINT
+    this->prev_vout_ = prev_vout;
+  }
+  /**
+   * @brief Get data type of prevVout
+   * @return Data type of prevVout
+   */
+  static std::string GetPrevVoutFieldType() {
+    return "uint32_t";
+  }
+  /**
+   * @brief Get json string of prevVout field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetPrevVoutString(  // line separate
+      const AddSignatureToFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.prev_vout_);
+  }
+  /**
+   * @brief Set json object to prevVout field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetPrevVoutString(  // line separate
+      AddSignatureToFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.prev_vout_, json_value);
+  }
+
+  /**
+   * @brief Get of pubkey
+   * @return pubkey
+   */
+  std::string GetPubkey() const {
+    return pubkey_;
+  }
+  /**
+   * @brief Set to pubkey
+   * @param[in] pubkey    setting value.
+   */
+  void SetPubkey(  // line separate
+    const std::string& pubkey) {  // NOLINT
+    this->pubkey_ = pubkey;
+  }
+  /**
+   * @brief Get data type of pubkey
+   * @return Data type of pubkey
+   */
+  static std::string GetPubkeyFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of pubkey field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetPubkeyString(  // line separate
+      const AddSignatureToFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.pubkey_);
+  }
+  /**
+   * @brief Set json object to pubkey field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetPubkeyString(  // line separate
+      AddSignatureToFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.pubkey_, json_value);
+  }
+
+  /**
+   * @brief Set ignore item.
+   * @param[in] key   ignore target key name.
+   */
+  void SetIgnoreItem(const std::string& key) {
+    ignore_items.insert(key);
+  }
+
+  /**
+   * @brief Convert struct to class.
+   * @param[in] data   struct data.
+   */
+  void ConvertFromStruct(
+      const AddSignatureToFundTransactionRequestStruct& data);
+
+  /**
+   * @brief Convert class to struct.
+   * @return  struct data.
+   */
+  AddSignatureToFundTransactionRequestStruct ConvertToStruct()  const;
+
+ protected:
+  /**
+   * @brief definition type of Map table.
+   */
+  using AddSignatureToFundTransactionRequestMapTable =
+    cfd::core::JsonTableMap<AddSignatureToFundTransactionRequest>;
+
+  /**
+   * @brief Get JSON mapping object.
+   * @return JSON mapping object.
+   * @see cfd::core::JsonClassBase::GetJsonMapper()
+   */
+  virtual const AddSignatureToFundTransactionRequestMapTable& GetJsonMapper() const {  // NOLINT
+    return json_mapper;
+  }
+  /**
+   * @brief Get item lists of JSON mapping.
+   * Fetch a list of target variable names in the order of definition.
+   * @return Item lists of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetJsonItemList()
+   */
+  virtual const std::vector<std::string>& GetJsonItemList() const {
+    return item_list;
+  }
+  /**
+   * @brief Get ignore item lists of JSON mnapping.
+   * Ignore the target variable at Serialize.
+   * @return Item list of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetIgnoreItem()
+   */
+  virtual const std::set<std::string>& GetIgnoreItem() const {
+    return ignore_items;
+  }
+
+ private:
+ /**
+  * @brief JsonFunctionMap table
+  */
+  static AddSignatureToFundTransactionRequestMapTable json_mapper;
+  /**
+   * @brief field name list.
+   */
+  static std::vector<std::string> item_list;
+  /**
+   * @brief ignore item list.
+   */
+  std::set<std::string> ignore_items;
+
+  /**
+   * @brief JsonAPI(fundTxHex) value
+   */
+  std::string fund_tx_hex_ = "";
+  /**
+   * @brief JsonAPI(signature) value
+   */
+  std::string signature_ = "";
+  /**
+   * @brief JsonAPI(prevTxId) value
+   */
+  std::string prev_tx_id_ = "";
+  /**
+   * @brief JsonAPI(prevVout) value
+   */
+  uint32_t prev_vout_ = 0;
+  /**
+   * @brief JsonAPI(pubkey) value
+   */
+  std::string pubkey_ = "";
+};
+
+// ------------------------------------------------------------------------
+// AddSignatureToFundTransactionResponse
+// ------------------------------------------------------------------------
+/**
+ * @brief JSON-API (AddSignatureToFundTransactionResponse) class
+ */
+class AddSignatureToFundTransactionResponse
+  : public cfd::core::JsonClassBase<AddSignatureToFundTransactionResponse> {
+ public:
+  AddSignatureToFundTransactionResponse() {
+    CollectFieldName();
+  }
+  virtual ~AddSignatureToFundTransactionResponse() {
+    // do nothing
+  }
+  /**
+   * @brief collect field name.
+   */
+  static void CollectFieldName();
+
+  /**
+   * @brief Get of hex
+   * @return hex
+   */
+  std::string GetHex() const {
+    return hex_;
+  }
+  /**
+   * @brief Set to hex
+   * @param[in] hex    setting value.
+   */
+  void SetHex(  // line separate
+    const std::string& hex) {  // NOLINT
+    this->hex_ = hex;
+  }
+  /**
+   * @brief Get data type of hex
+   * @return Data type of hex
+   */
+  static std::string GetHexFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of hex field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetHexString(  // line separate
+      const AddSignatureToFundTransactionResponse& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.hex_);
+  }
+  /**
+   * @brief Set json object to hex field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetHexString(  // line separate
+      AddSignatureToFundTransactionResponse& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.hex_, json_value);
+  }
+
+  /**
+   * @brief Set ignore item.
+   * @param[in] key   ignore target key name.
+   */
+  void SetIgnoreItem(const std::string& key) {
+    ignore_items.insert(key);
+  }
+
+  /**
+   * @brief Convert struct to class.
+   * @param[in] data   struct data.
+   */
+  void ConvertFromStruct(
+      const AddSignatureToFundTransactionResponseStruct& data);
+
+  /**
+   * @brief Convert class to struct.
+   * @return  struct data.
+   */
+  AddSignatureToFundTransactionResponseStruct ConvertToStruct()  const;
+
+ protected:
+  /**
+   * @brief definition type of Map table.
+   */
+  using AddSignatureToFundTransactionResponseMapTable =
+    cfd::core::JsonTableMap<AddSignatureToFundTransactionResponse>;
+
+  /**
+   * @brief Get JSON mapping object.
+   * @return JSON mapping object.
+   * @see cfd::core::JsonClassBase::GetJsonMapper()
+   */
+  virtual const AddSignatureToFundTransactionResponseMapTable& GetJsonMapper() const {  // NOLINT
+    return json_mapper;
+  }
+  /**
+   * @brief Get item lists of JSON mapping.
+   * Fetch a list of target variable names in the order of definition.
+   * @return Item lists of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetJsonItemList()
+   */
+  virtual const std::vector<std::string>& GetJsonItemList() const {
+    return item_list;
+  }
+  /**
+   * @brief Get ignore item lists of JSON mnapping.
+   * Ignore the target variable at Serialize.
+   * @return Item list of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetIgnoreItem()
+   */
+  virtual const std::set<std::string>& GetIgnoreItem() const {
+    return ignore_items;
+  }
+
+ private:
+ /**
+  * @brief JsonFunctionMap table
+  */
+  static AddSignatureToFundTransactionResponseMapTable json_mapper;
+  /**
+   * @brief field name list.
+   */
+  static std::vector<std::string> item_list;
+  /**
+   * @brief ignore item list.
+   */
+  std::set<std::string> ignore_items;
+
+  /**
+   * @brief JsonAPI(hex) value
+   */
+  std::string hex_ = "";
+};
+
+// ------------------------------------------------------------------------
 // AddSignaturesToCetRequest
 // ------------------------------------------------------------------------
 /**
@@ -179,46 +643,46 @@ class AddSignaturesToCetRequest
   }
 
   /**
-   * @brief Get of fundTxVout
-   * @return fundTxVout
+   * @brief Get of fundVout
+   * @return fundVout
    */
-  uint32_t GetFundTxVout() const {
-    return fund_tx_vout_;
+  uint32_t GetFundVout() const {
+    return fund_vout_;
   }
   /**
-   * @brief Set to fundTxVout
-   * @param[in] fund_tx_vout    setting value.
+   * @brief Set to fundVout
+   * @param[in] fund_vout    setting value.
    */
-  void SetFundTxVout(  // line separate
-    const uint32_t& fund_tx_vout) {  // NOLINT
-    this->fund_tx_vout_ = fund_tx_vout;
+  void SetFundVout(  // line separate
+    const uint32_t& fund_vout) {  // NOLINT
+    this->fund_vout_ = fund_vout;
   }
   /**
-   * @brief Get data type of fundTxVout
-   * @return Data type of fundTxVout
+   * @brief Get data type of fundVout
+   * @return Data type of fundVout
    */
-  static std::string GetFundTxVoutFieldType() {
+  static std::string GetFundVoutFieldType() {
     return "uint32_t";
   }
   /**
-   * @brief Get json string of fundTxVout field.
+   * @brief Get json string of fundVout field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetFundTxVoutString(  // line separate
+  static std::string GetFundVoutString(  // line separate
       const AddSignaturesToCetRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.fund_tx_vout_);
+    return cfd::core::ConvertToString(obj.fund_vout_);
   }
   /**
-   * @brief Set json object to fundTxVout field.
+   * @brief Set json object to fundVout field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetFundTxVoutString(  // line separate
+  static void SetFundVoutString(  // line separate
       AddSignaturesToCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.fund_tx_vout_, json_value);
+      obj.fund_vout_, json_value);
   }
 
   /**
@@ -389,9 +853,9 @@ class AddSignaturesToCetRequest
    */
   std::string fund_tx_id_ = "";
   /**
-   * @brief JsonAPI(fundTxVout) value
+   * @brief JsonAPI(fundVout) value
    */
-  uint32_t fund_tx_vout_ = 0;
+  uint32_t fund_vout_ = 0;
   /**
    * @brief JsonAPI(localFundPubkey) value
    */
@@ -691,46 +1155,46 @@ class AddSignaturesToMutualClosingTxRequest
   }
 
   /**
-   * @brief Get of fundTxVout
-   * @return fundTxVout
+   * @brief Get of fundVout
+   * @return fundVout
    */
-  uint32_t GetFundTxVout() const {
-    return fund_tx_vout_;
+  uint32_t GetFundVout() const {
+    return fund_vout_;
   }
   /**
-   * @brief Set to fundTxVout
-   * @param[in] fund_tx_vout    setting value.
+   * @brief Set to fundVout
+   * @param[in] fund_vout    setting value.
    */
-  void SetFundTxVout(  // line separate
-    const uint32_t& fund_tx_vout) {  // NOLINT
-    this->fund_tx_vout_ = fund_tx_vout;
+  void SetFundVout(  // line separate
+    const uint32_t& fund_vout) {  // NOLINT
+    this->fund_vout_ = fund_vout;
   }
   /**
-   * @brief Get data type of fundTxVout
-   * @return Data type of fundTxVout
+   * @brief Get data type of fundVout
+   * @return Data type of fundVout
    */
-  static std::string GetFundTxVoutFieldType() {
+  static std::string GetFundVoutFieldType() {
     return "uint32_t";
   }
   /**
-   * @brief Get json string of fundTxVout field.
+   * @brief Get json string of fundVout field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetFundTxVoutString(  // line separate
+  static std::string GetFundVoutString(  // line separate
       const AddSignaturesToMutualClosingTxRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.fund_tx_vout_);
+    return cfd::core::ConvertToString(obj.fund_vout_);
   }
   /**
-   * @brief Set json object to fundTxVout field.
+   * @brief Set json object to fundVout field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetFundTxVoutString(  // line separate
+  static void SetFundVoutString(  // line separate
       AddSignaturesToMutualClosingTxRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.fund_tx_vout_, json_value);
+      obj.fund_vout_, json_value);
   }
 
   /**
@@ -901,9 +1365,9 @@ class AddSignaturesToMutualClosingTxRequest
    */
   std::string fund_tx_id_ = "";
   /**
-   * @brief JsonAPI(fundTxVout) value
+   * @brief JsonAPI(fundVout) value
    */
-  uint32_t fund_tx_vout_ = 0;
+  uint32_t fund_vout_ = 0;
   /**
    * @brief JsonAPI(localFundPubkey) value
    */
@@ -1203,46 +1667,46 @@ class AddSignaturesToRefundTxRequest
   }
 
   /**
-   * @brief Get of fundTxVout
-   * @return fundTxVout
+   * @brief Get of fundVout
+   * @return fundVout
    */
-  uint32_t GetFundTxVout() const {
-    return fund_tx_vout_;
+  uint32_t GetFundVout() const {
+    return fund_vout_;
   }
   /**
-   * @brief Set to fundTxVout
-   * @param[in] fund_tx_vout    setting value.
+   * @brief Set to fundVout
+   * @param[in] fund_vout    setting value.
    */
-  void SetFundTxVout(  // line separate
-    const uint32_t& fund_tx_vout) {  // NOLINT
-    this->fund_tx_vout_ = fund_tx_vout;
+  void SetFundVout(  // line separate
+    const uint32_t& fund_vout) {  // NOLINT
+    this->fund_vout_ = fund_vout;
   }
   /**
-   * @brief Get data type of fundTxVout
-   * @return Data type of fundTxVout
+   * @brief Get data type of fundVout
+   * @return Data type of fundVout
    */
-  static std::string GetFundTxVoutFieldType() {
+  static std::string GetFundVoutFieldType() {
     return "uint32_t";
   }
   /**
-   * @brief Get json string of fundTxVout field.
+   * @brief Get json string of fundVout field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetFundTxVoutString(  // line separate
+  static std::string GetFundVoutString(  // line separate
       const AddSignaturesToRefundTxRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.fund_tx_vout_);
+    return cfd::core::ConvertToString(obj.fund_vout_);
   }
   /**
-   * @brief Set json object to fundTxVout field.
+   * @brief Set json object to fundVout field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetFundTxVoutString(  // line separate
+  static void SetFundVoutString(  // line separate
       AddSignaturesToRefundTxRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.fund_tx_vout_, json_value);
+      obj.fund_vout_, json_value);
   }
 
   /**
@@ -1413,9 +1877,9 @@ class AddSignaturesToRefundTxRequest
    */
   std::string fund_tx_id_ = "";
   /**
-   * @brief JsonAPI(fundTxVout) value
+   * @brief JsonAPI(fundVout) value
    */
-  uint32_t fund_tx_vout_ = 0;
+  uint32_t fund_vout_ = 0;
   /**
    * @brief JsonAPI(localFundPubkey) value
    */
@@ -1565,18 +2029,18 @@ class AddSignaturesToRefundTxResponse
 };
 
 // ------------------------------------------------------------------------
-// CreateCETRequest
+// CreateCetRequest
 // ------------------------------------------------------------------------
 /**
- * @brief JSON-API (CreateCETRequest) class
+ * @brief JSON-API (CreateCetRequest) class
  */
-class CreateCETRequest
-  : public cfd::core::JsonClassBase<CreateCETRequest> {
+class CreateCetRequest
+  : public cfd::core::JsonClassBase<CreateCetRequest> {
  public:
-  CreateCETRequest() {
+  CreateCetRequest() {
     CollectFieldName();
   }
-  virtual ~CreateCETRequest() {
+  virtual ~CreateCetRequest() {
     // do nothing
   }
   /**
@@ -1612,7 +2076,7 @@ class CreateCETRequest
    * @return JSON string
    */
   static std::string GetLocalFundPubkeyString(  // line separate
-      const CreateCETRequest& obj) {  // NOLINT
+      const CreateCetRequest& obj) {  // NOLINT
     return cfd::core::ConvertToString(obj.local_fund_pubkey_);
   }
   /**
@@ -1621,7 +2085,7 @@ class CreateCETRequest
    * @param[in] json_value  JSON object.
    */
   static void SetLocalFundPubkeyString(  // line separate
-      CreateCETRequest& obj,  // NOLINT
+      CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.local_fund_pubkey_, json_value);
@@ -1655,7 +2119,7 @@ class CreateCETRequest
    * @return JSON string
    */
   static std::string GetLocalSweepPubkeyString(  // line separate
-      const CreateCETRequest& obj) {  // NOLINT
+      const CreateCetRequest& obj) {  // NOLINT
     return cfd::core::ConvertToString(obj.local_sweep_pubkey_);
   }
   /**
@@ -1664,7 +2128,7 @@ class CreateCETRequest
    * @param[in] json_value  JSON object.
    */
   static void SetLocalSweepPubkeyString(  // line separate
-      CreateCETRequest& obj,  // NOLINT
+      CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.local_sweep_pubkey_, json_value);
@@ -1698,7 +2162,7 @@ class CreateCETRequest
    * @return JSON string
    */
   static std::string GetRemoteSweepPubkeyString(  // line separate
-      const CreateCETRequest& obj) {  // NOLINT
+      const CreateCetRequest& obj) {  // NOLINT
     return cfd::core::ConvertToString(obj.remote_sweep_pubkey_);
   }
   /**
@@ -1707,7 +2171,7 @@ class CreateCETRequest
    * @param[in] json_value  JSON object.
    */
   static void SetRemoteSweepPubkeyString(  // line separate
-      CreateCETRequest& obj,  // NOLINT
+      CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.remote_sweep_pubkey_, json_value);
@@ -1741,7 +2205,7 @@ class CreateCETRequest
    * @return JSON string
    */
   static std::string GetRemoteFinalAddressString(  // line separate
-      const CreateCETRequest& obj) {  // NOLINT
+      const CreateCetRequest& obj) {  // NOLINT
     return cfd::core::ConvertToString(obj.remote_final_address_);
   }
   /**
@@ -1750,7 +2214,7 @@ class CreateCETRequest
    * @param[in] json_value  JSON object.
    */
   static void SetRemoteFinalAddressString(  // line separate
-      CreateCETRequest& obj,  // NOLINT
+      CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.remote_final_address_, json_value);
@@ -1784,7 +2248,7 @@ class CreateCETRequest
    * @return JSON string
    */
   static std::string GetOraclePubkeyString(  // line separate
-      const CreateCETRequest& obj) {  // NOLINT
+      const CreateCetRequest& obj) {  // NOLINT
     return cfd::core::ConvertToString(obj.oracle_pubkey_);
   }
   /**
@@ -1793,7 +2257,7 @@ class CreateCETRequest
    * @param[in] json_value  JSON object.
    */
   static void SetOraclePubkeyString(  // line separate
-      CreateCETRequest& obj,  // NOLINT
+      CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.oracle_pubkey_, json_value);
@@ -1827,7 +2291,7 @@ class CreateCETRequest
    * @return JSON string.
    */
   static std::string GetOracleRPointsString(  // line separate
-      const CreateCETRequest& obj) {  // NOLINT
+      const CreateCetRequest& obj) {  // NOLINT
     // Do not set to const, because substitution of member variables
     // may occur in pre / post processing inside Serialize
     return obj.oracle_r_points_.Serialize();
@@ -1838,7 +2302,7 @@ class CreateCETRequest
    * @param[in] json_value  JSON object
    */
   static void SetOracleRPointsString(  // line separate
-      CreateCETRequest& obj,  // NOLINT
+      CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     obj.oracle_r_points_.DeserializeUniValue(json_value);
   }
@@ -1871,7 +2335,7 @@ class CreateCETRequest
    * @return JSON string.
    */
   static std::string GetMessagesString(  // line separate
-      const CreateCETRequest& obj) {  // NOLINT
+      const CreateCetRequest& obj) {  // NOLINT
     // Do not set to const, because substitution of member variables
     // may occur in pre / post processing inside Serialize
     return obj.messages_.Serialize();
@@ -1882,7 +2346,7 @@ class CreateCETRequest
    * @param[in] json_value  JSON object
    */
   static void SetMessagesString(  // line separate
-      CreateCETRequest& obj,  // NOLINT
+      CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     obj.messages_.DeserializeUniValue(json_value);
   }
@@ -1915,7 +2379,7 @@ class CreateCETRequest
    * @return JSON string
    */
   static std::string GetDelayString(  // line separate
-      const CreateCETRequest& obj) {  // NOLINT
+      const CreateCetRequest& obj) {  // NOLINT
     return cfd::core::ConvertToString(obj.delay_);
   }
   /**
@@ -1924,7 +2388,7 @@ class CreateCETRequest
    * @param[in] json_value  JSON object.
    */
   static void SetDelayString(  // line separate
-      CreateCETRequest& obj,  // NOLINT
+      CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.delay_, json_value);
@@ -1958,7 +2422,7 @@ class CreateCETRequest
    * @return JSON string
    */
   static std::string GetLocalPayoutString(  // line separate
-      const CreateCETRequest& obj) {  // NOLINT
+      const CreateCetRequest& obj) {  // NOLINT
     return cfd::core::ConvertToString(obj.local_payout_);
   }
   /**
@@ -1967,7 +2431,7 @@ class CreateCETRequest
    * @param[in] json_value  JSON object.
    */
   static void SetLocalPayoutString(  // line separate
-      CreateCETRequest& obj,  // NOLINT
+      CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.local_payout_, json_value);
@@ -2001,7 +2465,7 @@ class CreateCETRequest
    * @return JSON string
    */
   static std::string GetRemotePayoutString(  // line separate
-      const CreateCETRequest& obj) {  // NOLINT
+      const CreateCetRequest& obj) {  // NOLINT
     return cfd::core::ConvertToString(obj.remote_payout_);
   }
   /**
@@ -2010,53 +2474,53 @@ class CreateCETRequest
    * @param[in] json_value  JSON object.
    */
   static void SetRemotePayoutString(  // line separate
-      CreateCETRequest& obj,  // NOLINT
+      CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.remote_payout_, json_value);
   }
 
   /**
-   * @brief Get of fundTxid
-   * @return fundTxid
+   * @brief Get of fundTxId
+   * @return fundTxId
    */
-  std::string GetFundTxid() const {
-    return fund_txid_;
+  std::string GetFundTxId() const {
+    return fund_tx_id_;
   }
   /**
-   * @brief Set to fundTxid
-   * @param[in] fund_txid    setting value.
+   * @brief Set to fundTxId
+   * @param[in] fund_tx_id    setting value.
    */
-  void SetFundTxid(  // line separate
-    const std::string& fund_txid) {  // NOLINT
-    this->fund_txid_ = fund_txid;
+  void SetFundTxId(  // line separate
+    const std::string& fund_tx_id) {  // NOLINT
+    this->fund_tx_id_ = fund_tx_id;
   }
   /**
-   * @brief Get data type of fundTxid
-   * @return Data type of fundTxid
+   * @brief Get data type of fundTxId
+   * @return Data type of fundTxId
    */
-  static std::string GetFundTxidFieldType() {
+  static std::string GetFundTxIdFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of fundTxid field.
+   * @brief Get json string of fundTxId field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetFundTxidString(  // line separate
-      const CreateCETRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.fund_txid_);
+  static std::string GetFundTxIdString(  // line separate
+      const CreateCetRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.fund_tx_id_);
   }
   /**
-   * @brief Set json object to fundTxid field.
+   * @brief Set json object to fundTxId field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetFundTxidString(  // line separate
-      CreateCETRequest& obj,  // NOLINT
+  static void SetFundTxIdString(  // line separate
+      CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.fund_txid_, json_value);
+      obj.fund_tx_id_, json_value);
   }
 
   /**
@@ -2087,7 +2551,7 @@ class CreateCETRequest
    * @return JSON string
    */
   static std::string GetFundVoutString(  // line separate
-      const CreateCETRequest& obj) {  // NOLINT
+      const CreateCetRequest& obj) {  // NOLINT
     return cfd::core::ConvertToString(obj.fund_vout_);
   }
   /**
@@ -2096,7 +2560,7 @@ class CreateCETRequest
    * @param[in] json_value  JSON object.
    */
   static void SetFundVoutString(  // line separate
-      CreateCETRequest& obj,  // NOLINT
+      CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.fund_vout_, json_value);
@@ -2130,7 +2594,7 @@ class CreateCETRequest
    * @return JSON string
    */
   static std::string GetMaturityTimeString(  // line separate
-      const CreateCETRequest& obj) {  // NOLINT
+      const CreateCetRequest& obj) {  // NOLINT
     return cfd::core::ConvertToString(obj.maturity_time_);
   }
   /**
@@ -2139,7 +2603,7 @@ class CreateCETRequest
    * @param[in] json_value  JSON object.
    */
   static void SetMaturityTimeString(  // line separate
-      CreateCETRequest& obj,  // NOLINT
+      CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.maturity_time_, json_value);
@@ -2158,27 +2622,27 @@ class CreateCETRequest
    * @param[in] data   struct data.
    */
   void ConvertFromStruct(
-      const CreateCETRequestStruct& data);
+      const CreateCetRequestStruct& data);
 
   /**
    * @brief Convert class to struct.
    * @return  struct data.
    */
-  CreateCETRequestStruct ConvertToStruct()  const;
+  CreateCetRequestStruct ConvertToStruct()  const;
 
  protected:
   /**
    * @brief definition type of Map table.
    */
-  using CreateCETRequestMapTable =
-    cfd::core::JsonTableMap<CreateCETRequest>;
+  using CreateCetRequestMapTable =
+    cfd::core::JsonTableMap<CreateCetRequest>;
 
   /**
    * @brief Get JSON mapping object.
    * @return JSON mapping object.
    * @see cfd::core::JsonClassBase::GetJsonMapper()
    */
-  virtual const CreateCETRequestMapTable& GetJsonMapper() const {  // NOLINT
+  virtual const CreateCetRequestMapTable& GetJsonMapper() const {  // NOLINT
     return json_mapper;
   }
   /**
@@ -2204,7 +2668,7 @@ class CreateCETRequest
  /**
   * @brief JsonFunctionMap table
   */
-  static CreateCETRequestMapTable json_mapper;
+  static CreateCetRequestMapTable json_mapper;
   /**
    * @brief field name list.
    */
@@ -2255,9 +2719,9 @@ class CreateCETRequest
    */
   uint64_t remote_payout_ = 0;
   /**
-   * @brief JsonAPI(fundTxid) value
+   * @brief JsonAPI(fundTxId) value
    */
-  std::string fund_txid_ = "";
+  std::string fund_tx_id_ = "";
   /**
    * @brief JsonAPI(fundVout) value
    */
@@ -2269,18 +2733,18 @@ class CreateCETRequest
 };
 
 // ------------------------------------------------------------------------
-// CreateCETResponse
+// CreateCetResponse
 // ------------------------------------------------------------------------
 /**
- * @brief JSON-API (CreateCETResponse) class
+ * @brief JSON-API (CreateCetResponse) class
  */
-class CreateCETResponse
-  : public cfd::core::JsonClassBase<CreateCETResponse> {
+class CreateCetResponse
+  : public cfd::core::JsonClassBase<CreateCetResponse> {
  public:
-  CreateCETResponse() {
+  CreateCetResponse() {
     CollectFieldName();
   }
-  virtual ~CreateCETResponse() {
+  virtual ~CreateCetResponse() {
     // do nothing
   }
   /**
@@ -2316,7 +2780,7 @@ class CreateCETResponse
    * @return JSON string
    */
   static std::string GetHexString(  // line separate
-      const CreateCETResponse& obj) {  // NOLINT
+      const CreateCetResponse& obj) {  // NOLINT
     return cfd::core::ConvertToString(obj.hex_);
   }
   /**
@@ -2325,7 +2789,7 @@ class CreateCETResponse
    * @param[in] json_value  JSON object.
    */
   static void SetHexString(  // line separate
-      CreateCETResponse& obj,  // NOLINT
+      CreateCetResponse& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.hex_, json_value);
@@ -2344,27 +2808,27 @@ class CreateCETResponse
    * @param[in] data   struct data.
    */
   void ConvertFromStruct(
-      const CreateCETResponseStruct& data);
+      const CreateCetResponseStruct& data);
 
   /**
    * @brief Convert class to struct.
    * @return  struct data.
    */
-  CreateCETResponseStruct ConvertToStruct()  const;
+  CreateCetResponseStruct ConvertToStruct()  const;
 
  protected:
   /**
    * @brief definition type of Map table.
    */
-  using CreateCETResponseMapTable =
-    cfd::core::JsonTableMap<CreateCETResponse>;
+  using CreateCetResponseMapTable =
+    cfd::core::JsonTableMap<CreateCetResponse>;
 
   /**
    * @brief Get JSON mapping object.
    * @return JSON mapping object.
    * @see cfd::core::JsonClassBase::GetJsonMapper()
    */
-  virtual const CreateCETResponseMapTable& GetJsonMapper() const {  // NOLINT
+  virtual const CreateCetResponseMapTable& GetJsonMapper() const {  // NOLINT
     return json_mapper;
   }
   /**
@@ -2390,7 +2854,7 @@ class CreateCETResponse
  /**
   * @brief JsonFunctionMap table
   */
-  static CreateCETResponseMapTable json_mapper;
+  static CreateCetResponseMapTable json_mapper;
   /**
    * @brief field name list.
    */
@@ -2513,46 +2977,46 @@ class CreateClosingTransactionRequest
   }
 
   /**
-   * @brief Get of cetTxid
-   * @return cetTxid
+   * @brief Get of cetTxId
+   * @return cetTxId
    */
-  std::string GetCetTxid() const {
-    return cet_txid_;
+  std::string GetCetTxId() const {
+    return cet_tx_id_;
   }
   /**
-   * @brief Set to cetTxid
-   * @param[in] cet_txid    setting value.
+   * @brief Set to cetTxId
+   * @param[in] cet_tx_id    setting value.
    */
-  void SetCetTxid(  // line separate
-    const std::string& cet_txid) {  // NOLINT
-    this->cet_txid_ = cet_txid;
+  void SetCetTxId(  // line separate
+    const std::string& cet_tx_id) {  // NOLINT
+    this->cet_tx_id_ = cet_tx_id;
   }
   /**
-   * @brief Get data type of cetTxid
-   * @return Data type of cetTxid
+   * @brief Get data type of cetTxId
+   * @return Data type of cetTxId
    */
-  static std::string GetCetTxidFieldType() {
+  static std::string GetCetTxIdFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of cetTxid field.
+   * @brief Get json string of cetTxId field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetCetTxidString(  // line separate
+  static std::string GetCetTxIdString(  // line separate
       const CreateClosingTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.cet_txid_);
+    return cfd::core::ConvertToString(obj.cet_tx_id_);
   }
   /**
-   * @brief Set json object to cetTxid field.
+   * @brief Set json object to cetTxId field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetCetTxidString(  // line separate
+  static void SetCetTxIdString(  // line separate
       CreateClosingTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.cet_txid_, json_value);
+      obj.cet_tx_id_, json_value);
   }
 
   /**
@@ -2676,9 +3140,9 @@ class CreateClosingTransactionRequest
    */
   uint64_t amount_ = 0;
   /**
-   * @brief JsonAPI(cetTxid) value
+   * @brief JsonAPI(cetTxId) value
    */
-  std::string cet_txid_ = "";
+  std::string cet_tx_id_ = "";
   /**
    * @brief JsonAPI(cetVout) value
    */
@@ -5681,46 +6145,46 @@ class CreateMutualClosingTransactionRequest
   }
 
   /**
-   * @brief Get of fundTxid
-   * @return fundTxid
+   * @brief Get of fundTxId
+   * @return fundTxId
    */
-  std::string GetFundTxid() const {
-    return fund_txid_;
+  std::string GetFundTxId() const {
+    return fund_tx_id_;
   }
   /**
-   * @brief Set to fundTxid
-   * @param[in] fund_txid    setting value.
+   * @brief Set to fundTxId
+   * @param[in] fund_tx_id    setting value.
    */
-  void SetFundTxid(  // line separate
-    const std::string& fund_txid) {  // NOLINT
-    this->fund_txid_ = fund_txid;
+  void SetFundTxId(  // line separate
+    const std::string& fund_tx_id) {  // NOLINT
+    this->fund_tx_id_ = fund_tx_id;
   }
   /**
-   * @brief Get data type of fundTxid
-   * @return Data type of fundTxid
+   * @brief Get data type of fundTxId
+   * @return Data type of fundTxId
    */
-  static std::string GetFundTxidFieldType() {
+  static std::string GetFundTxIdFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of fundTxid field.
+   * @brief Get json string of fundTxId field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetFundTxidString(  // line separate
+  static std::string GetFundTxIdString(  // line separate
       const CreateMutualClosingTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.fund_txid_);
+    return cfd::core::ConvertToString(obj.fund_tx_id_);
   }
   /**
-   * @brief Set json object to fundTxid field.
+   * @brief Set json object to fundTxId field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetFundTxidString(  // line separate
+  static void SetFundTxIdString(  // line separate
       CreateMutualClosingTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.fund_txid_, json_value);
+      obj.fund_tx_id_, json_value);
   }
 
   /**
@@ -5852,9 +6316,9 @@ class CreateMutualClosingTransactionRequest
    */
   uint64_t remote_amount_ = 0;
   /**
-   * @brief JsonAPI(fundTxid) value
+   * @brief JsonAPI(fundTxId) value
    */
-  std::string fund_txid_ = "";
+  std::string fund_tx_id_ = "";
   /**
    * @brief JsonAPI(fundVout) value
    */
@@ -6106,53 +6570,53 @@ class CreatePenaltyTransactionRequest
   }
 
   /**
-   * @brief Get of cetId
-   * @return cetId
+   * @brief Get of cetTxId
+   * @return cetTxId
    */
-  std::string GetCetId() const {
-    return cet_id_;
+  std::string GetCetTxId() const {
+    return cet_tx_id_;
   }
   /**
-   * @brief Set to cetId
-   * @param[in] cet_id    setting value.
+   * @brief Set to cetTxId
+   * @param[in] cet_tx_id    setting value.
    */
-  void SetCetId(  // line separate
-    const std::string& cet_id) {  // NOLINT
-    this->cet_id_ = cet_id;
+  void SetCetTxId(  // line separate
+    const std::string& cet_tx_id) {  // NOLINT
+    this->cet_tx_id_ = cet_tx_id;
   }
   /**
-   * @brief Get data type of cetId
-   * @return Data type of cetId
+   * @brief Get data type of cetTxId
+   * @return Data type of cetTxId
    */
-  static std::string GetCetIdFieldType() {
+  static std::string GetCetTxIdFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of cetId field.
+   * @brief Get json string of cetTxId field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetCetIdString(  // line separate
+  static std::string GetCetTxIdString(  // line separate
       const CreatePenaltyTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.cet_id_);
+    return cfd::core::ConvertToString(obj.cet_tx_id_);
   }
   /**
-   * @brief Set json object to cetId field.
+   * @brief Set json object to cetTxId field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetCetIdString(  // line separate
+  static void SetCetTxIdString(  // line separate
       CreatePenaltyTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.cet_id_, json_value);
+      obj.cet_tx_id_, json_value);
   }
 
   /**
    * @brief Get of cetVout
    * @return cetVout
    */
-  uint64_t GetCetVout() const {
+  uint32_t GetCetVout() const {
     return cet_vout_;
   }
   /**
@@ -6160,7 +6624,7 @@ class CreatePenaltyTransactionRequest
    * @param[in] cet_vout    setting value.
    */
   void SetCetVout(  // line separate
-    const uint64_t& cet_vout) {  // NOLINT
+    const uint32_t& cet_vout) {  // NOLINT
     this->cet_vout_ = cet_vout;
   }
   /**
@@ -6168,7 +6632,7 @@ class CreatePenaltyTransactionRequest
    * @return Data type of cetVout
    */
   static std::string GetCetVoutFieldType() {
-    return "uint64_t";
+    return "uint32_t";
   }
   /**
    * @brief Get json string of cetVout field.
@@ -6269,13 +6733,13 @@ class CreatePenaltyTransactionRequest
    */
   uint64_t amount_ = 0;
   /**
-   * @brief JsonAPI(cetId) value
+   * @brief JsonAPI(cetTxId) value
    */
-  std::string cet_id_ = "";
+  std::string cet_tx_id_ = "";
   /**
    * @brief JsonAPI(cetVout) value
    */
-  uint64_t cet_vout_ = 0;
+  uint32_t cet_vout_ = 0;
 };
 
 // ------------------------------------------------------------------------
@@ -6652,46 +7116,46 @@ class CreateRefundTransactionRequest
   }
 
   /**
-   * @brief Get of fundTxid
-   * @return fundTxid
+   * @brief Get of fundTxId
+   * @return fundTxId
    */
-  std::string GetFundTxid() const {
-    return fund_txid_;
+  std::string GetFundTxId() const {
+    return fund_tx_id_;
   }
   /**
-   * @brief Set to fundTxid
-   * @param[in] fund_txid    setting value.
+   * @brief Set to fundTxId
+   * @param[in] fund_tx_id    setting value.
    */
-  void SetFundTxid(  // line separate
-    const std::string& fund_txid) {  // NOLINT
-    this->fund_txid_ = fund_txid;
+  void SetFundTxId(  // line separate
+    const std::string& fund_tx_id) {  // NOLINT
+    this->fund_tx_id_ = fund_tx_id;
   }
   /**
-   * @brief Get data type of fundTxid
-   * @return Data type of fundTxid
+   * @brief Get data type of fundTxId
+   * @return Data type of fundTxId
    */
-  static std::string GetFundTxidFieldType() {
+  static std::string GetFundTxIdFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of fundTxid field.
+   * @brief Get json string of fundTxId field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetFundTxidString(  // line separate
+  static std::string GetFundTxIdString(  // line separate
       const CreateRefundTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.fund_txid_);
+    return cfd::core::ConvertToString(obj.fund_tx_id_);
   }
   /**
-   * @brief Set json object to fundTxid field.
+   * @brief Set json object to fundTxId field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetFundTxidString(  // line separate
+  static void SetFundTxIdString(  // line separate
       CreateRefundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.fund_txid_, json_value);
+      obj.fund_tx_id_, json_value);
   }
 
   /**
@@ -6827,9 +7291,9 @@ class CreateRefundTransactionRequest
    */
   uint64_t lock_time_ = 0;
   /**
-   * @brief JsonAPI(fundTxid) value
+   * @brief JsonAPI(fundTxId) value
    */
-  std::string fund_txid_ = "";
+  std::string fund_tx_id_ = "";
   /**
    * @brief JsonAPI(fundVout) value
    */
@@ -7484,46 +7948,46 @@ class GetRawCetSignatureRequest
   }
 
   /**
-   * @brief Get of fundTxVout
-   * @return fundTxVout
+   * @brief Get of fundVout
+   * @return fundVout
    */
-  uint32_t GetFundTxVout() const {
-    return fund_tx_vout_;
+  uint32_t GetFundVout() const {
+    return fund_vout_;
   }
   /**
-   * @brief Set to fundTxVout
-   * @param[in] fund_tx_vout    setting value.
+   * @brief Set to fundVout
+   * @param[in] fund_vout    setting value.
    */
-  void SetFundTxVout(  // line separate
-    const uint32_t& fund_tx_vout) {  // NOLINT
-    this->fund_tx_vout_ = fund_tx_vout;
+  void SetFundVout(  // line separate
+    const uint32_t& fund_vout) {  // NOLINT
+    this->fund_vout_ = fund_vout;
   }
   /**
-   * @brief Get data type of fundTxVout
-   * @return Data type of fundTxVout
+   * @brief Get data type of fundVout
+   * @return Data type of fundVout
    */
-  static std::string GetFundTxVoutFieldType() {
+  static std::string GetFundVoutFieldType() {
     return "uint32_t";
   }
   /**
-   * @brief Get json string of fundTxVout field.
+   * @brief Get json string of fundVout field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetFundTxVoutString(  // line separate
+  static std::string GetFundVoutString(  // line separate
       const GetRawCetSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.fund_tx_vout_);
+    return cfd::core::ConvertToString(obj.fund_vout_);
   }
   /**
-   * @brief Set json object to fundTxVout field.
+   * @brief Set json object to fundVout field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetFundTxVoutString(  // line separate
+  static void SetFundVoutString(  // line separate
       GetRawCetSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.fund_tx_vout_, json_value);
+      obj.fund_vout_, json_value);
   }
 
   /**
@@ -7613,46 +8077,46 @@ class GetRawCetSignatureRequest
   }
 
   /**
-   * @brief Get of fundAmount
-   * @return fundAmount
+   * @brief Get of fundInputAmount
+   * @return fundInputAmount
    */
-  uint64_t GetFundAmount() const {
-    return fund_amount_;
+  uint64_t GetFundInputAmount() const {
+    return fund_input_amount_;
   }
   /**
-   * @brief Set to fundAmount
-   * @param[in] fund_amount    setting value.
+   * @brief Set to fundInputAmount
+   * @param[in] fund_input_amount    setting value.
    */
-  void SetFundAmount(  // line separate
-    const uint64_t& fund_amount) {  // NOLINT
-    this->fund_amount_ = fund_amount;
+  void SetFundInputAmount(  // line separate
+    const uint64_t& fund_input_amount) {  // NOLINT
+    this->fund_input_amount_ = fund_input_amount;
   }
   /**
-   * @brief Get data type of fundAmount
-   * @return Data type of fundAmount
+   * @brief Get data type of fundInputAmount
+   * @return Data type of fundInputAmount
    */
-  static std::string GetFundAmountFieldType() {
+  static std::string GetFundInputAmountFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of fundAmount field.
+   * @brief Get json string of fundInputAmount field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetFundAmountString(  // line separate
+  static std::string GetFundInputAmountString(  // line separate
       const GetRawCetSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.fund_amount_);
+    return cfd::core::ConvertToString(obj.fund_input_amount_);
   }
   /**
-   * @brief Set json object to fundAmount field.
+   * @brief Set json object to fundInputAmount field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetFundAmountString(  // line separate
+  static void SetFundInputAmountString(  // line separate
       GetRawCetSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.fund_amount_, json_value);
+      obj.fund_input_amount_, json_value);
   }
 
   /**
@@ -7737,9 +8201,9 @@ class GetRawCetSignatureRequest
    */
   std::string fund_tx_id_ = "";
   /**
-   * @brief JsonAPI(fundTxVout) value
+   * @brief JsonAPI(fundVout) value
    */
-  uint32_t fund_tx_vout_ = 0;
+  uint32_t fund_vout_ = 0;
   /**
    * @brief JsonAPI(localFundPubkey) value
    */
@@ -7749,9 +8213,9 @@ class GetRawCetSignatureRequest
    */
   std::string remote_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(fundAmount) value
+   * @brief JsonAPI(fundInputAmount) value
    */
-  uint64_t fund_amount_ = 0;
+  uint64_t fund_input_amount_ = 0;
 };
 
 // ------------------------------------------------------------------------
@@ -8042,46 +8506,46 @@ class GetRawFundTxSignatureRequest
   }
 
   /**
-   * @brief Get of prevTxVout
-   * @return prevTxVout
+   * @brief Get of prevVout
+   * @return prevVout
    */
-  uint32_t GetPrevTxVout() const {
-    return prev_tx_vout_;
+  uint32_t GetPrevVout() const {
+    return prev_vout_;
   }
   /**
-   * @brief Set to prevTxVout
-   * @param[in] prev_tx_vout    setting value.
+   * @brief Set to prevVout
+   * @param[in] prev_vout    setting value.
    */
-  void SetPrevTxVout(  // line separate
-    const uint32_t& prev_tx_vout) {  // NOLINT
-    this->prev_tx_vout_ = prev_tx_vout;
+  void SetPrevVout(  // line separate
+    const uint32_t& prev_vout) {  // NOLINT
+    this->prev_vout_ = prev_vout;
   }
   /**
-   * @brief Get data type of prevTxVout
-   * @return Data type of prevTxVout
+   * @brief Get data type of prevVout
+   * @return Data type of prevVout
    */
-  static std::string GetPrevTxVoutFieldType() {
+  static std::string GetPrevVoutFieldType() {
     return "uint32_t";
   }
   /**
-   * @brief Get json string of prevTxVout field.
+   * @brief Get json string of prevVout field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetPrevTxVoutString(  // line separate
+  static std::string GetPrevVoutString(  // line separate
       const GetRawFundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.prev_tx_vout_);
+    return cfd::core::ConvertToString(obj.prev_vout_);
   }
   /**
-   * @brief Set json object to prevTxVout field.
+   * @brief Set json object to prevVout field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetPrevTxVoutString(  // line separate
+  static void SetPrevVoutString(  // line separate
       GetRawFundTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.prev_tx_vout_, json_value);
+      obj.prev_vout_, json_value);
   }
 
   /**
@@ -8209,9 +8673,9 @@ class GetRawFundTxSignatureRequest
    */
   std::string prev_tx_id_ = "";
   /**
-   * @brief JsonAPI(prevTxVout) value
+   * @brief JsonAPI(prevVout) value
    */
-  uint32_t prev_tx_vout_ = 0;
+  uint32_t prev_vout_ = 0;
   /**
    * @brief JsonAPI(amount) value
    */
@@ -8506,46 +8970,46 @@ class GetRawMutualClosingTxSignatureRequest
   }
 
   /**
-   * @brief Get of fundTxVout
-   * @return fundTxVout
+   * @brief Get of fundVout
+   * @return fundVout
    */
-  uint32_t GetFundTxVout() const {
-    return fund_tx_vout_;
+  uint32_t GetFundVout() const {
+    return fund_vout_;
   }
   /**
-   * @brief Set to fundTxVout
-   * @param[in] fund_tx_vout    setting value.
+   * @brief Set to fundVout
+   * @param[in] fund_vout    setting value.
    */
-  void SetFundTxVout(  // line separate
-    const uint32_t& fund_tx_vout) {  // NOLINT
-    this->fund_tx_vout_ = fund_tx_vout;
+  void SetFundVout(  // line separate
+    const uint32_t& fund_vout) {  // NOLINT
+    this->fund_vout_ = fund_vout;
   }
   /**
-   * @brief Get data type of fundTxVout
-   * @return Data type of fundTxVout
+   * @brief Get data type of fundVout
+   * @return Data type of fundVout
    */
-  static std::string GetFundTxVoutFieldType() {
+  static std::string GetFundVoutFieldType() {
     return "uint32_t";
   }
   /**
-   * @brief Get json string of fundTxVout field.
+   * @brief Get json string of fundVout field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetFundTxVoutString(  // line separate
+  static std::string GetFundVoutString(  // line separate
       const GetRawMutualClosingTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.fund_tx_vout_);
+    return cfd::core::ConvertToString(obj.fund_vout_);
   }
   /**
-   * @brief Set json object to fundTxVout field.
+   * @brief Set json object to fundVout field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetFundTxVoutString(  // line separate
+  static void SetFundVoutString(  // line separate
       GetRawMutualClosingTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.fund_tx_vout_, json_value);
+      obj.fund_vout_, json_value);
   }
 
   /**
@@ -8635,46 +9099,46 @@ class GetRawMutualClosingTxSignatureRequest
   }
 
   /**
-   * @brief Get of fundAmount
-   * @return fundAmount
+   * @brief Get of fundInputAmount
+   * @return fundInputAmount
    */
-  uint64_t GetFundAmount() const {
-    return fund_amount_;
+  uint64_t GetFundInputAmount() const {
+    return fund_input_amount_;
   }
   /**
-   * @brief Set to fundAmount
-   * @param[in] fund_amount    setting value.
+   * @brief Set to fundInputAmount
+   * @param[in] fund_input_amount    setting value.
    */
-  void SetFundAmount(  // line separate
-    const uint64_t& fund_amount) {  // NOLINT
-    this->fund_amount_ = fund_amount;
+  void SetFundInputAmount(  // line separate
+    const uint64_t& fund_input_amount) {  // NOLINT
+    this->fund_input_amount_ = fund_input_amount;
   }
   /**
-   * @brief Get data type of fundAmount
-   * @return Data type of fundAmount
+   * @brief Get data type of fundInputAmount
+   * @return Data type of fundInputAmount
    */
-  static std::string GetFundAmountFieldType() {
+  static std::string GetFundInputAmountFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of fundAmount field.
+   * @brief Get json string of fundInputAmount field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetFundAmountString(  // line separate
+  static std::string GetFundInputAmountString(  // line separate
       const GetRawMutualClosingTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.fund_amount_);
+    return cfd::core::ConvertToString(obj.fund_input_amount_);
   }
   /**
-   * @brief Set json object to fundAmount field.
+   * @brief Set json object to fundInputAmount field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetFundAmountString(  // line separate
+  static void SetFundInputAmountString(  // line separate
       GetRawMutualClosingTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.fund_amount_, json_value);
+      obj.fund_input_amount_, json_value);
   }
 
   /**
@@ -8759,9 +9223,9 @@ class GetRawMutualClosingTxSignatureRequest
    */
   std::string fund_tx_id_ = "";
   /**
-   * @brief JsonAPI(fundTxVout) value
+   * @brief JsonAPI(fundVout) value
    */
-  uint32_t fund_tx_vout_ = 0;
+  uint32_t fund_vout_ = 0;
   /**
    * @brief JsonAPI(localFundPubkey) value
    */
@@ -8771,9 +9235,9 @@ class GetRawMutualClosingTxSignatureRequest
    */
   std::string remote_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(fundAmount) value
+   * @brief JsonAPI(fundInputAmount) value
    */
-  uint64_t fund_amount_ = 0;
+  uint64_t fund_input_amount_ = 0;
 };
 
 // ------------------------------------------------------------------------
@@ -9064,46 +9528,46 @@ class GetRawRefundTxSignatureRequest
   }
 
   /**
-   * @brief Get of fundTxVout
-   * @return fundTxVout
+   * @brief Get of fundVout
+   * @return fundVout
    */
-  uint32_t GetFundTxVout() const {
-    return fund_tx_vout_;
+  uint32_t GetFundVout() const {
+    return fund_vout_;
   }
   /**
-   * @brief Set to fundTxVout
-   * @param[in] fund_tx_vout    setting value.
+   * @brief Set to fundVout
+   * @param[in] fund_vout    setting value.
    */
-  void SetFundTxVout(  // line separate
-    const uint32_t& fund_tx_vout) {  // NOLINT
-    this->fund_tx_vout_ = fund_tx_vout;
+  void SetFundVout(  // line separate
+    const uint32_t& fund_vout) {  // NOLINT
+    this->fund_vout_ = fund_vout;
   }
   /**
-   * @brief Get data type of fundTxVout
-   * @return Data type of fundTxVout
+   * @brief Get data type of fundVout
+   * @return Data type of fundVout
    */
-  static std::string GetFundTxVoutFieldType() {
+  static std::string GetFundVoutFieldType() {
     return "uint32_t";
   }
   /**
-   * @brief Get json string of fundTxVout field.
+   * @brief Get json string of fundVout field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetFundTxVoutString(  // line separate
+  static std::string GetFundVoutString(  // line separate
       const GetRawRefundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.fund_tx_vout_);
+    return cfd::core::ConvertToString(obj.fund_vout_);
   }
   /**
-   * @brief Set json object to fundTxVout field.
+   * @brief Set json object to fundVout field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetFundTxVoutString(  // line separate
+  static void SetFundVoutString(  // line separate
       GetRawRefundTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.fund_tx_vout_, json_value);
+      obj.fund_vout_, json_value);
   }
 
   /**
@@ -9193,46 +9657,46 @@ class GetRawRefundTxSignatureRequest
   }
 
   /**
-   * @brief Get of fundAmount
-   * @return fundAmount
+   * @brief Get of fundInputAmount
+   * @return fundInputAmount
    */
-  uint64_t GetFundAmount() const {
-    return fund_amount_;
+  uint64_t GetFundInputAmount() const {
+    return fund_input_amount_;
   }
   /**
-   * @brief Set to fundAmount
-   * @param[in] fund_amount    setting value.
+   * @brief Set to fundInputAmount
+   * @param[in] fund_input_amount    setting value.
    */
-  void SetFundAmount(  // line separate
-    const uint64_t& fund_amount) {  // NOLINT
-    this->fund_amount_ = fund_amount;
+  void SetFundInputAmount(  // line separate
+    const uint64_t& fund_input_amount) {  // NOLINT
+    this->fund_input_amount_ = fund_input_amount;
   }
   /**
-   * @brief Get data type of fundAmount
-   * @return Data type of fundAmount
+   * @brief Get data type of fundInputAmount
+   * @return Data type of fundInputAmount
    */
-  static std::string GetFundAmountFieldType() {
+  static std::string GetFundInputAmountFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of fundAmount field.
+   * @brief Get json string of fundInputAmount field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetFundAmountString(  // line separate
+  static std::string GetFundInputAmountString(  // line separate
       const GetRawRefundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.fund_amount_);
+    return cfd::core::ConvertToString(obj.fund_input_amount_);
   }
   /**
-   * @brief Set json object to fundAmount field.
+   * @brief Set json object to fundInputAmount field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetFundAmountString(  // line separate
+  static void SetFundInputAmountString(  // line separate
       GetRawRefundTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.fund_amount_, json_value);
+      obj.fund_input_amount_, json_value);
   }
 
   /**
@@ -9317,9 +9781,9 @@ class GetRawRefundTxSignatureRequest
    */
   std::string fund_tx_id_ = "";
   /**
-   * @brief JsonAPI(fundTxVout) value
+   * @brief JsonAPI(fundVout) value
    */
-  uint32_t fund_tx_vout_ = 0;
+  uint32_t fund_vout_ = 0;
   /**
    * @brief JsonAPI(localFundPubkey) value
    */
@@ -9329,9 +9793,9 @@ class GetRawRefundTxSignatureRequest
    */
   std::string remote_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(fundAmount) value
+   * @brief JsonAPI(fundInputAmount) value
    */
-  uint64_t fund_amount_ = 0;
+  uint64_t fund_input_amount_ = 0;
 };
 
 // ------------------------------------------------------------------------
@@ -10529,46 +10993,46 @@ class SignClosingTransactionRequest
   }
 
   /**
-   * @brief Get of cetTxid
-   * @return cetTxid
+   * @brief Get of cetTxId
+   * @return cetTxId
    */
-  std::string GetCetTxid() const {
-    return cet_txid_;
+  std::string GetCetTxId() const {
+    return cet_tx_id_;
   }
   /**
-   * @brief Set to cetTxid
-   * @param[in] cet_txid    setting value.
+   * @brief Set to cetTxId
+   * @param[in] cet_tx_id    setting value.
    */
-  void SetCetTxid(  // line separate
-    const std::string& cet_txid) {  // NOLINT
-    this->cet_txid_ = cet_txid;
+  void SetCetTxId(  // line separate
+    const std::string& cet_tx_id) {  // NOLINT
+    this->cet_tx_id_ = cet_tx_id;
   }
   /**
-   * @brief Get data type of cetTxid
-   * @return Data type of cetTxid
+   * @brief Get data type of cetTxId
+   * @return Data type of cetTxId
    */
-  static std::string GetCetTxidFieldType() {
+  static std::string GetCetTxIdFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of cetTxid field.
+   * @brief Get json string of cetTxId field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetCetTxidString(  // line separate
+  static std::string GetCetTxIdString(  // line separate
       const SignClosingTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.cet_txid_);
+    return cfd::core::ConvertToString(obj.cet_tx_id_);
   }
   /**
-   * @brief Set json object to cetTxid field.
+   * @brief Set json object to cetTxId field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetCetTxidString(  // line separate
+  static void SetCetTxIdString(  // line separate
       SignClosingTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.cet_txid_, json_value);
+      obj.cet_tx_id_, json_value);
   }
 
   /**
@@ -10763,9 +11227,9 @@ class SignClosingTransactionRequest
    */
   JsonValueVector<std::string> oracle_sigs_;  // NOLINT
   /**
-   * @brief JsonAPI(cetTxid) value
+   * @brief JsonAPI(cetTxId) value
    */
-  std::string cet_txid_ = "";
+  std::string cet_tx_id_ = "";
   /**
    * @brief JsonAPI(cetVout) value
    */
@@ -11021,89 +11485,89 @@ class SignFundTransactionRequest
   }
 
   /**
-   * @brief Get of prevTxid
-   * @return prevTxid
+   * @brief Get of prevTxId
+   * @return prevTxId
    */
-  std::string GetPrevTxid() const {
-    return prev_txid_;
+  std::string GetPrevTxId() const {
+    return prev_tx_id_;
   }
   /**
-   * @brief Set to prevTxid
-   * @param[in] prev_txid    setting value.
+   * @brief Set to prevTxId
+   * @param[in] prev_tx_id    setting value.
    */
-  void SetPrevTxid(  // line separate
-    const std::string& prev_txid) {  // NOLINT
-    this->prev_txid_ = prev_txid;
+  void SetPrevTxId(  // line separate
+    const std::string& prev_tx_id) {  // NOLINT
+    this->prev_tx_id_ = prev_tx_id;
   }
   /**
-   * @brief Get data type of prevTxid
-   * @return Data type of prevTxid
+   * @brief Get data type of prevTxId
+   * @return Data type of prevTxId
    */
-  static std::string GetPrevTxidFieldType() {
+  static std::string GetPrevTxIdFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of prevTxid field.
+   * @brief Get json string of prevTxId field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetPrevTxidString(  // line separate
+  static std::string GetPrevTxIdString(  // line separate
       const SignFundTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.prev_txid_);
+    return cfd::core::ConvertToString(obj.prev_tx_id_);
   }
   /**
-   * @brief Set json object to prevTxid field.
+   * @brief Set json object to prevTxId field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetPrevTxidString(  // line separate
+  static void SetPrevTxIdString(  // line separate
       SignFundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.prev_txid_, json_value);
+      obj.prev_tx_id_, json_value);
   }
 
   /**
-   * @brief Get of prevTxVout
-   * @return prevTxVout
+   * @brief Get of prevVout
+   * @return prevVout
    */
-  uint32_t GetPrevTxVout() const {
-    return prev_tx_vout_;
+  uint32_t GetPrevVout() const {
+    return prev_vout_;
   }
   /**
-   * @brief Set to prevTxVout
-   * @param[in] prev_tx_vout    setting value.
+   * @brief Set to prevVout
+   * @param[in] prev_vout    setting value.
    */
-  void SetPrevTxVout(  // line separate
-    const uint32_t& prev_tx_vout) {  // NOLINT
-    this->prev_tx_vout_ = prev_tx_vout;
+  void SetPrevVout(  // line separate
+    const uint32_t& prev_vout) {  // NOLINT
+    this->prev_vout_ = prev_vout;
   }
   /**
-   * @brief Get data type of prevTxVout
-   * @return Data type of prevTxVout
+   * @brief Get data type of prevVout
+   * @return Data type of prevVout
    */
-  static std::string GetPrevTxVoutFieldType() {
+  static std::string GetPrevVoutFieldType() {
     return "uint32_t";
   }
   /**
-   * @brief Get json string of prevTxVout field.
+   * @brief Get json string of prevVout field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetPrevTxVoutString(  // line separate
+  static std::string GetPrevVoutString(  // line separate
       const SignFundTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.prev_tx_vout_);
+    return cfd::core::ConvertToString(obj.prev_vout_);
   }
   /**
-   * @brief Set json object to prevTxVout field.
+   * @brief Set json object to prevVout field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetPrevTxVoutString(  // line separate
+  static void SetPrevVoutString(  // line separate
       SignFundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.prev_tx_vout_, json_value);
+      obj.prev_vout_, json_value);
   }
 
   /**
@@ -11227,13 +11691,13 @@ class SignFundTransactionRequest
    */
   std::string privkey_ = "";
   /**
-   * @brief JsonAPI(prevTxid) value
+   * @brief JsonAPI(prevTxId) value
    */
-  std::string prev_txid_ = "";
+  std::string prev_tx_id_ = "";
   /**
-   * @brief JsonAPI(prevTxVout) value
+   * @brief JsonAPI(prevVout) value
    */
-  uint32_t prev_tx_vout_ = 0;
+  uint32_t prev_vout_ = 0;
   /**
    * @brief JsonAPI(amount) value
    */
@@ -11657,46 +12121,46 @@ class VerifyCetSignatureRequest
   }
 
   /**
-   * @brief Get of inputAmount
-   * @return inputAmount
+   * @brief Get of fundInputAmount
+   * @return fundInputAmount
    */
-  uint64_t GetInputAmount() const {
-    return input_amount_;
+  uint64_t GetFundInputAmount() const {
+    return fund_input_amount_;
   }
   /**
-   * @brief Set to inputAmount
-   * @param[in] input_amount    setting value.
+   * @brief Set to fundInputAmount
+   * @param[in] fund_input_amount    setting value.
    */
-  void SetInputAmount(  // line separate
-    const uint64_t& input_amount) {  // NOLINT
-    this->input_amount_ = input_amount;
+  void SetFundInputAmount(  // line separate
+    const uint64_t& fund_input_amount) {  // NOLINT
+    this->fund_input_amount_ = fund_input_amount;
   }
   /**
-   * @brief Get data type of inputAmount
-   * @return Data type of inputAmount
+   * @brief Get data type of fundInputAmount
+   * @return Data type of fundInputAmount
    */
-  static std::string GetInputAmountFieldType() {
+  static std::string GetFundInputAmountFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of inputAmount field.
+   * @brief Get json string of fundInputAmount field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetInputAmountString(  // line separate
+  static std::string GetFundInputAmountString(  // line separate
       const VerifyCetSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.input_amount_);
+    return cfd::core::ConvertToString(obj.fund_input_amount_);
   }
   /**
-   * @brief Set json object to inputAmount field.
+   * @brief Set json object to fundInputAmount field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetInputAmountString(  // line separate
+  static void SetFundInputAmountString(  // line separate
       VerifyCetSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.input_amount_, json_value);
+      obj.fund_input_amount_, json_value);
   }
 
   /**
@@ -11836,9 +12300,9 @@ class VerifyCetSignatureRequest
    */
   uint32_t fund_vout_ = 0;
   /**
-   * @brief JsonAPI(inputAmount) value
+   * @brief JsonAPI(fundInputAmount) value
    */
-  uint64_t input_amount_ = 0;
+  uint64_t fund_input_amount_ = 0;
   /**
    * @brief JsonAPI(verifyRemote) value
    */
@@ -12176,89 +12640,89 @@ class VerifyFundTxSignatureRequest
   }
 
   /**
-   * @brief Get of prevTxVout
-   * @return prevTxVout
+   * @brief Get of prevVout
+   * @return prevVout
    */
-  uint32_t GetPrevTxVout() const {
-    return prev_tx_vout_;
+  uint32_t GetPrevVout() const {
+    return prev_vout_;
   }
   /**
-   * @brief Set to prevTxVout
-   * @param[in] prev_tx_vout    setting value.
+   * @brief Set to prevVout
+   * @param[in] prev_vout    setting value.
    */
-  void SetPrevTxVout(  // line separate
-    const uint32_t& prev_tx_vout) {  // NOLINT
-    this->prev_tx_vout_ = prev_tx_vout;
+  void SetPrevVout(  // line separate
+    const uint32_t& prev_vout) {  // NOLINT
+    this->prev_vout_ = prev_vout;
   }
   /**
-   * @brief Get data type of prevTxVout
-   * @return Data type of prevTxVout
+   * @brief Get data type of prevVout
+   * @return Data type of prevVout
    */
-  static std::string GetPrevTxVoutFieldType() {
+  static std::string GetPrevVoutFieldType() {
     return "uint32_t";
   }
   /**
-   * @brief Get json string of prevTxVout field.
+   * @brief Get json string of prevVout field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetPrevTxVoutString(  // line separate
+  static std::string GetPrevVoutString(  // line separate
       const VerifyFundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.prev_tx_vout_);
+    return cfd::core::ConvertToString(obj.prev_vout_);
   }
   /**
-   * @brief Set json object to prevTxVout field.
+   * @brief Set json object to prevVout field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetPrevTxVoutString(  // line separate
+  static void SetPrevVoutString(  // line separate
       VerifyFundTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.prev_tx_vout_, json_value);
+      obj.prev_vout_, json_value);
   }
 
   /**
-   * @brief Get of inputAmount
-   * @return inputAmount
+   * @brief Get of fundInputAmount
+   * @return fundInputAmount
    */
-  uint64_t GetInputAmount() const {
-    return input_amount_;
+  uint64_t GetFundInputAmount() const {
+    return fund_input_amount_;
   }
   /**
-   * @brief Set to inputAmount
-   * @param[in] input_amount    setting value.
+   * @brief Set to fundInputAmount
+   * @param[in] fund_input_amount    setting value.
    */
-  void SetInputAmount(  // line separate
-    const uint64_t& input_amount) {  // NOLINT
-    this->input_amount_ = input_amount;
+  void SetFundInputAmount(  // line separate
+    const uint64_t& fund_input_amount) {  // NOLINT
+    this->fund_input_amount_ = fund_input_amount;
   }
   /**
-   * @brief Get data type of inputAmount
-   * @return Data type of inputAmount
+   * @brief Get data type of fundInputAmount
+   * @return Data type of fundInputAmount
    */
-  static std::string GetInputAmountFieldType() {
+  static std::string GetFundInputAmountFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of inputAmount field.
+   * @brief Get json string of fundInputAmount field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetInputAmountString(  // line separate
+  static std::string GetFundInputAmountString(  // line separate
       const VerifyFundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.input_amount_);
+    return cfd::core::ConvertToString(obj.fund_input_amount_);
   }
   /**
-   * @brief Set json object to inputAmount field.
+   * @brief Set json object to fundInputAmount field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetInputAmountString(  // line separate
+  static void SetFundInputAmountString(  // line separate
       VerifyFundTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.input_amount_, json_value);
+      obj.fund_input_amount_, json_value);
   }
 
   /**
@@ -12347,13 +12811,13 @@ class VerifyFundTxSignatureRequest
    */
   std::string prev_tx_id_ = "";
   /**
-   * @brief JsonAPI(prevTxVout) value
+   * @brief JsonAPI(prevVout) value
    */
-  uint32_t prev_tx_vout_ = 0;
+  uint32_t prev_vout_ = 0;
   /**
-   * @brief JsonAPI(inputAmount) value
+   * @brief JsonAPI(fundInputAmount) value
    */
-  uint64_t input_amount_ = 0;
+  uint64_t fund_input_amount_ = 0;
 };
 
 // ------------------------------------------------------------------------
@@ -12773,46 +13237,46 @@ class VerifyMutualClosingTxSignatureRequest
   }
 
   /**
-   * @brief Get of inputAmount
-   * @return inputAmount
+   * @brief Get of fundInputAmount
+   * @return fundInputAmount
    */
-  uint64_t GetInputAmount() const {
-    return input_amount_;
+  uint64_t GetFundInputAmount() const {
+    return fund_input_amount_;
   }
   /**
-   * @brief Set to inputAmount
-   * @param[in] input_amount    setting value.
+   * @brief Set to fundInputAmount
+   * @param[in] fund_input_amount    setting value.
    */
-  void SetInputAmount(  // line separate
-    const uint64_t& input_amount) {  // NOLINT
-    this->input_amount_ = input_amount;
+  void SetFundInputAmount(  // line separate
+    const uint64_t& fund_input_amount) {  // NOLINT
+    this->fund_input_amount_ = fund_input_amount;
   }
   /**
-   * @brief Get data type of inputAmount
-   * @return Data type of inputAmount
+   * @brief Get data type of fundInputAmount
+   * @return Data type of fundInputAmount
    */
-  static std::string GetInputAmountFieldType() {
+  static std::string GetFundInputAmountFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of inputAmount field.
+   * @brief Get json string of fundInputAmount field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetInputAmountString(  // line separate
+  static std::string GetFundInputAmountString(  // line separate
       const VerifyMutualClosingTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.input_amount_);
+    return cfd::core::ConvertToString(obj.fund_input_amount_);
   }
   /**
-   * @brief Set json object to inputAmount field.
+   * @brief Set json object to fundInputAmount field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetInputAmountString(  // line separate
+  static void SetFundInputAmountString(  // line separate
       VerifyMutualClosingTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.input_amount_, json_value);
+      obj.fund_input_amount_, json_value);
   }
 
   /**
@@ -12952,9 +13416,9 @@ class VerifyMutualClosingTxSignatureRequest
    */
   uint32_t fund_vout_ = 0;
   /**
-   * @brief JsonAPI(inputAmount) value
+   * @brief JsonAPI(fundInputAmount) value
    */
-  uint64_t input_amount_ = 0;
+  uint64_t fund_input_amount_ = 0;
   /**
    * @brief JsonAPI(verifyRemote) value
    */
@@ -13378,46 +13842,46 @@ class VerifyRefundTxSignatureRequest
   }
 
   /**
-   * @brief Get of inputAmount
-   * @return inputAmount
+   * @brief Get of fundInputAmount
+   * @return fundInputAmount
    */
-  uint64_t GetInputAmount() const {
-    return input_amount_;
+  uint64_t GetFundInputAmount() const {
+    return fund_input_amount_;
   }
   /**
-   * @brief Set to inputAmount
-   * @param[in] input_amount    setting value.
+   * @brief Set to fundInputAmount
+   * @param[in] fund_input_amount    setting value.
    */
-  void SetInputAmount(  // line separate
-    const uint64_t& input_amount) {  // NOLINT
-    this->input_amount_ = input_amount;
+  void SetFundInputAmount(  // line separate
+    const uint64_t& fund_input_amount) {  // NOLINT
+    this->fund_input_amount_ = fund_input_amount;
   }
   /**
-   * @brief Get data type of inputAmount
-   * @return Data type of inputAmount
+   * @brief Get data type of fundInputAmount
+   * @return Data type of fundInputAmount
    */
-  static std::string GetInputAmountFieldType() {
+  static std::string GetFundInputAmountFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of inputAmount field.
+   * @brief Get json string of fundInputAmount field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetInputAmountString(  // line separate
+  static std::string GetFundInputAmountString(  // line separate
       const VerifyRefundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.input_amount_);
+    return cfd::core::ConvertToString(obj.fund_input_amount_);
   }
   /**
-   * @brief Set json object to inputAmount field.
+   * @brief Set json object to fundInputAmount field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetInputAmountString(  // line separate
+  static void SetFundInputAmountString(  // line separate
       VerifyRefundTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.input_amount_, json_value);
+      obj.fund_input_amount_, json_value);
   }
 
   /**
@@ -13557,9 +14021,9 @@ class VerifyRefundTxSignatureRequest
    */
   uint32_t fund_vout_ = 0;
   /**
-   * @brief JsonAPI(inputAmount) value
+   * @brief JsonAPI(fundInputAmount) value
    */
-  uint64_t input_amount_ = 0;
+  uint64_t fund_input_amount_ = 0;
   /**
    * @brief JsonAPI(verifyRemote) value
    */

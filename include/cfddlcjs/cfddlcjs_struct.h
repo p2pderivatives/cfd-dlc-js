@@ -33,6 +33,33 @@ struct InnerErrorResponseStruct {
 };
 
 // ------------------------------------------------------------------------
+// AddSignatureToFundTransactionRequestStruct
+// ------------------------------------------------------------------------
+/**
+ * @brief AddSignatureToFundTransactionRequestStruct struct
+ */
+struct AddSignatureToFundTransactionRequestStruct {
+  std::string fund_tx_hex = "";  //!< fund_tx_hex  // NOLINT
+  std::string signature = "";    //!< signature  // NOLINT
+  std::string prev_tx_id = "";   //!< prev_tx_id  // NOLINT
+  uint32_t prev_vout = 0;        //!< prev_vout  // NOLINT
+  std::string pubkey = "";       //!< pubkey  // NOLINT
+  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
+};
+
+// ------------------------------------------------------------------------
+// AddSignatureToFundTransactionResponseStruct
+// ------------------------------------------------------------------------
+/**
+ * @brief AddSignatureToFundTransactionResponseStruct struct
+ */
+struct AddSignatureToFundTransactionResponseStruct {
+  std::string hex = "";  //!< hex  // NOLINT
+  cfd::dlc::js::api::InnerErrorResponseStruct error;   //!< error information
+  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
+};
+
+// ------------------------------------------------------------------------
 // AddSignaturesToCetRequestStruct
 // ------------------------------------------------------------------------
 /**
@@ -42,7 +69,7 @@ struct AddSignaturesToCetRequestStruct {
   std::string cet_hex = "";             //!< cet_hex  // NOLINT
   std::vector<std::string> signatures;  //!< signatures  // NOLINT
   std::string fund_tx_id = "";          //!< fund_tx_id  // NOLINT
-  uint32_t fund_tx_vout = 0;            //!< fund_tx_vout  // NOLINT
+  uint32_t fund_vout = 0;               //!< fund_vout  // NOLINT
   std::string local_fund_pubkey = "";   //!< local_fund_pubkey  // NOLINT
   std::string remote_fund_pubkey = "";  //!< remote_fund_pubkey  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
@@ -70,7 +97,7 @@ struct AddSignaturesToMutualClosingTxRequestStruct {
   std::string mutual_closing_tx_hex = "";  //!< mutual_closing_tx_hex  // NOLINT
   std::vector<std::string> signatures;     //!< signatures  // NOLINT
   std::string fund_tx_id = "";             //!< fund_tx_id  // NOLINT
-  uint32_t fund_tx_vout = 0;               //!< fund_tx_vout  // NOLINT
+  uint32_t fund_vout = 0;                  //!< fund_vout  // NOLINT
   std::string local_fund_pubkey = "";      //!< local_fund_pubkey  // NOLINT
   std::string remote_fund_pubkey = "";     //!< remote_fund_pubkey  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
@@ -98,7 +125,7 @@ struct AddSignaturesToRefundTxRequestStruct {
   std::string refund_tx_hex = "";       //!< refund_tx_hex  // NOLINT
   std::vector<std::string> signatures;  //!< signatures  // NOLINT
   std::string fund_tx_id = "";          //!< fund_tx_id  // NOLINT
-  uint32_t fund_tx_vout = 0;            //!< fund_tx_vout  // NOLINT
+  uint32_t fund_vout = 0;               //!< fund_vout  // NOLINT
   std::string local_fund_pubkey = "";   //!< local_fund_pubkey  // NOLINT
   std::string remote_fund_pubkey = "";  //!< remote_fund_pubkey  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
@@ -117,12 +144,12 @@ struct AddSignaturesToRefundTxResponseStruct {
 };
 
 // ------------------------------------------------------------------------
-// CreateCETRequestStruct
+// CreateCetRequestStruct
 // ------------------------------------------------------------------------
 /**
- * @brief CreateCETRequestStruct struct
+ * @brief CreateCetRequestStruct struct
  */
-struct CreateCETRequestStruct {
+struct CreateCetRequestStruct {
   std::string local_fund_pubkey = "";        //!< local_fund_pubkey  // NOLINT
   std::string local_sweep_pubkey = "";       //!< local_sweep_pubkey  // NOLINT
   std::string remote_sweep_pubkey = "";      //!< remote_sweep_pubkey  // NOLINT
@@ -133,19 +160,19 @@ struct CreateCETRequestStruct {
   uint32_t delay = 0;                        //!< delay  // NOLINT
   uint64_t local_payout = 0;                 //!< local_payout  // NOLINT
   uint64_t remote_payout = 0;                //!< remote_payout  // NOLINT
-  std::string fund_txid = "";                //!< fund_txid  // NOLINT
+  std::string fund_tx_id = "";               //!< fund_tx_id  // NOLINT
   uint32_t fund_vout = 0;                    //!< fund_vout  // NOLINT
   uint64_t maturity_time = 0;                //!< maturity_time  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
 
 // ------------------------------------------------------------------------
-// CreateCETResponseStruct
+// CreateCetResponseStruct
 // ------------------------------------------------------------------------
 /**
- * @brief CreateCETResponseStruct struct
+ * @brief CreateCetResponseStruct struct
  */
-struct CreateCETResponseStruct {
+struct CreateCetResponseStruct {
   std::string hex = "";  //!< hex  // NOLINT
   cfd::dlc::js::api::InnerErrorResponseStruct error;   //!< error information
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
@@ -158,10 +185,10 @@ struct CreateCETResponseStruct {
  * @brief CreateClosingTransactionRequestStruct struct
  */
 struct CreateClosingTransactionRequestStruct {
-  std::string address = "";   //!< address  // NOLINT
-  uint64_t amount = 0;        //!< amount  // NOLINT
-  std::string cet_txid = "";  //!< cet_txid  // NOLINT
-  uint32_t cet_vout = 0;      //!< cet_vout  // NOLINT
+  std::string address = "";    //!< address  // NOLINT
+  uint64_t amount = 0;         //!< amount  // NOLINT
+  std::string cet_tx_id = "";  //!< cet_tx_id  // NOLINT
+  uint32_t cet_vout = 0;       //!< cet_vout  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
 
@@ -311,7 +338,7 @@ struct CreateMutualClosingTransactionRequestStruct {
   std::string remote_final_address = "";  //!< remote_final_address  // NOLINT
   uint64_t local_amount = 0;              //!< local_amount  // NOLINT
   uint64_t remote_amount = 0;             //!< remote_amount  // NOLINT
-  std::string fund_txid = "";             //!< fund_txid  // NOLINT
+  std::string fund_tx_id = "";            //!< fund_tx_id  // NOLINT
   uint32_t fund_vout = 0;                 //!< fund_vout  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
@@ -337,8 +364,8 @@ struct CreateMutualClosingTransactionResponseStruct {
 struct CreatePenaltyTransactionRequestStruct {
   std::string final_address = "";  //!< final_address  // NOLINT
   uint64_t amount = 0;             //!< amount  // NOLINT
-  std::string cet_id = "";         //!< cet_id  // NOLINT
-  uint64_t cet_vout = 0;           //!< cet_vout  // NOLINT
+  std::string cet_tx_id = "";      //!< cet_tx_id  // NOLINT
+  uint32_t cet_vout = 0;           //!< cet_vout  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
 
@@ -366,7 +393,7 @@ struct CreateRefundTransactionRequestStruct {
   uint64_t local_amount = 0;              //!< local_amount  // NOLINT
   uint64_t remote_amount = 0;             //!< remote_amount  // NOLINT
   uint64_t lock_time = 0;                 //!< lock_time  // NOLINT
-  std::string fund_txid = "";             //!< fund_txid  // NOLINT
+  std::string fund_tx_id = "";            //!< fund_tx_id  // NOLINT
   uint32_t fund_vout = 0;                 //!< fund_vout  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
@@ -393,10 +420,10 @@ struct GetRawCetSignatureRequestStruct {
   std::string cet_hex = "";             //!< cet_hex  // NOLINT
   std::string privkey = "";             //!< privkey  // NOLINT
   std::string fund_tx_id = "";          //!< fund_tx_id  // NOLINT
-  uint32_t fund_tx_vout = 0;            //!< fund_tx_vout  // NOLINT
+  uint32_t fund_vout = 0;               //!< fund_vout  // NOLINT
   std::string local_fund_pubkey = "";   //!< local_fund_pubkey  // NOLINT
   std::string remote_fund_pubkey = "";  //!< remote_fund_pubkey  // NOLINT
-  uint64_t fund_amount = 0;             //!< fund_amount  // NOLINT
+  uint64_t fund_input_amount = 0;       //!< fund_input_amount  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
 
@@ -422,7 +449,7 @@ struct GetRawFundTxSignatureRequestStruct {
   std::string fund_tx_hex = "";  //!< fund_tx_hex  // NOLINT
   std::string privkey = "";      //!< privkey  // NOLINT
   std::string prev_tx_id = "";   //!< prev_tx_id  // NOLINT
-  uint32_t prev_tx_vout = 0;     //!< prev_tx_vout  // NOLINT
+  uint32_t prev_vout = 0;        //!< prev_vout  // NOLINT
   uint64_t amount = 0;           //!< amount  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
@@ -449,10 +476,10 @@ struct GetRawMutualClosingTxSignatureRequestStruct {
   std::string mutual_closing_hex = "";  //!< mutual_closing_hex  // NOLINT
   std::string privkey = "";             //!< privkey  // NOLINT
   std::string fund_tx_id = "";          //!< fund_tx_id  // NOLINT
-  uint32_t fund_tx_vout = 0;            //!< fund_tx_vout  // NOLINT
+  uint32_t fund_vout = 0;               //!< fund_vout  // NOLINT
   std::string local_fund_pubkey = "";   //!< local_fund_pubkey  // NOLINT
   std::string remote_fund_pubkey = "";  //!< remote_fund_pubkey  // NOLINT
-  uint64_t fund_amount = 0;             //!< fund_amount  // NOLINT
+  uint64_t fund_input_amount = 0;       //!< fund_input_amount  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
 
@@ -478,10 +505,10 @@ struct GetRawRefundTxSignatureRequestStruct {
   std::string refund_tx_hex = "";       //!< refund_tx_hex  // NOLINT
   std::string privkey = "";             //!< privkey  // NOLINT
   std::string fund_tx_id = "";          //!< fund_tx_id  // NOLINT
-  uint32_t fund_tx_vout = 0;            //!< fund_tx_vout  // NOLINT
+  uint32_t fund_vout = 0;               //!< fund_vout  // NOLINT
   std::string local_fund_pubkey = "";   //!< local_fund_pubkey  // NOLINT
   std::string remote_fund_pubkey = "";  //!< remote_fund_pubkey  // NOLINT
-  uint64_t fund_amount = 0;             //!< fund_amount  // NOLINT
+  uint64_t fund_input_amount = 0;       //!< fund_input_amount  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
 
@@ -561,7 +588,7 @@ struct SignClosingTransactionRequestStruct {
   std::vector<std::string> messages;         //!< messages  // NOLINT
   uint64_t delay = 0;                        //!< delay  // NOLINT
   std::vector<std::string> oracle_sigs;      //!< oracle_sigs  // NOLINT
-  std::string cet_txid = "";                 //!< cet_txid  // NOLINT
+  std::string cet_tx_id = "";                //!< cet_tx_id  // NOLINT
   uint32_t cet_vout = 0;                     //!< cet_vout  // NOLINT
   uint64_t amount = 0;                       //!< amount  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
@@ -588,8 +615,8 @@ struct SignClosingTransactionResponseStruct {
 struct SignFundTransactionRequestStruct {
   std::string fund_tx_hex = "";  //!< fund_tx_hex  // NOLINT
   std::string privkey = "";      //!< privkey  // NOLINT
-  std::string prev_txid = "";    //!< prev_txid  // NOLINT
-  uint32_t prev_tx_vout = 0;     //!< prev_tx_vout  // NOLINT
+  std::string prev_tx_id = "";   //!< prev_tx_id  // NOLINT
+  uint32_t prev_vout = 0;        //!< prev_vout  // NOLINT
   uint64_t amount = 0;           //!< amount  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
@@ -619,7 +646,7 @@ struct VerifyCetSignatureRequestStruct {
   std::string remote_fund_pubkey = "";  //!< remote_fund_pubkey  // NOLINT
   std::string fund_tx_id = "";          //!< fund_tx_id  // NOLINT
   uint32_t fund_vout = 0;               //!< fund_vout  // NOLINT
-  uint64_t input_amount = 0;            //!< input_amount  // NOLINT
+  uint64_t fund_input_amount = 0;       //!< fund_input_amount  // NOLINT
   bool verify_remote = true;            //!< verify_remote  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
@@ -643,12 +670,12 @@ struct VerifyCetSignatureResponseStruct {
  * @brief VerifyFundTxSignatureRequestStruct struct
  */
 struct VerifyFundTxSignatureRequestStruct {
-  std::string fund_tx_hex = "";  //!< fund_tx_hex  // NOLINT
-  std::string signature = "";    //!< signature  // NOLINT
-  std::string pubkey = "";       //!< pubkey  // NOLINT
-  std::string prev_tx_id = "";   //!< prev_tx_id  // NOLINT
-  uint32_t prev_tx_vout = 0;     //!< prev_tx_vout  // NOLINT
-  uint64_t input_amount = 0;     //!< input_amount  // NOLINT
+  std::string fund_tx_hex = "";    //!< fund_tx_hex  // NOLINT
+  std::string signature = "";      //!< signature  // NOLINT
+  std::string pubkey = "";         //!< pubkey  // NOLINT
+  std::string prev_tx_id = "";     //!< prev_tx_id  // NOLINT
+  uint32_t prev_vout = 0;          //!< prev_vout  // NOLINT
+  uint64_t fund_input_amount = 0;  //!< fund_input_amount  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
 
@@ -677,7 +704,7 @@ struct VerifyMutualClosingTxSignatureRequestStruct {
   std::string remote_fund_pubkey = "";  //!< remote_fund_pubkey  // NOLINT
   std::string fund_tx_id = "";          //!< fund_tx_id  // NOLINT
   uint32_t fund_vout = 0;               //!< fund_vout  // NOLINT
-  uint64_t input_amount = 0;            //!< input_amount  // NOLINT
+  uint64_t fund_input_amount = 0;       //!< fund_input_amount  // NOLINT
   bool verify_remote = true;            //!< verify_remote  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
@@ -707,7 +734,7 @@ struct VerifyRefundTxSignatureRequestStruct {
   std::string remote_fund_pubkey = "";  //!< remote_fund_pubkey  // NOLINT
   std::string fund_tx_id = "";          //!< fund_tx_id  // NOLINT
   uint32_t fund_vout = 0;               //!< fund_vout  // NOLINT
-  uint64_t input_amount = 0;            //!< input_amount  // NOLINT
+  uint64_t fund_input_amount = 0;       //!< fund_input_amount  // NOLINT
   bool verify_remote = true;            //!< verify_remote  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };

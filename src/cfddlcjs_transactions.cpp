@@ -7,13 +7,14 @@
 
 #include "cfddlcjs/cfddlcjs_transactions.h"
 
+#include <iostream>
 #include <vector>
 
 #include "cfdcore/cfdcore_key.h"
+#include "cfddlc/cfddlc_transactions.h"
+#include "cfddlc/cfddlc_util.h"
 #include "cfddlcjs/cfddlcjs_struct.h"
 #include "cfddlcjs_internal.h"  // NOLINT
-#include "dlc/dlc_transactions.h"
-#include "dlc/dlc_util.h"
 
 namespace cfd {
 namespace dlc {
@@ -67,7 +68,7 @@ CreateFundTransactionResponseStruct DlcTransactionsApi::CreateFundTransaction(
 
     auto local_change_address = Address(request.local_change.address);
     std::vector<TxIn> remote_inputs;
-    for (TxInRequestAStruct txin_req : request.local_inputs) {
+    for (TxInRequestAStruct txin_req : request.remote_inputs) {
       auto txid = Txid(txin_req.txid);
       auto txin = TxIn(txid, txin_req.vout, 0);
       remote_inputs.push_back(txin);
@@ -97,11 +98,11 @@ SignFundTransactionResponseStruct DlcTransactionsApi::SignFundTransaction(
     SignFundTransactionResponseStruct response;
     auto transaction = TransactionController(request.fund_tx_hex);
     auto privkey = Privkey(request.privkey);
-    auto prev_tx_id = Txid(request.prev_txid);
+    auto prev_tx_id = Txid(request.prev_tx_id);
     auto value = Amount::CreateBySatoshiAmount(request.amount);
 
-    DlcManager::SignFundingTransactionInput(&transaction, privkey, prev_tx_id,
-                                            request.prev_tx_vout, value);
+    DlcManager::SignFundTransactionInput(&transaction, privkey, prev_tx_id,
+                                         request.prev_vout, value);
     response.hex = transaction.GetHex();
     return response;
   };
@@ -117,18 +118,40 @@ GetRawFundTxSignatureResponseStruct DlcTransactionsApi::GetRawFundTxSignature(
   auto call_func = [](const GetRawFundTxSignatureRequestStruct& request)
       -> GetRawFundTxSignatureResponseStruct {
     GetRawFundTxSignatureResponseStruct response;
-    TransactionController refund_tx(request.fund_tx_hex);
+    TransactionController fund_tx(request.fund_tx_hex);
     Privkey privkey(request.privkey);
     Txid prev_txid(request.prev_tx_id);
     auto amount = Amount::CreateBySatoshiAmount(request.amount);
     auto signature = DlcManager::GetRawFundingTransactionInputSignature(
-        refund_tx, privkey, prev_txid, request.prev_tx_vout, amount);
+        fund_tx, privkey, prev_txid, request.prev_vout, amount);
     response.hex = signature.GetHex();
     return response;
   };
   GetRawFundTxSignatureResponseStruct result;
   result = ExecuteStructApi<GetRawFundTxSignatureRequestStruct,
                             GetRawFundTxSignatureResponseStruct>(
+      request, call_func, std::string(__FUNCTION__));
+  return result;
+}
+
+AddSignatureToFundTransactionResponseStruct
+DlcTransactionsApi::AddSignatureToFundTransaction(
+    const AddSignatureToFundTransactionRequestStruct& request) {
+  auto call_func = [](const AddSignatureToFundTransactionRequestStruct& request)
+      -> AddSignatureToFundTransactionResponseStruct {
+    AddSignatureToFundTransactionResponseStruct response;
+    TransactionController fund_tx(request.fund_tx_hex);
+    Pubkey pubkey(request.pubkey);
+    Txid prev_txid(request.prev_tx_id);
+    ByteData signature(request.signature);
+    DlcManager::AddSignatureToFundTransaction(&fund_tx, signature, pubkey,
+                                              prev_txid, request.prev_vout);
+    response.hex = fund_tx.GetHex();
+    return response;
+  };
+  AddSignatureToFundTransactionResponseStruct result;
+  result = ExecuteStructApi<AddSignatureToFundTransactionRequestStruct,
+                            AddSignatureToFundTransactionResponseStruct>(
       request, call_func, std::string(__FUNCTION__));
   return result;
 }
@@ -142,10 +165,10 @@ VerifyFundTxSignatureResponseStruct DlcTransactionsApi::VerifyFundTxSignature(
     ByteData signature(request.signature);
     Pubkey pubkey(request.pubkey);
     Txid prev_txid(request.prev_tx_id);
-    auto amount = Amount::CreateBySatoshiAmount(request.input_amount);
+    auto amount = Amount::CreateBySatoshiAmount(request.fund_input_amount);
 
     response.valid = DlcManager::VerifyFundTxSignature(
-        fund_tx, signature, pubkey, prev_txid, request.prev_tx_vout, amount);
+        fund_tx, signature, pubkey, prev_txid, request.prev_vout, amount);
     return response;
   };
   VerifyFundTxSignatureResponseStruct result;
@@ -155,11 +178,11 @@ VerifyFundTxSignatureResponseStruct DlcTransactionsApi::VerifyFundTxSignature(
   return result;
 }
 
-CreateCETResponseStruct DlcTransactionsApi::CreateCET(
-    const CreateCETRequestStruct& request) {
+CreateCetResponseStruct DlcTransactionsApi::CreateCet(
+    const CreateCetRequestStruct& request) {
   auto call_func =
-      [](const CreateCETRequestStruct& request) -> CreateCETResponseStruct {
-    CreateCETResponseStruct response;
+      [](const CreateCetRequestStruct& request) -> CreateCetResponseStruct {
+    CreateCetResponseStruct response;
     auto local_fund_pubkey = Pubkey(request.local_fund_pubkey);
     auto local_sweep_pubkey = Pubkey(request.local_sweep_pubkey);
     auto oracle_pubkey = Pubkey(request.oracle_pubkey);
@@ -168,7 +191,7 @@ CreateCETResponseStruct DlcTransactionsApi::CreateCET(
     auto remote_final_address = Address(request.remote_final_address);
     auto local_payout = Amount::CreateBySatoshiAmount(request.local_payout);
     auto remote_payout = Amount::CreateBySatoshiAmount(request.remote_payout);
-    auto fund_tx_id = Txid(request.fund_txid);
+    auto fund_tx_id = Txid(request.fund_tx_id);
 
     auto transaction = DlcManager::CreateCet(
         local_fund_pubkey, local_sweep_pubkey, remote_sweep_pubkey,
@@ -179,8 +202,8 @@ CreateCETResponseStruct DlcTransactionsApi::CreateCET(
     response.hex = transaction.GetHex();
     return response;
   };
-  CreateCETResponseStruct result;
-  result = ExecuteStructApi<CreateCETRequestStruct, CreateCETResponseStruct>(
+  CreateCetResponseStruct result;
+  result = ExecuteStructApi<CreateCetRequestStruct, CreateCetResponseStruct>(
       request, call_func, std::string(__FUNCTION__));
   return result;
 }
@@ -195,7 +218,7 @@ DlcTransactionsApi::CreateRefundTransaction(
     auto remote_final_address = Address(request.remote_final_address);
     auto local_amount = Amount::CreateBySatoshiAmount(request.local_amount);
     auto remote_amount = Amount::CreateBySatoshiAmount(request.remote_amount);
-    auto fund_tx_id = Txid(request.fund_txid);
+    auto fund_tx_id = Txid(request.fund_tx_id);
 
     auto transaction = DlcManager::CreateRefundTransaction(
         local_final_address, remote_final_address, local_amount, remote_amount,
@@ -219,7 +242,7 @@ DlcTransactionsApi::CreateClosingTransaction(
     CreateClosingTransactionResponseStruct response;
     auto address = Address(request.address);
     auto amount = Amount::CreateBySatoshiAmount(request.amount);
-    auto cet_id = Txid(request.cet_txid);
+    auto cet_id = Txid(request.cet_tx_id);
 
     auto transaction = DlcManager::CreateClosingTransaction(
         address, amount, cet_id, request.cet_vout);
@@ -247,7 +270,7 @@ SignClosingTransactionResponseStruct DlcTransactionsApi::SignClosingTransaction(
     auto messages = request.messages;
     uint32_t delay = request.delay;
     std::vector<ByteData> oracle_sigs;
-    auto cet_id = Txid(request.cet_txid);
+    auto cet_id = Txid(request.cet_tx_id);
     auto value = Amount::CreateBySatoshiAmount(request.amount);
 
     for (auto sig : request.oracle_sigs) {
@@ -363,10 +386,11 @@ GetRawCetSignatureResponseStruct DlcTransactionsApi::GetRawCetSignature(
     Pubkey local_fund_pubkey(request.local_fund_pubkey);
     Pubkey remote_fund_pubkey(request.remote_fund_pubkey);
     Txid fund_txid(request.fund_tx_id);
-    auto fund_amount = Amount::CreateBySatoshiAmount(request.fund_amount);
+    auto fund_input_amount =
+        Amount::CreateBySatoshiAmount(request.fund_input_amount);
     auto signature = DlcManager::GetRawCetSignature(
-        cet, privkey, local_fund_pubkey, remote_fund_pubkey, fund_amount,
-        fund_txid, request.fund_tx_vout);
+        cet, privkey, local_fund_pubkey, remote_fund_pubkey, fund_input_amount,
+        fund_txid, request.fund_vout);
     response.hex = signature.GetHex();
     return response;
   };
@@ -394,7 +418,7 @@ AddSignaturesToCetResponseStruct DlcTransactionsApi::AddSignaturesToCet(
     }
 
     DlcManager::AddSignaturesToCet(&cet, local_fund_pubkey, remote_fund_pubkey,
-                                   signatures, fund_txid, request.fund_tx_vout);
+                                   signatures, fund_txid, request.fund_vout);
     response.hex = cet.GetHex();
     return response;
   };
@@ -415,11 +439,12 @@ VerifyCetSignatureResponseStruct DlcTransactionsApi::VerifyCetSignature(
     Pubkey local_fund_pubkey(request.local_fund_pubkey);
     Pubkey remote_fund_pubkey(request.remote_fund_pubkey);
     Txid fund_txid(request.fund_tx_id);
-    auto input_amount = Amount::CreateBySatoshiAmount(request.input_amount);
+    auto fund_input_amount =
+        Amount::CreateBySatoshiAmount(request.fund_input_amount);
 
     response.valid = DlcManager::VerifyCetSignature(
-        cet, signature, local_fund_pubkey, remote_fund_pubkey, input_amount,
-        fund_txid, request.fund_vout, request.verify_remote);
+        cet, signature, local_fund_pubkey, remote_fund_pubkey,
+        fund_input_amount, fund_txid, request.fund_vout, request.verify_remote);
     return response;
   };
   VerifyCetSignatureResponseStruct result;
@@ -436,10 +461,10 @@ DlcTransactionsApi::CreatePenaltyTransaction(
       -> CreatePenaltyTransactionResponseStruct {
     CreatePenaltyTransactionResponseStruct response;
     Address address(request.final_address);
-    Txid cet_id(request.cet_id);
+    Txid cet_tx_id(request.cet_tx_id);
     auto amount = Amount::CreateBySatoshiAmount(request.amount);
 
-    auto tx = DlcManager::CreatePenaltyTransaction(address, amount, cet_id,
+    auto tx = DlcManager::CreatePenaltyTransaction(address, amount, cet_tx_id,
                                                    request.cet_vout);
     response.hex = tx.GetHex();
     return response;
@@ -460,7 +485,7 @@ DlcTransactionsApi::CreateMutualClosingTransaction(
     CreateMutualClosingTransactionResponseStruct response;
     Address local_final_address(request.local_final_address);
     Address remote_final_address(request.remote_final_address);
-    Txid fund_txid(request.fund_txid);
+    Txid fund_txid(request.fund_tx_id);
     auto local_amount = Amount::CreateBySatoshiAmount(request.local_amount);
     auto remote_amount = Amount::CreateBySatoshiAmount(request.remote_amount);
 
@@ -489,10 +514,11 @@ DlcTransactionsApi::GetRawMutualClosingTxSignature(
     Pubkey local_fund_pubkey(request.local_fund_pubkey);
     Pubkey remote_fund_pubkey(request.remote_fund_pubkey);
     Txid fund_txid(request.fund_tx_id);
-    auto fund_amount = Amount::CreateBySatoshiAmount(request.fund_amount);
+    auto fund_input_amount =
+        Amount::CreateBySatoshiAmount(request.fund_input_amount);
     auto signature = DlcManager::GetRawMutualClosingTxSignature(
         mutual_closing_hex, privkey, local_fund_pubkey, remote_fund_pubkey,
-        fund_amount, fund_txid, request.fund_tx_vout);
+        fund_input_amount, fund_txid, request.fund_vout);
     response.hex = signature.GetHex();
     return response;
   };
@@ -523,7 +549,7 @@ DlcTransactionsApi::AddSignaturesToMutualClosingTx(
 
     DlcManager::AddSignaturesToMutualClosingTx(
         &mutual_closing_tx_hex, local_fund_pubkey, remote_fund_pubkey,
-        signatures, fund_txid, request.fund_tx_vout);
+        signatures, fund_txid, request.fund_vout);
     response.hex = mutual_closing_tx_hex.GetHex();
     return response;
   };
@@ -546,11 +572,12 @@ DlcTransactionsApi::VerifyMutualClosingTxSignature(
     Pubkey local_fund_pubkey(request.local_fund_pubkey);
     Pubkey remote_fund_pubkey(request.remote_fund_pubkey);
     Txid fund_txid(request.fund_tx_id);
-    auto input_amount = Amount::CreateBySatoshiAmount(request.input_amount);
+    auto fund_input_amount =
+        Amount::CreateBySatoshiAmount(request.fund_input_amount);
 
     response.valid = DlcManager::VerifyMutualClosingTxSignature(
-        cet, signature, local_fund_pubkey, remote_fund_pubkey, fund_txid,
-        request.fund_vout, input_amount, request.verify_remote);
+        cet, signature, local_fund_pubkey, remote_fund_pubkey,
+        fund_input_amount, fund_txid, request.fund_vout, request.verify_remote);
     return response;
   };
   VerifyMutualClosingTxSignatureResponseStruct result;
@@ -571,10 +598,11 @@ DlcTransactionsApi::GetRawRefundTxSignature(
     Pubkey local_fund_pubkey(request.local_fund_pubkey);
     Pubkey remote_fund_pubkey(request.remote_fund_pubkey);
     Txid fund_txid(request.fund_tx_id);
-    auto fund_amount = Amount::CreateBySatoshiAmount(request.fund_amount);
+    auto fund_input_amount =
+        Amount::CreateBySatoshiAmount(request.fund_input_amount);
     auto signature = DlcManager::GetRawRefundTxSignature(
-        refund_tx, privkey, local_fund_pubkey, remote_fund_pubkey, fund_amount,
-        fund_txid, request.fund_tx_vout);
+        refund_tx, privkey, local_fund_pubkey, remote_fund_pubkey,
+        fund_input_amount, fund_txid, request.fund_vout);
     response.hex = signature.GetHex();
     return response;
   };
@@ -604,7 +632,7 @@ DlcTransactionsApi::AddSignaturesToRefundTx(
 
     DlcManager::AddSignaturesToRefundTx(&refund_tx, local_fund_pubkey,
                                         remote_fund_pubkey, signatures,
-                                        fund_txid, request.fund_tx_vout);
+                                        fund_txid, request.fund_vout);
     response.hex = refund_tx.GetHex();
     return response;
   };
@@ -626,11 +654,12 @@ DlcTransactionsApi::VerifyRefundTxSignature(
     Pubkey local_fund_pubkey(request.local_fund_pubkey);
     Pubkey remote_fund_pubkey(request.remote_fund_pubkey);
     Txid fund_txid(request.fund_tx_id);
-    auto input_amount = Amount::CreateBySatoshiAmount(request.input_amount);
+    auto fund_input_amount =
+        Amount::CreateBySatoshiAmount(request.fund_input_amount);
 
     response.valid = DlcManager::VerifyRefundTxSignature(
         refund_tx, signature, local_fund_pubkey, remote_fund_pubkey,
-        input_amount, request.verify_remote, fund_txid, request.fund_vout);
+        fund_input_amount, request.verify_remote, fund_txid, request.fund_vout);
     return response;
   };
   VerifyRefundTxSignatureResponseStruct result;

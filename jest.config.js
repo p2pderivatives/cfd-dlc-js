@@ -1,13 +1,11 @@
 module.exports = {
   transform: {
-    "^.+\\.ts$": 'ts-jest'
+    "^.+\\.ts?$": "ts-jest",
   },
   globals: {
     "ts-jest": {
-      tsConfig: 'tsconfig.json',
+      tsConfig: "tsconfig.json",
     },
   },
-  testMatch: [
-    "**/integration_tests/__tests__/*.spec.ts"
-  ],
+  testMatch: ["<rootDir>/wrap_js/__test__/*.spec.ts"],
 };

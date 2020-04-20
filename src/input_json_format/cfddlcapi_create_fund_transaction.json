@@ -1,11 +1,5 @@
 {
-  "namespace": [
-    "cfd",
-    "dlc",
-    "js",
-    "api",
-    "json"
-  ],
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
   "request": {
     ":class": "CreateFundTransactionRequest",
     ":class:comment": "Create a fund transaction",
