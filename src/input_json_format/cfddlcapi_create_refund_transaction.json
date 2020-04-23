@@ -1,0 +1,23 @@
+{
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
+  "request": {
+    ":class": "CreateRefundTransactionRequest",
+    ":class:comment": "Create a refund transaction",
+    "localFinalAddress": "",
+    "remoteFinalAddress": "",
+    "localAmount": 0,
+    "localAmount:type": "uint64_t",
+    "remoteAmount": 0,
+    "remoteAmount:type": "uint64_t",
+    "lockTime": 0,
+    "lockTime:type": "uint64_t",
+    "fundTxId": "",
+    "fundVout": 0,
+    "fundVout:require": "optional",
+    "fundVout:type": "uint32_t"
+  },
+  "response": {
+    ":class": "CreateRefundTransactionResponse",
+    "hex": ""
+  }
+}

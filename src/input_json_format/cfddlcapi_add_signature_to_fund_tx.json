@@ -1,0 +1,17 @@
+{
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
+  "request": {
+    ":class": "AddSignatureToFundTransactionRequest",
+    ":class:comment": "Add a signature to fund transaction",
+    "fundTxHex": "",
+    "signature": "",
+    "prevTxId": "",
+    "prevVout": 0,
+    "prevVout:type": "uint32_t",
+    "pubkey": ""
+  },
+  "response": {
+    ":class": "AddSignatureToFundTransactionResponse",
+    "hex": ""
+  }
+}

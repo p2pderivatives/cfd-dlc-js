@@ -1,0 +1,12 @@
+{
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
+  "request": {
+    ":class": "GetSchnorrPublicNonceRequest",
+    ":class:comment": "Get a schnorr public nonce",
+    "kValue": ""
+  },
+  "response": {
+    ":class": "GetSchnorrPublicNonceResponse",
+    "hex": ""
+  }
+}

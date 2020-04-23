@@ -1,0 +1,19 @@
+{
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
+  "request": {
+    ":class": "VerifyFundTxSignatureRequest",
+    ":class:comment": "Verify a signature for a mutual closing transaction",
+    "fundTxHex": "",
+    "signature": "",
+    "pubkey": "",
+    "prevTxId": "",
+    "prevVout": 0,
+    "prevVout:type": "uint32_t",
+    "fundInputAmount": 0,
+    "fundInputAmount:type": "uint64_t"
+  },
+  "response": {
+    ":class": "VerifyFundTxSignatureResponse",
+    "valid": false
+  }
+}
