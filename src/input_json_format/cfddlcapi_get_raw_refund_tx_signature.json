@@ -1,0 +1,21 @@
+{
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
+  "request": {
+    ":class": "GetRawRefundTxSignatureRequest",
+    ":class:comment": "Get a signature for a CET",
+    "refundTxHex": "",
+    "privkey": "",
+    "fundTxId": "",
+    "fundVout": 0,
+    "fundVout:type": "uint32_t",
+    "fundVout:require": "optional",
+    "localFundPubkey": "",
+    "remoteFundPubkey": "",
+    "fundInputAmount": 0,
+    "fundInputAmount:type": "uint64_t"
+  },
+  "response": {
+    ":class": "GetRawRefundTxSignatureResponse",
+    "hex": ""
+  }
+}

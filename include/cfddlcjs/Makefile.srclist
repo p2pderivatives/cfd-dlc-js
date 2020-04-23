@@ -1,0 +1,6 @@
+# ./include/cfddlcjs/Makefile.srclist
+
+CFDDLCJS_PKGINCLUDE_FILES = \
+  cfddlcjs_struct.h \
+  cfddlc_transactions.h
+
