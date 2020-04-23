@@ -1,0 +1,18 @@
+{
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
+  "request": {
+    ":class": "GetRawFundTxSignatureRequest",
+    ":class:comment": "Get a signature for a fund transaction input",
+    "fundTxHex": "",
+    "privkey": "",
+    "prevTxId": "",
+    "prevVout": 0,
+    "prevVout:type": "uint32_t",
+    "amount": 0,
+    "amount:type": "uint64_t"
+  },
+  "response": {
+    ":class": "GetRawFundTxSignatureResponse",
+    "hex": ""
+  }
+}

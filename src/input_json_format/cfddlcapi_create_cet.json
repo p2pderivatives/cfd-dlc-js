@@ -1,0 +1,31 @@
+{
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
+  "request": {
+    ":class": "CreateCetRequest",
+    ":class:comment": "Create a CET",
+    "localFundPubkey": "",
+    "localSweepPubkey": "",
+    "remoteSweepPubkey": "",
+    "remoteFinalAddress": "",
+    "oraclePubkey": "",
+    "oracleRPoints": [""],
+    "messages": [""],
+    "delay": 0,
+    "delay:type": "uint32_t",
+    "localPayout": 0,
+    "localPayout:type": "uint64_t",
+    "remotePayout": 0,
+    "remotePayout:type": "uint64_t",
+    "feeRate": 1,
+    "fundTxId": "",
+    "fundVout": 0,
+    "fundVout:require": "optional",
+    "fundVout:type": "uint32_t",
+    "maturityTime": 0,
+    "maturityTime:type": "uint64_t"
+  },
+  "response": {
+    ":class": "CreateCetResponse",
+    "hex": ""
+  }
+}

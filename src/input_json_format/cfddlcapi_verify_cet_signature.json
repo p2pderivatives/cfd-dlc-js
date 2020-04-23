@@ -1,0 +1,22 @@
+{
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
+  "request": {
+    ":class": "VerifyCetSignatureRequest",
+    ":class:comment": "Verify a signature for a CET",
+    "cetHex": "",
+    "signature": "",
+    "localFundPubkey": "",
+    "remoteFundPubkey": "",
+    "fundTxId": "",
+    "fundVout": 0,
+    "fundVout:type": "uint32_t",
+    "fundVout:require": "optional",
+    "fundInputAmount": 0,
+    "fundInputAmount:type": "uint64_t",
+    "verifyRemote": true
+  },
+  "response": {
+    ":class": "VerifyCetSignatureResponse",
+    "valid": false
+  }
+}
