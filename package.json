@@ -15,6 +15,7 @@
     "test_quiet": "jest --no-cache --silent",
     "test_logging": "jest --no-cache --silent=false --verbose false",
     "test_report": "cross-env JEST_JUNIT_OUTPUT_DIR=./reports/jest jest  --reporters=default --reporters=jest-junit",
+    "test_integration": "jest --config jest.integration.config.js",
     "format_all": "run-p code_format ts_format",
     "code_format": "clang-format -i --style=file src/*.cpp src/*.h include/cfddlcjs/*.h",
     "ts_format": "tslint -c tslint.json 'wrap_js/**/*.ts' 'integration_tests/__tests__/**/*.ts' --fix",
@@ -102,6 +103,7 @@
     "ts-node": "^8.6.2",
     "tslint": "^6.1.1",
     "tslint-plugin-prettier": "^2.3.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "wallet-for-testing-js": "git+https://github.com/cryptogarageinc/wallet-for-testing-js#v0.0.3"
   }
 }
