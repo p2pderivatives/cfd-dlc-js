@@ -1,0 +1,25 @@
+{
+  "name": "dlccli",
+  "version": "0.0.1",
+  "description": "tutorial to learn DLC using the cfd-dlc-js library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "example": "ts-node index.ts"
+  },
+  "author": "CryptoGarage Inc.",
+  "license": "MIT",
+  "dependencies": {
+    "bitcoin-core": "github:wleev/bitcoin-core#test-version",
+    "inquirer": "^7.1.0",
+    "inquirer-datepicker": "^1.1.0",
+    "tslint": "^6.1.2",
+    "uuid": "^7.0.3"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^6.5.0",
+    "@types/node": "^13.13.2",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.8.3"
+  }
+}
