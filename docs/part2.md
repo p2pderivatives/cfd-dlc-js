@@ -1,6 +1,6 @@
 # Part 2: Setup
 
-The code for this tutorial is [available on github](https://github.com/p2pderivatives/cfd-js/blob/master/example/dlccli).
+The code for this tutorial is [available on github](https://github.com/p2pderivatives/cfd-dlc-js/tree/master/examples/dlccli).
 
 ## Pre-requisite
 
