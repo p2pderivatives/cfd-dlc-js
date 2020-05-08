@@ -70,4 +70,4 @@ Check also [the resources page](https://github.com/discreetlogcontracts/dlcspecs
 
 ---
 
-Now that we have a basic understanding of DLC, let's start coding!
+Now that we have a basic understanding of DLC, we will start coding in [part 2](./part2.md)!
