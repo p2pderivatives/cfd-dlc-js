@@ -410,4 +410,4 @@ addresstype=bech32
 
 Note that it's important to use `bech32` addresses as DLC requires SegWit transactions to work.
 
-Now you are read to run, type `npm run example` and create your first DLC contract!
+Now you are ready to run, type `npm run example` and create your first DLC contract!
