@@ -8,17 +8,12 @@ transform_makefile_srclist(${DEBUG_VERSION_FILE} "${CMAKE_CURRENT_BINARY_DIR}/${
 include(${CMAKE_CURRENT_BINARY_DIR}/${EXTERNAL_DEBUG_FILENAME}.cmake)
 endif()
 
-# cfd-core
-# TODO REMOVE LATER
-set(CFDCORE_TARGET_URL cryptogarageinc/cfd-core.git)
-set(CFDCORE_TARGET_VERSION "v0.0.25")
-
 # cfd-dlc
 if(CFD_DLC_TARGET_VERSION)
 set(CFD_DLC_TARGET_TAG  ${CFD_DLC_TARGET_VERSION})
 message(STATUS "[external project debug] cfd dlc target=${CFD_DLC_TARGET_VERSION}")
 else()
-set(CFD_DLC_TARGET_TAG  "v0.0.1")
+set(CFD_DLC_TARGET_TAG  "v0.0.2")
 endif()
 if(CFD_DLC_TARGET_URL)
 set(CFD_DLC_TARGET_REP  ${CFD_DLC_TARGET_URL})
