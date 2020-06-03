@@ -2352,46 +2352,46 @@ class CreateCetRequest
   }
 
   /**
-   * @brief Get of delay
-   * @return delay
+   * @brief Get of csvDelay
+   * @return csvDelay
    */
-  uint32_t GetDelay() const {
-    return delay_;
+  uint32_t GetCsvDelay() const {
+    return csv_delay_;
   }
   /**
-   * @brief Set to delay
-   * @param[in] delay    setting value.
+   * @brief Set to csvDelay
+   * @param[in] csv_delay    setting value.
    */
-  void SetDelay(  // line separate
-    const uint32_t& delay) {  // NOLINT
-    this->delay_ = delay;
+  void SetCsvDelay(  // line separate
+    const uint32_t& csv_delay) {  // NOLINT
+    this->csv_delay_ = csv_delay;
   }
   /**
-   * @brief Get data type of delay
-   * @return Data type of delay
+   * @brief Get data type of csvDelay
+   * @return Data type of csvDelay
    */
-  static std::string GetDelayFieldType() {
+  static std::string GetCsvDelayFieldType() {
     return "uint32_t";
   }
   /**
-   * @brief Get json string of delay field.
+   * @brief Get json string of csvDelay field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetDelayString(  // line separate
+  static std::string GetCsvDelayString(  // line separate
       const CreateCetRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.delay_);
+    return cfd::core::ConvertToString(obj.csv_delay_);
   }
   /**
-   * @brief Set json object to delay field.
+   * @brief Set json object to csvDelay field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetDelayString(  // line separate
+  static void SetCsvDelayString(  // line separate
       CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.delay_, json_value);
+      obj.csv_delay_, json_value);
   }
 
   /**
@@ -2750,9 +2750,9 @@ class CreateCetRequest
    */
   JsonValueVector<std::string> messages_;  // NOLINT
   /**
-   * @brief JsonAPI(delay) value
+   * @brief JsonAPI(csvDelay) value
    */
-  uint32_t delay_ = 0;
+  uint32_t csv_delay_ = 0;
   /**
    * @brief JsonAPI(localPayout) value
    */
@@ -4334,46 +4334,89 @@ class CreateDlcTransactionsRequest
   }
 
   /**
-   * @brief Get of timeout
-   * @return timeout
+   * @brief Get of csvDelay
+   * @return csvDelay
    */
-  uint32_t GetTimeout() const {
-    return timeout_;
+  uint64_t GetCsvDelay() const {
+    return csv_delay_;
   }
   /**
-   * @brief Set to timeout
-   * @param[in] timeout    setting value.
+   * @brief Set to csvDelay
+   * @param[in] csv_delay    setting value.
    */
-  void SetTimeout(  // line separate
-    const uint32_t& timeout) {  // NOLINT
-    this->timeout_ = timeout;
+  void SetCsvDelay(  // line separate
+    const uint64_t& csv_delay) {  // NOLINT
+    this->csv_delay_ = csv_delay;
   }
   /**
-   * @brief Get data type of timeout
-   * @return Data type of timeout
+   * @brief Get data type of csvDelay
+   * @return Data type of csvDelay
    */
-  static std::string GetTimeoutFieldType() {
-    return "uint32_t";
+  static std::string GetCsvDelayFieldType() {
+    return "uint64_t";
   }
   /**
-   * @brief Get json string of timeout field.
+   * @brief Get json string of csvDelay field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetTimeoutString(  // line separate
+  static std::string GetCsvDelayString(  // line separate
       const CreateDlcTransactionsRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.timeout_);
+    return cfd::core::ConvertToString(obj.csv_delay_);
   }
   /**
-   * @brief Set json object to timeout field.
+   * @brief Set json object to csvDelay field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetTimeoutString(  // line separate
+  static void SetCsvDelayString(  // line separate
       CreateDlcTransactionsRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.timeout_, json_value);
+      obj.csv_delay_, json_value);
+  }
+
+  /**
+   * @brief Get of refundLocktime
+   * @return refundLocktime
+   */
+  uint64_t GetRefundLocktime() const {
+    return refund_locktime_;
+  }
+  /**
+   * @brief Set to refundLocktime
+   * @param[in] refund_locktime    setting value.
+   */
+  void SetRefundLocktime(  // line separate
+    const uint64_t& refund_locktime) {  // NOLINT
+    this->refund_locktime_ = refund_locktime;
+  }
+  /**
+   * @brief Get data type of refundLocktime
+   * @return Data type of refundLocktime
+   */
+  static std::string GetRefundLocktimeFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of refundLocktime field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetRefundLocktimeString(  // line separate
+      const CreateDlcTransactionsRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.refund_locktime_);
+  }
+  /**
+   * @brief Set json object to refundLocktime field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetRefundLocktimeString(  // line separate
+      CreateDlcTransactionsRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.refund_locktime_, json_value);
   }
 
   /**
@@ -4758,9 +4801,13 @@ class CreateDlcTransactionsRequest
    */
   uint64_t remote_collateral_amount_ = 0;
   /**
-   * @brief JsonAPI(timeout) value
+   * @brief JsonAPI(csvDelay) value
    */
-  uint32_t timeout_ = 0;
+  uint64_t csv_delay_ = 0;
+  /**
+   * @brief JsonAPI(refundLocktime) value
+   */
+  uint64_t refund_locktime_ = 0;
   /**
    * @brief JsonAPI(localInputs) value
    */
@@ -11608,46 +11655,46 @@ class SignClosingTransactionRequest
   }
 
   /**
-   * @brief Get of delay
-   * @return delay
+   * @brief Get of csvDelay
+   * @return csvDelay
    */
-  uint64_t GetDelay() const {
-    return delay_;
+  uint64_t GetCsvDelay() const {
+    return csv_delay_;
   }
   /**
-   * @brief Set to delay
-   * @param[in] delay    setting value.
+   * @brief Set to csvDelay
+   * @param[in] csv_delay    setting value.
    */
-  void SetDelay(  // line separate
-    const uint64_t& delay) {  // NOLINT
-    this->delay_ = delay;
+  void SetCsvDelay(  // line separate
+    const uint64_t& csv_delay) {  // NOLINT
+    this->csv_delay_ = csv_delay;
   }
   /**
-   * @brief Get data type of delay
-   * @return Data type of delay
+   * @brief Get data type of csvDelay
+   * @return Data type of csvDelay
    */
-  static std::string GetDelayFieldType() {
+  static std::string GetCsvDelayFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of delay field.
+   * @brief Get json string of csvDelay field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetDelayString(  // line separate
+  static std::string GetCsvDelayString(  // line separate
       const SignClosingTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.delay_);
+    return cfd::core::ConvertToString(obj.csv_delay_);
   }
   /**
-   * @brief Set json object to delay field.
+   * @brief Set json object to csvDelay field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetDelayString(  // line separate
+  static void SetCsvDelayString(  // line separate
       SignClosingTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.delay_, json_value);
+      obj.csv_delay_, json_value);
   }
 
   /**
@@ -11921,9 +11968,9 @@ class SignClosingTransactionRequest
    */
   JsonValueVector<std::string> messages_;  // NOLINT
   /**
-   * @brief JsonAPI(delay) value
+   * @brief JsonAPI(csvDelay) value
    */
-  uint64_t delay_ = 0;
+  uint64_t csv_delay_ = 0;
   /**
    * @brief JsonAPI(oracleSigs) value
    */

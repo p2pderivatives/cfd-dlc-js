@@ -29,7 +29,8 @@ const testCase = [
       localCollateralAmount: TestData.LocalCollateralAmount,
       remoteInputAmount: TestData.RemoteInputAmount,
       remoteCollateralAmount: TestData.RemoteCollateralAmount,
-      timeout: 100,
+      csvDelay: 100,
+      refundLocktime: 100,
       localInputs: [
         {
           txid: TestData.LocalInputs[0].txid,

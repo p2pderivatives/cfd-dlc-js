@@ -169,7 +169,8 @@ We encapsulate it in a `CreateDlcTransactions` function:
       localCollateralAmount: this.contract.localCollateral.GetSatoshiAmount(),
       remoteInputAmount: this.contract.remotePartyInputs.GetTotalInputAmount(),
       remoteCollateralAmount: this.contract.remoteCollateral.GetSatoshiAmount(),
-      timeout: this.contract.cetCsvDelay,
+      csvDelay: this.contract.cetCsvDelay,
+      refundLocktime: this.contract.refundLockTime,
       localInputs: this.contract.localPartyInputs.utxos,
       remoteInputs: this.contract.remotePartyInputs.utxos,
       localChangeAddress: this.contract.localPartyInputs.changeAddress,
@@ -618,7 +619,7 @@ We then sign the closing transaction using our private key and the oracle signat
       oracleRPoints: [this.contract.oracleInfo.rValue],
       oracleSigs: [oracleSignature],
       messages: [this.contract.outcomes[outcomeIndex].message],
-      delay: this.contract.cetCsvDelay,
+      csvDelay: this.contract.cetCsvDelay,
     };
 
     closingTxHex = cfddlcjs.SignClosingTransaction(signClosingRequest).hex;

@@ -14,7 +14,7 @@ const testCase = [
       oraclePubkey: TestData.OraclePubkey,
       oracleRPoints: TestData.OracleRPoints,
       messages: TestData.WinMessages,
-      delay: 100,
+      csvDelay: 100,
       localPayout: TestData.WinAmount + 122,
       remotePayout: TestData.LoseAmount,
       feeRate: 1,
