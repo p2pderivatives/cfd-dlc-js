@@ -29,8 +29,10 @@
     "remoteInputAmount:type": "uint64_t",
     "remoteCollateralAmount": 0,
     "remoteCollateralAmount:type": "uint64_t",
-    "timeout": 0,
-    "timeout:type": "uint32_t",
+    "csvDelay": 0,
+    "csvDelay:type": "uint64_t",
+    "refundLocktime": 0,
+    "refundLocktime:type": "uint64_t",
     "localInputs": [
       {
         ":class": "TxInRequest",

@@ -14,7 +14,7 @@ const testCase = [
       oraclePubkey: TestData.OraclePubkey,
       oracleRPoints: TestData.OracleRPoints,
       messages: TestData.WinMessages,
-      delay: 100,
+      csvDelay: 100,
       oracleSigs: [TestData.OracleSignature],
       cetTxId: TestData.CetTxId,
       cetVout: 0,

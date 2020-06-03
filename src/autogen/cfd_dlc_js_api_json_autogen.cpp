@@ -537,12 +537,12 @@ void CreateCetRequest::CollectFieldName() {
   json_mapper.emplace("messages", func_table);
   item_list.push_back("messages");
   func_table = {
-    CreateCetRequest::GetDelayString,
-    CreateCetRequest::SetDelayString,
-    CreateCetRequest::GetDelayFieldType,
+    CreateCetRequest::GetCsvDelayString,
+    CreateCetRequest::SetCsvDelayString,
+    CreateCetRequest::GetCsvDelayFieldType,
   };
-  json_mapper.emplace("delay", func_table);
-  item_list.push_back("delay");
+  json_mapper.emplace("csvDelay", func_table);
+  item_list.push_back("csvDelay");
   func_table = {
     CreateCetRequest::GetLocalPayoutString,
     CreateCetRequest::SetLocalPayoutString,
@@ -596,7 +596,7 @@ void CreateCetRequest::ConvertFromStruct(
   oracle_pubkey_ = data.oracle_pubkey;
   oracle_r_points_.ConvertFromStruct(data.oracle_r_points);
   messages_.ConvertFromStruct(data.messages);
-  delay_ = data.delay;
+  csv_delay_ = data.csv_delay;
   local_payout_ = data.local_payout;
   remote_payout_ = data.remote_payout;
   fee_rate_ = data.fee_rate;
@@ -615,7 +615,7 @@ CreateCetRequestStruct CreateCetRequest::ConvertToStruct() const {  // NOLINT
   result.oracle_pubkey = oracle_pubkey_;
   result.oracle_r_points = oracle_r_points_.ConvertToStruct();
   result.messages = messages_.ConvertToStruct();
-  result.delay = delay_;
+  result.csv_delay = csv_delay_;
   result.local_payout = local_payout_;
   result.remote_payout = remote_payout_;
   result.fee_rate = fee_rate_;
@@ -960,12 +960,19 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
   json_mapper.emplace("remoteCollateralAmount", func_table);
   item_list.push_back("remoteCollateralAmount");
   func_table = {
-    CreateDlcTransactionsRequest::GetTimeoutString,
-    CreateDlcTransactionsRequest::SetTimeoutString,
-    CreateDlcTransactionsRequest::GetTimeoutFieldType,
+    CreateDlcTransactionsRequest::GetCsvDelayString,
+    CreateDlcTransactionsRequest::SetCsvDelayString,
+    CreateDlcTransactionsRequest::GetCsvDelayFieldType,
   };
-  json_mapper.emplace("timeout", func_table);
-  item_list.push_back("timeout");
+  json_mapper.emplace("csvDelay", func_table);
+  item_list.push_back("csvDelay");
+  func_table = {
+    CreateDlcTransactionsRequest::GetRefundLocktimeString,
+    CreateDlcTransactionsRequest::SetRefundLocktimeString,
+    CreateDlcTransactionsRequest::GetRefundLocktimeFieldType,
+  };
+  json_mapper.emplace("refundLocktime", func_table);
+  item_list.push_back("refundLocktime");
   func_table = {
     CreateDlcTransactionsRequest::GetLocalInputsString,
     CreateDlcTransactionsRequest::SetLocalInputsString,
@@ -1025,7 +1032,8 @@ void CreateDlcTransactionsRequest::ConvertFromStruct(
   local_collateral_amount_ = data.local_collateral_amount;
   remote_input_amount_ = data.remote_input_amount;
   remote_collateral_amount_ = data.remote_collateral_amount;
-  timeout_ = data.timeout;
+  csv_delay_ = data.csv_delay;
+  refund_locktime_ = data.refund_locktime;
   local_inputs_.ConvertFromStruct(data.local_inputs);
   local_change_address_ = data.local_change_address;
   remote_inputs_.ConvertFromStruct(data.remote_inputs);
@@ -1050,7 +1058,8 @@ CreateDlcTransactionsRequestStruct CreateDlcTransactionsRequest::ConvertToStruct
   result.local_collateral_amount = local_collateral_amount_;
   result.remote_input_amount = remote_input_amount_;
   result.remote_collateral_amount = remote_collateral_amount_;
-  result.timeout = timeout_;
+  result.csv_delay = csv_delay_;
+  result.refund_locktime = refund_locktime_;
   result.local_inputs = local_inputs_.ConvertToStruct();
   result.local_change_address = local_change_address_;
   result.remote_inputs = remote_inputs_.ConvertToStruct();
@@ -2587,12 +2596,12 @@ void SignClosingTransactionRequest::CollectFieldName() {
   json_mapper.emplace("messages", func_table);
   item_list.push_back("messages");
   func_table = {
-    SignClosingTransactionRequest::GetDelayString,
-    SignClosingTransactionRequest::SetDelayString,
-    SignClosingTransactionRequest::GetDelayFieldType,
+    SignClosingTransactionRequest::GetCsvDelayString,
+    SignClosingTransactionRequest::SetCsvDelayString,
+    SignClosingTransactionRequest::GetCsvDelayFieldType,
   };
-  json_mapper.emplace("delay", func_table);
-  item_list.push_back("delay");
+  json_mapper.emplace("csvDelay", func_table);
+  item_list.push_back("csvDelay");
   func_table = {
     SignClosingTransactionRequest::GetOracleSigsString,
     SignClosingTransactionRequest::SetOracleSigsString,
@@ -2632,7 +2641,7 @@ void SignClosingTransactionRequest::ConvertFromStruct(
   oracle_pubkey_ = data.oracle_pubkey;
   oracle_r_points_.ConvertFromStruct(data.oracle_r_points);
   messages_.ConvertFromStruct(data.messages);
-  delay_ = data.delay;
+  csv_delay_ = data.csv_delay;
   oracle_sigs_.ConvertFromStruct(data.oracle_sigs);
   cet_tx_id_ = data.cet_tx_id;
   cet_vout_ = data.cet_vout;
@@ -2649,7 +2658,7 @@ SignClosingTransactionRequestStruct SignClosingTransactionRequest::ConvertToStru
   result.oracle_pubkey = oracle_pubkey_;
   result.oracle_r_points = oracle_r_points_.ConvertToStruct();
   result.messages = messages_.ConvertToStruct();
-  result.delay = delay_;
+  result.csv_delay = csv_delay_;
   result.oracle_sigs = oracle_sigs_.ConvertToStruct();
   result.cet_tx_id = cet_tx_id_;
   result.cet_vout = cet_vout_;

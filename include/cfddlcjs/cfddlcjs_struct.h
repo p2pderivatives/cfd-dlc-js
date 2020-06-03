@@ -157,7 +157,7 @@ struct CreateCetRequestStruct {
   std::string oracle_pubkey = "";            //!< oracle_pubkey  // NOLINT
   std::vector<std::string> oracle_r_points;  //!< oracle_r_points  // NOLINT
   std::vector<std::string> messages;         //!< messages  // NOLINT
-  uint32_t delay = 0;                        //!< delay  // NOLINT
+  uint32_t csv_delay = 0;                    //!< csv_delay  // NOLINT
   uint64_t local_payout = 0;                 //!< local_payout  // NOLINT
   uint64_t remote_payout = 0;                //!< remote_payout  // NOLINT
   int64_t fee_rate = 1;                      //!< fee_rate  // NOLINT
@@ -250,7 +250,8 @@ struct CreateDlcTransactionsRequestStruct {
   uint64_t local_collateral_amount = 0;          //!< local_collateral_amount  // NOLINT
   uint64_t remote_input_amount = 0;              //!< remote_input_amount  // NOLINT
   uint64_t remote_collateral_amount = 0;         //!< remote_collateral_amount  // NOLINT
-  uint32_t timeout = 0;                          //!< timeout  // NOLINT
+  uint64_t csv_delay = 0;                        //!< csv_delay  // NOLINT
+  uint64_t refund_locktime = 0;                  //!< refund_locktime  // NOLINT
   std::vector<TxInRequestStruct> local_inputs;   //!< local_inputs  // NOLINT
   std::string local_change_address = "";         //!< local_change_address  // NOLINT
   std::vector<TxInRequestStruct> remote_inputs;  //!< remote_inputs  // NOLINT
@@ -618,7 +619,7 @@ struct SignClosingTransactionRequestStruct {
   std::string oracle_pubkey = "";            //!< oracle_pubkey  // NOLINT
   std::vector<std::string> oracle_r_points;  //!< oracle_r_points  // NOLINT
   std::vector<std::string> messages;         //!< messages  // NOLINT
-  uint64_t delay = 0;                        //!< delay  // NOLINT
+  uint64_t csv_delay = 0;                    //!< csv_delay  // NOLINT
   std::vector<std::string> oracle_sigs;      //!< oracle_sigs  // NOLINT
   std::string cet_tx_id = "";                //!< cet_tx_id  // NOLINT
   uint32_t cet_vout = 0;                     //!< cet_vout  // NOLINT

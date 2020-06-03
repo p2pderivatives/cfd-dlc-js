@@ -47,7 +47,8 @@ async function GetInitialInputs() {
     );
     contract.feeRate = values[InitialInputNames.FeeRate];
     contract.maturityTime = values[InitialInputNames.Maturity];
-    contract.refundLockTime = values[InitialInputNames.Refund];
+    contract.refundLockTime =
+      Date.parse(values[InitialInputNames.Refund]) / 1000;
     contract.cetCsvDelay = values[InitialInputNames.CsvDelay];
   });
 }

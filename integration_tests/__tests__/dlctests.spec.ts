@@ -97,7 +97,7 @@ describe("dlc tests", () => {
       [testHelper.oracleRValue],
       testHelper.winMessages,
       [oracleSignature],
-      testHelper.dlcTimeout,
+      testHelper.csvDelay,
       cet.txid,
       Number(cet.vout[0].value)
     );
