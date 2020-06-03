@@ -31,7 +31,7 @@ export class DlcTestHelper {
   bobSweepPubkey: string;
   bobFinalAddress: string;
   bobChangeAddress: string;
-  readonly dlcTimeout = 50;
+  readonly csvDelay = 50;
   aliceInput;
   aliceInputPrv;
   bobInput;
@@ -115,7 +115,7 @@ export class DlcTestHelper {
       localCollateralAmount: this.collateral,
       remoteInputAmount: this.bobInput.amount,
       remoteCollateralAmount: this.collateral,
-      timeout: this.dlcTimeout,
+      csvDelay: this.csvDelay,
       localInputs: [
         {
           txid: this.aliceInput.txid,
@@ -131,6 +131,7 @@ export class DlcTestHelper {
       ],
       remoteChangeAddress: this.bobChangeAddress,
       maturityTime: 1579072156,
+      refundLocktime: 1579082156,
       feeRate: 2,
       localFinalAddress: this.aliceFinalAddress,
       remoteFinalAddress: this.bobFinalAddress,

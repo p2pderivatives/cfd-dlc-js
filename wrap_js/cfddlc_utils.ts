@@ -97,7 +97,7 @@ export function SignClosingTx(
   oracleRPoints: string[],
   messages: string[],
   oracleSigs: string[],
-  delay: number,
+  csvDelay: number,
   cetId: string,
   amount: number
 ) {
@@ -110,7 +110,7 @@ export function SignClosingTx(
     oracleRPoints,
     messages,
     oracleSigs,
-    delay,
+    csvDelay,
     cetTxId: cetId,
     cetVout: 0,
     amount,

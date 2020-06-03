@@ -57,7 +57,7 @@ export interface CreateCetRequest {
     oraclePubkey: string;
     oracleRPoints: string[];
     messages: string[];
-    delay: number;
+    csvDelay: number;
     localPayout: bigint | number;
     remotePayout: bigint | number;
     feeRate: bigint | number;
@@ -111,7 +111,8 @@ export interface CreateDlcTransactionsRequest {
     localCollateralAmount: bigint | number;
     remoteInputAmount: bigint | number;
     remoteCollateralAmount: bigint | number;
-    timeout: number;
+    csvDelay: bigint | number;
+    refundLocktime: bigint | number;
     localInputs: TxInRequest[];
     localChangeAddress: string;
     remoteInputs: TxInRequest[];
@@ -305,7 +306,7 @@ export interface SignClosingTransactionRequest {
     oraclePubkey: string;
     oracleRPoints: string[];
     messages: string[];
-    delay: bigint | number;
+    csvDelay: bigint | number;
     oracleSigs: string[];
     cetTxId: string;
     cetVout?: number;
