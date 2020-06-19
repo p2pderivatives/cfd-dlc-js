@@ -1,12 +1,76 @@
 version: 2.1
+orbs:
+  win: circleci/windows@2.2.0
+
+executors:
+  default-runner:
+    docker:
+      - image: cryptogarageinc/elements-testing:v0.18.1.3
+  macos-builder:
+    macos:
+      xcode: 11.3.0
+
+tag_only: &tag_only
+  filters:
+    tags:
+      only: /.*/
+    branches:
+      ignore: /.*/
+workflows:
+  lint-build-test-integration:
+    jobs:
+      - lint
+      - build
+      - test:
+          requires:
+            - build
+      - integration:
+          requires:
+            - build
+  prebuild-release:
+    jobs:
+      - prebuild:
+          name: prebuild-linux
+          runner: default-runner
+          <<: *tag_only
+      - prebuild:
+          name: prebuild-macos
+          runner: macos-builder
+          setup:
+            - run:
+                name: Install cmake Homebrew
+                command: brew install cmake
+          <<: *tag_only
+      - prebuild:
+          name: prebuild-windows
+          runner:
+            name: win/default
+            shell: bash.exe
+          setup:
+            - run:
+                name: Install cmake choco
+                command: |
+                  choco install cmake.install --installargs "ADD_CMAKE_TO_PATH=User"
+                  npm config set script-shell "bash.exe"
+          pre-prebuild-cmd: |
+            PATH="$PATH:/c/Program Files/Cmake/bin"
+            PATH="$PATH:/c/Program Files/Git/usr/bin"
+            PATH="$PATH:/c/Program Files/Git/mingw64/libexec/git-core"
+          <<: *tag_only
+      - release:
+          <<: *tag_only
+          requires:
+            - prebuild-linux
+            - prebuild-macos
+            - prebuild-windows
+
 jobs:
   lint:
     docker:
       - image: cryptogarageinc/elements-testing:v0.18.1.3
-
     steps:
       - checkout
-      - run: npm install
+      - run: npm ci
       - run: npm run tslint_check
 
   build:
@@ -14,7 +78,7 @@ jobs:
       - image: cryptogarageinc/elements-testing:v0.18.1.3
     steps:
       - checkout
-      - run: npm install
+      - run: npm ci
       - run: npm run cmake_all
       - persist_to_workspace:
           root: .
@@ -49,15 +113,47 @@ jobs:
       - store_artifacts:
           path: ./reports/integration
 
-workflows:
-  version: 2.1
-  lint-build-test-integration:
-    jobs:
-      - lint
-      - build
-      - test:
-          requires:
-            - build
-      - integration:
-          requires:
-            - build
+  prebuild:
+    parameters:
+      runner:
+        type: executor
+      setup:
+        description: "Steps that will run before prebuild the app"
+        type: steps
+        default: []
+      pre-prebuild-cmd:
+        description: "command that will be run before and in the same shell as prebuild command"
+        type: string
+        default: ""
+    executor: << parameters.runner >>
+    steps:
+      - checkout
+      - steps: << parameters.setup >>
+      - run:
+          name: Install modules
+          command: npm ci
+      - run:
+          name: Build prebuilt binaries
+          command: |
+            << parameters.pre-prebuild-cmd >>
+            npm run-script prebuild_all
+      - store_artifacts:
+          path: ./prebuilds
+      - persist_to_workspace:
+          root: prebuilds
+          paths:
+            - .
+
+  release:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./prebuilds
+      - run:
+          name: Install modules
+          command: npm ci
+      - run:
+          name: Upload prebuilt releases
+          command: npm run-script prebuild_upload_all -- ${GITHUB_ACCESS_TOKEN}
