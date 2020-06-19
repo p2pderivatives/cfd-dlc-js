@@ -169,3 +169,6 @@ external/*
 
 # prebuilt binaries
 prebuilds
+
+# flag files
+.no-postinstall
