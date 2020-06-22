@@ -8,4 +8,4 @@ Description: DLC library
 URL: https://github.com/cryptogarageinc/cfd-dlc-js
 Version: @PACKAGE_VERSION@
 Cflags: -I${includedir}
-Libs: -L${libdir} -lcfd-dlc-js
+Libs: -L${libdir} -lcfddlcjs_api

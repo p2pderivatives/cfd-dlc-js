@@ -135,7 +135,8 @@ endif()
 
 target_include_directories(${PROJECT_NAME}
   PUBLIC
-    ../include
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+    $<INSTALL_INTERFACE:include>
   PRIVATE
     .
     ./autogen
@@ -167,6 +168,8 @@ install(TARGETS       ${PROJECT_NAME}
         EXPORT        ${PROJECT_NAME}-export
         ARCHIVE       DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY       DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME       DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        OBJECTS       DESTINATION ${CMAKE_INSTALL_LIBDIR}
         PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 # https://cmake.org/cmake/help/latest/command/install.html
@@ -175,6 +178,6 @@ export(TARGETS ${PROJECT_NAME}
        APPEND FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}-export.cmake
        EXPORT_LINK_INTERFACE_LIBRARIES)
 
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../include/cfdjs"
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../include/cfddlcjs"
         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
         FILES_MATCHING PATTERN "*.h")
