@@ -1,9 +1,9 @@
-import WalletManager = require("wallet-for-testing-js");
 import * as fs from "fs";
 import path from "path";
+import { NetworkType, WalletManager } from "wallet-for-testing-js";
 
 export class DlcWalletHelper {
-  readonly network = "regtest";
+  readonly network = NetworkType.Regtest;
   readonly configFilePath = __dirname + "/bitcoin.conf";
   readonly testSeed =
     "0e09fbdd00e575b654d480ae979f24da45ef4dee645c7dc2e3b30b2e093d38dda0202357754cc856f8920b8e31dd02e9d34f6a2b20dc825c6ba90f90009085e1";
