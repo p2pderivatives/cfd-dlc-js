@@ -1,11 +1,11 @@
-import * as CfdUtils from "../../wrap_js/cfd_utils";
 import * as CfdDlcUtils from "../../wrap_js/cfddlc_utils";
-import { DlcWalletHelper } from "./wallet_helper";
+import * as CfdUtils from "../../wrap_js/cfd_utils";
 import { DlcTestHelper } from "./test_helper";
+import { DlcWalletHelper } from "./wallet_helper";
 
 const SyncTimeout = 5000;
 
-jest.setTimeout(30000);
+jest.setTimeout(50000);
 const walletHelper = new DlcWalletHelper();
 
 beforeAll(async () => {
