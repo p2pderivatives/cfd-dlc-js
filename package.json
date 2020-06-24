@@ -20,8 +20,8 @@
     "install:prod": "prebuild-install --verbose && mkdir -p wrap_js/build && cp -r build/* wrap_js/build/ || run-s install_cmake",
     "install_cmake": "run-s cmake_clean cmake_install_configure cmake_compile",
     "prebuild_all": "run-s prebuild_nodejs prebuild_electron",
-    "prebuild_nodejs": "prebuild --backend cmake-js -t 12.18.1 -r node --verbose --include-regex \".*(node|a|so|dll|dylib)$\" --  -O build --CDENABLE_SHARED=off --CDENABLE_CAPI=off --CDENABLE_TESTS=off --CDTARGET_RPATH=\"@executable_path;/usr/local/lib;/usr/local/lib64;./node_modules/cfd-dlc-js/build/Release;../node_modules/cfd-dlc-js/build/Release;../../node_modules/cfd-dlc-js/build/Release;../../../node_modules/cfd-dlc-js/build/Release;../../../../node_modules/cfd-dlc-js/build/Release;../../../../../node_modules/cfd-dlc-js/build/Release;../../../../../../node_modules/cfd-dlc-js/build/Release;./build/Release;./wrap_js/build/Release;./wrap_js/dl_lib/lib\" -C --CDnapi_build_version=3",
-    "prebuild_electron": "prebuild --backend cmake-js -t 7.0.0 -t 7.3.0 -t 8.0.0 -t 9.0.0 -r electron --verbose --include-regex \".*(node|a|so|dll|dylib)$\" --  -O build --CDENABLE_SHARED=off --CDENABLE_CAPI=off --CDENABLE_TESTS=off --CDTARGET_RPATH=\"@executable_path;/usr/local/lib;/usr/local/lib64;./node_modules/cfd-dlc-js/build/Release;../node_modules/cfd-dlc-js/build/Release;../../node_modules/cfd-dlc-js/build/Release;../../../node_modules/cfd-dlc-js/build/Release;../../../../node_modules/cfd-dlc-js/build/Release;../../../../../node_modules/cfd-dlc-js/build/Release;../../../../../../node_modules/cfd-dlc-js/build/Release;./build/Release;./wrap_js/build/Release;./wrap_js/dl_lib/lib\" -C --CDnapi_build_version=3",
+    "prebuild_nodejs": "prebuild --backend cmake-js -t 12.18.1 -r node --verbose --include-regex \".*(node|a|so|dll|dylib)$\" --  -O build --CDENABLE_SHARED=off --CDENABLE_CAPI=off --CDENABLE_TESTS=off --CDTARGET_RPATH=\"@executable_path;/usr/local/lib;/usr/local/lib64;./node_modules/cfd-dlc-js/wrap_js/build/Release;../node_modules/cfd-dlc-js/wrap_js/build/Release;../../node_modules/cfd-dlc-js/wrap_js/build/Release;../../../node_modules/cfd-dlc-js/wrap_js/build/Release;../../../../node_modules/cfd-dlc-js/wrap_js/build/Release;../../../../../node_modules/cfd-dlc-js/wrap_js/build/Release;../../../../../../node_modules/cfd-dlc-js/wrap_js/build/Release;./build/Release;./wrap_js/build/Release;./wrap_js/dl_lib/lib\" -C --CDnapi_build_version=3",
+    "prebuild_electron": "prebuild --backend cmake-js -t 7.0.0 -t 7.3.0 -t 8.0.0 -t 9.0.0 -r electron --verbose --include-regex \".*(node|a|so|dll|dylib)$\" --  -O build --CDENABLE_SHARED=off --CDENABLE_CAPI=off --CDENABLE_TESTS=off --CDTARGET_RPATH=\"@executable_path;/usr/local/lib;/usr/local/lib64;./node_modules/cfd-dlc-js/wrap_js/build/Release;../node_modules/cfd-dlc-js/wrap_js/build/Release;../../node_modules/cfd-dlc-js/wrap_js/build/Release;../../../node_modules/cfd-dlc-js/wrap_js/build/Release;../../../../node_modules/cfd-dlc-js/wrap_js/build/Release;../../../../../node_modules/cfd-dlc-js/wrap_js/build/Release;../../../../../../node_modules/cfd-dlc-js/wrap_js/build/Release;./build/Release;./wrap_js/build/Release;./wrap_js/dl_lib/lib\" -C --CDnapi_build_version=3",
     "prebuild_upload_all": "prebuild --upload-all",
     "cmake_compile": "cmake-js compile -O wrap_js/build",
     "cmake_install_configure": "run-script-os",
@@ -110,7 +110,7 @@
     "@typescript-eslint/parser": "^2.19.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "cfd-js": "github:cryptogarageinc/cfd-js#v0.1.3",
+    "cfd-js": "github:cryptogarageinc/cfd-js#v0.1.9",
     "cross-env": "^7.0.2",
     "eslint": "^6.5.1",
     "eslint-config-google": "^0.14.0",
@@ -124,6 +124,6 @@
     "tslint": "^6.1.1",
     "tslint-plugin-prettier": "^2.3.0",
     "typescript": "^3.8.3",
-    "wallet-for-testing-js": "git+https://github.com/cryptogarageinc/wallet-for-testing-js#v0.0.5"
+    "wallet-for-testing-js": "git+https://github.com/cryptogarageinc/wallet-for-testing-js#v0.0.9"
   }
 }

@@ -103,7 +103,7 @@ jobs:
       - attach_workspace:
           at: .
       - run: ./integration_tests/__tests__/start-bitcoind.sh $(pwd) 'integration_tests'
-      - run: sleep 1
+      - run: sleep 3
       - run: npm run test_integration
       - store_artifacts:
           path: ./build_coverage/lcov_cfddlc_output
