@@ -35,7 +35,12 @@
       "amount:type": "uint64_t",
       "address": ""
     },
-    "feeRate": 1
+    "feeRate": 1,
+    "optionDest": "",
+    "optionDest:require": "optional",
+    "optionPremium": 0,
+    "optionPremium:type": "uint64_t",
+    "optionPremium:require": "optional"
   },
   "response": {
     ":class": "CreateFundTransactionResponse",

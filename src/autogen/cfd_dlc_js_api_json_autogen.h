@@ -4680,6 +4680,92 @@ class CreateDlcTransactionsRequest
   }
 
   /**
+   * @brief Get of optionDest
+   * @return optionDest
+   */
+  std::string GetOptionDest() const {
+    return option_dest_;
+  }
+  /**
+   * @brief Set to optionDest
+   * @param[in] option_dest    setting value.
+   */
+  void SetOptionDest(  // line separate
+    const std::string& option_dest) {  // NOLINT
+    this->option_dest_ = option_dest;
+  }
+  /**
+   * @brief Get data type of optionDest
+   * @return Data type of optionDest
+   */
+  static std::string GetOptionDestFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of optionDest field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetOptionDestString(  // line separate
+      const CreateDlcTransactionsRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.option_dest_);
+  }
+  /**
+   * @brief Set json object to optionDest field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetOptionDestString(  // line separate
+      CreateDlcTransactionsRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.option_dest_, json_value);
+  }
+
+  /**
+   * @brief Get of optionPremium
+   * @return optionPremium
+   */
+  uint64_t GetOptionPremium() const {
+    return option_premium_;
+  }
+  /**
+   * @brief Set to optionPremium
+   * @param[in] option_premium    setting value.
+   */
+  void SetOptionPremium(  // line separate
+    const uint64_t& option_premium) {  // NOLINT
+    this->option_premium_ = option_premium;
+  }
+  /**
+   * @brief Get data type of optionPremium
+   * @return Data type of optionPremium
+   */
+  static std::string GetOptionPremiumFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of optionPremium field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetOptionPremiumString(  // line separate
+      const CreateDlcTransactionsRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.option_premium_);
+  }
+  /**
+   * @brief Set json object to optionPremium field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetOptionPremiumString(  // line separate
+      CreateDlcTransactionsRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.option_premium_, json_value);
+  }
+
+  /**
    * @brief Set ignore item.
    * @param[in] key   ignore target key name.
    */
@@ -4832,6 +4918,14 @@ class CreateDlcTransactionsRequest
    * @brief JsonAPI(maturityTime) value
    */
   uint64_t maturity_time_ = 0;
+  /**
+   * @brief JsonAPI(optionDest) value
+   */
+  std::string option_dest_ = "";
+  /**
+   * @brief JsonAPI(optionPremium) value
+   */
+  uint64_t option_premium_ = 0;
 };
 
 // ------------------------------------------------------------------------
@@ -5854,6 +5948,92 @@ class CreateFundTransactionRequest
   }
 
   /**
+   * @brief Get of optionDest
+   * @return optionDest
+   */
+  std::string GetOptionDest() const {
+    return option_dest_;
+  }
+  /**
+   * @brief Set to optionDest
+   * @param[in] option_dest    setting value.
+   */
+  void SetOptionDest(  // line separate
+    const std::string& option_dest) {  // NOLINT
+    this->option_dest_ = option_dest;
+  }
+  /**
+   * @brief Get data type of optionDest
+   * @return Data type of optionDest
+   */
+  static std::string GetOptionDestFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of optionDest field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetOptionDestString(  // line separate
+      const CreateFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.option_dest_);
+  }
+  /**
+   * @brief Set json object to optionDest field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetOptionDestString(  // line separate
+      CreateFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.option_dest_, json_value);
+  }
+
+  /**
+   * @brief Get of optionPremium
+   * @return optionPremium
+   */
+  uint64_t GetOptionPremium() const {
+    return option_premium_;
+  }
+  /**
+   * @brief Set to optionPremium
+   * @param[in] option_premium    setting value.
+   */
+  void SetOptionPremium(  // line separate
+    const uint64_t& option_premium) {  // NOLINT
+    this->option_premium_ = option_premium;
+  }
+  /**
+   * @brief Get data type of optionPremium
+   * @return Data type of optionPremium
+   */
+  static std::string GetOptionPremiumFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of optionPremium field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetOptionPremiumString(  // line separate
+      const CreateFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.option_premium_);
+  }
+  /**
+   * @brief Set json object to optionPremium field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetOptionPremiumString(  // line separate
+      CreateFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.option_premium_, json_value);
+  }
+
+  /**
    * @brief Set ignore item.
    * @param[in] key   ignore target key name.
    */
@@ -5954,6 +6134,14 @@ class CreateFundTransactionRequest
    * @brief JsonAPI(feeRate) value
    */
   int64_t fee_rate_ = 1;
+  /**
+   * @brief JsonAPI(optionDest) value
+   */
+  std::string option_dest_ = "";
+  /**
+   * @brief JsonAPI(optionPremium) value
+   */
+  uint64_t option_premium_ = 0;
 };
 
 // ------------------------------------------------------------------------

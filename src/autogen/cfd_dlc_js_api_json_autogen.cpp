@@ -1015,6 +1015,20 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
   };
   json_mapper.emplace("maturityTime", func_table);
   item_list.push_back("maturityTime");
+  func_table = {
+    CreateDlcTransactionsRequest::GetOptionDestString,
+    CreateDlcTransactionsRequest::SetOptionDestString,
+    CreateDlcTransactionsRequest::GetOptionDestFieldType,
+  };
+  json_mapper.emplace("optionDest", func_table);
+  item_list.push_back("optionDest");
+  func_table = {
+    CreateDlcTransactionsRequest::GetOptionPremiumString,
+    CreateDlcTransactionsRequest::SetOptionPremiumString,
+    CreateDlcTransactionsRequest::GetOptionPremiumFieldType,
+  };
+  json_mapper.emplace("optionPremium", func_table);
+  item_list.push_back("optionPremium");
 }
 
 void CreateDlcTransactionsRequest::ConvertFromStruct(
@@ -1040,6 +1054,8 @@ void CreateDlcTransactionsRequest::ConvertFromStruct(
   remote_change_address_ = data.remote_change_address;
   fee_rate_ = data.fee_rate;
   maturity_time_ = data.maturity_time;
+  option_dest_ = data.option_dest;
+  option_premium_ = data.option_premium;
   ignore_items = data.ignore_items;
 }
 
@@ -1066,6 +1082,8 @@ CreateDlcTransactionsRequestStruct CreateDlcTransactionsRequest::ConvertToStruct
   result.remote_change_address = remote_change_address_;
   result.fee_rate = fee_rate_;
   result.maturity_time = maturity_time_;
+  result.option_dest = option_dest_;
+  result.option_premium = option_premium_;
   result.ignore_items = ignore_items;
   return result;
 }
@@ -1289,6 +1307,20 @@ void CreateFundTransactionRequest::CollectFieldName() {
   };
   json_mapper.emplace("feeRate", func_table);
   item_list.push_back("feeRate");
+  func_table = {
+    CreateFundTransactionRequest::GetOptionDestString,
+    CreateFundTransactionRequest::SetOptionDestString,
+    CreateFundTransactionRequest::GetOptionDestFieldType,
+  };
+  json_mapper.emplace("optionDest", func_table);
+  item_list.push_back("optionDest");
+  func_table = {
+    CreateFundTransactionRequest::GetOptionPremiumString,
+    CreateFundTransactionRequest::SetOptionPremiumString,
+    CreateFundTransactionRequest::GetOptionPremiumFieldType,
+  };
+  json_mapper.emplace("optionPremium", func_table);
+  item_list.push_back("optionPremium");
 }
 
 void CreateFundTransactionRequest::ConvertFromStruct(
@@ -1301,6 +1333,8 @@ void CreateFundTransactionRequest::ConvertFromStruct(
   remote_inputs_.ConvertFromStruct(data.remote_inputs);
   remote_change_.ConvertFromStruct(data.remote_change);
   fee_rate_ = data.fee_rate;
+  option_dest_ = data.option_dest;
+  option_premium_ = data.option_premium;
   ignore_items = data.ignore_items;
 }
 
@@ -1314,6 +1348,8 @@ CreateFundTransactionRequestStruct CreateFundTransactionRequest::ConvertToStruct
   result.remote_inputs = remote_inputs_.ConvertToStruct();
   result.remote_change = remote_change_.ConvertToStruct();
   result.fee_rate = fee_rate_;
+  result.option_dest = option_dest_;
+  result.option_premium = option_premium_;
   result.ignore_items = ignore_items;
   return result;
 }

@@ -119,6 +119,8 @@ export interface CreateDlcTransactionsRequest {
     remoteChangeAddress: string;
     feeRate: number;
     maturityTime: bigint | number;
+    optionDest?: string;
+    optionPremium?: bigint | number;
 }
 
 export interface CreateDlcTransactionsResponse {
@@ -157,6 +159,8 @@ export interface CreateFundTransactionRequest {
     remoteInputs: TxInRequestA[];
     remoteChange: TxOutRequestA;
     feeRate: bigint | number;
+    optionDest?: string;
+    optionPremium?: bigint | number;
 }
 
 export interface CreateFundTransactionResponse {

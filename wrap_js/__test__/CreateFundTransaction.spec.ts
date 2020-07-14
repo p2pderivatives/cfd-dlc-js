@@ -2,7 +2,12 @@ import * as cfddlcjs from "../../index.js";
 import TestHelper from "./TestHelper";
 import * as TestData from "./data/TestData";
 
-function GetRequest() {
+function GetRequest(
+  optionPremium = 0,
+  optionDest = "",
+  localChange = 4899999719,
+  remoteChange = 4899999719
+) {
   return {
     localPubkey: TestData.LocalFundPubkey,
     remotePubkey: TestData.RemoteFundPubkey,
@@ -10,15 +15,17 @@ function GetRequest() {
     feeRate: 1,
     localInputs: TestData.LocalInputs,
     localChange: {
-      amount: 4899999719,
+      amount: localChange,
       address: TestData.LocalChangeAddress,
     },
     remoteInputs: TestData.RemoteInputs,
     remoteChange: {
-      amount: 4899999719,
+      amount: remoteChange,
       address: TestData.RemoteChangeAddress,
     },
     nLockTime: 0,
+    optionPremium,
+    optionDest,
   };
 }
 
@@ -29,6 +36,19 @@ const testCase = [
     GetRequest(),
     {
       hex: TestData.FundTxHexUnsigned,
+    }
+  ),
+  TestHelper.createTestCase(
+    "CreateFundTransactionWithPremium",
+    cfddlcjs.CreateFundTransaction,
+    GetRequest(
+      100000,
+      "bcrt1qxyzqgxhnnhwtp9m0n2m9ygqp7zt2lckwvxx4jq",
+      4899899703,
+      4899999703
+    ),
+    {
+      hex: TestData.FundTxWithPremium,
     }
   ),
 ];
