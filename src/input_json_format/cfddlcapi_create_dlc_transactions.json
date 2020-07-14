@@ -54,7 +54,12 @@
     "feeRate": 0,
     "feeRate:type": "uint32_t",
     "maturityTime": 0,
-    "maturityTime:type": "uint64_t"
+    "maturityTime:type": "uint64_t",
+    "optionDest": "",
+    "optionDest:require": "optional",
+    "optionPremium": 0,
+    "optionPremium:type": "uint64_t",
+    "optionPremium:require": "optional"
   },
   "response": {
     ":class": "CreateDlcTransactionsResponse",

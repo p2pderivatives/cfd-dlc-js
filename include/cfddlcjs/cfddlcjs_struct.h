@@ -258,6 +258,8 @@ struct CreateDlcTransactionsRequestStruct {
   std::string remote_change_address = "";        //!< remote_change_address  // NOLINT
   uint32_t fee_rate = 0;                         //!< fee_rate  // NOLINT
   uint64_t maturity_time = 0;                    //!< maturity_time  // NOLINT
+  std::string option_dest = "";                  //!< option_dest  // NOLINT
+  uint64_t option_premium = 0;                   //!< option_premium  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
 
@@ -315,6 +317,8 @@ struct CreateFundTransactionRequestStruct {
   std::vector<TxInRequestAStruct> remote_inputs;  //!< remote_inputs  // NOLINT
   TxOutRequestAStruct remote_change;              //!< remote_change  // NOLINT
   int64_t fee_rate = 1;                           //!< fee_rate  // NOLINT
+  std::string option_dest = "";                   //!< option_dest  // NOLINT
+  uint64_t option_premium = 0;                    //!< option_premium  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
 

@@ -59,6 +59,10 @@ CreateFundTransactionResponseStruct DlcTransactionsApi::CreateFundTransaction(
     auto local_pubkey = Pubkey(request.local_pubkey);
     auto remote_pubkey = Pubkey(request.remote_pubkey);
     auto output_amount = Amount::CreateBySatoshiAmount(request.output_amount);
+    auto option_premium = Amount::CreateBySatoshiAmount(request.option_premium);
+    auto option_dest =
+        request.option_dest == "" ? Address() : Address(request.option_dest);
+
     std::vector<TxIn> local_inputs;
     for (TxInRequestAStruct txin_req : request.local_inputs) {
       auto txid = Txid(txin_req.txid);
@@ -80,7 +84,8 @@ CreateFundTransactionResponseStruct DlcTransactionsApi::CreateFundTransaction(
                                          request.remote_change.amount);
     auto transaction = DlcManager::CreateFundTransaction(
         local_pubkey, remote_pubkey, output_amount, local_inputs, local_change,
-        remote_inputs, remote_change, request.fee_rate);
+        remote_inputs, remote_change, request.fee_rate, option_dest,
+        option_premium);
     response.hex = transaction.GetHex();
     return response;
   };
@@ -324,6 +329,9 @@ CreateDlcTransactionsResponseStruct DlcTransactionsApi::CreateDlcTransactions(
         Amount::CreateBySatoshiAmount(request.remote_collateral_amount);
     uint64_t csv_delay = request.csv_delay;
     uint64_t refund_locktime = request.refund_locktime;
+    auto option_premium = Amount::CreateBySatoshiAmount(request.option_premium);
+    auto option_dest =
+        request.option_dest == "" ? Address() : Address(request.option_dest);
 
     std::vector<TxIn> local_inputs;
 
@@ -352,7 +360,8 @@ CreateDlcTransactionsResponseStruct DlcTransactionsApi::CreateDlcTransactions(
         local_change_address, remote_change_address, local_final_address,
         remote_final_address, local_input_amount, local_collateral_amount,
         remote_input_amount, remote_collateral_amount, refund_locktime,
-        csv_delay, local_inputs, remote_inputs, fee_rate, maturity_time);
+        csv_delay, local_inputs, remote_inputs, fee_rate, maturity_time,
+        option_dest, option_premium);
     CreateDlcTransactionsResponseStruct result;
     result.fund_tx_hex = transactions.fund_transaction.GetHex();
     result.refund_tx_hex = transactions.refund_transaction.GetHex();
