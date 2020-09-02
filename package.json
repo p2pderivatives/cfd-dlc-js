@@ -124,6 +124,6 @@
     "tslint": "^6.1.1",
     "tslint-plugin-prettier": "^2.3.0",
     "typescript": "^3.8.3",
-    "wallet-for-testing-js": "git+https://github.com/cryptogarageinc/wallet-for-testing-js#v0.0.12"
+    "wallet-for-testing-js": "git+https://github.com/cryptogarageinc/wallet-for-testing-js#v0.1.1"
   }
 }

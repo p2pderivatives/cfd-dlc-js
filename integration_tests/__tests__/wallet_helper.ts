@@ -44,9 +44,9 @@ export class DlcWalletHelper {
       this.configFilePath,
       dbDir,
       this.network,
-      this.testSeed
     );
-    this.walletMgr.initialize("bitcoin");
+    await this.walletMgr.setMasterPrivkey(this.testSeed);
+    await this.walletMgr.initialize("bitcoin");
 
     this.aliceWallet = await this.walletMgr.createWallet(1, "alice", "bitcoin");
     this.bobWallet = await this.walletMgr.createWallet(2, "bob", "bitcoin");
