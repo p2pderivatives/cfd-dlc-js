@@ -64,7 +64,7 @@ CreateFundTransactionResponseStruct DlcTransactionsApi::CreateFundTransaction(
         request.option_dest == "" ? Address() : Address(request.option_dest);
 
     std::vector<TxIn> local_inputs;
-    for (TxInRequestAStruct txin_req : request.local_inputs) {
+    for (TxInRequestStruct txin_req : request.local_inputs) {
       auto txid = Txid(txin_req.txid);
       auto txin = TxIn(txid, txin_req.vout, 0);
       local_inputs.push_back(txin);
@@ -72,7 +72,7 @@ CreateFundTransactionResponseStruct DlcTransactionsApi::CreateFundTransaction(
 
     auto local_change_address = Address(request.local_change.address);
     std::vector<TxIn> remote_inputs;
-    for (TxInRequestAStruct txin_req : request.remote_inputs) {
+    for (TxInRequestStruct txin_req : request.remote_inputs) {
       auto txid = Txid(txin_req.txid);
       auto txin = TxIn(txid, txin_req.vout, 0);
       remote_inputs.push_back(txin);

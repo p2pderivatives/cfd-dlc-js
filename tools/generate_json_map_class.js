@@ -11,6 +11,9 @@ let debugLog = function () {
   // do nothing
 };
 
+let classHeaderSet = new Set();
+let classSourceSet = new Set();
+
 // ----------------------------------------------------------------------------
 // json data class
 // ----------------------------------------------------------------------------
@@ -426,7 +429,7 @@ const generateFileSource = (filename, headerName, class_list, json_setting) => {
   const include_nolint = headerName.indexOf("/") >= 0 ? "" : "  // NOLINT";
 
   // header
-  const source_file_header = `// Copyright 2019 CryptoGarage
+  const source_file_header = `// Copyright 2020 CryptoGarage
 /**
  * @file ${filename}
  *
@@ -501,7 +504,10 @@ const generateClassSource = (req, res) => {
 
       for (const map_key in map_list) {
         const map_data = map_list[map_key];
-        if (processed_list.includes(map_data.type)) {
+        if (
+          classSourceSet.has(map_data.type) ||
+          processed_list.includes(map_data.type)
+        ) {
           continue;
         }
         const source_class_header = `
@@ -593,6 +599,7 @@ void ${map_data.type}::CollectFieldName() {
           result.push("}");
         }
 
+        classSourceSet.add(map_data.type);
         processed_list.push(map_data.type);
       }
     }
@@ -956,9 +963,14 @@ const generateClassHeader = (req, res, json_setting) => {
 
       for (const map_key in map_list) {
         const map_data = map_list[map_key];
-        if (processed_list.includes(map_data.type)) {
+        console.log("TYPE:" + map_data.type);
+        if (
+          classHeaderSet.has(map_data.type) ||
+          processed_list.includes(map_data.type)
+        ) {
           continue;
         }
+
         const class_header = generateClassHeaderData(map_data, export_define);
         result.push(class_header);
 
@@ -1006,6 +1018,7 @@ const generateClassHeader = (req, res, json_setting) => {
 
         result.push("};");
 
+        classHeaderSet.add(map_data.type);
         processed_list.push(map_data.type);
       }
     }

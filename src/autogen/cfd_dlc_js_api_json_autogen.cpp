@@ -1,4 +1,4 @@
-// Copyright 2019 CryptoGarage
+// Copyright 2020 CryptoGarage
 /**
  * @file cfd_dlc_js_api_json_autogen.cpp
  *
@@ -1151,87 +1151,43 @@ CreateDlcTransactionsResponseStruct CreateDlcTransactionsResponse::ConvertToStru
 }
 
 // ------------------------------------------------------------------------
-// TxInRequestA
+// TxOutRequest
 // ------------------------------------------------------------------------
-cfd::core::JsonTableMap<TxInRequestA>
-  TxInRequestA::json_mapper;
-std::vector<std::string> TxInRequestA::item_list;
+cfd::core::JsonTableMap<TxOutRequest>
+  TxOutRequest::json_mapper;
+std::vector<std::string> TxOutRequest::item_list;
 
-void TxInRequestA::CollectFieldName() {
+void TxOutRequest::CollectFieldName() {
   if (!json_mapper.empty()) {
     return;
   }
-  cfd::core::CLASS_FUNCTION_TABLE<TxInRequestA> func_table;  // NOLINT
+  cfd::core::CLASS_FUNCTION_TABLE<TxOutRequest> func_table;  // NOLINT
 
   func_table = {
-    TxInRequestA::GetTxidString,
-    TxInRequestA::SetTxidString,
-    TxInRequestA::GetTxidFieldType,
-  };
-  json_mapper.emplace("txid", func_table);
-  item_list.push_back("txid");
-  func_table = {
-    TxInRequestA::GetVoutString,
-    TxInRequestA::SetVoutString,
-    TxInRequestA::GetVoutFieldType,
-  };
-  json_mapper.emplace("vout", func_table);
-  item_list.push_back("vout");
-}
-
-void TxInRequestA::ConvertFromStruct(
-    const TxInRequestAStruct& data) {
-  txid_ = data.txid;
-  vout_ = data.vout;
-  ignore_items = data.ignore_items;
-}
-
-TxInRequestAStruct TxInRequestA::ConvertToStruct() const {  // NOLINT
-  TxInRequestAStruct result;
-  result.txid = txid_;
-  result.vout = vout_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// TxOutRequestA
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<TxOutRequestA>
-  TxOutRequestA::json_mapper;
-std::vector<std::string> TxOutRequestA::item_list;
-
-void TxOutRequestA::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<TxOutRequestA> func_table;  // NOLINT
-
-  func_table = {
-    TxOutRequestA::GetAmountString,
-    TxOutRequestA::SetAmountString,
-    TxOutRequestA::GetAmountFieldType,
+    TxOutRequest::GetAmountString,
+    TxOutRequest::SetAmountString,
+    TxOutRequest::GetAmountFieldType,
   };
   json_mapper.emplace("amount", func_table);
   item_list.push_back("amount");
   func_table = {
-    TxOutRequestA::GetAddressString,
-    TxOutRequestA::SetAddressString,
-    TxOutRequestA::GetAddressFieldType,
+    TxOutRequest::GetAddressString,
+    TxOutRequest::SetAddressString,
+    TxOutRequest::GetAddressFieldType,
   };
   json_mapper.emplace("address", func_table);
   item_list.push_back("address");
 }
 
-void TxOutRequestA::ConvertFromStruct(
-    const TxOutRequestAStruct& data) {
+void TxOutRequest::ConvertFromStruct(
+    const TxOutRequestStruct& data) {
   amount_ = data.amount;
   address_ = data.address;
   ignore_items = data.ignore_items;
 }
 
-TxOutRequestAStruct TxOutRequestA::ConvertToStruct() const {  // NOLINT
-  TxOutRequestAStruct result;
+TxOutRequestStruct TxOutRequest::ConvertToStruct() const {  // NOLINT
+  TxOutRequestStruct result;
   result.amount = amount_;
   result.address = address_;
   result.ignore_items = ignore_items;
