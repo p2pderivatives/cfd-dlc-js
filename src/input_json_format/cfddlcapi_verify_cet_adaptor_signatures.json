@@ -1,12 +1,15 @@
 {
   "namespace": ["cfd", "dlc", "js", "api", "json"],
   "request": {
-    ":class": "VerifyMutualClosingTxSignatureRequest",
-    ":class:comment": "Verify a signature for a mutual closing transaction",
-    "mutualClosingHex": "",
-    "signature": "",
+    ":class": "VerifyCetAdaptorSignaturesRequest",
+    ":class:comment": "Verify a set of signatures for a set of CET",
+    "cetsHex": [""],
+    "adaptorPairs": [{ ":class": "AdaptorPair", "signature": "", "proof": "" }],
+    "messages": [""],
     "localFundPubkey": "",
     "remoteFundPubkey": "",
+    "oraclePubkey": "",
+    "oracleRValue": "",
     "fundTxId": "",
     "fundVout": 0,
     "fundVout:type": "uint32_t",
@@ -16,7 +19,7 @@
     "verifyRemote": true
   },
   "response": {
-    ":class": "VerifyMutualClosingTxSignatureResponse",
+    ":class": "VerifyCetAdaptorSignaturesResponse",
     "valid": false
   }
 }

@@ -3,8 +3,8 @@
   "request": {
     ":class": "CreateRefundTransactionRequest",
     ":class:comment": "Create a refund transaction",
-    "localFinalAddress": "",
-    "remoteFinalAddress": "",
+    "localFinalScriptPubkey": "",
+    "remoteFinalScriptPubkey": "",
     "localAmount": 0,
     "localAmount:type": "uint64_t",
     "remoteAmount": 0,

@@ -1,8 +1,8 @@
 {
   "namespace": ["cfd", "dlc", "js", "api", "json"],
   "request": {
-    ":class": "GetRawCetSignatureRequest",
-    ":class:comment": "Get a signature for a CET",
+    ":class": "CreateCetAdaptorSignatureRequest",
+    ":class:comment": "Create an adaptor signature for a CET",
     "cetHex": "",
     "privkey": "",
     "fundTxId": "",
@@ -11,11 +11,15 @@
     "fundVout:require": "optional",
     "localFundPubkey": "",
     "remoteFundPubkey": "",
+    "oraclePubkey": "",
+    "oracleRValue": "",
     "fundInputAmount": 0,
-    "fundInputAmount:type": "uint64_t"
+    "fundInputAmount:type": "uint64_t",
+    "message": ""
   },
   "response": {
-    ":class": "GetRawCetSignatureResponse",
-    "hex": ""
+    ":class": "CreateCetAdaptorSignatureResponse",
+    "signature": "",
+    "proof": ""
   }
 }

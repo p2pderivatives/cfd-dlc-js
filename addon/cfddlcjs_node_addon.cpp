@@ -112,20 +112,6 @@ Value CreateCet(const CallbackInfo &information) {
   return NodeAddonJsonApi(information, JsonMappingApi::CreateCet);
 }
 
-Value CreateClosingTransaction(const CallbackInfo &information) {
-  return NodeAddonJsonApi(information,
-                          JsonMappingApi::CreateClosingTransaction);
-}
-
-Value CreatePenaltyTransaction(const CallbackInfo &information) {
-  return NodeAddonJsonApi(information,
-                          JsonMappingApi::CreatePenaltyTransaction);
-}
-
-Value SignClosingTransaction(const CallbackInfo &information) {
-  return NodeAddonJsonApi(information, JsonMappingApi::SignClosingTransaction);
-}
-
 Value VerifyFundTxSignature(const CallbackInfo &information) {
   return NodeAddonJsonApi(information, JsonMappingApi::VerifyFundTxSignature);
 }
@@ -138,44 +124,28 @@ Value CreateDlcTransactions(const CallbackInfo &information) {
   return NodeAddonJsonApi(information, JsonMappingApi::CreateDlcTransactions);
 }
 
-Value GetRawCetSignature(const CallbackInfo &information) {
-  return NodeAddonJsonApi(information, JsonMappingApi::GetRawCetSignature);
-}
-
-Value GetRawCetSignatures(const CallbackInfo &information) {
-  return NodeAddonJsonApi(information, JsonMappingApi::GetRawCetSignatures);
-}
-
-Value AddSignaturesToCet(const CallbackInfo &information) {
-  return NodeAddonJsonApi(information, JsonMappingApi::AddSignaturesToCet);
-}
-
-Value VerifyCetSignature(const CallbackInfo &information) {
-  return NodeAddonJsonApi(information, JsonMappingApi::VerifyCetSignature);
-}
-
-Value VerifyCetSignatures(const CallbackInfo &information) {
-  return NodeAddonJsonApi(information, JsonMappingApi::VerifyCetSignatures);
-}
-
-Value CreateMutualClosingTransaction(const CallbackInfo &information) {
+Value CreateCetAdaptorSignature(const CallbackInfo &information) {
   return NodeAddonJsonApi(information,
-                          JsonMappingApi::CreateMutualClosingTransaction);
+                          JsonMappingApi::CreateCetAdaptorSignature);
 }
 
-Value GetRawMutualClosingTxSignature(const CallbackInfo &information) {
+Value CreateCetAdaptorSignatures(const CallbackInfo &information) {
   return NodeAddonJsonApi(information,
-                          JsonMappingApi::GetRawMutualClosingTxSignature);
+                          JsonMappingApi::CreateCetAdaptorSignatures);
 }
 
-Value AddSignaturesToMutualClosingTx(const CallbackInfo &information) {
-  return NodeAddonJsonApi(information,
-                          JsonMappingApi::AddSignaturesToMutualClosingTx);
+Value SignCet(const CallbackInfo &information) {
+  return NodeAddonJsonApi(information, JsonMappingApi::SignCet);
 }
 
-Value VerifyMutualClosingTxSignature(const CallbackInfo &information) {
+Value VerifyCetAdaptorSignature(const CallbackInfo &information) {
   return NodeAddonJsonApi(information,
-                          JsonMappingApi::VerifyMutualClosingTxSignature);
+                          JsonMappingApi::VerifyCetAdaptorSignature);
+}
+
+Value VerifyCetAdaptorSignatures(const CallbackInfo &information) {
+  return NodeAddonJsonApi(information,
+                          JsonMappingApi::VerifyCetAdaptorSignatures);
 }
 
 Value GetRawRefundTxSignature(const CallbackInfo &information) {
@@ -188,14 +158,6 @@ Value AddSignaturesToRefundTx(const CallbackInfo &information) {
 
 Value VerifyRefundTxSignature(const CallbackInfo &information) {
   return NodeAddonJsonApi(information, JsonMappingApi::VerifyRefundTxSignature);
-}
-
-Value SchnorrSign(const CallbackInfo &information) {
-  return NodeAddonJsonApi(information, JsonMappingApi::SchnorrSign);
-}
-
-Value GetSchnorrPublicNonce(const CallbackInfo &information) {
-  return NodeAddonJsonApi(information, JsonMappingApi::GetSchnorrPublicNonce);
 }
 
 /**
@@ -216,44 +178,25 @@ void InitializeJsonApi(Env env, Object *exports) {
   exports->Set(String::New(env, "VerifyFundTxSignature"),
                Function::New(env, VerifyFundTxSignature));
   exports->Set(String::New(env, "CreateCet"), Function::New(env, CreateCet));
-  exports->Set(String::New(env, "CreateClosingTransaction"),
-               Function::New(env, CreateClosingTransaction));
-  exports->Set(String::New(env, "CreatePenaltyTransaction"),
-               Function::New(env, CreatePenaltyTransaction));
-  exports->Set(String::New(env, "SignClosingTransaction"),
-               Function::New(env, SignClosingTransaction));
   exports->Set(String::New(env, "CreateRefundTransaction"),
                Function::New(env, CreateRefundTransaction));
   exports->Set(String::New(env, "CreateDlcTransactions"),
                Function::New(env, CreateDlcTransactions));
-  exports->Set(String::New(env, "GetRawCetSignature"),
-               Function::New(env, GetRawCetSignature));
-  exports->Set(String::New(env, "GetRawCetSignatures"),
-               Function::New(env, GetRawCetSignatures));
-  exports->Set(String::New(env, "AddSignaturesToCet"),
-               Function::New(env, AddSignaturesToCet));
-  exports->Set(String::New(env, "VerifyCetSignature"),
-               Function::New(env, VerifyCetSignature));
-  exports->Set(String::New(env, "VerifyCetSignatures"),
-               Function::New(env, VerifyCetSignatures));
-  exports->Set(String::New(env, "CreateMutualClosingTransaction"),
-               Function::New(env, CreateMutualClosingTransaction));
-  exports->Set(String::New(env, "GetRawMutualClosingTxSignature"),
-               Function::New(env, GetRawMutualClosingTxSignature));
-  exports->Set(String::New(env, "AddSignaturesToMutualClosingTx"),
-               Function::New(env, AddSignaturesToMutualClosingTx));
-  exports->Set(String::New(env, "VerifyMutualClosingTxSignature"),
-               Function::New(env, VerifyMutualClosingTxSignature));
+  exports->Set(String::New(env, "CreateCetAdaptorSignature"),
+               Function::New(env, CreateCetAdaptorSignature));
+  exports->Set(String::New(env, "CreateCetAdaptorSignatures"),
+               Function::New(env, CreateCetAdaptorSignatures));
+  exports->Set(String::New(env, "SignCet"), Function::New(env, SignCet));
+  exports->Set(String::New(env, "VerifyCetAdaptorSignature"),
+               Function::New(env, VerifyCetAdaptorSignature));
+  exports->Set(String::New(env, "VerifyCetAdaptorSignatures"),
+               Function::New(env, VerifyCetAdaptorSignatures));
   exports->Set(String::New(env, "GetRawRefundTxSignature"),
                Function::New(env, GetRawRefundTxSignature));
   exports->Set(String::New(env, "AddSignaturesToRefundTx"),
                Function::New(env, AddSignaturesToRefundTx));
   exports->Set(String::New(env, "VerifyRefundTxSignature"),
                Function::New(env, VerifyRefundTxSignature));
-  exports->Set(String::New(env, "SchnorrSign"),
-               Function::New(env, SchnorrSign));
-  exports->Set(String::New(env, "GetSchnorrPublicNonce"),
-               Function::New(env, GetSchnorrPublicNonce));
 }
 
 }  // namespace json

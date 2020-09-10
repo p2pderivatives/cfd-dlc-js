@@ -1,0 +1,23 @@
+{
+  "namespace": ["cfd", "dlc", "js", "api", "json"],
+  "request": {
+    ":class": "SignCetRequest",
+    ":class:comment": "Sign a CET",
+    "cetHex": "",
+    "fundPrivkey": "",
+    "fundTxId": "",
+    "fundVout": 0,
+    "fundVout:require": "optional",
+    "fundVout:type": "uint32_t",
+    "localFundPubkey": "",
+    "remoteFundPubkey": "",
+    "fundInputAmount": 0,
+    "fundInputAmount:type": "uint64_t",
+    "adaptorSignature": "",
+    "oracleSignature": ""
+  },
+  "response": {
+    ":class": "SignCetResponse",
+    "hex": ""
+  }
+}

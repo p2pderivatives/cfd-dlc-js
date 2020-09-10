@@ -4,17 +4,17 @@ import * as TestData from "./data/TestData";
 
 const testCase = [
   TestHelper.createTestCase(
-    "AddSignaturesToCet",
-    cfddlcjs.AddSignaturesToCet,
+    "SignCet",
+    cfddlcjs.SignCet,
     {
       cetHex: TestData.CetHexUnsigned,
       localFundPubkey: TestData.LocalFundPubkey,
       remoteFundPubkey: TestData.RemoteFundPubkey,
       fundTxId: TestData.FundTxId,
-      signatures: [
-        TestData.CetLocalRawSignature,
-        TestData.CetRemoteRawSignature,
-      ],
+      adaptorSignature: TestData.CetLocalAdaptorSignature,
+      fundPrivkey: TestData.RemoteFundPrivkey,
+      fundInputAmount: TestData.FundInputAmount,
+      oracleSignature: TestData.OracleSignature,
     },
     {
       hex: TestData.CetHexSigned,

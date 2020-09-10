@@ -152,112 +152,46 @@ std::string JsonMappingApi::CreateDlcTransactions(
       request_message, DlcTransactionsApi::CreateDlcTransactions);
 }
 
-std::string JsonMappingApi::CreateClosingTransaction(
+std::string JsonMappingApi::CreateCetAdaptorSignature(
     const std::string &request_message) {
-  return ExecuteJsonApi<api::json::CreateClosingTransactionRequest,
-                        api::json::CreateClosingTransactionResponse,
-                        api::CreateClosingTransactionRequestStruct,
-                        api::CreateClosingTransactionResponseStruct>(
-      request_message, DlcTransactionsApi::CreateClosingTransaction);
+  return ExecuteJsonApi<api::json::CreateCetAdaptorSignatureRequest,
+                        api::json::CreateCetAdaptorSignatureResponse,
+                        api::CreateCetAdaptorSignatureRequestStruct,
+                        api::CreateCetAdaptorSignatureResponseStruct>(
+      request_message, DlcTransactionsApi::CreateCetAdaptorSignature);
 }
 
-std::string JsonMappingApi::CreatePenaltyTransaction(
+std::string JsonMappingApi::CreateCetAdaptorSignatures(
     const std::string &request_message) {
-  return ExecuteJsonApi<api::json::CreatePenaltyTransactionRequest,
-                        api::json::CreatePenaltyTransactionResponse,
-                        api::CreatePenaltyTransactionRequestStruct,
-                        api::CreatePenaltyTransactionResponseStruct>(
-      request_message, DlcTransactionsApi::CreatePenaltyTransaction);
+  return ExecuteJsonApi<api::json::CreateCetAdaptorSignaturesRequest,
+                        api::json::CreateCetAdaptorSignaturesResponse,
+                        api::CreateCetAdaptorSignaturesRequestStruct,
+                        api::CreateCetAdaptorSignaturesResponseStruct>(
+      request_message, DlcTransactionsApi::CreateCetAdaptorSignatures);
 }
 
-std::string JsonMappingApi::CreateMutualClosingTransaction(
-    const std::string &request_message) {
-  return ExecuteJsonApi<api::json::CreateMutualClosingTransactionRequest,
-                        api::json::CreateMutualClosingTransactionResponse,
-                        api::CreateMutualClosingTransactionRequestStruct,
-                        api::CreateMutualClosingTransactionResponseStruct>(
-      request_message, DlcTransactionsApi::CreateMutualClosingTransaction);
+std::string JsonMappingApi::SignCet(const std::string &request_message) {
+  return ExecuteJsonApi<api::json::SignCetRequest, api::json::SignCetResponse,
+                        api::SignCetRequestStruct, api::SignCetResponseStruct>(
+      request_message, DlcTransactionsApi::SignCet);
 }
 
-std::string JsonMappingApi::SignClosingTransaction(
+std::string JsonMappingApi::VerifyCetAdaptorSignature(
     const std::string &request_message) {
-  return ExecuteJsonApi<api::json::SignClosingTransactionRequest,
-                        api::json::SignClosingTransactionResponse,
-                        api::SignClosingTransactionRequestStruct,
-                        api::SignClosingTransactionResponseStruct>(
-      request_message, DlcTransactionsApi::SignClosingTransaction);
+  return ExecuteJsonApi<api::json::VerifyCetAdaptorSignatureRequest,
+                        api::json::VerifyCetAdaptorSignatureResponse,
+                        api::VerifyCetAdaptorSignatureRequestStruct,
+                        api::VerifyCetAdaptorSignatureResponseStruct>(
+      request_message, DlcTransactionsApi::VerifyCetAdaptorSignature);
 }
 
-std::string JsonMappingApi::GetRawCetSignature(
+std::string JsonMappingApi::VerifyCetAdaptorSignatures(
     const std::string &request_message) {
-  return ExecuteJsonApi<api::json::GetRawCetSignatureRequest,
-                        api::json::GetRawCetSignatureResponse,
-                        api::GetRawCetSignatureRequestStruct,
-                        api::GetRawCetSignatureResponseStruct>(
-      request_message, DlcTransactionsApi::GetRawCetSignature);
-}
-
-std::string JsonMappingApi::GetRawCetSignatures(
-    const std::string &request_message) {
-  return ExecuteJsonApi<api::json::GetRawCetSignaturesRequest,
-                        api::json::GetRawCetSignaturesResponse,
-                        api::GetRawCetSignaturesRequestStruct,
-                        api::GetRawCetSignaturesResponseStruct>(
-      request_message, DlcTransactionsApi::GetRawCetSignatures);
-}
-
-std::string JsonMappingApi::GetRawMutualClosingTxSignature(
-    const std::string &request_message) {
-  return ExecuteJsonApi<api::json::GetRawMutualClosingTxSignatureRequest,
-                        api::json::GetRawMutualClosingTxSignatureResponse,
-                        api::GetRawMutualClosingTxSignatureRequestStruct,
-                        api::GetRawMutualClosingTxSignatureResponseStruct>(
-      request_message, DlcTransactionsApi::GetRawMutualClosingTxSignature);
-}
-
-std::string JsonMappingApi::AddSignaturesToCet(
-    const std::string &request_message) {
-  return ExecuteJsonApi<api::json::AddSignaturesToCetRequest,
-                        api::json::AddSignaturesToCetResponse,
-                        api::AddSignaturesToCetRequestStruct,
-                        api::AddSignaturesToCetResponseStruct>(
-      request_message, DlcTransactionsApi::AddSignaturesToCet);
-}
-
-std::string JsonMappingApi::VerifyCetSignature(
-    const std::string &request_message) {
-  return ExecuteJsonApi<api::json::VerifyCetSignatureRequest,
-                        api::json::VerifyCetSignatureResponse,
-                        api::VerifyCetSignatureRequestStruct,
-                        api::VerifyCetSignatureResponseStruct>(
-      request_message, DlcTransactionsApi::VerifyCetSignature);
-}
-
-std::string JsonMappingApi::VerifyCetSignatures(
-    const std::string &request_message) {
-  return ExecuteJsonApi<api::json::VerifyCetSignaturesRequest,
-                        api::json::VerifyCetSignaturesResponse,
-                        api::VerifyCetSignaturesRequestStruct,
-                        api::VerifyCetSignaturesResponseStruct>(
-      request_message, DlcTransactionsApi::VerifyCetSignatures);
-}
-
-std::string JsonMappingApi::AddSignaturesToMutualClosingTx(
-    const std::string &request_message) {
-  return ExecuteJsonApi<api::json::AddSignaturesToMutualClosingTxRequest,
-                        api::json::AddSignaturesToMutualClosingTxResponse,
-                        api::AddSignaturesToMutualClosingTxRequestStruct,
-                        api::AddSignaturesToMutualClosingTxResponseStruct>(
-      request_message, DlcTransactionsApi::AddSignaturesToMutualClosingTx);
-}
-
-std::string JsonMappingApi::VerifyMutualClosingTxSignature(
-    const std::string &request_message) {
-  return ExecuteJsonApi<api::json::VerifyMutualClosingTxSignatureRequest,
-                        api::json::VerifyMutualClosingTxSignatureResponse,
-                        api::VerifyMutualClosingTxSignatureRequestStruct,
-                        api::VerifyMutualClosingTxSignatureResponseStruct>(
-      request_message, DlcTransactionsApi::VerifyMutualClosingTxSignature);
+  return ExecuteJsonApi<api::json::VerifyCetAdaptorSignaturesRequest,
+                        api::json::VerifyCetAdaptorSignaturesResponse,
+                        api::VerifyCetAdaptorSignaturesRequestStruct,
+                        api::VerifyCetAdaptorSignaturesResponseStruct>(
+      request_message, DlcTransactionsApi::VerifyCetAdaptorSignatures);
 }
 
 std::string JsonMappingApi::GetRawRefundTxSignature(
@@ -285,22 +219,6 @@ std::string JsonMappingApi::VerifyRefundTxSignature(
                         api::VerifyRefundTxSignatureRequestStruct,
                         api::VerifyRefundTxSignatureResponseStruct>(
       request_message, DlcTransactionsApi::VerifyRefundTxSignature);
-}
-
-std::string JsonMappingApi::SchnorrSign(const std::string &request_message) {
-  return ExecuteJsonApi<
-      api::json::SchnorrSignRequest, api::json::SchnorrSignResponse,
-      api::SchnorrSignRequestStruct, api::SchnorrSignResponseStruct>(
-      request_message, DlcTransactionsApi::SchnorrSign);
-}
-
-std::string JsonMappingApi::GetSchnorrPublicNonce(
-    const std::string &request_message) {
-  return ExecuteJsonApi<api::json::GetSchnorrPublicNonceRequest,
-                        api::json::GetSchnorrPublicNonceResponse,
-                        api::GetSchnorrPublicNonceRequestStruct,
-                        api::GetSchnorrPublicNonceResponseStruct>(
-      request_message, DlcTransactionsApi::GetSchnorrPublicNonce);
 }
 
 }  // namespace json

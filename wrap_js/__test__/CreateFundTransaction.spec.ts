@@ -5,8 +5,8 @@ import * as TestData from "./data/TestData";
 function GetRequest(
   optionPremium = 0,
   optionDest = "",
-  localChange = 4899999719,
-  remoteChange = 4899999719
+  localChange = 4899999789,
+  remoteChange = 4899999789
 ) {
   return {
     localPubkey: TestData.LocalFundPubkey,
@@ -44,8 +44,8 @@ const testCase = [
     GetRequest(
       100000,
       "bcrt1qxyzqgxhnnhwtp9m0n2m9ygqp7zt2lckwvxx4jq",
-      4899899703,
-      4899999703
+      4899899758,
+      4899999789
     ),
     {
       hex: TestData.FundTxWithPremium,

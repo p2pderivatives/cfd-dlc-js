@@ -1,6 +1,6 @@
 {
   "name": "cfd-dlc-js",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "cfd-dlc node.js api",
   "domain": "p2pderivatives",
   "main": "index.js",
@@ -108,7 +108,7 @@
     "@types/node": "^13.13.18",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",
-    "cfd-js": "github:cryptogarageinc/cfd-js#v0.1.16",
+    "cfd-js": "github:cryptogarageinc/cfd-js#v0.2.5",
     "cross-env": "^7.0.2",
     "eslint": "^6.5.1",
     "eslint-config-google": "^0.14.0",
