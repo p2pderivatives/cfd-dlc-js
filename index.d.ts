@@ -130,22 +130,22 @@ export interface CreateDlcTransactionsResponse {
     refundTxHex: string;
 }
 
-export interface TxInRequestA {
+export interface TxInRequest {
     txid: string;
     vout: number;
 }
 
-export interface TxOutRequestA {
+export interface TxOutRequest {
     amount: bigint | number;
     address: string;
 }
 
-export interface TxInRequestA {
+export interface TxInRequest {
     txid: string;
     vout: number;
 }
 
-export interface TxOutRequestA {
+export interface TxOutRequest {
     amount: bigint | number;
     address: string;
 }
@@ -154,10 +154,10 @@ export interface CreateFundTransactionRequest {
     localPubkey: string;
     remotePubkey: string;
     outputAmount: bigint | number;
-    localInputs: TxInRequestA[];
-    localChange: TxOutRequestA;
-    remoteInputs: TxInRequestA[];
-    remoteChange: TxOutRequestA;
+    localInputs: TxInRequest[];
+    localChange: TxOutRequest;
+    remoteInputs: TxInRequest[];
+    remoteChange: TxOutRequest;
     feeRate: bigint | number;
     optionDest?: string;
     optionPremium?: bigint | number;

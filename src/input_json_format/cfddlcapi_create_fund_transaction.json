@@ -9,28 +9,28 @@
     "outputAmount:type": "uint64_t",
     "localInputs": [
       {
-        ":class": "TxInRequestA",
+        ":class": "TxInRequest",
         "txid": "",
         "vout": 0,
         "vout:type": "uint32_t"
       }
     ],
     "localChange": {
-      ":class": "TxOutRequestA",
+      ":class": "TxOutRequest",
       "amount": 0,
       "amount:type": "uint64_t",
       "address": ""
     },
     "remoteInputs": [
       {
-        ":class": "TxInRequestA",
+        ":class": "TxInRequest",
         "txid": "",
         "vout": 0,
         "vout:type": "uint32_t"
       }
     ],
     "remoteChange": {
-      ":class": "TxOutRequestA",
+      ":class": "TxOutRequest",
       "amount": 0,
       "amount:type": "uint64_t",
       "address": ""

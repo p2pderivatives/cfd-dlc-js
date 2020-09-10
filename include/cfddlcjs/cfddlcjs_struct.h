@@ -279,24 +279,12 @@ struct CreateDlcTransactionsResponseStruct {
 };
 
 // ------------------------------------------------------------------------
-// TxInRequestAStruct
+// TxOutRequestStruct
 // ------------------------------------------------------------------------
 /**
- * @brief TxInRequestAStruct struct
+ * @brief TxOutRequestStruct struct
  */
-struct TxInRequestAStruct {
-  std::string txid = "";  //!< txid  // NOLINT
-  uint32_t vout = 0;      //!< vout  // NOLINT
-  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
-};
-
-// ------------------------------------------------------------------------
-// TxOutRequestAStruct
-// ------------------------------------------------------------------------
-/**
- * @brief TxOutRequestAStruct struct
- */
-struct TxOutRequestAStruct {
+struct TxOutRequestStruct {
   uint64_t amount = 0;       //!< amount  // NOLINT
   std::string address = "";  //!< address  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
@@ -309,16 +297,16 @@ struct TxOutRequestAStruct {
  * @brief CreateFundTransactionRequestStruct struct
  */
 struct CreateFundTransactionRequestStruct {
-  std::string local_pubkey = "";                  //!< local_pubkey  // NOLINT
-  std::string remote_pubkey = "";                 //!< remote_pubkey  // NOLINT
-  uint64_t output_amount = 0;                     //!< output_amount  // NOLINT
-  std::vector<TxInRequestAStruct> local_inputs;   //!< local_inputs  // NOLINT
-  TxOutRequestAStruct local_change;               //!< local_change  // NOLINT
-  std::vector<TxInRequestAStruct> remote_inputs;  //!< remote_inputs  // NOLINT
-  TxOutRequestAStruct remote_change;              //!< remote_change  // NOLINT
-  int64_t fee_rate = 1;                           //!< fee_rate  // NOLINT
-  std::string option_dest = "";                   //!< option_dest  // NOLINT
-  uint64_t option_premium = 0;                    //!< option_premium  // NOLINT
+  std::string local_pubkey = "";                 //!< local_pubkey  // NOLINT
+  std::string remote_pubkey = "";                //!< remote_pubkey  // NOLINT
+  uint64_t output_amount = 0;                    //!< output_amount  // NOLINT
+  std::vector<TxInRequestStruct> local_inputs;   //!< local_inputs  // NOLINT
+  TxOutRequestStruct local_change;               //!< local_change  // NOLINT
+  std::vector<TxInRequestStruct> remote_inputs;  //!< remote_inputs  // NOLINT
+  TxOutRequestStruct remote_change;              //!< remote_change  // NOLINT
+  int64_t fee_rate = 1;                          //!< fee_rate  // NOLINT
+  std::string option_dest = "";                  //!< option_dest  // NOLINT
+  uint64_t option_premium = 0;                   //!< option_premium  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
 
