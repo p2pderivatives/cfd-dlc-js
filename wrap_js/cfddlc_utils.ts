@@ -1,28 +1,6 @@
 import * as cfddlcjs from "../index.js";
 import * as CfdUtils from "./cfd_utils";
 
-export function GetSchnorrPublicNonce(kValue: string) {
-  const reqJson: cfddlcjs.GetSchnorrPublicNonceRequest = {
-    kValue,
-  };
-
-  return cfddlcjs.GetSchnorrPublicNonce(reqJson).hex;
-}
-
-export function SchnorrSign(
-  message: string,
-  oraclePrivkey: string,
-  oracleKValue: string
-) {
-  const reqJson: cfddlcjs.SchnorrSignRequest = {
-    message,
-    privkey: oraclePrivkey,
-    kValue: oracleKValue,
-  };
-
-  return cfddlcjs.SchnorrSign(reqJson).hex;
-}
-
 export function SignFundTransactionInput(
   transaction: string,
   input: any,
@@ -43,80 +21,26 @@ export function SignCet(
   transaction: string,
   fundTxId: string,
   fundInputAmount: number,
-  prv1: string,
-  prv2: string
-) {
-  const reqJson: cfddlcjs.GetRawCetSignatureRequest = {
+  adaptorSignature: string,
+  prv: string,
+  oracleSignature: string,
+  localFundPubkey: string,
+  remoteFundPubkey: string,
+  isLocal: boolean
+): string {
+  const reqJson: cfddlcjs.SignCetRequest = {
     cetHex: transaction,
-    privkey: prv1,
+    fundPrivkey: prv,
     fundTxId,
     fundVout: 0,
     fundInputAmount,
-    localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
-    remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
+    localFundPubkey,
+    remoteFundPubkey,
+    oracleSignature,
+    adaptorSignature,
   };
 
-  const sig1 = cfddlcjs.GetRawCetSignature(reqJson).hex;
-  reqJson.privkey = prv2;
-  const sig2 = cfddlcjs.GetRawCetSignature(reqJson).hex;
-
-  const addSigReq: cfddlcjs.AddSignaturesToCetRequest = {
-    cetHex: transaction,
-    signatures: [sig1, sig2],
-    fundTxId,
-    fundVout: 0,
-    localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
-    remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
-  };
-
-  return cfddlcjs.AddSignaturesToCet(addSigReq).hex;
-}
-
-export function CreateClosingTx(
-  finalAddress: string,
-  amount: number,
-  cetTxId: string,
-  cetVout: number
-) {
-  const reqJson: cfddlcjs.CreateClosingTransactionRequest = {
-    address: finalAddress,
-    amount,
-    cetTxId,
-    cetVout,
-  };
-
-  return cfddlcjs.CreateClosingTransaction(reqJson).hex;
-}
-
-export function SignClosingTx(
-  transaction: string,
-  localFundPrivkey: string,
-  localSweepPubkey: string,
-  remoteSweepPubkey: string,
-  oraclePubkey: string,
-  oracleRPoints: string[],
-  messages: string[],
-  oracleSigs: string[],
-  csvDelay: number,
-  cetId: string,
-  amount: number
-) {
-  const reqJson: cfddlcjs.SignClosingTransactionRequest = {
-    closingTxHex: transaction,
-    localFundPrivkey,
-    localSweepPubkey,
-    remoteSweepPubkey,
-    oraclePubkey,
-    oracleRPoints,
-    messages,
-    oracleSigs,
-    csvDelay,
-    cetTxId: cetId,
-    cetVout: 0,
-    amount,
-  };
-
-  return cfddlcjs.SignClosingTransaction(reqJson).hex;
+  return cfddlcjs.SignCet(reqJson).hex;
 }
 
 export function SignRefundTransaction(
@@ -150,9 +74,14 @@ export function SignRefundTransaction(
 
   const sig2 = cfddlcjs.GetRawRefundTxSignature(reqJson).hex;
 
+  const pubkey1 = CfdUtils.GetPubkeyFromPrivkey(prv1);
+  const pubkey2 = CfdUtils.GetPubkeyFromPrivkey(prv2);
+
+  const signatures = pubkey1 < pubkey2 ? [sig1, sig2] : [sig2, sig1];
+
   const addSigReq: cfddlcjs.AddSignaturesToRefundTxRequest = {
     refundTxHex: transaction,
-    signatures: [sig1, sig2],
+    signatures,
     fundTxId,
     localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
     remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
@@ -161,62 +90,58 @@ export function SignRefundTransaction(
   return cfddlcjs.AddSignaturesToRefundTx(addSigReq).hex;
 }
 
-export function CreateMutualClosingTx(
-  localFinalAddress: string,
-  remoteFinalAddress: string,
-  localAmount: number,
-  remoteAmount: number,
-  fundTxId: string
+export function CreateCetAdaptorSignatures(
+  cets: string[],
+  privkey: string,
+  oraclePubkey: string,
+  oracleRValue: string,
+  messages: string[],
+  fundTxId: string,
+  fundVout: number,
+  fundInputAmount: number,
+  localFundPubkey: string,
+  remoteFundPubkey: string
 ) {
-  const reqJson: cfddlcjs.CreateMutualClosingTransactionRequest = {
-    localFinalAddress,
-    remoteFinalAddress,
-    localAmount,
-    remoteAmount,
+  const req: cfddlcjs.CreateCetAdaptorSignaturesRequest = {
+    cetsHex: cets,
+    privkey,
     fundTxId,
-    feeRate: 1,
+    fundVout,
+    localFundPubkey,
+    remoteFundPubkey,
+    oraclePubkey,
+    oracleRValue,
+    messages,
+    fundInputAmount,
   };
 
-  return cfddlcjs.CreateMutualClosingTransaction(reqJson).hex;
+  return cfddlcjs.CreateCetAdaptorSignatures(req).adaptorPairs;
 }
 
-export function SignMutualClosingTx(
-  transaction: string,
+export function VerifyAdaptorSignatures(
+  cets: string[],
+  adaptorPairs: cfddlcjs.AdaptorPair[],
+  messages: string[],
+  oraclePubkey: string,
+  oracleRValue: string,
+  localFundPubkey: string,
+  remoteFundPubkey: string,
   fundTxId: string,
   fundInputAmount: number,
-  prv1: string,
-  prv2: string
+  verifyRemote: boolean
 ) {
-  let reqJson: cfddlcjs.GetRawMutualClosingTxSignatureRequest = {
-    mutualClosingHex: transaction,
-    privkey: prv1,
-    fundTxId,
-    fundVout: 0,
-    fundInputAmount,
-    localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
-    remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
-  };
-
-  const sig1 = cfddlcjs.GetRawMutualClosingTxSignature(reqJson).hex;
-
-  reqJson = {
-    mutualClosingHex: transaction,
-    privkey: prv2,
+  const req: cfddlcjs.VerifyCetAdaptorSignaturesRequest = {
+    cetsHex: cets,
+    adaptorPairs,
+    messages,
+    localFundPubkey,
+    remoteFundPubkey,
+    oraclePubkey,
+    oracleRValue,
     fundTxId,
     fundInputAmount,
-    localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
-    remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
+    verifyRemote,
   };
 
-  const sig2 = cfddlcjs.GetRawMutualClosingTxSignature(reqJson).hex;
-
-  const addSigReq: cfddlcjs.AddSignaturesToMutualClosingTxRequest = {
-    mutualClosingTxHex: transaction,
-    signatures: [sig1, sig2],
-    fundTxId,
-    localFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv1),
-    remoteFundPubkey: CfdUtils.GetPubkeyFromPrivkey(prv2),
-  };
-
-  return cfddlcjs.AddSignaturesToMutualClosingTx(addSigReq).hex;
+  return cfddlcjs.VerifyCetAdaptorSignatures(req).valid;
 }

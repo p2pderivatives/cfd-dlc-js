@@ -21,13 +21,81 @@ describe("dlc tests", () => {
 
     await testHelper.Initialize();
 
-    const oracleSignature = CfdDlcUtils.SchnorrSign(
-      testHelper.winMessages[0],
+    const oracleSignature = CfdUtils.SchnorrSign(
+      testHelper.winMessage,
       testHelper.oracleKey,
       testHelper.oracleKValue
     );
 
+    expect(
+      CfdUtils.SchnorrVerify(
+        testHelper.winMessage,
+        oracleSignature,
+        testHelper.oraclePubkey
+      )
+    ).toBeTruthy();
+
     const dlctxs = testHelper.CreateDlcTransactions();
+
+    const fundTx = CfdUtils.DecodeRawTransaction(dlctxs.fundTxHex);
+    const fundTxId = fundTx.txid;
+    const fundInputAmount = Number(fundTx.vout[0].value);
+
+    const localAdaptorPairs = CfdDlcUtils.CreateCetAdaptorSignatures(
+      dlctxs.cetsHex,
+      testHelper.aliceFundPrivkey,
+      testHelper.oraclePubkey,
+      testHelper.oracleRValue,
+      testHelper.messages,
+      fundTx.txid,
+      0,
+      fundInputAmount,
+      testHelper.aliceFundPubkey,
+      testHelper.bobFundPubkey
+    );
+
+    const validLocalAdaptorPairs = CfdDlcUtils.VerifyAdaptorSignatures(
+      dlctxs.cetsHex,
+      localAdaptorPairs,
+      testHelper.messages,
+      testHelper.oraclePubkey,
+      testHelper.oracleRValue,
+      testHelper.aliceFundPubkey,
+      testHelper.bobFundPubkey,
+      fundTxId,
+      fundInputAmount,
+      false
+    );
+
+    expect(validLocalAdaptorPairs).toBeTruthy();
+
+    const remoteAdaptorPairs = CfdDlcUtils.CreateCetAdaptorSignatures(
+      dlctxs.cetsHex,
+      testHelper.bobFundPrivkey,
+      testHelper.oraclePubkey,
+      testHelper.oracleRValue,
+      testHelper.messages,
+      fundTx.txid,
+      0,
+      Number(fundTx.vout[0].value),
+      testHelper.aliceFundPubkey,
+      testHelper.bobFundPubkey
+    );
+
+    const validRemoteAdaptorPairs = CfdDlcUtils.VerifyAdaptorSignatures(
+      dlctxs.cetsHex,
+      remoteAdaptorPairs,
+      testHelper.messages,
+      testHelper.oraclePubkey,
+      testHelper.oracleRValue,
+      testHelper.aliceFundPubkey,
+      testHelper.bobFundPubkey,
+      fundTxId,
+      fundInputAmount,
+      true
+    );
+
+    expect(validRemoteAdaptorPairs).toBeTruthy();
 
     let fundTxHex = CfdDlcUtils.SignFundTransactionInput(
       dlctxs.fundTxHex,
@@ -40,11 +108,11 @@ describe("dlc tests", () => {
       testHelper.bobInputPrv
     );
 
-    const fundTx = CfdUtils.DecodeRawTransaction(fundTxHex);
+    const receivedFundTxId = await testHelper.aliceWallet.sendRawTransaction(
+      fundTxHex
+    );
 
-    const fundTxId = await testHelper.aliceWallet.sendRawTransaction(fundTxHex);
-
-    expect(fundTxId).toBe(fundTx.txid);
+    expect(receivedFundTxId).toBe(fundTxId);
 
     await testHelper.bobWallet.generate(1);
     await testHelper.aliceWallet.generate(1);
@@ -70,45 +138,21 @@ describe("dlc tests", () => {
     expect(bobChangeBalance.bitcoin).toBeGreaterThan(0);
 
     const cetHex = CfdDlcUtils.SignCet(
-      dlctxs.localCetsHex[0],
+      dlctxs.cetsHex[0],
       fundTxId,
-      Number(fundTx.vout[0].value),
+      fundInputAmount,
+      remoteAdaptorPairs[0].signature,
       testHelper.aliceFundPrivkey,
-      testHelper.bobFundPrivkey
+      oracleSignature,
+      testHelper.aliceFundPubkey,
+      testHelper.bobFundPubkey,
+      true
     );
     const cet = CfdUtils.DecodeRawTransaction(cetHex);
 
     const cetId = await testHelper.aliceWallet.sendRawTransaction(cetHex);
 
     expect(cetId).toBe(cet.txid);
-
-    let closingHex = CfdDlcUtils.CreateClosingTx(
-      testHelper.aliceFinalAddress,
-      Number(cet.vout[0].value) - 122 * 2,
-      cet.txid,
-      0
-    );
-    closingHex = CfdDlcUtils.SignClosingTx(
-      closingHex,
-      testHelper.aliceFundPrivkey,
-      testHelper.aliceSweepPubkey,
-      testHelper.bobSweepPubkey,
-      testHelper.oraclePubkey,
-      [testHelper.oracleRValue],
-      testHelper.winMessages,
-      [oracleSignature],
-      testHelper.csvDelay,
-      cet.txid,
-      Number(cet.vout[0].value)
-    );
-
-    const closingTxid = await testHelper.bobWallet.sendRawTransaction(
-      closingHex
-    );
-
-    const closingTx = CfdUtils.DecodeRawTransaction(closingHex);
-
-    expect(closingTxid).toEqual(closingTx.txid);
 
     await testHelper.aliceWallet.generate(1);
     await testHelper.bobWallet.generate(1);
@@ -138,6 +182,7 @@ describe("dlc tests", () => {
       walletHelper.aliceWallet,
       walletHelper.bobWallet
     );
+
     await testHelper.Initialize();
     const dlctxs = testHelper.CreateDlcTransactions();
     let fundTxHex = CfdDlcUtils.SignFundTransactionInput(
@@ -145,6 +190,7 @@ describe("dlc tests", () => {
       testHelper.aliceInput,
       testHelper.aliceInputPrv
     );
+
     fundTxHex = CfdDlcUtils.SignFundTransactionInput(
       fundTxHex,
       testHelper.bobInput,
@@ -195,81 +241,6 @@ describe("dlc tests", () => {
     );
     expect(bobFinalBalance.bitcoin).toBeGreaterThan(
       Number(testHelper.collateral)
-    );
-  });
-
-  it("test mutual closing", async () => {
-    const testHelper = new DlcTestHelper(
-      walletHelper.aliceWallet,
-      walletHelper.bobWallet
-    );
-    await testHelper.Initialize();
-
-    const dlctxs = testHelper.CreateDlcTransactions();
-
-    let fundTxHex = CfdDlcUtils.SignFundTransactionInput(
-      dlctxs.fundTxHex,
-      testHelper.aliceInput,
-      testHelper.aliceInputPrv
-    );
-    fundTxHex = CfdDlcUtils.SignFundTransactionInput(
-      fundTxHex,
-      testHelper.bobInput,
-      testHelper.bobInputPrv
-    );
-
-    const fundTxId = await testHelper.aliceWallet.sendRawTransaction(fundTxHex);
-
-    const fundTx = CfdUtils.DecodeRawTransaction(fundTxHex);
-
-    let mutualClosingHex = CfdDlcUtils.CreateMutualClosingTx(
-      testHelper.aliceFinalAddress,
-      testHelper.bobFinalAddress,
-      testHelper.winAmount,
-      testHelper.loseAmount,
-      fundTxId
-    );
-
-    mutualClosingHex = CfdDlcUtils.SignMutualClosingTx(
-      mutualClosingHex,
-      fundTx.txid,
-      Number(fundTx.vout[0].value),
-      testHelper.aliceFundPrivkey,
-      testHelper.bobFundPrivkey
-    );
-
-    const mutualClosing = CfdUtils.DecodeRawTransaction(mutualClosingHex);
-
-    const mutualClosingTxId = await testHelper.aliceWallet.sendRawTransaction(
-      mutualClosingHex
-    );
-
-    expect(mutualClosing.txid).toEqual(mutualClosingTxId);
-
-    await testHelper.aliceWallet.generate(1);
-    await testHelper.bobWallet.generate(1);
-
-    await DlcWalletHelper.Timeout(SyncTimeout);
-
-    await testHelper.aliceWallet.forceUpdateUtxoData();
-    await testHelper.bobWallet.forceUpdateUtxoData();
-
-    await DlcWalletHelper.Timeout(SyncTimeout);
-
-    const aliceFinalBalance = await testHelper.aliceWallet.getBalance(
-      1,
-      testHelper.aliceFinalAddress
-    );
-    const bobFinalBalance = await testHelper.bobWallet.getBalance(
-      1,
-      testHelper.bobFinalAddress
-    );
-
-    expect(aliceFinalBalance.bitcoin).toBeGreaterThan(
-      Number(testHelper.winAmount)
-    );
-    expect(bobFinalBalance.bitcoin).toBeGreaterThan(
-      Number(testHelper.loseAmount)
     );
   });
 });

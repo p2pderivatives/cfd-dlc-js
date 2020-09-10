@@ -24,45 +24,45 @@ using cfd::core::JsonVector;
 // @formatter:off
 
 // ------------------------------------------------------------------------
-// TxInRequest
+// AdaptorPair
 // ------------------------------------------------------------------------
-cfd::core::JsonTableMap<TxInRequest>
-  TxInRequest::json_mapper;
-std::vector<std::string> TxInRequest::item_list;
+cfd::core::JsonTableMap<AdaptorPair>
+  AdaptorPair::json_mapper;
+std::vector<std::string> AdaptorPair::item_list;
 
-void TxInRequest::CollectFieldName() {
+void AdaptorPair::CollectFieldName() {
   if (!json_mapper.empty()) {
     return;
   }
-  cfd::core::CLASS_FUNCTION_TABLE<TxInRequest> func_table;  // NOLINT
+  cfd::core::CLASS_FUNCTION_TABLE<AdaptorPair> func_table;  // NOLINT
 
   func_table = {
-    TxInRequest::GetTxidString,
-    TxInRequest::SetTxidString,
-    TxInRequest::GetTxidFieldType,
+    AdaptorPair::GetSignatureString,
+    AdaptorPair::SetSignatureString,
+    AdaptorPair::GetSignatureFieldType,
   };
-  json_mapper.emplace("txid", func_table);
-  item_list.push_back("txid");
+  json_mapper.emplace("signature", func_table);
+  item_list.push_back("signature");
   func_table = {
-    TxInRequest::GetVoutString,
-    TxInRequest::SetVoutString,
-    TxInRequest::GetVoutFieldType,
+    AdaptorPair::GetProofString,
+    AdaptorPair::SetProofString,
+    AdaptorPair::GetProofFieldType,
   };
-  json_mapper.emplace("vout", func_table);
-  item_list.push_back("vout");
+  json_mapper.emplace("proof", func_table);
+  item_list.push_back("proof");
 }
 
-void TxInRequest::ConvertFromStruct(
-    const TxInRequestStruct& data) {
-  txid_ = data.txid;
-  vout_ = data.vout;
+void AdaptorPair::ConvertFromStruct(
+    const AdaptorPairStruct& data) {
+  signature_ = data.signature;
+  proof_ = data.proof;
   ignore_items = data.ignore_items;
 }
 
-TxInRequestStruct TxInRequest::ConvertToStruct() const {  // NOLINT
-  TxInRequestStruct result;
-  result.txid = txid_;
-  result.vout = vout_;
+AdaptorPairStruct AdaptorPair::ConvertToStruct() const {  // NOLINT
+  AdaptorPairStruct result;
+  result.signature = signature_;
+  result.proof = proof_;
   result.ignore_items = ignore_items;
   return result;
 }
@@ -168,236 +168,6 @@ void AddSignatureToFundTransactionResponse::ConvertFromStruct(
 
 AddSignatureToFundTransactionResponseStruct AddSignatureToFundTransactionResponse::ConvertToStruct() const {  // NOLINT
   AddSignatureToFundTransactionResponseStruct result;
-  result.hex = hex_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// AddSignaturesToCetRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<AddSignaturesToCetRequest>
-  AddSignaturesToCetRequest::json_mapper;
-std::vector<std::string> AddSignaturesToCetRequest::item_list;
-
-void AddSignaturesToCetRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<AddSignaturesToCetRequest> func_table;  // NOLINT
-
-  func_table = {
-    AddSignaturesToCetRequest::GetCetHexString,
-    AddSignaturesToCetRequest::SetCetHexString,
-    AddSignaturesToCetRequest::GetCetHexFieldType,
-  };
-  json_mapper.emplace("cetHex", func_table);
-  item_list.push_back("cetHex");
-  func_table = {
-    AddSignaturesToCetRequest::GetSignaturesString,
-    AddSignaturesToCetRequest::SetSignaturesString,
-    AddSignaturesToCetRequest::GetSignaturesFieldType,
-  };
-  json_mapper.emplace("signatures", func_table);
-  item_list.push_back("signatures");
-  func_table = {
-    AddSignaturesToCetRequest::GetFundTxIdString,
-    AddSignaturesToCetRequest::SetFundTxIdString,
-    AddSignaturesToCetRequest::GetFundTxIdFieldType,
-  };
-  json_mapper.emplace("fundTxId", func_table);
-  item_list.push_back("fundTxId");
-  func_table = {
-    AddSignaturesToCetRequest::GetFundVoutString,
-    AddSignaturesToCetRequest::SetFundVoutString,
-    AddSignaturesToCetRequest::GetFundVoutFieldType,
-  };
-  json_mapper.emplace("fundVout", func_table);
-  item_list.push_back("fundVout");
-  func_table = {
-    AddSignaturesToCetRequest::GetLocalFundPubkeyString,
-    AddSignaturesToCetRequest::SetLocalFundPubkeyString,
-    AddSignaturesToCetRequest::GetLocalFundPubkeyFieldType,
-  };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
-  func_table = {
-    AddSignaturesToCetRequest::GetRemoteFundPubkeyString,
-    AddSignaturesToCetRequest::SetRemoteFundPubkeyString,
-    AddSignaturesToCetRequest::GetRemoteFundPubkeyFieldType,
-  };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
-}
-
-void AddSignaturesToCetRequest::ConvertFromStruct(
-    const AddSignaturesToCetRequestStruct& data) {
-  cet_hex_ = data.cet_hex;
-  signatures_.ConvertFromStruct(data.signatures);
-  fund_tx_id_ = data.fund_tx_id;
-  fund_vout_ = data.fund_vout;
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
-  ignore_items = data.ignore_items;
-}
-
-AddSignaturesToCetRequestStruct AddSignaturesToCetRequest::ConvertToStruct() const {  // NOLINT
-  AddSignaturesToCetRequestStruct result;
-  result.cet_hex = cet_hex_;
-  result.signatures = signatures_.ConvertToStruct();
-  result.fund_tx_id = fund_tx_id_;
-  result.fund_vout = fund_vout_;
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// AddSignaturesToCetResponse
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<AddSignaturesToCetResponse>
-  AddSignaturesToCetResponse::json_mapper;
-std::vector<std::string> AddSignaturesToCetResponse::item_list;
-
-void AddSignaturesToCetResponse::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<AddSignaturesToCetResponse> func_table;  // NOLINT
-
-  func_table = {
-    AddSignaturesToCetResponse::GetHexString,
-    AddSignaturesToCetResponse::SetHexString,
-    AddSignaturesToCetResponse::GetHexFieldType,
-  };
-  json_mapper.emplace("hex", func_table);
-  item_list.push_back("hex");
-}
-
-void AddSignaturesToCetResponse::ConvertFromStruct(
-    const AddSignaturesToCetResponseStruct& data) {
-  hex_ = data.hex;
-  ignore_items = data.ignore_items;
-}
-
-AddSignaturesToCetResponseStruct AddSignaturesToCetResponse::ConvertToStruct() const {  // NOLINT
-  AddSignaturesToCetResponseStruct result;
-  result.hex = hex_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// AddSignaturesToMutualClosingTxRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<AddSignaturesToMutualClosingTxRequest>
-  AddSignaturesToMutualClosingTxRequest::json_mapper;
-std::vector<std::string> AddSignaturesToMutualClosingTxRequest::item_list;
-
-void AddSignaturesToMutualClosingTxRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<AddSignaturesToMutualClosingTxRequest> func_table;  // NOLINT
-
-  func_table = {
-    AddSignaturesToMutualClosingTxRequest::GetMutualClosingTxHexString,
-    AddSignaturesToMutualClosingTxRequest::SetMutualClosingTxHexString,
-    AddSignaturesToMutualClosingTxRequest::GetMutualClosingTxHexFieldType,
-  };
-  json_mapper.emplace("mutualClosingTxHex", func_table);
-  item_list.push_back("mutualClosingTxHex");
-  func_table = {
-    AddSignaturesToMutualClosingTxRequest::GetSignaturesString,
-    AddSignaturesToMutualClosingTxRequest::SetSignaturesString,
-    AddSignaturesToMutualClosingTxRequest::GetSignaturesFieldType,
-  };
-  json_mapper.emplace("signatures", func_table);
-  item_list.push_back("signatures");
-  func_table = {
-    AddSignaturesToMutualClosingTxRequest::GetFundTxIdString,
-    AddSignaturesToMutualClosingTxRequest::SetFundTxIdString,
-    AddSignaturesToMutualClosingTxRequest::GetFundTxIdFieldType,
-  };
-  json_mapper.emplace("fundTxId", func_table);
-  item_list.push_back("fundTxId");
-  func_table = {
-    AddSignaturesToMutualClosingTxRequest::GetFundVoutString,
-    AddSignaturesToMutualClosingTxRequest::SetFundVoutString,
-    AddSignaturesToMutualClosingTxRequest::GetFundVoutFieldType,
-  };
-  json_mapper.emplace("fundVout", func_table);
-  item_list.push_back("fundVout");
-  func_table = {
-    AddSignaturesToMutualClosingTxRequest::GetLocalFundPubkeyString,
-    AddSignaturesToMutualClosingTxRequest::SetLocalFundPubkeyString,
-    AddSignaturesToMutualClosingTxRequest::GetLocalFundPubkeyFieldType,
-  };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
-  func_table = {
-    AddSignaturesToMutualClosingTxRequest::GetRemoteFundPubkeyString,
-    AddSignaturesToMutualClosingTxRequest::SetRemoteFundPubkeyString,
-    AddSignaturesToMutualClosingTxRequest::GetRemoteFundPubkeyFieldType,
-  };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
-}
-
-void AddSignaturesToMutualClosingTxRequest::ConvertFromStruct(
-    const AddSignaturesToMutualClosingTxRequestStruct& data) {
-  mutual_closing_tx_hex_ = data.mutual_closing_tx_hex;
-  signatures_.ConvertFromStruct(data.signatures);
-  fund_tx_id_ = data.fund_tx_id;
-  fund_vout_ = data.fund_vout;
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
-  ignore_items = data.ignore_items;
-}
-
-AddSignaturesToMutualClosingTxRequestStruct AddSignaturesToMutualClosingTxRequest::ConvertToStruct() const {  // NOLINT
-  AddSignaturesToMutualClosingTxRequestStruct result;
-  result.mutual_closing_tx_hex = mutual_closing_tx_hex_;
-  result.signatures = signatures_.ConvertToStruct();
-  result.fund_tx_id = fund_tx_id_;
-  result.fund_vout = fund_vout_;
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// AddSignaturesToMutualClosingTxResponse
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<AddSignaturesToMutualClosingTxResponse>
-  AddSignaturesToMutualClosingTxResponse::json_mapper;
-std::vector<std::string> AddSignaturesToMutualClosingTxResponse::item_list;
-
-void AddSignaturesToMutualClosingTxResponse::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<AddSignaturesToMutualClosingTxResponse> func_table;  // NOLINT
-
-  func_table = {
-    AddSignaturesToMutualClosingTxResponse::GetHexString,
-    AddSignaturesToMutualClosingTxResponse::SetHexString,
-    AddSignaturesToMutualClosingTxResponse::GetHexFieldType,
-  };
-  json_mapper.emplace("hex", func_table);
-  item_list.push_back("hex");
-}
-
-void AddSignaturesToMutualClosingTxResponse::ConvertFromStruct(
-    const AddSignaturesToMutualClosingTxResponseStruct& data) {
-  hex_ = data.hex;
-  ignore_items = data.ignore_items;
-}
-
-AddSignaturesToMutualClosingTxResponseStruct AddSignaturesToMutualClosingTxResponse::ConvertToStruct() const {  // NOLINT
-  AddSignaturesToMutualClosingTxResponseStruct result;
   result.hex = hex_;
   result.ignore_items = ignore_items;
   return result;
@@ -539,19 +309,19 @@ void CreateCetRequest::CollectFieldName() {
   json_mapper.emplace("localFundPubkey", func_table);
   item_list.push_back("localFundPubkey");
   func_table = {
-    CreateCetRequest::GetLocalSweepPubkeyString,
-    CreateCetRequest::SetLocalSweepPubkeyString,
-    CreateCetRequest::GetLocalSweepPubkeyFieldType,
+    CreateCetRequest::GetRemoteFundPubkeyString,
+    CreateCetRequest::SetRemoteFundPubkeyString,
+    CreateCetRequest::GetRemoteFundPubkeyFieldType,
   };
-  json_mapper.emplace("localSweepPubkey", func_table);
-  item_list.push_back("localSweepPubkey");
+  json_mapper.emplace("remoteFundPubkey", func_table);
+  item_list.push_back("remoteFundPubkey");
   func_table = {
-    CreateCetRequest::GetRemoteSweepPubkeyString,
-    CreateCetRequest::SetRemoteSweepPubkeyString,
-    CreateCetRequest::GetRemoteSweepPubkeyFieldType,
+    CreateCetRequest::GetLocalFinalAddressString,
+    CreateCetRequest::SetLocalFinalAddressString,
+    CreateCetRequest::GetLocalFinalAddressFieldType,
   };
-  json_mapper.emplace("remoteSweepPubkey", func_table);
-  item_list.push_back("remoteSweepPubkey");
+  json_mapper.emplace("localFinalAddress", func_table);
+  item_list.push_back("localFinalAddress");
   func_table = {
     CreateCetRequest::GetRemoteFinalAddressString,
     CreateCetRequest::SetRemoteFinalAddressString,
@@ -559,34 +329,6 @@ void CreateCetRequest::CollectFieldName() {
   };
   json_mapper.emplace("remoteFinalAddress", func_table);
   item_list.push_back("remoteFinalAddress");
-  func_table = {
-    CreateCetRequest::GetOraclePubkeyString,
-    CreateCetRequest::SetOraclePubkeyString,
-    CreateCetRequest::GetOraclePubkeyFieldType,
-  };
-  json_mapper.emplace("oraclePubkey", func_table);
-  item_list.push_back("oraclePubkey");
-  func_table = {
-    CreateCetRequest::GetOracleRPointsString,
-    CreateCetRequest::SetOracleRPointsString,
-    CreateCetRequest::GetOracleRPointsFieldType,
-  };
-  json_mapper.emplace("oracleRPoints", func_table);
-  item_list.push_back("oracleRPoints");
-  func_table = {
-    CreateCetRequest::GetMessagesString,
-    CreateCetRequest::SetMessagesString,
-    CreateCetRequest::GetMessagesFieldType,
-  };
-  json_mapper.emplace("messages", func_table);
-  item_list.push_back("messages");
-  func_table = {
-    CreateCetRequest::GetCsvDelayString,
-    CreateCetRequest::SetCsvDelayString,
-    CreateCetRequest::GetCsvDelayFieldType,
-  };
-  json_mapper.emplace("csvDelay", func_table);
-  item_list.push_back("csvDelay");
   func_table = {
     CreateCetRequest::GetLocalPayoutString,
     CreateCetRequest::SetLocalPayoutString,
@@ -602,13 +344,6 @@ void CreateCetRequest::CollectFieldName() {
   json_mapper.emplace("remotePayout", func_table);
   item_list.push_back("remotePayout");
   func_table = {
-    CreateCetRequest::GetFeeRateString,
-    CreateCetRequest::SetFeeRateString,
-    CreateCetRequest::GetFeeRateFieldType,
-  };
-  json_mapper.emplace("feeRate", func_table);
-  item_list.push_back("feeRate");
-  func_table = {
     CreateCetRequest::GetFundTxIdString,
     CreateCetRequest::SetFundTxIdString,
     CreateCetRequest::GetFundTxIdFieldType,
@@ -623,49 +358,39 @@ void CreateCetRequest::CollectFieldName() {
   json_mapper.emplace("fundVout", func_table);
   item_list.push_back("fundVout");
   func_table = {
-    CreateCetRequest::GetMaturityTimeString,
-    CreateCetRequest::SetMaturityTimeString,
-    CreateCetRequest::GetMaturityTimeFieldType,
+    CreateCetRequest::GetLockTimeString,
+    CreateCetRequest::SetLockTimeString,
+    CreateCetRequest::GetLockTimeFieldType,
   };
-  json_mapper.emplace("maturityTime", func_table);
-  item_list.push_back("maturityTime");
+  json_mapper.emplace("lockTime", func_table);
+  item_list.push_back("lockTime");
 }
 
 void CreateCetRequest::ConvertFromStruct(
     const CreateCetRequestStruct& data) {
   local_fund_pubkey_ = data.local_fund_pubkey;
-  local_sweep_pubkey_ = data.local_sweep_pubkey;
-  remote_sweep_pubkey_ = data.remote_sweep_pubkey;
+  remote_fund_pubkey_ = data.remote_fund_pubkey;
+  local_final_address_ = data.local_final_address;
   remote_final_address_ = data.remote_final_address;
-  oracle_pubkey_ = data.oracle_pubkey;
-  oracle_r_points_.ConvertFromStruct(data.oracle_r_points);
-  messages_.ConvertFromStruct(data.messages);
-  csv_delay_ = data.csv_delay;
   local_payout_ = data.local_payout;
   remote_payout_ = data.remote_payout;
-  fee_rate_ = data.fee_rate;
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
-  maturity_time_ = data.maturity_time;
+  lock_time_ = data.lock_time;
   ignore_items = data.ignore_items;
 }
 
 CreateCetRequestStruct CreateCetRequest::ConvertToStruct() const {  // NOLINT
   CreateCetRequestStruct result;
   result.local_fund_pubkey = local_fund_pubkey_;
-  result.local_sweep_pubkey = local_sweep_pubkey_;
-  result.remote_sweep_pubkey = remote_sweep_pubkey_;
+  result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.local_final_address = local_final_address_;
   result.remote_final_address = remote_final_address_;
-  result.oracle_pubkey = oracle_pubkey_;
-  result.oracle_r_points = oracle_r_points_.ConvertToStruct();
-  result.messages = messages_.ConvertToStruct();
-  result.csv_delay = csv_delay_;
   result.local_payout = local_payout_;
   result.remote_payout = remote_payout_;
-  result.fee_rate = fee_rate_;
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
-  result.maturity_time = maturity_time_;
+  result.lock_time = lock_time_;
   result.ignore_items = ignore_items;
   return result;
 }
@@ -706,98 +431,312 @@ CreateCetResponseStruct CreateCetResponse::ConvertToStruct() const {  // NOLINT
 }
 
 // ------------------------------------------------------------------------
-// CreateClosingTransactionRequest
+// CreateCetAdaptorSignatureRequest
 // ------------------------------------------------------------------------
-cfd::core::JsonTableMap<CreateClosingTransactionRequest>
-  CreateClosingTransactionRequest::json_mapper;
-std::vector<std::string> CreateClosingTransactionRequest::item_list;
+cfd::core::JsonTableMap<CreateCetAdaptorSignatureRequest>
+  CreateCetAdaptorSignatureRequest::json_mapper;
+std::vector<std::string> CreateCetAdaptorSignatureRequest::item_list;
 
-void CreateClosingTransactionRequest::CollectFieldName() {
+void CreateCetAdaptorSignatureRequest::CollectFieldName() {
   if (!json_mapper.empty()) {
     return;
   }
-  cfd::core::CLASS_FUNCTION_TABLE<CreateClosingTransactionRequest> func_table;  // NOLINT
+  cfd::core::CLASS_FUNCTION_TABLE<CreateCetAdaptorSignatureRequest> func_table;  // NOLINT
 
   func_table = {
-    CreateClosingTransactionRequest::GetAddressString,
-    CreateClosingTransactionRequest::SetAddressString,
-    CreateClosingTransactionRequest::GetAddressFieldType,
+    CreateCetAdaptorSignatureRequest::GetCetHexString,
+    CreateCetAdaptorSignatureRequest::SetCetHexString,
+    CreateCetAdaptorSignatureRequest::GetCetHexFieldType,
   };
-  json_mapper.emplace("address", func_table);
-  item_list.push_back("address");
+  json_mapper.emplace("cetHex", func_table);
+  item_list.push_back("cetHex");
   func_table = {
-    CreateClosingTransactionRequest::GetAmountString,
-    CreateClosingTransactionRequest::SetAmountString,
-    CreateClosingTransactionRequest::GetAmountFieldType,
+    CreateCetAdaptorSignatureRequest::GetPrivkeyString,
+    CreateCetAdaptorSignatureRequest::SetPrivkeyString,
+    CreateCetAdaptorSignatureRequest::GetPrivkeyFieldType,
   };
-  json_mapper.emplace("amount", func_table);
-  item_list.push_back("amount");
+  json_mapper.emplace("privkey", func_table);
+  item_list.push_back("privkey");
   func_table = {
-    CreateClosingTransactionRequest::GetCetTxIdString,
-    CreateClosingTransactionRequest::SetCetTxIdString,
-    CreateClosingTransactionRequest::GetCetTxIdFieldType,
+    CreateCetAdaptorSignatureRequest::GetFundTxIdString,
+    CreateCetAdaptorSignatureRequest::SetFundTxIdString,
+    CreateCetAdaptorSignatureRequest::GetFundTxIdFieldType,
   };
-  json_mapper.emplace("cetTxId", func_table);
-  item_list.push_back("cetTxId");
+  json_mapper.emplace("fundTxId", func_table);
+  item_list.push_back("fundTxId");
   func_table = {
-    CreateClosingTransactionRequest::GetCetVoutString,
-    CreateClosingTransactionRequest::SetCetVoutString,
-    CreateClosingTransactionRequest::GetCetVoutFieldType,
+    CreateCetAdaptorSignatureRequest::GetFundVoutString,
+    CreateCetAdaptorSignatureRequest::SetFundVoutString,
+    CreateCetAdaptorSignatureRequest::GetFundVoutFieldType,
   };
-  json_mapper.emplace("cetVout", func_table);
-  item_list.push_back("cetVout");
+  json_mapper.emplace("fundVout", func_table);
+  item_list.push_back("fundVout");
+  func_table = {
+    CreateCetAdaptorSignatureRequest::GetLocalFundPubkeyString,
+    CreateCetAdaptorSignatureRequest::SetLocalFundPubkeyString,
+    CreateCetAdaptorSignatureRequest::GetLocalFundPubkeyFieldType,
+  };
+  json_mapper.emplace("localFundPubkey", func_table);
+  item_list.push_back("localFundPubkey");
+  func_table = {
+    CreateCetAdaptorSignatureRequest::GetRemoteFundPubkeyString,
+    CreateCetAdaptorSignatureRequest::SetRemoteFundPubkeyString,
+    CreateCetAdaptorSignatureRequest::GetRemoteFundPubkeyFieldType,
+  };
+  json_mapper.emplace("remoteFundPubkey", func_table);
+  item_list.push_back("remoteFundPubkey");
+  func_table = {
+    CreateCetAdaptorSignatureRequest::GetOraclePubkeyString,
+    CreateCetAdaptorSignatureRequest::SetOraclePubkeyString,
+    CreateCetAdaptorSignatureRequest::GetOraclePubkeyFieldType,
+  };
+  json_mapper.emplace("oraclePubkey", func_table);
+  item_list.push_back("oraclePubkey");
+  func_table = {
+    CreateCetAdaptorSignatureRequest::GetOracleRValueString,
+    CreateCetAdaptorSignatureRequest::SetOracleRValueString,
+    CreateCetAdaptorSignatureRequest::GetOracleRValueFieldType,
+  };
+  json_mapper.emplace("oracleRValue", func_table);
+  item_list.push_back("oracleRValue");
+  func_table = {
+    CreateCetAdaptorSignatureRequest::GetFundInputAmountString,
+    CreateCetAdaptorSignatureRequest::SetFundInputAmountString,
+    CreateCetAdaptorSignatureRequest::GetFundInputAmountFieldType,
+  };
+  json_mapper.emplace("fundInputAmount", func_table);
+  item_list.push_back("fundInputAmount");
+  func_table = {
+    CreateCetAdaptorSignatureRequest::GetMessageString,
+    CreateCetAdaptorSignatureRequest::SetMessageString,
+    CreateCetAdaptorSignatureRequest::GetMessageFieldType,
+  };
+  json_mapper.emplace("message", func_table);
+  item_list.push_back("message");
 }
 
-void CreateClosingTransactionRequest::ConvertFromStruct(
-    const CreateClosingTransactionRequestStruct& data) {
-  address_ = data.address;
-  amount_ = data.amount;
-  cet_tx_id_ = data.cet_tx_id;
-  cet_vout_ = data.cet_vout;
+void CreateCetAdaptorSignatureRequest::ConvertFromStruct(
+    const CreateCetAdaptorSignatureRequestStruct& data) {
+  cet_hex_ = data.cet_hex;
+  privkey_ = data.privkey;
+  fund_tx_id_ = data.fund_tx_id;
+  fund_vout_ = data.fund_vout;
+  local_fund_pubkey_ = data.local_fund_pubkey;
+  remote_fund_pubkey_ = data.remote_fund_pubkey;
+  oracle_pubkey_ = data.oracle_pubkey;
+  oracle_r_value_ = data.oracle_r_value;
+  fund_input_amount_ = data.fund_input_amount;
+  message_ = data.message;
   ignore_items = data.ignore_items;
 }
 
-CreateClosingTransactionRequestStruct CreateClosingTransactionRequest::ConvertToStruct() const {  // NOLINT
-  CreateClosingTransactionRequestStruct result;
-  result.address = address_;
-  result.amount = amount_;
-  result.cet_tx_id = cet_tx_id_;
-  result.cet_vout = cet_vout_;
+CreateCetAdaptorSignatureRequestStruct CreateCetAdaptorSignatureRequest::ConvertToStruct() const {  // NOLINT
+  CreateCetAdaptorSignatureRequestStruct result;
+  result.cet_hex = cet_hex_;
+  result.privkey = privkey_;
+  result.fund_tx_id = fund_tx_id_;
+  result.fund_vout = fund_vout_;
+  result.local_fund_pubkey = local_fund_pubkey_;
+  result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.oracle_pubkey = oracle_pubkey_;
+  result.oracle_r_value = oracle_r_value_;
+  result.fund_input_amount = fund_input_amount_;
+  result.message = message_;
   result.ignore_items = ignore_items;
   return result;
 }
 
 // ------------------------------------------------------------------------
-// CreateClosingTransactionResponse
+// CreateCetAdaptorSignatureResponse
 // ------------------------------------------------------------------------
-cfd::core::JsonTableMap<CreateClosingTransactionResponse>
-  CreateClosingTransactionResponse::json_mapper;
-std::vector<std::string> CreateClosingTransactionResponse::item_list;
+cfd::core::JsonTableMap<CreateCetAdaptorSignatureResponse>
+  CreateCetAdaptorSignatureResponse::json_mapper;
+std::vector<std::string> CreateCetAdaptorSignatureResponse::item_list;
 
-void CreateClosingTransactionResponse::CollectFieldName() {
+void CreateCetAdaptorSignatureResponse::CollectFieldName() {
   if (!json_mapper.empty()) {
     return;
   }
-  cfd::core::CLASS_FUNCTION_TABLE<CreateClosingTransactionResponse> func_table;  // NOLINT
+  cfd::core::CLASS_FUNCTION_TABLE<CreateCetAdaptorSignatureResponse> func_table;  // NOLINT
 
   func_table = {
-    CreateClosingTransactionResponse::GetHexString,
-    CreateClosingTransactionResponse::SetHexString,
-    CreateClosingTransactionResponse::GetHexFieldType,
+    CreateCetAdaptorSignatureResponse::GetSignatureString,
+    CreateCetAdaptorSignatureResponse::SetSignatureString,
+    CreateCetAdaptorSignatureResponse::GetSignatureFieldType,
   };
-  json_mapper.emplace("hex", func_table);
-  item_list.push_back("hex");
+  json_mapper.emplace("signature", func_table);
+  item_list.push_back("signature");
+  func_table = {
+    CreateCetAdaptorSignatureResponse::GetProofString,
+    CreateCetAdaptorSignatureResponse::SetProofString,
+    CreateCetAdaptorSignatureResponse::GetProofFieldType,
+  };
+  json_mapper.emplace("proof", func_table);
+  item_list.push_back("proof");
 }
 
-void CreateClosingTransactionResponse::ConvertFromStruct(
-    const CreateClosingTransactionResponseStruct& data) {
-  hex_ = data.hex;
+void CreateCetAdaptorSignatureResponse::ConvertFromStruct(
+    const CreateCetAdaptorSignatureResponseStruct& data) {
+  signature_ = data.signature;
+  proof_ = data.proof;
   ignore_items = data.ignore_items;
 }
 
-CreateClosingTransactionResponseStruct CreateClosingTransactionResponse::ConvertToStruct() const {  // NOLINT
-  CreateClosingTransactionResponseStruct result;
-  result.hex = hex_;
+CreateCetAdaptorSignatureResponseStruct CreateCetAdaptorSignatureResponse::ConvertToStruct() const {  // NOLINT
+  CreateCetAdaptorSignatureResponseStruct result;
+  result.signature = signature_;
+  result.proof = proof_;
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
+// CreateCetAdaptorSignaturesRequest
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<CreateCetAdaptorSignaturesRequest>
+  CreateCetAdaptorSignaturesRequest::json_mapper;
+std::vector<std::string> CreateCetAdaptorSignaturesRequest::item_list;
+
+void CreateCetAdaptorSignaturesRequest::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<CreateCetAdaptorSignaturesRequest> func_table;  // NOLINT
+
+  func_table = {
+    CreateCetAdaptorSignaturesRequest::GetCetsHexString,
+    CreateCetAdaptorSignaturesRequest::SetCetsHexString,
+    CreateCetAdaptorSignaturesRequest::GetCetsHexFieldType,
+  };
+  json_mapper.emplace("cetsHex", func_table);
+  item_list.push_back("cetsHex");
+  func_table = {
+    CreateCetAdaptorSignaturesRequest::GetPrivkeyString,
+    CreateCetAdaptorSignaturesRequest::SetPrivkeyString,
+    CreateCetAdaptorSignaturesRequest::GetPrivkeyFieldType,
+  };
+  json_mapper.emplace("privkey", func_table);
+  item_list.push_back("privkey");
+  func_table = {
+    CreateCetAdaptorSignaturesRequest::GetFundTxIdString,
+    CreateCetAdaptorSignaturesRequest::SetFundTxIdString,
+    CreateCetAdaptorSignaturesRequest::GetFundTxIdFieldType,
+  };
+  json_mapper.emplace("fundTxId", func_table);
+  item_list.push_back("fundTxId");
+  func_table = {
+    CreateCetAdaptorSignaturesRequest::GetFundVoutString,
+    CreateCetAdaptorSignaturesRequest::SetFundVoutString,
+    CreateCetAdaptorSignaturesRequest::GetFundVoutFieldType,
+  };
+  json_mapper.emplace("fundVout", func_table);
+  item_list.push_back("fundVout");
+  func_table = {
+    CreateCetAdaptorSignaturesRequest::GetLocalFundPubkeyString,
+    CreateCetAdaptorSignaturesRequest::SetLocalFundPubkeyString,
+    CreateCetAdaptorSignaturesRequest::GetLocalFundPubkeyFieldType,
+  };
+  json_mapper.emplace("localFundPubkey", func_table);
+  item_list.push_back("localFundPubkey");
+  func_table = {
+    CreateCetAdaptorSignaturesRequest::GetRemoteFundPubkeyString,
+    CreateCetAdaptorSignaturesRequest::SetRemoteFundPubkeyString,
+    CreateCetAdaptorSignaturesRequest::GetRemoteFundPubkeyFieldType,
+  };
+  json_mapper.emplace("remoteFundPubkey", func_table);
+  item_list.push_back("remoteFundPubkey");
+  func_table = {
+    CreateCetAdaptorSignaturesRequest::GetOraclePubkeyString,
+    CreateCetAdaptorSignaturesRequest::SetOraclePubkeyString,
+    CreateCetAdaptorSignaturesRequest::GetOraclePubkeyFieldType,
+  };
+  json_mapper.emplace("oraclePubkey", func_table);
+  item_list.push_back("oraclePubkey");
+  func_table = {
+    CreateCetAdaptorSignaturesRequest::GetOracleRValueString,
+    CreateCetAdaptorSignaturesRequest::SetOracleRValueString,
+    CreateCetAdaptorSignaturesRequest::GetOracleRValueFieldType,
+  };
+  json_mapper.emplace("oracleRValue", func_table);
+  item_list.push_back("oracleRValue");
+  func_table = {
+    CreateCetAdaptorSignaturesRequest::GetFundInputAmountString,
+    CreateCetAdaptorSignaturesRequest::SetFundInputAmountString,
+    CreateCetAdaptorSignaturesRequest::GetFundInputAmountFieldType,
+  };
+  json_mapper.emplace("fundInputAmount", func_table);
+  item_list.push_back("fundInputAmount");
+  func_table = {
+    CreateCetAdaptorSignaturesRequest::GetMessagesString,
+    CreateCetAdaptorSignaturesRequest::SetMessagesString,
+    CreateCetAdaptorSignaturesRequest::GetMessagesFieldType,
+  };
+  json_mapper.emplace("messages", func_table);
+  item_list.push_back("messages");
+}
+
+void CreateCetAdaptorSignaturesRequest::ConvertFromStruct(
+    const CreateCetAdaptorSignaturesRequestStruct& data) {
+  cets_hex_.ConvertFromStruct(data.cets_hex);
+  privkey_ = data.privkey;
+  fund_tx_id_ = data.fund_tx_id;
+  fund_vout_ = data.fund_vout;
+  local_fund_pubkey_ = data.local_fund_pubkey;
+  remote_fund_pubkey_ = data.remote_fund_pubkey;
+  oracle_pubkey_ = data.oracle_pubkey;
+  oracle_r_value_ = data.oracle_r_value;
+  fund_input_amount_ = data.fund_input_amount;
+  messages_.ConvertFromStruct(data.messages);
+  ignore_items = data.ignore_items;
+}
+
+CreateCetAdaptorSignaturesRequestStruct CreateCetAdaptorSignaturesRequest::ConvertToStruct() const {  // NOLINT
+  CreateCetAdaptorSignaturesRequestStruct result;
+  result.cets_hex = cets_hex_.ConvertToStruct();
+  result.privkey = privkey_;
+  result.fund_tx_id = fund_tx_id_;
+  result.fund_vout = fund_vout_;
+  result.local_fund_pubkey = local_fund_pubkey_;
+  result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.oracle_pubkey = oracle_pubkey_;
+  result.oracle_r_value = oracle_r_value_;
+  result.fund_input_amount = fund_input_amount_;
+  result.messages = messages_.ConvertToStruct();
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
+// CreateCetAdaptorSignaturesResponse
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<CreateCetAdaptorSignaturesResponse>
+  CreateCetAdaptorSignaturesResponse::json_mapper;
+std::vector<std::string> CreateCetAdaptorSignaturesResponse::item_list;
+
+void CreateCetAdaptorSignaturesResponse::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<CreateCetAdaptorSignaturesResponse> func_table;  // NOLINT
+
+  func_table = {
+    CreateCetAdaptorSignaturesResponse::GetAdaptorPairsString,
+    CreateCetAdaptorSignaturesResponse::SetAdaptorPairsString,
+    CreateCetAdaptorSignaturesResponse::GetAdaptorPairsFieldType,
+  };
+  json_mapper.emplace("adaptorPairs", func_table);
+  item_list.push_back("adaptorPairs");
+}
+
+void CreateCetAdaptorSignaturesResponse::ConvertFromStruct(
+    const CreateCetAdaptorSignaturesResponseStruct& data) {
+  adaptor_pairs_.ConvertFromStruct(data.adaptor_pairs);
+  ignore_items = data.ignore_items;
+}
+
+CreateCetAdaptorSignaturesResponseStruct CreateCetAdaptorSignaturesResponse::ConvertToStruct() const {  // NOLINT
+  CreateCetAdaptorSignaturesResponseStruct result;
+  result.adaptor_pairs = adaptor_pairs_.ConvertToStruct();
   result.ignore_items = ignore_items;
   return result;
 }
@@ -829,20 +768,12 @@ void PayoutRequest::CollectFieldName() {
   };
   json_mapper.emplace("remote", func_table);
   item_list.push_back("remote");
-  func_table = {
-    PayoutRequest::GetMessagesString,
-    PayoutRequest::SetMessagesString,
-    PayoutRequest::GetMessagesFieldType,
-  };
-  json_mapper.emplace("messages", func_table);
-  item_list.push_back("messages");
 }
 
 void PayoutRequest::ConvertFromStruct(
     const PayoutRequestStruct& data) {
   local_ = data.local;
   remote_ = data.remote;
-  messages_.ConvertFromStruct(data.messages);
   ignore_items = data.ignore_items;
 }
 
@@ -850,7 +781,68 @@ PayoutRequestStruct PayoutRequest::ConvertToStruct() const {  // NOLINT
   PayoutRequestStruct result;
   result.local = local_;
   result.remote = remote_;
-  result.messages = messages_.ConvertToStruct();
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
+// TxInInfoRequest
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<TxInInfoRequest>
+  TxInInfoRequest::json_mapper;
+std::vector<std::string> TxInInfoRequest::item_list;
+
+void TxInInfoRequest::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<TxInInfoRequest> func_table;  // NOLINT
+
+  func_table = {
+    TxInInfoRequest::GetTxidString,
+    TxInInfoRequest::SetTxidString,
+    TxInInfoRequest::GetTxidFieldType,
+  };
+  json_mapper.emplace("txid", func_table);
+  item_list.push_back("txid");
+  func_table = {
+    TxInInfoRequest::GetVoutString,
+    TxInInfoRequest::SetVoutString,
+    TxInInfoRequest::GetVoutFieldType,
+  };
+  json_mapper.emplace("vout", func_table);
+  item_list.push_back("vout");
+  func_table = {
+    TxInInfoRequest::GetRedeemScriptString,
+    TxInInfoRequest::SetRedeemScriptString,
+    TxInInfoRequest::GetRedeemScriptFieldType,
+  };
+  json_mapper.emplace("redeemScript", func_table);
+  item_list.push_back("redeemScript");
+  func_table = {
+    TxInInfoRequest::GetMaxWitnessLengthString,
+    TxInInfoRequest::SetMaxWitnessLengthString,
+    TxInInfoRequest::GetMaxWitnessLengthFieldType,
+  };
+  json_mapper.emplace("maxWitnessLength", func_table);
+  item_list.push_back("maxWitnessLength");
+}
+
+void TxInInfoRequest::ConvertFromStruct(
+    const TxInInfoRequestStruct& data) {
+  txid_ = data.txid;
+  vout_ = data.vout;
+  redeem_script_ = data.redeem_script;
+  max_witness_length_ = data.max_witness_length;
+  ignore_items = data.ignore_items;
+}
+
+TxInInfoRequestStruct TxInInfoRequest::ConvertToStruct() const {  // NOLINT
+  TxInInfoRequestStruct result;
+  result.txid = txid_;
+  result.vout = vout_;
+  result.redeem_script = redeem_script_;
+  result.max_witness_length = max_witness_length_;
   result.ignore_items = ignore_items;
   return result;
 }
@@ -869,26 +861,12 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
   cfd::core::CLASS_FUNCTION_TABLE<CreateDlcTransactionsRequest> func_table;  // NOLINT
 
   func_table = {
-    CreateDlcTransactionsRequest::GetOutcomesString,
-    CreateDlcTransactionsRequest::SetOutcomesString,
-    CreateDlcTransactionsRequest::GetOutcomesFieldType,
+    CreateDlcTransactionsRequest::GetPayoutsString,
+    CreateDlcTransactionsRequest::SetPayoutsString,
+    CreateDlcTransactionsRequest::GetPayoutsFieldType,
   };
-  json_mapper.emplace("outcomes", func_table);
-  item_list.push_back("outcomes");
-  func_table = {
-    CreateDlcTransactionsRequest::GetOracleRPointsString,
-    CreateDlcTransactionsRequest::SetOracleRPointsString,
-    CreateDlcTransactionsRequest::GetOracleRPointsFieldType,
-  };
-  json_mapper.emplace("oracleRPoints", func_table);
-  item_list.push_back("oracleRPoints");
-  func_table = {
-    CreateDlcTransactionsRequest::GetOraclePubkeyString,
-    CreateDlcTransactionsRequest::SetOraclePubkeyString,
-    CreateDlcTransactionsRequest::GetOraclePubkeyFieldType,
-  };
-  json_mapper.emplace("oraclePubkey", func_table);
-  item_list.push_back("oraclePubkey");
+  json_mapper.emplace("payouts", func_table);
+  item_list.push_back("payouts");
   func_table = {
     CreateDlcTransactionsRequest::GetLocalFundPubkeyString,
     CreateDlcTransactionsRequest::SetLocalFundPubkeyString,
@@ -897,19 +875,12 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
   json_mapper.emplace("localFundPubkey", func_table);
   item_list.push_back("localFundPubkey");
   func_table = {
-    CreateDlcTransactionsRequest::GetLocalSweepPubkeyString,
-    CreateDlcTransactionsRequest::SetLocalSweepPubkeyString,
-    CreateDlcTransactionsRequest::GetLocalSweepPubkeyFieldType,
+    CreateDlcTransactionsRequest::GetLocalFinalScriptPubkeyString,
+    CreateDlcTransactionsRequest::SetLocalFinalScriptPubkeyString,
+    CreateDlcTransactionsRequest::GetLocalFinalScriptPubkeyFieldType,
   };
-  json_mapper.emplace("localSweepPubkey", func_table);
-  item_list.push_back("localSweepPubkey");
-  func_table = {
-    CreateDlcTransactionsRequest::GetLocalFinalAddressString,
-    CreateDlcTransactionsRequest::SetLocalFinalAddressString,
-    CreateDlcTransactionsRequest::GetLocalFinalAddressFieldType,
-  };
-  json_mapper.emplace("localFinalAddress", func_table);
-  item_list.push_back("localFinalAddress");
+  json_mapper.emplace("localFinalScriptPubkey", func_table);
+  item_list.push_back("localFinalScriptPubkey");
   func_table = {
     CreateDlcTransactionsRequest::GetRemoteFundPubkeyString,
     CreateDlcTransactionsRequest::SetRemoteFundPubkeyString,
@@ -918,19 +889,12 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
   json_mapper.emplace("remoteFundPubkey", func_table);
   item_list.push_back("remoteFundPubkey");
   func_table = {
-    CreateDlcTransactionsRequest::GetRemoteSweepPubkeyString,
-    CreateDlcTransactionsRequest::SetRemoteSweepPubkeyString,
-    CreateDlcTransactionsRequest::GetRemoteSweepPubkeyFieldType,
+    CreateDlcTransactionsRequest::GetRemoteFinalScriptPubkeyString,
+    CreateDlcTransactionsRequest::SetRemoteFinalScriptPubkeyString,
+    CreateDlcTransactionsRequest::GetRemoteFinalScriptPubkeyFieldType,
   };
-  json_mapper.emplace("remoteSweepPubkey", func_table);
-  item_list.push_back("remoteSweepPubkey");
-  func_table = {
-    CreateDlcTransactionsRequest::GetRemoteFinalAddressString,
-    CreateDlcTransactionsRequest::SetRemoteFinalAddressString,
-    CreateDlcTransactionsRequest::GetRemoteFinalAddressFieldType,
-  };
-  json_mapper.emplace("remoteFinalAddress", func_table);
-  item_list.push_back("remoteFinalAddress");
+  json_mapper.emplace("remoteFinalScriptPubkey", func_table);
+  item_list.push_back("remoteFinalScriptPubkey");
   func_table = {
     CreateDlcTransactionsRequest::GetLocalInputAmountString,
     CreateDlcTransactionsRequest::SetLocalInputAmountString,
@@ -960,13 +924,6 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
   json_mapper.emplace("remoteCollateralAmount", func_table);
   item_list.push_back("remoteCollateralAmount");
   func_table = {
-    CreateDlcTransactionsRequest::GetCsvDelayString,
-    CreateDlcTransactionsRequest::SetCsvDelayString,
-    CreateDlcTransactionsRequest::GetCsvDelayFieldType,
-  };
-  json_mapper.emplace("csvDelay", func_table);
-  item_list.push_back("csvDelay");
-  func_table = {
     CreateDlcTransactionsRequest::GetRefundLocktimeString,
     CreateDlcTransactionsRequest::SetRefundLocktimeString,
     CreateDlcTransactionsRequest::GetRefundLocktimeFieldType,
@@ -981,12 +938,12 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
   json_mapper.emplace("localInputs", func_table);
   item_list.push_back("localInputs");
   func_table = {
-    CreateDlcTransactionsRequest::GetLocalChangeAddressString,
-    CreateDlcTransactionsRequest::SetLocalChangeAddressString,
-    CreateDlcTransactionsRequest::GetLocalChangeAddressFieldType,
+    CreateDlcTransactionsRequest::GetLocalChangeScriptPubkeyString,
+    CreateDlcTransactionsRequest::SetLocalChangeScriptPubkeyString,
+    CreateDlcTransactionsRequest::GetLocalChangeScriptPubkeyFieldType,
   };
-  json_mapper.emplace("localChangeAddress", func_table);
-  item_list.push_back("localChangeAddress");
+  json_mapper.emplace("localChangeScriptPubkey", func_table);
+  item_list.push_back("localChangeScriptPubkey");
   func_table = {
     CreateDlcTransactionsRequest::GetRemoteInputsString,
     CreateDlcTransactionsRequest::SetRemoteInputsString,
@@ -995,12 +952,12 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
   json_mapper.emplace("remoteInputs", func_table);
   item_list.push_back("remoteInputs");
   func_table = {
-    CreateDlcTransactionsRequest::GetRemoteChangeAddressString,
-    CreateDlcTransactionsRequest::SetRemoteChangeAddressString,
-    CreateDlcTransactionsRequest::GetRemoteChangeAddressFieldType,
+    CreateDlcTransactionsRequest::GetRemoteChangeScriptPubkeyString,
+    CreateDlcTransactionsRequest::SetRemoteChangeScriptPubkeyString,
+    CreateDlcTransactionsRequest::GetRemoteChangeScriptPubkeyFieldType,
   };
-  json_mapper.emplace("remoteChangeAddress", func_table);
-  item_list.push_back("remoteChangeAddress");
+  json_mapper.emplace("remoteChangeScriptPubkey", func_table);
+  item_list.push_back("remoteChangeScriptPubkey");
   func_table = {
     CreateDlcTransactionsRequest::GetFeeRateString,
     CreateDlcTransactionsRequest::SetFeeRateString,
@@ -1009,12 +966,19 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
   json_mapper.emplace("feeRate", func_table);
   item_list.push_back("feeRate");
   func_table = {
-    CreateDlcTransactionsRequest::GetMaturityTimeString,
-    CreateDlcTransactionsRequest::SetMaturityTimeString,
-    CreateDlcTransactionsRequest::GetMaturityTimeFieldType,
+    CreateDlcTransactionsRequest::GetCetLockTimeString,
+    CreateDlcTransactionsRequest::SetCetLockTimeString,
+    CreateDlcTransactionsRequest::GetCetLockTimeFieldType,
   };
-  json_mapper.emplace("maturityTime", func_table);
-  item_list.push_back("maturityTime");
+  json_mapper.emplace("cetLockTime", func_table);
+  item_list.push_back("cetLockTime");
+  func_table = {
+    CreateDlcTransactionsRequest::GetFundLockTimeString,
+    CreateDlcTransactionsRequest::SetFundLockTimeString,
+    CreateDlcTransactionsRequest::GetFundLockTimeFieldType,
+  };
+  json_mapper.emplace("fundLockTime", func_table);
+  item_list.push_back("fundLockTime");
   func_table = {
     CreateDlcTransactionsRequest::GetOptionDestString,
     CreateDlcTransactionsRequest::SetOptionDestString,
@@ -1033,27 +997,23 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
 
 void CreateDlcTransactionsRequest::ConvertFromStruct(
     const CreateDlcTransactionsRequestStruct& data) {
-  outcomes_.ConvertFromStruct(data.outcomes);
-  oracle_r_points_.ConvertFromStruct(data.oracle_r_points);
-  oracle_pubkey_ = data.oracle_pubkey;
+  payouts_.ConvertFromStruct(data.payouts);
   local_fund_pubkey_ = data.local_fund_pubkey;
-  local_sweep_pubkey_ = data.local_sweep_pubkey;
-  local_final_address_ = data.local_final_address;
+  local_final_script_pubkey_ = data.local_final_script_pubkey;
   remote_fund_pubkey_ = data.remote_fund_pubkey;
-  remote_sweep_pubkey_ = data.remote_sweep_pubkey;
-  remote_final_address_ = data.remote_final_address;
+  remote_final_script_pubkey_ = data.remote_final_script_pubkey;
   local_input_amount_ = data.local_input_amount;
   local_collateral_amount_ = data.local_collateral_amount;
   remote_input_amount_ = data.remote_input_amount;
   remote_collateral_amount_ = data.remote_collateral_amount;
-  csv_delay_ = data.csv_delay;
   refund_locktime_ = data.refund_locktime;
   local_inputs_.ConvertFromStruct(data.local_inputs);
-  local_change_address_ = data.local_change_address;
+  local_change_script_pubkey_ = data.local_change_script_pubkey;
   remote_inputs_.ConvertFromStruct(data.remote_inputs);
-  remote_change_address_ = data.remote_change_address;
+  remote_change_script_pubkey_ = data.remote_change_script_pubkey;
   fee_rate_ = data.fee_rate;
-  maturity_time_ = data.maturity_time;
+  cet_lock_time_ = data.cet_lock_time;
+  fund_lock_time_ = data.fund_lock_time;
   option_dest_ = data.option_dest;
   option_premium_ = data.option_premium;
   ignore_items = data.ignore_items;
@@ -1061,27 +1021,23 @@ void CreateDlcTransactionsRequest::ConvertFromStruct(
 
 CreateDlcTransactionsRequestStruct CreateDlcTransactionsRequest::ConvertToStruct() const {  // NOLINT
   CreateDlcTransactionsRequestStruct result;
-  result.outcomes = outcomes_.ConvertToStruct();
-  result.oracle_r_points = oracle_r_points_.ConvertToStruct();
-  result.oracle_pubkey = oracle_pubkey_;
+  result.payouts = payouts_.ConvertToStruct();
   result.local_fund_pubkey = local_fund_pubkey_;
-  result.local_sweep_pubkey = local_sweep_pubkey_;
-  result.local_final_address = local_final_address_;
+  result.local_final_script_pubkey = local_final_script_pubkey_;
   result.remote_fund_pubkey = remote_fund_pubkey_;
-  result.remote_sweep_pubkey = remote_sweep_pubkey_;
-  result.remote_final_address = remote_final_address_;
+  result.remote_final_script_pubkey = remote_final_script_pubkey_;
   result.local_input_amount = local_input_amount_;
   result.local_collateral_amount = local_collateral_amount_;
   result.remote_input_amount = remote_input_amount_;
   result.remote_collateral_amount = remote_collateral_amount_;
-  result.csv_delay = csv_delay_;
   result.refund_locktime = refund_locktime_;
   result.local_inputs = local_inputs_.ConvertToStruct();
-  result.local_change_address = local_change_address_;
+  result.local_change_script_pubkey = local_change_script_pubkey_;
   result.remote_inputs = remote_inputs_.ConvertToStruct();
-  result.remote_change_address = remote_change_address_;
+  result.remote_change_script_pubkey = remote_change_script_pubkey_;
   result.fee_rate = fee_rate_;
-  result.maturity_time = maturity_time_;
+  result.cet_lock_time = cet_lock_time_;
+  result.fund_lock_time = fund_lock_time_;
   result.option_dest = option_dest_;
   result.option_premium = option_premium_;
   result.ignore_items = ignore_items;
@@ -1109,19 +1065,12 @@ void CreateDlcTransactionsResponse::CollectFieldName() {
   json_mapper.emplace("fundTxHex", func_table);
   item_list.push_back("fundTxHex");
   func_table = {
-    CreateDlcTransactionsResponse::GetLocalCetsHexString,
-    CreateDlcTransactionsResponse::SetLocalCetsHexString,
-    CreateDlcTransactionsResponse::GetLocalCetsHexFieldType,
+    CreateDlcTransactionsResponse::GetCetsHexString,
+    CreateDlcTransactionsResponse::SetCetsHexString,
+    CreateDlcTransactionsResponse::GetCetsHexFieldType,
   };
-  json_mapper.emplace("localCetsHex", func_table);
-  item_list.push_back("localCetsHex");
-  func_table = {
-    CreateDlcTransactionsResponse::GetRemoteCetsHexString,
-    CreateDlcTransactionsResponse::SetRemoteCetsHexString,
-    CreateDlcTransactionsResponse::GetRemoteCetsHexFieldType,
-  };
-  json_mapper.emplace("remoteCetsHex", func_table);
-  item_list.push_back("remoteCetsHex");
+  json_mapper.emplace("cetsHex", func_table);
+  item_list.push_back("cetsHex");
   func_table = {
     CreateDlcTransactionsResponse::GetRefundTxHexString,
     CreateDlcTransactionsResponse::SetRefundTxHexString,
@@ -1134,8 +1083,7 @@ void CreateDlcTransactionsResponse::CollectFieldName() {
 void CreateDlcTransactionsResponse::ConvertFromStruct(
     const CreateDlcTransactionsResponseStruct& data) {
   fund_tx_hex_ = data.fund_tx_hex;
-  local_cets_hex_.ConvertFromStruct(data.local_cets_hex);
-  remote_cets_hex_.ConvertFromStruct(data.remote_cets_hex);
+  cets_hex_.ConvertFromStruct(data.cets_hex);
   refund_tx_hex_ = data.refund_tx_hex;
   ignore_items = data.ignore_items;
 }
@@ -1143,9 +1091,52 @@ void CreateDlcTransactionsResponse::ConvertFromStruct(
 CreateDlcTransactionsResponseStruct CreateDlcTransactionsResponse::ConvertToStruct() const {  // NOLINT
   CreateDlcTransactionsResponseStruct result;
   result.fund_tx_hex = fund_tx_hex_;
-  result.local_cets_hex = local_cets_hex_.ConvertToStruct();
-  result.remote_cets_hex = remote_cets_hex_.ConvertToStruct();
+  result.cets_hex = cets_hex_.ConvertToStruct();
   result.refund_tx_hex = refund_tx_hex_;
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
+// TxInRequest
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<TxInRequest>
+  TxInRequest::json_mapper;
+std::vector<std::string> TxInRequest::item_list;
+
+void TxInRequest::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<TxInRequest> func_table;  // NOLINT
+
+  func_table = {
+    TxInRequest::GetTxidString,
+    TxInRequest::SetTxidString,
+    TxInRequest::GetTxidFieldType,
+  };
+  json_mapper.emplace("txid", func_table);
+  item_list.push_back("txid");
+  func_table = {
+    TxInRequest::GetVoutString,
+    TxInRequest::SetVoutString,
+    TxInRequest::GetVoutFieldType,
+  };
+  json_mapper.emplace("vout", func_table);
+  item_list.push_back("vout");
+}
+
+void TxInRequest::ConvertFromStruct(
+    const TxInRequestStruct& data) {
+  txid_ = data.txid;
+  vout_ = data.vout;
+  ignore_items = data.ignore_items;
+}
+
+TxInRequestStruct TxInRequest::ConvertToStruct() const {  // NOLINT
+  TxInRequestStruct result;
+  result.txid = txid_;
+  result.vout = vout_;
   result.ignore_items = ignore_items;
   return result;
 }
@@ -1346,227 +1337,6 @@ CreateFundTransactionResponseStruct CreateFundTransactionResponse::ConvertToStru
 }
 
 // ------------------------------------------------------------------------
-// CreateMutualClosingTransactionRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<CreateMutualClosingTransactionRequest>
-  CreateMutualClosingTransactionRequest::json_mapper;
-std::vector<std::string> CreateMutualClosingTransactionRequest::item_list;
-
-void CreateMutualClosingTransactionRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<CreateMutualClosingTransactionRequest> func_table;  // NOLINT
-
-  func_table = {
-    CreateMutualClosingTransactionRequest::GetLocalFinalAddressString,
-    CreateMutualClosingTransactionRequest::SetLocalFinalAddressString,
-    CreateMutualClosingTransactionRequest::GetLocalFinalAddressFieldType,
-  };
-  json_mapper.emplace("localFinalAddress", func_table);
-  item_list.push_back("localFinalAddress");
-  func_table = {
-    CreateMutualClosingTransactionRequest::GetRemoteFinalAddressString,
-    CreateMutualClosingTransactionRequest::SetRemoteFinalAddressString,
-    CreateMutualClosingTransactionRequest::GetRemoteFinalAddressFieldType,
-  };
-  json_mapper.emplace("remoteFinalAddress", func_table);
-  item_list.push_back("remoteFinalAddress");
-  func_table = {
-    CreateMutualClosingTransactionRequest::GetLocalAmountString,
-    CreateMutualClosingTransactionRequest::SetLocalAmountString,
-    CreateMutualClosingTransactionRequest::GetLocalAmountFieldType,
-  };
-  json_mapper.emplace("localAmount", func_table);
-  item_list.push_back("localAmount");
-  func_table = {
-    CreateMutualClosingTransactionRequest::GetRemoteAmountString,
-    CreateMutualClosingTransactionRequest::SetRemoteAmountString,
-    CreateMutualClosingTransactionRequest::GetRemoteAmountFieldType,
-  };
-  json_mapper.emplace("remoteAmount", func_table);
-  item_list.push_back("remoteAmount");
-  func_table = {
-    CreateMutualClosingTransactionRequest::GetFeeRateString,
-    CreateMutualClosingTransactionRequest::SetFeeRateString,
-    CreateMutualClosingTransactionRequest::GetFeeRateFieldType,
-  };
-  json_mapper.emplace("feeRate", func_table);
-  item_list.push_back("feeRate");
-  func_table = {
-    CreateMutualClosingTransactionRequest::GetFundTxIdString,
-    CreateMutualClosingTransactionRequest::SetFundTxIdString,
-    CreateMutualClosingTransactionRequest::GetFundTxIdFieldType,
-  };
-  json_mapper.emplace("fundTxId", func_table);
-  item_list.push_back("fundTxId");
-  func_table = {
-    CreateMutualClosingTransactionRequest::GetFundVoutString,
-    CreateMutualClosingTransactionRequest::SetFundVoutString,
-    CreateMutualClosingTransactionRequest::GetFundVoutFieldType,
-  };
-  json_mapper.emplace("fundVout", func_table);
-  item_list.push_back("fundVout");
-}
-
-void CreateMutualClosingTransactionRequest::ConvertFromStruct(
-    const CreateMutualClosingTransactionRequestStruct& data) {
-  local_final_address_ = data.local_final_address;
-  remote_final_address_ = data.remote_final_address;
-  local_amount_ = data.local_amount;
-  remote_amount_ = data.remote_amount;
-  fee_rate_ = data.fee_rate;
-  fund_tx_id_ = data.fund_tx_id;
-  fund_vout_ = data.fund_vout;
-  ignore_items = data.ignore_items;
-}
-
-CreateMutualClosingTransactionRequestStruct CreateMutualClosingTransactionRequest::ConvertToStruct() const {  // NOLINT
-  CreateMutualClosingTransactionRequestStruct result;
-  result.local_final_address = local_final_address_;
-  result.remote_final_address = remote_final_address_;
-  result.local_amount = local_amount_;
-  result.remote_amount = remote_amount_;
-  result.fee_rate = fee_rate_;
-  result.fund_tx_id = fund_tx_id_;
-  result.fund_vout = fund_vout_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// CreateMutualClosingTransactionResponse
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<CreateMutualClosingTransactionResponse>
-  CreateMutualClosingTransactionResponse::json_mapper;
-std::vector<std::string> CreateMutualClosingTransactionResponse::item_list;
-
-void CreateMutualClosingTransactionResponse::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<CreateMutualClosingTransactionResponse> func_table;  // NOLINT
-
-  func_table = {
-    CreateMutualClosingTransactionResponse::GetHexString,
-    CreateMutualClosingTransactionResponse::SetHexString,
-    CreateMutualClosingTransactionResponse::GetHexFieldType,
-  };
-  json_mapper.emplace("hex", func_table);
-  item_list.push_back("hex");
-}
-
-void CreateMutualClosingTransactionResponse::ConvertFromStruct(
-    const CreateMutualClosingTransactionResponseStruct& data) {
-  hex_ = data.hex;
-  ignore_items = data.ignore_items;
-}
-
-CreateMutualClosingTransactionResponseStruct CreateMutualClosingTransactionResponse::ConvertToStruct() const {  // NOLINT
-  CreateMutualClosingTransactionResponseStruct result;
-  result.hex = hex_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// CreatePenaltyTransactionRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<CreatePenaltyTransactionRequest>
-  CreatePenaltyTransactionRequest::json_mapper;
-std::vector<std::string> CreatePenaltyTransactionRequest::item_list;
-
-void CreatePenaltyTransactionRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<CreatePenaltyTransactionRequest> func_table;  // NOLINT
-
-  func_table = {
-    CreatePenaltyTransactionRequest::GetFinalAddressString,
-    CreatePenaltyTransactionRequest::SetFinalAddressString,
-    CreatePenaltyTransactionRequest::GetFinalAddressFieldType,
-  };
-  json_mapper.emplace("finalAddress", func_table);
-  item_list.push_back("finalAddress");
-  func_table = {
-    CreatePenaltyTransactionRequest::GetAmountString,
-    CreatePenaltyTransactionRequest::SetAmountString,
-    CreatePenaltyTransactionRequest::GetAmountFieldType,
-  };
-  json_mapper.emplace("amount", func_table);
-  item_list.push_back("amount");
-  func_table = {
-    CreatePenaltyTransactionRequest::GetCetTxIdString,
-    CreatePenaltyTransactionRequest::SetCetTxIdString,
-    CreatePenaltyTransactionRequest::GetCetTxIdFieldType,
-  };
-  json_mapper.emplace("cetTxId", func_table);
-  item_list.push_back("cetTxId");
-  func_table = {
-    CreatePenaltyTransactionRequest::GetCetVoutString,
-    CreatePenaltyTransactionRequest::SetCetVoutString,
-    CreatePenaltyTransactionRequest::GetCetVoutFieldType,
-  };
-  json_mapper.emplace("cetVout", func_table);
-  item_list.push_back("cetVout");
-}
-
-void CreatePenaltyTransactionRequest::ConvertFromStruct(
-    const CreatePenaltyTransactionRequestStruct& data) {
-  final_address_ = data.final_address;
-  amount_ = data.amount;
-  cet_tx_id_ = data.cet_tx_id;
-  cet_vout_ = data.cet_vout;
-  ignore_items = data.ignore_items;
-}
-
-CreatePenaltyTransactionRequestStruct CreatePenaltyTransactionRequest::ConvertToStruct() const {  // NOLINT
-  CreatePenaltyTransactionRequestStruct result;
-  result.final_address = final_address_;
-  result.amount = amount_;
-  result.cet_tx_id = cet_tx_id_;
-  result.cet_vout = cet_vout_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// CreatePenaltyTransactionResponse
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<CreatePenaltyTransactionResponse>
-  CreatePenaltyTransactionResponse::json_mapper;
-std::vector<std::string> CreatePenaltyTransactionResponse::item_list;
-
-void CreatePenaltyTransactionResponse::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<CreatePenaltyTransactionResponse> func_table;  // NOLINT
-
-  func_table = {
-    CreatePenaltyTransactionResponse::GetHexString,
-    CreatePenaltyTransactionResponse::SetHexString,
-    CreatePenaltyTransactionResponse::GetHexFieldType,
-  };
-  json_mapper.emplace("hex", func_table);
-  item_list.push_back("hex");
-}
-
-void CreatePenaltyTransactionResponse::ConvertFromStruct(
-    const CreatePenaltyTransactionResponseStruct& data) {
-  hex_ = data.hex;
-  ignore_items = data.ignore_items;
-}
-
-CreatePenaltyTransactionResponseStruct CreatePenaltyTransactionResponse::ConvertToStruct() const {  // NOLINT
-  CreatePenaltyTransactionResponseStruct result;
-  result.hex = hex_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
 // CreateRefundTransactionRequest
 // ------------------------------------------------------------------------
 cfd::core::JsonTableMap<CreateRefundTransactionRequest>
@@ -1580,19 +1350,19 @@ void CreateRefundTransactionRequest::CollectFieldName() {
   cfd::core::CLASS_FUNCTION_TABLE<CreateRefundTransactionRequest> func_table;  // NOLINT
 
   func_table = {
-    CreateRefundTransactionRequest::GetLocalFinalAddressString,
-    CreateRefundTransactionRequest::SetLocalFinalAddressString,
-    CreateRefundTransactionRequest::GetLocalFinalAddressFieldType,
+    CreateRefundTransactionRequest::GetLocalFinalScriptPubkeyString,
+    CreateRefundTransactionRequest::SetLocalFinalScriptPubkeyString,
+    CreateRefundTransactionRequest::GetLocalFinalScriptPubkeyFieldType,
   };
-  json_mapper.emplace("localFinalAddress", func_table);
-  item_list.push_back("localFinalAddress");
+  json_mapper.emplace("localFinalScriptPubkey", func_table);
+  item_list.push_back("localFinalScriptPubkey");
   func_table = {
-    CreateRefundTransactionRequest::GetRemoteFinalAddressString,
-    CreateRefundTransactionRequest::SetRemoteFinalAddressString,
-    CreateRefundTransactionRequest::GetRemoteFinalAddressFieldType,
+    CreateRefundTransactionRequest::GetRemoteFinalScriptPubkeyString,
+    CreateRefundTransactionRequest::SetRemoteFinalScriptPubkeyString,
+    CreateRefundTransactionRequest::GetRemoteFinalScriptPubkeyFieldType,
   };
-  json_mapper.emplace("remoteFinalAddress", func_table);
-  item_list.push_back("remoteFinalAddress");
+  json_mapper.emplace("remoteFinalScriptPubkey", func_table);
+  item_list.push_back("remoteFinalScriptPubkey");
   func_table = {
     CreateRefundTransactionRequest::GetLocalAmountString,
     CreateRefundTransactionRequest::SetLocalAmountString,
@@ -1632,8 +1402,8 @@ void CreateRefundTransactionRequest::CollectFieldName() {
 
 void CreateRefundTransactionRequest::ConvertFromStruct(
     const CreateRefundTransactionRequestStruct& data) {
-  local_final_address_ = data.local_final_address;
-  remote_final_address_ = data.remote_final_address;
+  local_final_script_pubkey_ = data.local_final_script_pubkey;
+  remote_final_script_pubkey_ = data.remote_final_script_pubkey;
   local_amount_ = data.local_amount;
   remote_amount_ = data.remote_amount;
   lock_time_ = data.lock_time;
@@ -1644,8 +1414,8 @@ void CreateRefundTransactionRequest::ConvertFromStruct(
 
 CreateRefundTransactionRequestStruct CreateRefundTransactionRequest::ConvertToStruct() const {  // NOLINT
   CreateRefundTransactionRequestStruct result;
-  result.local_final_address = local_final_address_;
-  result.remote_final_address = remote_final_address_;
+  result.local_final_script_pubkey = local_final_script_pubkey_;
+  result.remote_final_script_pubkey = remote_final_script_pubkey_;
   result.local_amount = local_amount_;
   result.remote_amount = remote_amount_;
   result.lock_time = lock_time_;
@@ -1766,254 +1536,6 @@ void ErrorResponseBase::CollectFieldName() {
 }
 
 // ------------------------------------------------------------------------
-// GetRawCetSignatureRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<GetRawCetSignatureRequest>
-  GetRawCetSignatureRequest::json_mapper;
-std::vector<std::string> GetRawCetSignatureRequest::item_list;
-
-void GetRawCetSignatureRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<GetRawCetSignatureRequest> func_table;  // NOLINT
-
-  func_table = {
-    GetRawCetSignatureRequest::GetCetHexString,
-    GetRawCetSignatureRequest::SetCetHexString,
-    GetRawCetSignatureRequest::GetCetHexFieldType,
-  };
-  json_mapper.emplace("cetHex", func_table);
-  item_list.push_back("cetHex");
-  func_table = {
-    GetRawCetSignatureRequest::GetPrivkeyString,
-    GetRawCetSignatureRequest::SetPrivkeyString,
-    GetRawCetSignatureRequest::GetPrivkeyFieldType,
-  };
-  json_mapper.emplace("privkey", func_table);
-  item_list.push_back("privkey");
-  func_table = {
-    GetRawCetSignatureRequest::GetFundTxIdString,
-    GetRawCetSignatureRequest::SetFundTxIdString,
-    GetRawCetSignatureRequest::GetFundTxIdFieldType,
-  };
-  json_mapper.emplace("fundTxId", func_table);
-  item_list.push_back("fundTxId");
-  func_table = {
-    GetRawCetSignatureRequest::GetFundVoutString,
-    GetRawCetSignatureRequest::SetFundVoutString,
-    GetRawCetSignatureRequest::GetFundVoutFieldType,
-  };
-  json_mapper.emplace("fundVout", func_table);
-  item_list.push_back("fundVout");
-  func_table = {
-    GetRawCetSignatureRequest::GetLocalFundPubkeyString,
-    GetRawCetSignatureRequest::SetLocalFundPubkeyString,
-    GetRawCetSignatureRequest::GetLocalFundPubkeyFieldType,
-  };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
-  func_table = {
-    GetRawCetSignatureRequest::GetRemoteFundPubkeyString,
-    GetRawCetSignatureRequest::SetRemoteFundPubkeyString,
-    GetRawCetSignatureRequest::GetRemoteFundPubkeyFieldType,
-  };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
-  func_table = {
-    GetRawCetSignatureRequest::GetFundInputAmountString,
-    GetRawCetSignatureRequest::SetFundInputAmountString,
-    GetRawCetSignatureRequest::GetFundInputAmountFieldType,
-  };
-  json_mapper.emplace("fundInputAmount", func_table);
-  item_list.push_back("fundInputAmount");
-}
-
-void GetRawCetSignatureRequest::ConvertFromStruct(
-    const GetRawCetSignatureRequestStruct& data) {
-  cet_hex_ = data.cet_hex;
-  privkey_ = data.privkey;
-  fund_tx_id_ = data.fund_tx_id;
-  fund_vout_ = data.fund_vout;
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
-  fund_input_amount_ = data.fund_input_amount;
-  ignore_items = data.ignore_items;
-}
-
-GetRawCetSignatureRequestStruct GetRawCetSignatureRequest::ConvertToStruct() const {  // NOLINT
-  GetRawCetSignatureRequestStruct result;
-  result.cet_hex = cet_hex_;
-  result.privkey = privkey_;
-  result.fund_tx_id = fund_tx_id_;
-  result.fund_vout = fund_vout_;
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
-  result.fund_input_amount = fund_input_amount_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// GetRawCetSignatureResponse
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<GetRawCetSignatureResponse>
-  GetRawCetSignatureResponse::json_mapper;
-std::vector<std::string> GetRawCetSignatureResponse::item_list;
-
-void GetRawCetSignatureResponse::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<GetRawCetSignatureResponse> func_table;  // NOLINT
-
-  func_table = {
-    GetRawCetSignatureResponse::GetHexString,
-    GetRawCetSignatureResponse::SetHexString,
-    GetRawCetSignatureResponse::GetHexFieldType,
-  };
-  json_mapper.emplace("hex", func_table);
-  item_list.push_back("hex");
-}
-
-void GetRawCetSignatureResponse::ConvertFromStruct(
-    const GetRawCetSignatureResponseStruct& data) {
-  hex_ = data.hex;
-  ignore_items = data.ignore_items;
-}
-
-GetRawCetSignatureResponseStruct GetRawCetSignatureResponse::ConvertToStruct() const {  // NOLINT
-  GetRawCetSignatureResponseStruct result;
-  result.hex = hex_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// GetRawCetSignaturesRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<GetRawCetSignaturesRequest>
-  GetRawCetSignaturesRequest::json_mapper;
-std::vector<std::string> GetRawCetSignaturesRequest::item_list;
-
-void GetRawCetSignaturesRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<GetRawCetSignaturesRequest> func_table;  // NOLINT
-
-  func_table = {
-    GetRawCetSignaturesRequest::GetCetsHexString,
-    GetRawCetSignaturesRequest::SetCetsHexString,
-    GetRawCetSignaturesRequest::GetCetsHexFieldType,
-  };
-  json_mapper.emplace("cetsHex", func_table);
-  item_list.push_back("cetsHex");
-  func_table = {
-    GetRawCetSignaturesRequest::GetPrivkeyString,
-    GetRawCetSignaturesRequest::SetPrivkeyString,
-    GetRawCetSignaturesRequest::GetPrivkeyFieldType,
-  };
-  json_mapper.emplace("privkey", func_table);
-  item_list.push_back("privkey");
-  func_table = {
-    GetRawCetSignaturesRequest::GetFundTxIdString,
-    GetRawCetSignaturesRequest::SetFundTxIdString,
-    GetRawCetSignaturesRequest::GetFundTxIdFieldType,
-  };
-  json_mapper.emplace("fundTxId", func_table);
-  item_list.push_back("fundTxId");
-  func_table = {
-    GetRawCetSignaturesRequest::GetFundVoutString,
-    GetRawCetSignaturesRequest::SetFundVoutString,
-    GetRawCetSignaturesRequest::GetFundVoutFieldType,
-  };
-  json_mapper.emplace("fundVout", func_table);
-  item_list.push_back("fundVout");
-  func_table = {
-    GetRawCetSignaturesRequest::GetLocalFundPubkeyString,
-    GetRawCetSignaturesRequest::SetLocalFundPubkeyString,
-    GetRawCetSignaturesRequest::GetLocalFundPubkeyFieldType,
-  };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
-  func_table = {
-    GetRawCetSignaturesRequest::GetRemoteFundPubkeyString,
-    GetRawCetSignaturesRequest::SetRemoteFundPubkeyString,
-    GetRawCetSignaturesRequest::GetRemoteFundPubkeyFieldType,
-  };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
-  func_table = {
-    GetRawCetSignaturesRequest::GetFundInputAmountString,
-    GetRawCetSignaturesRequest::SetFundInputAmountString,
-    GetRawCetSignaturesRequest::GetFundInputAmountFieldType,
-  };
-  json_mapper.emplace("fundInputAmount", func_table);
-  item_list.push_back("fundInputAmount");
-}
-
-void GetRawCetSignaturesRequest::ConvertFromStruct(
-    const GetRawCetSignaturesRequestStruct& data) {
-  cets_hex_.ConvertFromStruct(data.cets_hex);
-  privkey_ = data.privkey;
-  fund_tx_id_ = data.fund_tx_id;
-  fund_vout_ = data.fund_vout;
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
-  fund_input_amount_ = data.fund_input_amount;
-  ignore_items = data.ignore_items;
-}
-
-GetRawCetSignaturesRequestStruct GetRawCetSignaturesRequest::ConvertToStruct() const {  // NOLINT
-  GetRawCetSignaturesRequestStruct result;
-  result.cets_hex = cets_hex_.ConvertToStruct();
-  result.privkey = privkey_;
-  result.fund_tx_id = fund_tx_id_;
-  result.fund_vout = fund_vout_;
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
-  result.fund_input_amount = fund_input_amount_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// GetRawCetSignaturesResponse
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<GetRawCetSignaturesResponse>
-  GetRawCetSignaturesResponse::json_mapper;
-std::vector<std::string> GetRawCetSignaturesResponse::item_list;
-
-void GetRawCetSignaturesResponse::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<GetRawCetSignaturesResponse> func_table;  // NOLINT
-
-  func_table = {
-    GetRawCetSignaturesResponse::GetHexString,
-    GetRawCetSignaturesResponse::SetHexString,
-    GetRawCetSignaturesResponse::GetHexFieldType,
-  };
-  json_mapper.emplace("hex", func_table);
-  item_list.push_back("hex");
-}
-
-void GetRawCetSignaturesResponse::ConvertFromStruct(
-    const GetRawCetSignaturesResponseStruct& data) {
-  hex_.ConvertFromStruct(data.hex);
-  ignore_items = data.ignore_items;
-}
-
-GetRawCetSignaturesResponseStruct GetRawCetSignaturesResponse::ConvertToStruct() const {  // NOLINT
-  GetRawCetSignaturesResponseStruct result;
-  result.hex = hex_.ConvertToStruct();
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
 // GetRawFundTxSignatureRequest
 // ------------------------------------------------------------------------
 cfd::core::JsonTableMap<GetRawFundTxSignatureRequest>
@@ -2114,130 +1636,6 @@ void GetRawFundTxSignatureResponse::ConvertFromStruct(
 
 GetRawFundTxSignatureResponseStruct GetRawFundTxSignatureResponse::ConvertToStruct() const {  // NOLINT
   GetRawFundTxSignatureResponseStruct result;
-  result.hex = hex_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// GetRawMutualClosingTxSignatureRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<GetRawMutualClosingTxSignatureRequest>
-  GetRawMutualClosingTxSignatureRequest::json_mapper;
-std::vector<std::string> GetRawMutualClosingTxSignatureRequest::item_list;
-
-void GetRawMutualClosingTxSignatureRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<GetRawMutualClosingTxSignatureRequest> func_table;  // NOLINT
-
-  func_table = {
-    GetRawMutualClosingTxSignatureRequest::GetMutualClosingHexString,
-    GetRawMutualClosingTxSignatureRequest::SetMutualClosingHexString,
-    GetRawMutualClosingTxSignatureRequest::GetMutualClosingHexFieldType,
-  };
-  json_mapper.emplace("mutualClosingHex", func_table);
-  item_list.push_back("mutualClosingHex");
-  func_table = {
-    GetRawMutualClosingTxSignatureRequest::GetPrivkeyString,
-    GetRawMutualClosingTxSignatureRequest::SetPrivkeyString,
-    GetRawMutualClosingTxSignatureRequest::GetPrivkeyFieldType,
-  };
-  json_mapper.emplace("privkey", func_table);
-  item_list.push_back("privkey");
-  func_table = {
-    GetRawMutualClosingTxSignatureRequest::GetFundTxIdString,
-    GetRawMutualClosingTxSignatureRequest::SetFundTxIdString,
-    GetRawMutualClosingTxSignatureRequest::GetFundTxIdFieldType,
-  };
-  json_mapper.emplace("fundTxId", func_table);
-  item_list.push_back("fundTxId");
-  func_table = {
-    GetRawMutualClosingTxSignatureRequest::GetFundVoutString,
-    GetRawMutualClosingTxSignatureRequest::SetFundVoutString,
-    GetRawMutualClosingTxSignatureRequest::GetFundVoutFieldType,
-  };
-  json_mapper.emplace("fundVout", func_table);
-  item_list.push_back("fundVout");
-  func_table = {
-    GetRawMutualClosingTxSignatureRequest::GetLocalFundPubkeyString,
-    GetRawMutualClosingTxSignatureRequest::SetLocalFundPubkeyString,
-    GetRawMutualClosingTxSignatureRequest::GetLocalFundPubkeyFieldType,
-  };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
-  func_table = {
-    GetRawMutualClosingTxSignatureRequest::GetRemoteFundPubkeyString,
-    GetRawMutualClosingTxSignatureRequest::SetRemoteFundPubkeyString,
-    GetRawMutualClosingTxSignatureRequest::GetRemoteFundPubkeyFieldType,
-  };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
-  func_table = {
-    GetRawMutualClosingTxSignatureRequest::GetFundInputAmountString,
-    GetRawMutualClosingTxSignatureRequest::SetFundInputAmountString,
-    GetRawMutualClosingTxSignatureRequest::GetFundInputAmountFieldType,
-  };
-  json_mapper.emplace("fundInputAmount", func_table);
-  item_list.push_back("fundInputAmount");
-}
-
-void GetRawMutualClosingTxSignatureRequest::ConvertFromStruct(
-    const GetRawMutualClosingTxSignatureRequestStruct& data) {
-  mutual_closing_hex_ = data.mutual_closing_hex;
-  privkey_ = data.privkey;
-  fund_tx_id_ = data.fund_tx_id;
-  fund_vout_ = data.fund_vout;
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
-  fund_input_amount_ = data.fund_input_amount;
-  ignore_items = data.ignore_items;
-}
-
-GetRawMutualClosingTxSignatureRequestStruct GetRawMutualClosingTxSignatureRequest::ConvertToStruct() const {  // NOLINT
-  GetRawMutualClosingTxSignatureRequestStruct result;
-  result.mutual_closing_hex = mutual_closing_hex_;
-  result.privkey = privkey_;
-  result.fund_tx_id = fund_tx_id_;
-  result.fund_vout = fund_vout_;
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
-  result.fund_input_amount = fund_input_amount_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// GetRawMutualClosingTxSignatureResponse
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<GetRawMutualClosingTxSignatureResponse>
-  GetRawMutualClosingTxSignatureResponse::json_mapper;
-std::vector<std::string> GetRawMutualClosingTxSignatureResponse::item_list;
-
-void GetRawMutualClosingTxSignatureResponse::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<GetRawMutualClosingTxSignatureResponse> func_table;  // NOLINT
-
-  func_table = {
-    GetRawMutualClosingTxSignatureResponse::GetHexString,
-    GetRawMutualClosingTxSignatureResponse::SetHexString,
-    GetRawMutualClosingTxSignatureResponse::GetHexFieldType,
-  };
-  json_mapper.emplace("hex", func_table);
-  item_list.push_back("hex");
-}
-
-void GetRawMutualClosingTxSignatureResponse::ConvertFromStruct(
-    const GetRawMutualClosingTxSignatureResponseStruct& data) {
-  hex_ = data.hex;
-  ignore_items = data.ignore_items;
-}
-
-GetRawMutualClosingTxSignatureResponseStruct GetRawMutualClosingTxSignatureResponse::ConvertToStruct() const {  // NOLINT
-  GetRawMutualClosingTxSignatureResponseStruct result;
   result.hex = hex_;
   result.ignore_items = ignore_items;
   return result;
@@ -2368,327 +1766,142 @@ GetRawRefundTxSignatureResponseStruct GetRawRefundTxSignatureResponse::ConvertTo
 }
 
 // ------------------------------------------------------------------------
-// GetSchnorrPublicNonceRequest
+// SignCetRequest
 // ------------------------------------------------------------------------
-cfd::core::JsonTableMap<GetSchnorrPublicNonceRequest>
-  GetSchnorrPublicNonceRequest::json_mapper;
-std::vector<std::string> GetSchnorrPublicNonceRequest::item_list;
+cfd::core::JsonTableMap<SignCetRequest>
+  SignCetRequest::json_mapper;
+std::vector<std::string> SignCetRequest::item_list;
 
-void GetSchnorrPublicNonceRequest::CollectFieldName() {
+void SignCetRequest::CollectFieldName() {
   if (!json_mapper.empty()) {
     return;
   }
-  cfd::core::CLASS_FUNCTION_TABLE<GetSchnorrPublicNonceRequest> func_table;  // NOLINT
+  cfd::core::CLASS_FUNCTION_TABLE<SignCetRequest> func_table;  // NOLINT
 
   func_table = {
-    GetSchnorrPublicNonceRequest::GetKValueString,
-    GetSchnorrPublicNonceRequest::SetKValueString,
-    GetSchnorrPublicNonceRequest::GetKValueFieldType,
+    SignCetRequest::GetCetHexString,
+    SignCetRequest::SetCetHexString,
+    SignCetRequest::GetCetHexFieldType,
   };
-  json_mapper.emplace("kValue", func_table);
-  item_list.push_back("kValue");
+  json_mapper.emplace("cetHex", func_table);
+  item_list.push_back("cetHex");
+  func_table = {
+    SignCetRequest::GetFundPrivkeyString,
+    SignCetRequest::SetFundPrivkeyString,
+    SignCetRequest::GetFundPrivkeyFieldType,
+  };
+  json_mapper.emplace("fundPrivkey", func_table);
+  item_list.push_back("fundPrivkey");
+  func_table = {
+    SignCetRequest::GetFundTxIdString,
+    SignCetRequest::SetFundTxIdString,
+    SignCetRequest::GetFundTxIdFieldType,
+  };
+  json_mapper.emplace("fundTxId", func_table);
+  item_list.push_back("fundTxId");
+  func_table = {
+    SignCetRequest::GetFundVoutString,
+    SignCetRequest::SetFundVoutString,
+    SignCetRequest::GetFundVoutFieldType,
+  };
+  json_mapper.emplace("fundVout", func_table);
+  item_list.push_back("fundVout");
+  func_table = {
+    SignCetRequest::GetLocalFundPubkeyString,
+    SignCetRequest::SetLocalFundPubkeyString,
+    SignCetRequest::GetLocalFundPubkeyFieldType,
+  };
+  json_mapper.emplace("localFundPubkey", func_table);
+  item_list.push_back("localFundPubkey");
+  func_table = {
+    SignCetRequest::GetRemoteFundPubkeyString,
+    SignCetRequest::SetRemoteFundPubkeyString,
+    SignCetRequest::GetRemoteFundPubkeyFieldType,
+  };
+  json_mapper.emplace("remoteFundPubkey", func_table);
+  item_list.push_back("remoteFundPubkey");
+  func_table = {
+    SignCetRequest::GetFundInputAmountString,
+    SignCetRequest::SetFundInputAmountString,
+    SignCetRequest::GetFundInputAmountFieldType,
+  };
+  json_mapper.emplace("fundInputAmount", func_table);
+  item_list.push_back("fundInputAmount");
+  func_table = {
+    SignCetRequest::GetAdaptorSignatureString,
+    SignCetRequest::SetAdaptorSignatureString,
+    SignCetRequest::GetAdaptorSignatureFieldType,
+  };
+  json_mapper.emplace("adaptorSignature", func_table);
+  item_list.push_back("adaptorSignature");
+  func_table = {
+    SignCetRequest::GetOracleSignatureString,
+    SignCetRequest::SetOracleSignatureString,
+    SignCetRequest::GetOracleSignatureFieldType,
+  };
+  json_mapper.emplace("oracleSignature", func_table);
+  item_list.push_back("oracleSignature");
 }
 
-void GetSchnorrPublicNonceRequest::ConvertFromStruct(
-    const GetSchnorrPublicNonceRequestStruct& data) {
-  k_value_ = data.k_value;
+void SignCetRequest::ConvertFromStruct(
+    const SignCetRequestStruct& data) {
+  cet_hex_ = data.cet_hex;
+  fund_privkey_ = data.fund_privkey;
+  fund_tx_id_ = data.fund_tx_id;
+  fund_vout_ = data.fund_vout;
+  local_fund_pubkey_ = data.local_fund_pubkey;
+  remote_fund_pubkey_ = data.remote_fund_pubkey;
+  fund_input_amount_ = data.fund_input_amount;
+  adaptor_signature_ = data.adaptor_signature;
+  oracle_signature_ = data.oracle_signature;
   ignore_items = data.ignore_items;
 }
 
-GetSchnorrPublicNonceRequestStruct GetSchnorrPublicNonceRequest::ConvertToStruct() const {  // NOLINT
-  GetSchnorrPublicNonceRequestStruct result;
-  result.k_value = k_value_;
+SignCetRequestStruct SignCetRequest::ConvertToStruct() const {  // NOLINT
+  SignCetRequestStruct result;
+  result.cet_hex = cet_hex_;
+  result.fund_privkey = fund_privkey_;
+  result.fund_tx_id = fund_tx_id_;
+  result.fund_vout = fund_vout_;
+  result.local_fund_pubkey = local_fund_pubkey_;
+  result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.fund_input_amount = fund_input_amount_;
+  result.adaptor_signature = adaptor_signature_;
+  result.oracle_signature = oracle_signature_;
   result.ignore_items = ignore_items;
   return result;
 }
 
 // ------------------------------------------------------------------------
-// GetSchnorrPublicNonceResponse
+// SignCetResponse
 // ------------------------------------------------------------------------
-cfd::core::JsonTableMap<GetSchnorrPublicNonceResponse>
-  GetSchnorrPublicNonceResponse::json_mapper;
-std::vector<std::string> GetSchnorrPublicNonceResponse::item_list;
+cfd::core::JsonTableMap<SignCetResponse>
+  SignCetResponse::json_mapper;
+std::vector<std::string> SignCetResponse::item_list;
 
-void GetSchnorrPublicNonceResponse::CollectFieldName() {
+void SignCetResponse::CollectFieldName() {
   if (!json_mapper.empty()) {
     return;
   }
-  cfd::core::CLASS_FUNCTION_TABLE<GetSchnorrPublicNonceResponse> func_table;  // NOLINT
+  cfd::core::CLASS_FUNCTION_TABLE<SignCetResponse> func_table;  // NOLINT
 
   func_table = {
-    GetSchnorrPublicNonceResponse::GetHexString,
-    GetSchnorrPublicNonceResponse::SetHexString,
-    GetSchnorrPublicNonceResponse::GetHexFieldType,
+    SignCetResponse::GetHexString,
+    SignCetResponse::SetHexString,
+    SignCetResponse::GetHexFieldType,
   };
   json_mapper.emplace("hex", func_table);
   item_list.push_back("hex");
 }
 
-void GetSchnorrPublicNonceResponse::ConvertFromStruct(
-    const GetSchnorrPublicNonceResponseStruct& data) {
+void SignCetResponse::ConvertFromStruct(
+    const SignCetResponseStruct& data) {
   hex_ = data.hex;
   ignore_items = data.ignore_items;
 }
 
-GetSchnorrPublicNonceResponseStruct GetSchnorrPublicNonceResponse::ConvertToStruct() const {  // NOLINT
-  GetSchnorrPublicNonceResponseStruct result;
-  result.hex = hex_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// SchnorrSignRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<SchnorrSignRequest>
-  SchnorrSignRequest::json_mapper;
-std::vector<std::string> SchnorrSignRequest::item_list;
-
-void SchnorrSignRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<SchnorrSignRequest> func_table;  // NOLINT
-
-  func_table = {
-    SchnorrSignRequest::GetPrivkeyString,
-    SchnorrSignRequest::SetPrivkeyString,
-    SchnorrSignRequest::GetPrivkeyFieldType,
-  };
-  json_mapper.emplace("privkey", func_table);
-  item_list.push_back("privkey");
-  func_table = {
-    SchnorrSignRequest::GetKValueString,
-    SchnorrSignRequest::SetKValueString,
-    SchnorrSignRequest::GetKValueFieldType,
-  };
-  json_mapper.emplace("kValue", func_table);
-  item_list.push_back("kValue");
-  func_table = {
-    SchnorrSignRequest::GetMessageString,
-    SchnorrSignRequest::SetMessageString,
-    SchnorrSignRequest::GetMessageFieldType,
-  };
-  json_mapper.emplace("message", func_table);
-  item_list.push_back("message");
-}
-
-void SchnorrSignRequest::ConvertFromStruct(
-    const SchnorrSignRequestStruct& data) {
-  privkey_ = data.privkey;
-  k_value_ = data.k_value;
-  message_ = data.message;
-  ignore_items = data.ignore_items;
-}
-
-SchnorrSignRequestStruct SchnorrSignRequest::ConvertToStruct() const {  // NOLINT
-  SchnorrSignRequestStruct result;
-  result.privkey = privkey_;
-  result.k_value = k_value_;
-  result.message = message_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// SchnorrSignResponse
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<SchnorrSignResponse>
-  SchnorrSignResponse::json_mapper;
-std::vector<std::string> SchnorrSignResponse::item_list;
-
-void SchnorrSignResponse::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<SchnorrSignResponse> func_table;  // NOLINT
-
-  func_table = {
-    SchnorrSignResponse::GetHexString,
-    SchnorrSignResponse::SetHexString,
-    SchnorrSignResponse::GetHexFieldType,
-  };
-  json_mapper.emplace("hex", func_table);
-  item_list.push_back("hex");
-}
-
-void SchnorrSignResponse::ConvertFromStruct(
-    const SchnorrSignResponseStruct& data) {
-  hex_ = data.hex;
-  ignore_items = data.ignore_items;
-}
-
-SchnorrSignResponseStruct SchnorrSignResponse::ConvertToStruct() const {  // NOLINT
-  SchnorrSignResponseStruct result;
-  result.hex = hex_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// SignClosingTransactionRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<SignClosingTransactionRequest>
-  SignClosingTransactionRequest::json_mapper;
-std::vector<std::string> SignClosingTransactionRequest::item_list;
-
-void SignClosingTransactionRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<SignClosingTransactionRequest> func_table;  // NOLINT
-
-  func_table = {
-    SignClosingTransactionRequest::GetClosingTxHexString,
-    SignClosingTransactionRequest::SetClosingTxHexString,
-    SignClosingTransactionRequest::GetClosingTxHexFieldType,
-  };
-  json_mapper.emplace("closingTxHex", func_table);
-  item_list.push_back("closingTxHex");
-  func_table = {
-    SignClosingTransactionRequest::GetLocalFundPrivkeyString,
-    SignClosingTransactionRequest::SetLocalFundPrivkeyString,
-    SignClosingTransactionRequest::GetLocalFundPrivkeyFieldType,
-  };
-  json_mapper.emplace("localFundPrivkey", func_table);
-  item_list.push_back("localFundPrivkey");
-  func_table = {
-    SignClosingTransactionRequest::GetLocalSweepPubkeyString,
-    SignClosingTransactionRequest::SetLocalSweepPubkeyString,
-    SignClosingTransactionRequest::GetLocalSweepPubkeyFieldType,
-  };
-  json_mapper.emplace("localSweepPubkey", func_table);
-  item_list.push_back("localSweepPubkey");
-  func_table = {
-    SignClosingTransactionRequest::GetRemoteSweepPubkeyString,
-    SignClosingTransactionRequest::SetRemoteSweepPubkeyString,
-    SignClosingTransactionRequest::GetRemoteSweepPubkeyFieldType,
-  };
-  json_mapper.emplace("remoteSweepPubkey", func_table);
-  item_list.push_back("remoteSweepPubkey");
-  func_table = {
-    SignClosingTransactionRequest::GetOraclePubkeyString,
-    SignClosingTransactionRequest::SetOraclePubkeyString,
-    SignClosingTransactionRequest::GetOraclePubkeyFieldType,
-  };
-  json_mapper.emplace("oraclePubkey", func_table);
-  item_list.push_back("oraclePubkey");
-  func_table = {
-    SignClosingTransactionRequest::GetOracleRPointsString,
-    SignClosingTransactionRequest::SetOracleRPointsString,
-    SignClosingTransactionRequest::GetOracleRPointsFieldType,
-  };
-  json_mapper.emplace("oracleRPoints", func_table);
-  item_list.push_back("oracleRPoints");
-  func_table = {
-    SignClosingTransactionRequest::GetMessagesString,
-    SignClosingTransactionRequest::SetMessagesString,
-    SignClosingTransactionRequest::GetMessagesFieldType,
-  };
-  json_mapper.emplace("messages", func_table);
-  item_list.push_back("messages");
-  func_table = {
-    SignClosingTransactionRequest::GetCsvDelayString,
-    SignClosingTransactionRequest::SetCsvDelayString,
-    SignClosingTransactionRequest::GetCsvDelayFieldType,
-  };
-  json_mapper.emplace("csvDelay", func_table);
-  item_list.push_back("csvDelay");
-  func_table = {
-    SignClosingTransactionRequest::GetOracleSigsString,
-    SignClosingTransactionRequest::SetOracleSigsString,
-    SignClosingTransactionRequest::GetOracleSigsFieldType,
-  };
-  json_mapper.emplace("oracleSigs", func_table);
-  item_list.push_back("oracleSigs");
-  func_table = {
-    SignClosingTransactionRequest::GetCetTxIdString,
-    SignClosingTransactionRequest::SetCetTxIdString,
-    SignClosingTransactionRequest::GetCetTxIdFieldType,
-  };
-  json_mapper.emplace("cetTxId", func_table);
-  item_list.push_back("cetTxId");
-  func_table = {
-    SignClosingTransactionRequest::GetCetVoutString,
-    SignClosingTransactionRequest::SetCetVoutString,
-    SignClosingTransactionRequest::GetCetVoutFieldType,
-  };
-  json_mapper.emplace("cetVout", func_table);
-  item_list.push_back("cetVout");
-  func_table = {
-    SignClosingTransactionRequest::GetAmountString,
-    SignClosingTransactionRequest::SetAmountString,
-    SignClosingTransactionRequest::GetAmountFieldType,
-  };
-  json_mapper.emplace("amount", func_table);
-  item_list.push_back("amount");
-}
-
-void SignClosingTransactionRequest::ConvertFromStruct(
-    const SignClosingTransactionRequestStruct& data) {
-  closing_tx_hex_ = data.closing_tx_hex;
-  local_fund_privkey_ = data.local_fund_privkey;
-  local_sweep_pubkey_ = data.local_sweep_pubkey;
-  remote_sweep_pubkey_ = data.remote_sweep_pubkey;
-  oracle_pubkey_ = data.oracle_pubkey;
-  oracle_r_points_.ConvertFromStruct(data.oracle_r_points);
-  messages_.ConvertFromStruct(data.messages);
-  csv_delay_ = data.csv_delay;
-  oracle_sigs_.ConvertFromStruct(data.oracle_sigs);
-  cet_tx_id_ = data.cet_tx_id;
-  cet_vout_ = data.cet_vout;
-  amount_ = data.amount;
-  ignore_items = data.ignore_items;
-}
-
-SignClosingTransactionRequestStruct SignClosingTransactionRequest::ConvertToStruct() const {  // NOLINT
-  SignClosingTransactionRequestStruct result;
-  result.closing_tx_hex = closing_tx_hex_;
-  result.local_fund_privkey = local_fund_privkey_;
-  result.local_sweep_pubkey = local_sweep_pubkey_;
-  result.remote_sweep_pubkey = remote_sweep_pubkey_;
-  result.oracle_pubkey = oracle_pubkey_;
-  result.oracle_r_points = oracle_r_points_.ConvertToStruct();
-  result.messages = messages_.ConvertToStruct();
-  result.csv_delay = csv_delay_;
-  result.oracle_sigs = oracle_sigs_.ConvertToStruct();
-  result.cet_tx_id = cet_tx_id_;
-  result.cet_vout = cet_vout_;
-  result.amount = amount_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// SignClosingTransactionResponse
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<SignClosingTransactionResponse>
-  SignClosingTransactionResponse::json_mapper;
-std::vector<std::string> SignClosingTransactionResponse::item_list;
-
-void SignClosingTransactionResponse::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<SignClosingTransactionResponse> func_table;  // NOLINT
-
-  func_table = {
-    SignClosingTransactionResponse::GetHexString,
-    SignClosingTransactionResponse::SetHexString,
-    SignClosingTransactionResponse::GetHexFieldType,
-  };
-  json_mapper.emplace("hex", func_table);
-  item_list.push_back("hex");
-}
-
-void SignClosingTransactionResponse::ConvertFromStruct(
-    const SignClosingTransactionResponseStruct& data) {
-  hex_ = data.hex;
-  ignore_items = data.ignore_items;
-}
-
-SignClosingTransactionResponseStruct SignClosingTransactionResponse::ConvertToStruct() const {  // NOLINT
-  SignClosingTransactionResponseStruct result;
+SignCetResponseStruct SignCetResponse::ConvertToStruct() const {  // NOLINT
+  SignCetResponseStruct result;
   result.hex = hex_;
   result.ignore_items = ignore_items;
   return result;
@@ -2801,82 +2014,114 @@ SignFundTransactionResponseStruct SignFundTransactionResponse::ConvertToStruct()
 }
 
 // ------------------------------------------------------------------------
-// VerifyCetSignatureRequest
+// VerifyCetAdaptorSignatureRequest
 // ------------------------------------------------------------------------
-cfd::core::JsonTableMap<VerifyCetSignatureRequest>
-  VerifyCetSignatureRequest::json_mapper;
-std::vector<std::string> VerifyCetSignatureRequest::item_list;
+cfd::core::JsonTableMap<VerifyCetAdaptorSignatureRequest>
+  VerifyCetAdaptorSignatureRequest::json_mapper;
+std::vector<std::string> VerifyCetAdaptorSignatureRequest::item_list;
 
-void VerifyCetSignatureRequest::CollectFieldName() {
+void VerifyCetAdaptorSignatureRequest::CollectFieldName() {
   if (!json_mapper.empty()) {
     return;
   }
-  cfd::core::CLASS_FUNCTION_TABLE<VerifyCetSignatureRequest> func_table;  // NOLINT
+  cfd::core::CLASS_FUNCTION_TABLE<VerifyCetAdaptorSignatureRequest> func_table;  // NOLINT
 
   func_table = {
-    VerifyCetSignatureRequest::GetCetHexString,
-    VerifyCetSignatureRequest::SetCetHexString,
-    VerifyCetSignatureRequest::GetCetHexFieldType,
+    VerifyCetAdaptorSignatureRequest::GetCetHexString,
+    VerifyCetAdaptorSignatureRequest::SetCetHexString,
+    VerifyCetAdaptorSignatureRequest::GetCetHexFieldType,
   };
   json_mapper.emplace("cetHex", func_table);
   item_list.push_back("cetHex");
   func_table = {
-    VerifyCetSignatureRequest::GetSignatureString,
-    VerifyCetSignatureRequest::SetSignatureString,
-    VerifyCetSignatureRequest::GetSignatureFieldType,
+    VerifyCetAdaptorSignatureRequest::GetAdaptorSignatureString,
+    VerifyCetAdaptorSignatureRequest::SetAdaptorSignatureString,
+    VerifyCetAdaptorSignatureRequest::GetAdaptorSignatureFieldType,
   };
-  json_mapper.emplace("signature", func_table);
-  item_list.push_back("signature");
+  json_mapper.emplace("adaptorSignature", func_table);
+  item_list.push_back("adaptorSignature");
   func_table = {
-    VerifyCetSignatureRequest::GetLocalFundPubkeyString,
-    VerifyCetSignatureRequest::SetLocalFundPubkeyString,
-    VerifyCetSignatureRequest::GetLocalFundPubkeyFieldType,
+    VerifyCetAdaptorSignatureRequest::GetAdaptorProofString,
+    VerifyCetAdaptorSignatureRequest::SetAdaptorProofString,
+    VerifyCetAdaptorSignatureRequest::GetAdaptorProofFieldType,
+  };
+  json_mapper.emplace("adaptorProof", func_table);
+  item_list.push_back("adaptorProof");
+  func_table = {
+    VerifyCetAdaptorSignatureRequest::GetMessageString,
+    VerifyCetAdaptorSignatureRequest::SetMessageString,
+    VerifyCetAdaptorSignatureRequest::GetMessageFieldType,
+  };
+  json_mapper.emplace("message", func_table);
+  item_list.push_back("message");
+  func_table = {
+    VerifyCetAdaptorSignatureRequest::GetLocalFundPubkeyString,
+    VerifyCetAdaptorSignatureRequest::SetLocalFundPubkeyString,
+    VerifyCetAdaptorSignatureRequest::GetLocalFundPubkeyFieldType,
   };
   json_mapper.emplace("localFundPubkey", func_table);
   item_list.push_back("localFundPubkey");
   func_table = {
-    VerifyCetSignatureRequest::GetRemoteFundPubkeyString,
-    VerifyCetSignatureRequest::SetRemoteFundPubkeyString,
-    VerifyCetSignatureRequest::GetRemoteFundPubkeyFieldType,
+    VerifyCetAdaptorSignatureRequest::GetRemoteFundPubkeyString,
+    VerifyCetAdaptorSignatureRequest::SetRemoteFundPubkeyString,
+    VerifyCetAdaptorSignatureRequest::GetRemoteFundPubkeyFieldType,
   };
   json_mapper.emplace("remoteFundPubkey", func_table);
   item_list.push_back("remoteFundPubkey");
   func_table = {
-    VerifyCetSignatureRequest::GetFundTxIdString,
-    VerifyCetSignatureRequest::SetFundTxIdString,
-    VerifyCetSignatureRequest::GetFundTxIdFieldType,
+    VerifyCetAdaptorSignatureRequest::GetOraclePubkeyString,
+    VerifyCetAdaptorSignatureRequest::SetOraclePubkeyString,
+    VerifyCetAdaptorSignatureRequest::GetOraclePubkeyFieldType,
+  };
+  json_mapper.emplace("oraclePubkey", func_table);
+  item_list.push_back("oraclePubkey");
+  func_table = {
+    VerifyCetAdaptorSignatureRequest::GetOracleRValueString,
+    VerifyCetAdaptorSignatureRequest::SetOracleRValueString,
+    VerifyCetAdaptorSignatureRequest::GetOracleRValueFieldType,
+  };
+  json_mapper.emplace("oracleRValue", func_table);
+  item_list.push_back("oracleRValue");
+  func_table = {
+    VerifyCetAdaptorSignatureRequest::GetFundTxIdString,
+    VerifyCetAdaptorSignatureRequest::SetFundTxIdString,
+    VerifyCetAdaptorSignatureRequest::GetFundTxIdFieldType,
   };
   json_mapper.emplace("fundTxId", func_table);
   item_list.push_back("fundTxId");
   func_table = {
-    VerifyCetSignatureRequest::GetFundVoutString,
-    VerifyCetSignatureRequest::SetFundVoutString,
-    VerifyCetSignatureRequest::GetFundVoutFieldType,
+    VerifyCetAdaptorSignatureRequest::GetFundVoutString,
+    VerifyCetAdaptorSignatureRequest::SetFundVoutString,
+    VerifyCetAdaptorSignatureRequest::GetFundVoutFieldType,
   };
   json_mapper.emplace("fundVout", func_table);
   item_list.push_back("fundVout");
   func_table = {
-    VerifyCetSignatureRequest::GetFundInputAmountString,
-    VerifyCetSignatureRequest::SetFundInputAmountString,
-    VerifyCetSignatureRequest::GetFundInputAmountFieldType,
+    VerifyCetAdaptorSignatureRequest::GetFundInputAmountString,
+    VerifyCetAdaptorSignatureRequest::SetFundInputAmountString,
+    VerifyCetAdaptorSignatureRequest::GetFundInputAmountFieldType,
   };
   json_mapper.emplace("fundInputAmount", func_table);
   item_list.push_back("fundInputAmount");
   func_table = {
-    VerifyCetSignatureRequest::GetVerifyRemoteString,
-    VerifyCetSignatureRequest::SetVerifyRemoteString,
-    VerifyCetSignatureRequest::GetVerifyRemoteFieldType,
+    VerifyCetAdaptorSignatureRequest::GetVerifyRemoteString,
+    VerifyCetAdaptorSignatureRequest::SetVerifyRemoteString,
+    VerifyCetAdaptorSignatureRequest::GetVerifyRemoteFieldType,
   };
   json_mapper.emplace("verifyRemote", func_table);
   item_list.push_back("verifyRemote");
 }
 
-void VerifyCetSignatureRequest::ConvertFromStruct(
-    const VerifyCetSignatureRequestStruct& data) {
+void VerifyCetAdaptorSignatureRequest::ConvertFromStruct(
+    const VerifyCetAdaptorSignatureRequestStruct& data) {
   cet_hex_ = data.cet_hex;
-  signature_ = data.signature;
+  adaptor_signature_ = data.adaptor_signature;
+  adaptor_proof_ = data.adaptor_proof;
+  message_ = data.message;
   local_fund_pubkey_ = data.local_fund_pubkey;
   remote_fund_pubkey_ = data.remote_fund_pubkey;
+  oracle_pubkey_ = data.oracle_pubkey;
+  oracle_r_value_ = data.oracle_r_value;
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
   fund_input_amount_ = data.fund_input_amount;
@@ -2884,12 +2129,16 @@ void VerifyCetSignatureRequest::ConvertFromStruct(
   ignore_items = data.ignore_items;
 }
 
-VerifyCetSignatureRequestStruct VerifyCetSignatureRequest::ConvertToStruct() const {  // NOLINT
-  VerifyCetSignatureRequestStruct result;
+VerifyCetAdaptorSignatureRequestStruct VerifyCetAdaptorSignatureRequest::ConvertToStruct() const {  // NOLINT
+  VerifyCetAdaptorSignatureRequestStruct result;
   result.cet_hex = cet_hex_;
-  result.signature = signature_;
+  result.adaptor_signature = adaptor_signature_;
+  result.adaptor_proof = adaptor_proof_;
+  result.message = message_;
   result.local_fund_pubkey = local_fund_pubkey_;
   result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.oracle_pubkey = oracle_pubkey_;
+  result.oracle_r_value = oracle_r_value_;
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
   result.fund_input_amount = fund_input_amount_;
@@ -2899,117 +2148,141 @@ VerifyCetSignatureRequestStruct VerifyCetSignatureRequest::ConvertToStruct() con
 }
 
 // ------------------------------------------------------------------------
-// VerifyCetSignatureResponse
+// VerifyCetAdaptorSignatureResponse
 // ------------------------------------------------------------------------
-cfd::core::JsonTableMap<VerifyCetSignatureResponse>
-  VerifyCetSignatureResponse::json_mapper;
-std::vector<std::string> VerifyCetSignatureResponse::item_list;
+cfd::core::JsonTableMap<VerifyCetAdaptorSignatureResponse>
+  VerifyCetAdaptorSignatureResponse::json_mapper;
+std::vector<std::string> VerifyCetAdaptorSignatureResponse::item_list;
 
-void VerifyCetSignatureResponse::CollectFieldName() {
+void VerifyCetAdaptorSignatureResponse::CollectFieldName() {
   if (!json_mapper.empty()) {
     return;
   }
-  cfd::core::CLASS_FUNCTION_TABLE<VerifyCetSignatureResponse> func_table;  // NOLINT
+  cfd::core::CLASS_FUNCTION_TABLE<VerifyCetAdaptorSignatureResponse> func_table;  // NOLINT
 
   func_table = {
-    VerifyCetSignatureResponse::GetValidString,
-    VerifyCetSignatureResponse::SetValidString,
-    VerifyCetSignatureResponse::GetValidFieldType,
+    VerifyCetAdaptorSignatureResponse::GetValidString,
+    VerifyCetAdaptorSignatureResponse::SetValidString,
+    VerifyCetAdaptorSignatureResponse::GetValidFieldType,
   };
   json_mapper.emplace("valid", func_table);
   item_list.push_back("valid");
 }
 
-void VerifyCetSignatureResponse::ConvertFromStruct(
-    const VerifyCetSignatureResponseStruct& data) {
+void VerifyCetAdaptorSignatureResponse::ConvertFromStruct(
+    const VerifyCetAdaptorSignatureResponseStruct& data) {
   valid_ = data.valid;
   ignore_items = data.ignore_items;
 }
 
-VerifyCetSignatureResponseStruct VerifyCetSignatureResponse::ConvertToStruct() const {  // NOLINT
-  VerifyCetSignatureResponseStruct result;
+VerifyCetAdaptorSignatureResponseStruct VerifyCetAdaptorSignatureResponse::ConvertToStruct() const {  // NOLINT
+  VerifyCetAdaptorSignatureResponseStruct result;
   result.valid = valid_;
   result.ignore_items = ignore_items;
   return result;
 }
 
 // ------------------------------------------------------------------------
-// VerifyCetSignaturesRequest
+// VerifyCetAdaptorSignaturesRequest
 // ------------------------------------------------------------------------
-cfd::core::JsonTableMap<VerifyCetSignaturesRequest>
-  VerifyCetSignaturesRequest::json_mapper;
-std::vector<std::string> VerifyCetSignaturesRequest::item_list;
+cfd::core::JsonTableMap<VerifyCetAdaptorSignaturesRequest>
+  VerifyCetAdaptorSignaturesRequest::json_mapper;
+std::vector<std::string> VerifyCetAdaptorSignaturesRequest::item_list;
 
-void VerifyCetSignaturesRequest::CollectFieldName() {
+void VerifyCetAdaptorSignaturesRequest::CollectFieldName() {
   if (!json_mapper.empty()) {
     return;
   }
-  cfd::core::CLASS_FUNCTION_TABLE<VerifyCetSignaturesRequest> func_table;  // NOLINT
+  cfd::core::CLASS_FUNCTION_TABLE<VerifyCetAdaptorSignaturesRequest> func_table;  // NOLINT
 
   func_table = {
-    VerifyCetSignaturesRequest::GetCetsHexString,
-    VerifyCetSignaturesRequest::SetCetsHexString,
-    VerifyCetSignaturesRequest::GetCetsHexFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetCetsHexString,
+    VerifyCetAdaptorSignaturesRequest::SetCetsHexString,
+    VerifyCetAdaptorSignaturesRequest::GetCetsHexFieldType,
   };
   json_mapper.emplace("cetsHex", func_table);
   item_list.push_back("cetsHex");
   func_table = {
-    VerifyCetSignaturesRequest::GetSignaturesString,
-    VerifyCetSignaturesRequest::SetSignaturesString,
-    VerifyCetSignaturesRequest::GetSignaturesFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetAdaptorPairsString,
+    VerifyCetAdaptorSignaturesRequest::SetAdaptorPairsString,
+    VerifyCetAdaptorSignaturesRequest::GetAdaptorPairsFieldType,
   };
-  json_mapper.emplace("signatures", func_table);
-  item_list.push_back("signatures");
+  json_mapper.emplace("adaptorPairs", func_table);
+  item_list.push_back("adaptorPairs");
   func_table = {
-    VerifyCetSignaturesRequest::GetLocalFundPubkeyString,
-    VerifyCetSignaturesRequest::SetLocalFundPubkeyString,
-    VerifyCetSignaturesRequest::GetLocalFundPubkeyFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetMessagesString,
+    VerifyCetAdaptorSignaturesRequest::SetMessagesString,
+    VerifyCetAdaptorSignaturesRequest::GetMessagesFieldType,
+  };
+  json_mapper.emplace("messages", func_table);
+  item_list.push_back("messages");
+  func_table = {
+    VerifyCetAdaptorSignaturesRequest::GetLocalFundPubkeyString,
+    VerifyCetAdaptorSignaturesRequest::SetLocalFundPubkeyString,
+    VerifyCetAdaptorSignaturesRequest::GetLocalFundPubkeyFieldType,
   };
   json_mapper.emplace("localFundPubkey", func_table);
   item_list.push_back("localFundPubkey");
   func_table = {
-    VerifyCetSignaturesRequest::GetRemoteFundPubkeyString,
-    VerifyCetSignaturesRequest::SetRemoteFundPubkeyString,
-    VerifyCetSignaturesRequest::GetRemoteFundPubkeyFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetRemoteFundPubkeyString,
+    VerifyCetAdaptorSignaturesRequest::SetRemoteFundPubkeyString,
+    VerifyCetAdaptorSignaturesRequest::GetRemoteFundPubkeyFieldType,
   };
   json_mapper.emplace("remoteFundPubkey", func_table);
   item_list.push_back("remoteFundPubkey");
   func_table = {
-    VerifyCetSignaturesRequest::GetFundTxIdString,
-    VerifyCetSignaturesRequest::SetFundTxIdString,
-    VerifyCetSignaturesRequest::GetFundTxIdFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetOraclePubkeyString,
+    VerifyCetAdaptorSignaturesRequest::SetOraclePubkeyString,
+    VerifyCetAdaptorSignaturesRequest::GetOraclePubkeyFieldType,
+  };
+  json_mapper.emplace("oraclePubkey", func_table);
+  item_list.push_back("oraclePubkey");
+  func_table = {
+    VerifyCetAdaptorSignaturesRequest::GetOracleRValueString,
+    VerifyCetAdaptorSignaturesRequest::SetOracleRValueString,
+    VerifyCetAdaptorSignaturesRequest::GetOracleRValueFieldType,
+  };
+  json_mapper.emplace("oracleRValue", func_table);
+  item_list.push_back("oracleRValue");
+  func_table = {
+    VerifyCetAdaptorSignaturesRequest::GetFundTxIdString,
+    VerifyCetAdaptorSignaturesRequest::SetFundTxIdString,
+    VerifyCetAdaptorSignaturesRequest::GetFundTxIdFieldType,
   };
   json_mapper.emplace("fundTxId", func_table);
   item_list.push_back("fundTxId");
   func_table = {
-    VerifyCetSignaturesRequest::GetFundVoutString,
-    VerifyCetSignaturesRequest::SetFundVoutString,
-    VerifyCetSignaturesRequest::GetFundVoutFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetFundVoutString,
+    VerifyCetAdaptorSignaturesRequest::SetFundVoutString,
+    VerifyCetAdaptorSignaturesRequest::GetFundVoutFieldType,
   };
   json_mapper.emplace("fundVout", func_table);
   item_list.push_back("fundVout");
   func_table = {
-    VerifyCetSignaturesRequest::GetFundInputAmountString,
-    VerifyCetSignaturesRequest::SetFundInputAmountString,
-    VerifyCetSignaturesRequest::GetFundInputAmountFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetFundInputAmountString,
+    VerifyCetAdaptorSignaturesRequest::SetFundInputAmountString,
+    VerifyCetAdaptorSignaturesRequest::GetFundInputAmountFieldType,
   };
   json_mapper.emplace("fundInputAmount", func_table);
   item_list.push_back("fundInputAmount");
   func_table = {
-    VerifyCetSignaturesRequest::GetVerifyRemoteString,
-    VerifyCetSignaturesRequest::SetVerifyRemoteString,
-    VerifyCetSignaturesRequest::GetVerifyRemoteFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetVerifyRemoteString,
+    VerifyCetAdaptorSignaturesRequest::SetVerifyRemoteString,
+    VerifyCetAdaptorSignaturesRequest::GetVerifyRemoteFieldType,
   };
   json_mapper.emplace("verifyRemote", func_table);
   item_list.push_back("verifyRemote");
 }
 
-void VerifyCetSignaturesRequest::ConvertFromStruct(
-    const VerifyCetSignaturesRequestStruct& data) {
+void VerifyCetAdaptorSignaturesRequest::ConvertFromStruct(
+    const VerifyCetAdaptorSignaturesRequestStruct& data) {
   cets_hex_.ConvertFromStruct(data.cets_hex);
-  signatures_.ConvertFromStruct(data.signatures);
+  adaptor_pairs_.ConvertFromStruct(data.adaptor_pairs);
+  messages_.ConvertFromStruct(data.messages);
   local_fund_pubkey_ = data.local_fund_pubkey;
   remote_fund_pubkey_ = data.remote_fund_pubkey;
+  oracle_pubkey_ = data.oracle_pubkey;
+  oracle_r_value_ = data.oracle_r_value;
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
   fund_input_amount_ = data.fund_input_amount;
@@ -3017,12 +2290,15 @@ void VerifyCetSignaturesRequest::ConvertFromStruct(
   ignore_items = data.ignore_items;
 }
 
-VerifyCetSignaturesRequestStruct VerifyCetSignaturesRequest::ConvertToStruct() const {  // NOLINT
-  VerifyCetSignaturesRequestStruct result;
+VerifyCetAdaptorSignaturesRequestStruct VerifyCetAdaptorSignaturesRequest::ConvertToStruct() const {  // NOLINT
+  VerifyCetAdaptorSignaturesRequestStruct result;
   result.cets_hex = cets_hex_.ConvertToStruct();
-  result.signatures = signatures_.ConvertToStruct();
+  result.adaptor_pairs = adaptor_pairs_.ConvertToStruct();
+  result.messages = messages_.ConvertToStruct();
   result.local_fund_pubkey = local_fund_pubkey_;
   result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.oracle_pubkey = oracle_pubkey_;
+  result.oracle_r_value = oracle_r_value_;
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
   result.fund_input_amount = fund_input_amount_;
@@ -3032,35 +2308,35 @@ VerifyCetSignaturesRequestStruct VerifyCetSignaturesRequest::ConvertToStruct() c
 }
 
 // ------------------------------------------------------------------------
-// VerifyCetSignaturesResponse
+// VerifyCetAdaptorSignaturesResponse
 // ------------------------------------------------------------------------
-cfd::core::JsonTableMap<VerifyCetSignaturesResponse>
-  VerifyCetSignaturesResponse::json_mapper;
-std::vector<std::string> VerifyCetSignaturesResponse::item_list;
+cfd::core::JsonTableMap<VerifyCetAdaptorSignaturesResponse>
+  VerifyCetAdaptorSignaturesResponse::json_mapper;
+std::vector<std::string> VerifyCetAdaptorSignaturesResponse::item_list;
 
-void VerifyCetSignaturesResponse::CollectFieldName() {
+void VerifyCetAdaptorSignaturesResponse::CollectFieldName() {
   if (!json_mapper.empty()) {
     return;
   }
-  cfd::core::CLASS_FUNCTION_TABLE<VerifyCetSignaturesResponse> func_table;  // NOLINT
+  cfd::core::CLASS_FUNCTION_TABLE<VerifyCetAdaptorSignaturesResponse> func_table;  // NOLINT
 
   func_table = {
-    VerifyCetSignaturesResponse::GetValidString,
-    VerifyCetSignaturesResponse::SetValidString,
-    VerifyCetSignaturesResponse::GetValidFieldType,
+    VerifyCetAdaptorSignaturesResponse::GetValidString,
+    VerifyCetAdaptorSignaturesResponse::SetValidString,
+    VerifyCetAdaptorSignaturesResponse::GetValidFieldType,
   };
   json_mapper.emplace("valid", func_table);
   item_list.push_back("valid");
 }
 
-void VerifyCetSignaturesResponse::ConvertFromStruct(
-    const VerifyCetSignaturesResponseStruct& data) {
+void VerifyCetAdaptorSignaturesResponse::ConvertFromStruct(
+    const VerifyCetAdaptorSignaturesResponseStruct& data) {
   valid_ = data.valid;
   ignore_items = data.ignore_items;
 }
 
-VerifyCetSignaturesResponseStruct VerifyCetSignaturesResponse::ConvertToStruct() const {  // NOLINT
-  VerifyCetSignaturesResponseStruct result;
+VerifyCetAdaptorSignaturesResponseStruct VerifyCetAdaptorSignaturesResponse::ConvertToStruct() const {  // NOLINT
+  VerifyCetAdaptorSignaturesResponseStruct result;
   result.valid = valid_;
   result.ignore_items = ignore_items;
   return result;
@@ -3176,139 +2452,6 @@ void VerifyFundTxSignatureResponse::ConvertFromStruct(
 
 VerifyFundTxSignatureResponseStruct VerifyFundTxSignatureResponse::ConvertToStruct() const {  // NOLINT
   VerifyFundTxSignatureResponseStruct result;
-  result.valid = valid_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// VerifyMutualClosingTxSignatureRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<VerifyMutualClosingTxSignatureRequest>
-  VerifyMutualClosingTxSignatureRequest::json_mapper;
-std::vector<std::string> VerifyMutualClosingTxSignatureRequest::item_list;
-
-void VerifyMutualClosingTxSignatureRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<VerifyMutualClosingTxSignatureRequest> func_table;  // NOLINT
-
-  func_table = {
-    VerifyMutualClosingTxSignatureRequest::GetMutualClosingHexString,
-    VerifyMutualClosingTxSignatureRequest::SetMutualClosingHexString,
-    VerifyMutualClosingTxSignatureRequest::GetMutualClosingHexFieldType,
-  };
-  json_mapper.emplace("mutualClosingHex", func_table);
-  item_list.push_back("mutualClosingHex");
-  func_table = {
-    VerifyMutualClosingTxSignatureRequest::GetSignatureString,
-    VerifyMutualClosingTxSignatureRequest::SetSignatureString,
-    VerifyMutualClosingTxSignatureRequest::GetSignatureFieldType,
-  };
-  json_mapper.emplace("signature", func_table);
-  item_list.push_back("signature");
-  func_table = {
-    VerifyMutualClosingTxSignatureRequest::GetLocalFundPubkeyString,
-    VerifyMutualClosingTxSignatureRequest::SetLocalFundPubkeyString,
-    VerifyMutualClosingTxSignatureRequest::GetLocalFundPubkeyFieldType,
-  };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
-  func_table = {
-    VerifyMutualClosingTxSignatureRequest::GetRemoteFundPubkeyString,
-    VerifyMutualClosingTxSignatureRequest::SetRemoteFundPubkeyString,
-    VerifyMutualClosingTxSignatureRequest::GetRemoteFundPubkeyFieldType,
-  };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
-  func_table = {
-    VerifyMutualClosingTxSignatureRequest::GetFundTxIdString,
-    VerifyMutualClosingTxSignatureRequest::SetFundTxIdString,
-    VerifyMutualClosingTxSignatureRequest::GetFundTxIdFieldType,
-  };
-  json_mapper.emplace("fundTxId", func_table);
-  item_list.push_back("fundTxId");
-  func_table = {
-    VerifyMutualClosingTxSignatureRequest::GetFundVoutString,
-    VerifyMutualClosingTxSignatureRequest::SetFundVoutString,
-    VerifyMutualClosingTxSignatureRequest::GetFundVoutFieldType,
-  };
-  json_mapper.emplace("fundVout", func_table);
-  item_list.push_back("fundVout");
-  func_table = {
-    VerifyMutualClosingTxSignatureRequest::GetFundInputAmountString,
-    VerifyMutualClosingTxSignatureRequest::SetFundInputAmountString,
-    VerifyMutualClosingTxSignatureRequest::GetFundInputAmountFieldType,
-  };
-  json_mapper.emplace("fundInputAmount", func_table);
-  item_list.push_back("fundInputAmount");
-  func_table = {
-    VerifyMutualClosingTxSignatureRequest::GetVerifyRemoteString,
-    VerifyMutualClosingTxSignatureRequest::SetVerifyRemoteString,
-    VerifyMutualClosingTxSignatureRequest::GetVerifyRemoteFieldType,
-  };
-  json_mapper.emplace("verifyRemote", func_table);
-  item_list.push_back("verifyRemote");
-}
-
-void VerifyMutualClosingTxSignatureRequest::ConvertFromStruct(
-    const VerifyMutualClosingTxSignatureRequestStruct& data) {
-  mutual_closing_hex_ = data.mutual_closing_hex;
-  signature_ = data.signature;
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
-  fund_tx_id_ = data.fund_tx_id;
-  fund_vout_ = data.fund_vout;
-  fund_input_amount_ = data.fund_input_amount;
-  verify_remote_ = data.verify_remote;
-  ignore_items = data.ignore_items;
-}
-
-VerifyMutualClosingTxSignatureRequestStruct VerifyMutualClosingTxSignatureRequest::ConvertToStruct() const {  // NOLINT
-  VerifyMutualClosingTxSignatureRequestStruct result;
-  result.mutual_closing_hex = mutual_closing_hex_;
-  result.signature = signature_;
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
-  result.fund_tx_id = fund_tx_id_;
-  result.fund_vout = fund_vout_;
-  result.fund_input_amount = fund_input_amount_;
-  result.verify_remote = verify_remote_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// VerifyMutualClosingTxSignatureResponse
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<VerifyMutualClosingTxSignatureResponse>
-  VerifyMutualClosingTxSignatureResponse::json_mapper;
-std::vector<std::string> VerifyMutualClosingTxSignatureResponse::item_list;
-
-void VerifyMutualClosingTxSignatureResponse::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<VerifyMutualClosingTxSignatureResponse> func_table;  // NOLINT
-
-  func_table = {
-    VerifyMutualClosingTxSignatureResponse::GetValidString,
-    VerifyMutualClosingTxSignatureResponse::SetValidString,
-    VerifyMutualClosingTxSignatureResponse::GetValidFieldType,
-  };
-  json_mapper.emplace("valid", func_table);
-  item_list.push_back("valid");
-}
-
-void VerifyMutualClosingTxSignatureResponse::ConvertFromStruct(
-    const VerifyMutualClosingTxSignatureResponseStruct& data) {
-  valid_ = data.valid;
-  ignore_items = data.ignore_items;
-}
-
-VerifyMutualClosingTxSignatureResponseStruct VerifyMutualClosingTxSignatureResponse::ConvertToStruct() const {  // NOLINT
-  VerifyMutualClosingTxSignatureResponseStruct result;
   result.valid = valid_;
   result.ignore_items = ignore_items;
   return result;

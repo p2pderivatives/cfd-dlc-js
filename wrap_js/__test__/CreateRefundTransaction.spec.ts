@@ -1,4 +1,5 @@
 import * as cfddlcjs from "../../index.js";
+import * as CfdUtils from "../cfd_utils";
 import TestHelper from "./TestHelper";
 import * as TestData from "./data/TestData";
 
@@ -7,10 +8,14 @@ const testCase = [
     "CreateRefundTransaction",
     cfddlcjs.CreateRefundTransaction,
     {
-      localFinalAddress: TestData.LocalFinalAddress,
-      remoteFinalAddress: TestData.RemoteFinalAddress,
-      localAmount: TestData.LocalCollateralAmount + 72,
-      remoteAmount: TestData.LocalCollateralAmount + 72,
+      localFinalScriptPubkey: CfdUtils.GetAddressScript(
+        TestData.LocalFinalAddress
+      ),
+      remoteFinalScriptPubkey: CfdUtils.GetAddressScript(
+        TestData.RemoteFinalAddress
+      ),
+      localAmount: TestData.LocalCollateralAmount,
+      remoteAmount: TestData.LocalCollateralAmount,
       fundTxId: TestData.FundTxId,
       fundVout: 0,
       lockTime: 100,

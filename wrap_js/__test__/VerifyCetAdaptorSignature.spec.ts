@@ -4,15 +4,19 @@ import * as TestData from "./data/TestData";
 
 const testCase = [
   TestHelper.createTestCase(
-    "VerifyCetSignature Local",
-    cfddlcjs.VerifyCetSignature,
+    "VerifyCetAdaptorSignature Local",
+    cfddlcjs.VerifyCetAdaptorSignature,
     {
       cetHex: TestData.CetHexUnsigned,
       localFundPubkey: TestData.LocalFundPubkey,
       remoteFundPubkey: TestData.RemoteFundPubkey,
       fundTxId: TestData.FundTxId,
       fundInputAmount: TestData.FundInputAmount,
-      signature: TestData.CetLocalRawSignature,
+      adaptorSignature: TestData.CetLocalAdaptorSignature,
+      adaptorProof: TestData.CetLocalAdaptorProof,
+      message: TestData.WinMessage,
+      oraclePubkey: TestData.OraclePubkey,
+      oracleRValue: TestData.OracleRPoint,
       verifyRemote: false,
     },
     {
@@ -21,14 +25,18 @@ const testCase = [
   ),
   TestHelper.createTestCase(
     "VerifyCetSignature Remote",
-    cfddlcjs.VerifyCetSignature,
+    cfddlcjs.VerifyCetAdaptorSignature,
     {
       cetHex: TestData.CetHexUnsigned,
       localFundPubkey: TestData.LocalFundPubkey,
       remoteFundPubkey: TestData.RemoteFundPubkey,
       fundTxId: TestData.FundTxId,
       fundInputAmount: TestData.FundInputAmount,
-      signature: TestData.CetRemoteRawSignature,
+      adaptorSignature: TestData.CetRemoteAdaptorSignature,
+      adaptorProof: TestData.CetRemoteAdaptorProof,
+      message: TestData.Messages[0],
+      oraclePubkey: TestData.OraclePubkey,
+      oracleRValue: TestData.OracleRPoint,
       verifyRemote: true,
     },
     {
@@ -37,15 +45,19 @@ const testCase = [
   ),
   TestHelper.createTestCase(
     "VerifyCetSignature Bad Signature",
-    cfddlcjs.VerifyCetSignature,
+    cfddlcjs.VerifyCetAdaptorSignature,
     {
       cetHex: TestData.CetHexUnsigned,
       localFundPubkey: TestData.LocalFundPubkey,
       remoteFundPubkey: TestData.RemoteFundPubkey,
       fundTxId: TestData.FundTxId,
       fundInputAmount: TestData.FundInputAmount,
-      signature:
-        "7b3460f1e7f5af3738467715f621774282eba8fa1752c859338c095dd952764d13b3ba4b2a3ec489715b2c10974c4395cb49e7ba7acae7f0125549a53f68679a",
+      adaptorSignature:
+        "007ae15ae89be929e7a022ec370e4edf9e7e8dca29e6ee8aa4a3b73596b8987caf798443cd661eeee26e5514e905479b5a3b352d3777ce9d8c8ecea130d50fe7ac",
+      adaptorProof: TestData.CetLocalAdaptorProof,
+      oraclePubkey: TestData.OraclePubkey,
+      oracleRValue: TestData.OracleRPoint,
+      message: TestData.Messages[0],
       verifyRemote: true,
     },
     {

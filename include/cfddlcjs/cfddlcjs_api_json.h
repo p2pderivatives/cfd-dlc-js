@@ -43,28 +43,15 @@ class CFD_DLC_JS_API_EXPORT JsonMappingApi {
   static std::string CreateRefundTransaction(
       const std::string &request_message);
 
-  static std::string CreateClosingTransaction(
-      const std::string &request_message);
-
-  static std::string CreateMutualClosingTransaction(
-      const std::string &request_message);
-
-  static std::string CreatePenaltyTransaction(
-      const std::string &request_message);
-
-  static std::string SignClosingTransaction(const std::string &request_message);
-
   static std::string CreateDlcTransactions(const std::string &request_message);
-  static std::string GetRawCetSignature(const std::string &request_message);
-  static std::string GetRawCetSignatures(const std::string &request_message);
-  static std::string AddSignaturesToCet(const std::string &request_message);
-  static std::string VerifyCetSignature(const std::string &request_message);
-  static std::string VerifyCetSignatures(const std::string &request_message);
-  static std::string GetRawMutualClosingTxSignature(
+  static std::string CreateCetAdaptorSignature(
       const std::string &request_message);
-  static std::string AddSignaturesToMutualClosingTx(
+  static std::string CreateCetAdaptorSignatures(
       const std::string &request_message);
-  static std::string VerifyMutualClosingTxSignature(
+  static std::string SignCet(const std::string &request_message);
+  static std::string VerifyCetAdaptorSignature(
+      const std::string &request_message);
+  static std::string VerifyCetAdaptorSignatures(
       const std::string &request_message);
   static std::string GetRawRefundTxSignature(
       const std::string &request_message);
@@ -72,8 +59,6 @@ class CFD_DLC_JS_API_EXPORT JsonMappingApi {
       const std::string &request_message);
   static std::string VerifyRefundTxSignature(
       const std::string &request_message);
-  static std::string SchnorrSign(const std::string &request_message);
-  static std::string GetSchnorrPublicNonce(const std::string &request_message);
 
  private:
   JsonMappingApi();
