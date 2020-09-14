@@ -24,6 +24,50 @@ using cfd::core::JsonVector;
 // @formatter:off
 
 // ------------------------------------------------------------------------
+// TxInRequest
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<TxInRequest>
+  TxInRequest::json_mapper;
+std::vector<std::string> TxInRequest::item_list;
+
+void TxInRequest::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<TxInRequest> func_table;  // NOLINT
+
+  func_table = {
+    TxInRequest::GetTxidString,
+    TxInRequest::SetTxidString,
+    TxInRequest::GetTxidFieldType,
+  };
+  json_mapper.emplace("txid", func_table);
+  item_list.push_back("txid");
+  func_table = {
+    TxInRequest::GetVoutString,
+    TxInRequest::SetVoutString,
+    TxInRequest::GetVoutFieldType,
+  };
+  json_mapper.emplace("vout", func_table);
+  item_list.push_back("vout");
+}
+
+void TxInRequest::ConvertFromStruct(
+    const TxInRequestStruct& data) {
+  txid_ = data.txid;
+  vout_ = data.vout;
+  ignore_items = data.ignore_items;
+}
+
+TxInRequestStruct TxInRequest::ConvertToStruct() const {  // NOLINT
+  TxInRequestStruct result;
+  result.txid = txid_;
+  result.vout = vout_;
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
 // AddSignatureToFundTransactionRequest
 // ------------------------------------------------------------------------
 cfd::core::JsonTableMap<AddSignatureToFundTransactionRequest>
@@ -807,50 +851,6 @@ PayoutRequestStruct PayoutRequest::ConvertToStruct() const {  // NOLINT
   result.local = local_;
   result.remote = remote_;
   result.messages = messages_.ConvertToStruct();
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// TxInRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<TxInRequest>
-  TxInRequest::json_mapper;
-std::vector<std::string> TxInRequest::item_list;
-
-void TxInRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<TxInRequest> func_table;  // NOLINT
-
-  func_table = {
-    TxInRequest::GetTxidString,
-    TxInRequest::SetTxidString,
-    TxInRequest::GetTxidFieldType,
-  };
-  json_mapper.emplace("txid", func_table);
-  item_list.push_back("txid");
-  func_table = {
-    TxInRequest::GetVoutString,
-    TxInRequest::SetVoutString,
-    TxInRequest::GetVoutFieldType,
-  };
-  json_mapper.emplace("vout", func_table);
-  item_list.push_back("vout");
-}
-
-void TxInRequest::ConvertFromStruct(
-    const TxInRequestStruct& data) {
-  txid_ = data.txid;
-  vout_ = data.vout;
-  ignore_items = data.ignore_items;
-}
-
-TxInRequestStruct TxInRequest::ConvertToStruct() const {  // NOLINT
-  TxInRequestStruct result;
-  result.txid = txid_;
-  result.vout = vout_;
   result.ignore_items = ignore_items;
   return result;
 }

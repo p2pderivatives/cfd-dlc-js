@@ -87,8 +87,8 @@
     "cmake_quiet_build": "cmake-js build -O wrap_js/build -i",
     "cmake_clean": "cmake-js clean -O wrap_js/build",
     "tslint_check": "tslint -c tslint.json 'wrap_js/**/*.ts' 'integration_tests/**/*.ts' --quiet",
-    "convert_json": "babel-node ./tools/generate_json_map_class.js --presets env",
-    "convert_json_debug": "babel-node ./tools/generate_json_map_class.js mode=debug --presets env"
+    "convert_json": "ts-node ./tools/generate_json_map_class.ts",
+    "convert_json_debug": "ts-node ./tools/generate_json_map_class.ts mode=debug"
   },
   "author": "Crypto Garage Inc.",
   "license": "MIT",
@@ -100,30 +100,28 @@
     "node-addon-api": "^1.6.3",
     "node-gyp": "^5.0.2",
     "npm-run-all": "^4.1.5",
-    "prebuild-install": "^5.3.4",
+    "prebuild-install": "^5.3.5",
     "run-script-os": "^1.0.5"
   },
   "devDependencies": {
     "@types/jest": "^25.1.4",
-    "@types/node": "^13.9.0",
+    "@types/node": "^13.13.18",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "cfd-js": "github:cryptogarageinc/cfd-js#v0.1.16",
     "cross-env": "^7.0.2",
     "eslint": "^6.5.1",
     "eslint-config-google": "^0.14.0",
     "jest": "^25.4.0",
     "jest-junit": "^10.0.0",
-    "prebuild": "^10.0.0",
-    "prettier": "^2.0.4",
+    "prebuild": "^10.0.1",
+    "prettier": "^2.1.1",
     "ts-jest": "^25.3.0",
     "ts-morph": "^6.0.2",
     "ts-node": "^8.6.2",
-    "tslint": "^6.1.1",
+    "tslint": "^6.1.3",
     "tslint-plugin-prettier": "^2.3.0",
-    "typescript": "^3.8.3",
-    "wallet-for-testing-js": "git+https://github.com/cryptogarageinc/wallet-for-testing-js#v0.1.1"
+    "typescript": "^3.9.7",
+    "wallet-for-testing-js": "git+https://github.com/cryptogarageinc/wallet-for-testing-js.git#v0.1.1"
   }
 }
