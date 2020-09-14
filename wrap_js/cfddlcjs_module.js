@@ -25,6 +25,50 @@ const parseBigInt = function (_, value) {
   return typeof value == "bigint" ? value.toString() : value;
 };
 
+
+/**
+ * cfd-dlc error class.
+ */
+class CfdDlcError extends Error {
+  /**
+   * constructor.
+   * @param {string} message error message.
+   * @param {*} errorInformation error information object.
+   * @param {Error} cause cause error.
+   */
+  constructor(message, errorInformation = undefined, cause = undefined) {
+    super((!errorInformation) ?
+      message : message + JSON.stringify(errorInformation));
+    this.name = 'CfdError';
+    this.errorInformation = errorInformation;
+    this.cause = cause;
+  }
+  // eslint-disable-next-line valid-jsdoc
+  /**
+   * error object string.
+   * @return message string.
+   */
+  toString() {
+    return `${this.name}: ${this.message}`;
+  }
+  // eslint-disable-next-line valid-jsdoc
+  /**
+   * get error information.
+   * @return InnerErrorResponse object.
+   */
+  getErrorInformation() {
+    return this.errorInformation;
+  }
+  // eslint-disable-next-line valid-jsdoc
+  /**
+   * get error cause.
+   * @return Error or undefined.
+   */
+  getCause() {
+    return this.cause;
+  }
+}
+
 const wrappedModule = {};
 
 Object.keys(cfddlcjs).forEach((key) => {
@@ -51,7 +95,7 @@ Object.keys(cfddlcjs).forEach((key) => {
     }
 
     if (retObj.hasOwnProperty("error")) {
-      throw new Error(JSON.stringify(retObj.error));
+      throw new CfdDlcError('', retObj.error);
     }
     return retObj;
   };
