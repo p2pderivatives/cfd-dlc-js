@@ -1,4 +1,4 @@
-// Copyright 2019 CryptoGarage
+// Copyright 2020 CryptoGarage
 /**
  * @file cfddlcjs_struct.h
  *
@@ -29,6 +29,18 @@ struct InnerErrorResponseStruct {
   uint32_t code = 0;         //!< code  // NOLINT
   std::string type = "";     //!< type  // NOLINT
   std::string message = "";  //!< message  // NOLINT
+  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
+};
+
+// ------------------------------------------------------------------------
+// TxInRequestStruct
+// ------------------------------------------------------------------------
+/**
+ * @brief TxInRequestStruct struct
+ */
+struct TxInRequestStruct {
+  std::string txid = "";  //!< txid  // NOLINT
+  uint32_t vout = 0;      //!< vout  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
 
@@ -215,18 +227,6 @@ struct PayoutRequestStruct {
   uint64_t local = 0;                 //!< local  // NOLINT
   uint64_t remote = 0;                //!< remote  // NOLINT
   std::vector<std::string> messages;  //!< messages  // NOLINT
-  std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
-};
-
-// ------------------------------------------------------------------------
-// TxInRequestStruct
-// ------------------------------------------------------------------------
-/**
- * @brief TxInRequestStruct struct
- */
-struct TxInRequestStruct {
-  std::string txid = "";  //!< txid  // NOLINT
-  uint32_t vout = 0;      //!< vout  // NOLINT
   std::set<std::string> ignore_items;   //!< using on JSON mapping convert.
 };
 
