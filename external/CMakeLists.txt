@@ -19,7 +19,7 @@ if(CFD_DLC_TARGET_URL)
 set(CFD_DLC_TARGET_REP  ${CFD_DLC_TARGET_URL})
 message(STATUS "[external project debug] cfddlc url=${CFD_DLC_TARGET_URL}")
 else()
-set(CFD_DLC_TARGET_REP  git@github.com:p2pderivatives/cfd-dlc.git)
+set(CFD_DLC_TARGET_REP  https://github.com/p2pderivatives/cfd-dlc)
 endif()
 
 set(TEMPLATE_PROJECT_NAME           cfd-dlc)
