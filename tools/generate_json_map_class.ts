@@ -214,9 +214,10 @@ class JsonMappingData {
         if (this.childList[key]) {
           const ret = this.childList[key].collectMapData(
               map, list, isRequest, parentInfo);
+          const comment = ret['comment'] || this.comment;
           return {
             type: ret['type'] + '[]',
-            comment: ret['comment'],
+            comment,
           };
         }
         break;
@@ -286,8 +287,8 @@ class JsonMappingData {
               if (newProp.param.type != prop.param.type) {
                 if ((newProp.param.type.indexOf('bigint') >= 0) &&
                     (prop.param.type.indexOf('bigint') >= 0)) {
-                  if (prop.param.type == 'bigint') {
-                    prop.param.type = newProp.param.type;
+                  if (newProp.param.type == 'bigint') {
+                    exist = true;
                   }
                   break;
                 }
