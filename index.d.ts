@@ -42,9 +42,9 @@ export interface CreateCetAdaptorSignatureRequest {
     localFundPubkey: string;
     remoteFundPubkey: string;
     oraclePubkey: string;
-    oracleRValue: string;
+    oracleRValues: string[];
     fundInputAmount: bigint | number;
-    message: string;
+    messages: string[];
 }
 
 export interface CreateCetAdaptorSignatureResponse {
@@ -61,9 +61,9 @@ export interface CreateCetAdaptorSignaturesRequest {
     localFundPubkey: string;
     remoteFundPubkey: string;
     oraclePubkey: string;
-    oracleRValue: string;
+    oracleRValues: string[];
     fundInputAmount: bigint | number;
-    messages: string[];
+    messagesList: Messages[];
 }
 
 export interface CreateCetAdaptorSignaturesResponse {
@@ -187,6 +187,10 @@ export interface InnerErrorResponse {
     message: string;
 }
 
+export interface Messages {
+    messages: string[];
+}
+
 export interface PayoutRequest {
     local: bigint | number;
     remote: bigint | number;
@@ -202,7 +206,7 @@ export interface SignCetRequest {
     remoteFundPubkey: string;
     fundInputAmount: bigint | number;
     adaptorSignature: string;
-    oracleSignature: string;
+    oracleSignatures: string[];
 }
 
 export interface SignCetResponse {
@@ -244,11 +248,11 @@ export interface VerifyCetAdaptorSignatureRequest {
     cetHex: string;
     adaptorSignature: string;
     adaptorProof: string;
-    message: string;
+    messages: string[];
     localFundPubkey: string;
     remoteFundPubkey: string;
     oraclePubkey: string;
-    oracleRValue: string;
+    oracleRValues: string[];
     fundTxId: string;
     fundVout?: number;
     fundInputAmount: bigint | number;
@@ -263,11 +267,11 @@ export interface VerifyCetAdaptorSignatureResponse {
 export interface VerifyCetAdaptorSignaturesRequest {
     cetsHex: string[];
     adaptorPairs: AdaptorPair[];
-    messages: string[];
+    messagesList: Messages[];
     localFundPubkey: string;
     remoteFundPubkey: string;
     oraclePubkey: string;
-    oracleRValue: string;
+    oracleRValues: string[];
     fundTxId: string;
     fundVout?: number;
     fundInputAmount: bigint | number;

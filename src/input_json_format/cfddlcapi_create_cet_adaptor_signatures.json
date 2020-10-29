@@ -12,10 +12,10 @@
     "localFundPubkey": "",
     "remoteFundPubkey": "",
     "oraclePubkey": "",
-    "oracleRValue": "",
+    "oracleRValues": [""],
     "fundInputAmount": 0,
     "fundInputAmount:type": "uint64_t",
-    "messages": [""]
+    "messagesList": [{ ":class": "Messages", "messages": [""] }]
   },
   "response": {
     ":class": "CreateCetAdaptorSignaturesResponse",

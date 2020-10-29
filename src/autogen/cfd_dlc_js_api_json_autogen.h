@@ -214,6 +214,145 @@ class AdaptorPair
 };
 
 // ------------------------------------------------------------------------
+// Messages
+// ------------------------------------------------------------------------
+/**
+ * @brief JSON-API (Messages) class
+ */
+class Messages
+  : public cfd::core::JsonClassBase<Messages> {
+ public:
+  Messages() {
+    CollectFieldName();
+  }
+  virtual ~Messages() {
+    // do nothing
+  }
+  /**
+   * @brief collect field name.
+   */
+  static void CollectFieldName();
+
+  /**
+   * @brief Get of messages.
+   * @return messages
+   */
+  JsonValueVector<std::string>& GetMessages() {  // NOLINT
+    return messages_;
+  }
+  /**
+   * @brief Set to messages.
+   * @param[in] messages    setting value.
+   */
+  void SetMessages(  // line separate
+      const JsonValueVector<std::string>& messages) {  // NOLINT
+    this->messages_ = messages;
+  }
+  /**
+   * @brief Get data type of messages.
+   * @return Data type of messages.
+   */
+  static std::string GetMessagesFieldType() {
+    return "JsonValueVector<std::string>";  // NOLINT
+  }
+  /**
+   * @brief Get json string of messages field.
+   * @param[in,out] obj     class object
+   * @return JSON string.
+   */
+  static std::string GetMessagesString(  // line separate
+      const Messages& obj) {  // NOLINT
+    // Do not set to const, because substitution of member variables
+    // may occur in pre / post processing inside Serialize
+    return obj.messages_.Serialize();
+  }
+  /**
+   * @brief Set json object to messages field.
+   * @param[in,out] obj     class object
+   * @param[in] json_value  JSON object
+   */
+  static void SetMessagesString(  // line separate
+      Messages& obj,  // NOLINT
+      const UniValue& json_value) {
+    obj.messages_.DeserializeUniValue(json_value);
+  }
+
+  /**
+   * @brief Set ignore item.
+   * @param[in] key   ignore target key name.
+   */
+  void SetIgnoreItem(const std::string& key) {
+    ignore_items.insert(key);
+  }
+
+  /**
+   * @brief Convert struct to class.
+   * @param[in] data   struct data.
+   */
+  void ConvertFromStruct(
+      const MessagesStruct& data);
+
+  /**
+   * @brief Convert class to struct.
+   * @return  struct data.
+   */
+  MessagesStruct ConvertToStruct()  const;
+
+ protected:
+  /**
+   * @brief definition type of Map table.
+   */
+  using MessagesMapTable =
+    cfd::core::JsonTableMap<Messages>;
+
+  /**
+   * @brief Get JSON mapping object.
+   * @return JSON mapping object.
+   * @see cfd::core::JsonClassBase::GetJsonMapper()
+   */
+  virtual const MessagesMapTable& GetJsonMapper() const {  // NOLINT
+    return json_mapper;
+  }
+  /**
+   * @brief Get item lists of JSON mapping.
+   * Fetch a list of target variable names in the order of definition.
+   * @return Item lists of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetJsonItemList()
+   */
+  virtual const std::vector<std::string>& GetJsonItemList() const {
+    return item_list;
+  }
+  /**
+   * @brief Get ignore item lists of JSON mapping.
+   * Ignore the target variable at Serialize.
+   * @return Item list of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetIgnoreItem()
+   */
+  virtual const std::set<std::string>& GetIgnoreItem() const {
+    return ignore_items;
+  }
+
+ private:
+ /**
+  * @brief JsonFunctionMap table
+  */
+  static MessagesMapTable json_mapper;
+  /**
+   * @brief field name list.
+   */
+  static std::vector<std::string> item_list;
+  /**
+   * @brief ignore item list.
+   */
+  std::set<std::string> ignore_items;
+
+  /**
+   * @brief JsonAPI(messages) value
+   */
+  JsonValueVector<std::string> messages_;  // NOLINT
+};
+
+// ------------------------------------------------------------------------
 // AddSignatureToFundTransactionRequest
 // ------------------------------------------------------------------------
 /**
@@ -2163,46 +2302,47 @@ class CreateCetAdaptorSignatureRequest
   }
 
   /**
-   * @brief Get of oracleRValue
-   * @return oracleRValue
+   * @brief Get of oracleRValues.
+   * @return oracleRValues
    */
-  std::string GetOracleRValue() const {
-    return oracle_r_value_;
+  JsonValueVector<std::string>& GetOracleRValues() {  // NOLINT
+    return oracle_r_values_;
   }
   /**
-   * @brief Set to oracleRValue
-   * @param[in] oracle_r_value    setting value.
+   * @brief Set to oracleRValues.
+   * @param[in] oracle_r_values    setting value.
    */
-  void SetOracleRValue(  // line separate
-    const std::string& oracle_r_value) {  // NOLINT
-    this->oracle_r_value_ = oracle_r_value;
+  void SetOracleRValues(  // line separate
+      const JsonValueVector<std::string>& oracle_r_values) {  // NOLINT
+    this->oracle_r_values_ = oracle_r_values;
   }
   /**
-   * @brief Get data type of oracleRValue
-   * @return Data type of oracleRValue
+   * @brief Get data type of oracleRValues.
+   * @return Data type of oracleRValues.
    */
-  static std::string GetOracleRValueFieldType() {
-    return "std::string";
+  static std::string GetOracleRValuesFieldType() {
+    return "JsonValueVector<std::string>";  // NOLINT
   }
   /**
-   * @brief Get json string of oracleRValue field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
+   * @brief Get json string of oracleRValues field.
+   * @param[in,out] obj     class object
+   * @return JSON string.
    */
-  static std::string GetOracleRValueString(  // line separate
+  static std::string GetOracleRValuesString(  // line separate
       const CreateCetAdaptorSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.oracle_r_value_);
+    // Do not set to const, because substitution of member variables
+    // may occur in pre / post processing inside Serialize
+    return obj.oracle_r_values_.Serialize();
   }
   /**
-   * @brief Set json object to oracleRValue field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
+   * @brief Set json object to oracleRValues field.
+   * @param[in,out] obj     class object
+   * @param[in] json_value  JSON object
    */
-  static void SetOracleRValueString(  // line separate
+  static void SetOracleRValuesString(  // line separate
       CreateCetAdaptorSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.oracle_r_value_, json_value);
+    obj.oracle_r_values_.DeserializeUniValue(json_value);
   }
 
   /**
@@ -2249,46 +2389,47 @@ class CreateCetAdaptorSignatureRequest
   }
 
   /**
-   * @brief Get of message
-   * @return message
+   * @brief Get of messages.
+   * @return messages
    */
-  std::string GetMessage() const {
-    return message_;
+  JsonValueVector<std::string>& GetMessages() {  // NOLINT
+    return messages_;
   }
   /**
-   * @brief Set to message
-   * @param[in] message    setting value.
+   * @brief Set to messages.
+   * @param[in] messages    setting value.
    */
-  void SetMessage(  // line separate
-    const std::string& message) {  // NOLINT
-    this->message_ = message;
+  void SetMessages(  // line separate
+      const JsonValueVector<std::string>& messages) {  // NOLINT
+    this->messages_ = messages;
   }
   /**
-   * @brief Get data type of message
-   * @return Data type of message
+   * @brief Get data type of messages.
+   * @return Data type of messages.
    */
-  static std::string GetMessageFieldType() {
-    return "std::string";
+  static std::string GetMessagesFieldType() {
+    return "JsonValueVector<std::string>";  // NOLINT
   }
   /**
-   * @brief Get json string of message field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
+   * @brief Get json string of messages field.
+   * @param[in,out] obj     class object
+   * @return JSON string.
    */
-  static std::string GetMessageString(  // line separate
+  static std::string GetMessagesString(  // line separate
       const CreateCetAdaptorSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.message_);
+    // Do not set to const, because substitution of member variables
+    // may occur in pre / post processing inside Serialize
+    return obj.messages_.Serialize();
   }
   /**
-   * @brief Set json object to message field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
+   * @brief Set json object to messages field.
+   * @param[in,out] obj     class object
+   * @param[in] json_value  JSON object
    */
-  static void SetMessageString(  // line separate
+  static void SetMessagesString(  // line separate
       CreateCetAdaptorSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.message_, json_value);
+    obj.messages_.DeserializeUniValue(json_value);
   }
 
   /**
@@ -2389,17 +2530,17 @@ class CreateCetAdaptorSignatureRequest
    */
   std::string oracle_pubkey_ = "";
   /**
-   * @brief JsonAPI(oracleRValue) value
+   * @brief JsonAPI(oracleRValues) value
    */
-  std::string oracle_r_value_ = "";
+  JsonValueVector<std::string> oracle_r_values_;  // NOLINT
   /**
    * @brief JsonAPI(fundInputAmount) value
    */
   uint64_t fund_input_amount_ = 0;
   /**
-   * @brief JsonAPI(message) value
+   * @brief JsonAPI(messages) value
    */
-  std::string message_ = "";
+  JsonValueVector<std::string> messages_;  // NOLINT
 };
 
 // ------------------------------------------------------------------------
@@ -2910,46 +3051,47 @@ class CreateCetAdaptorSignaturesRequest
   }
 
   /**
-   * @brief Get of oracleRValue
-   * @return oracleRValue
+   * @brief Get of oracleRValues.
+   * @return oracleRValues
    */
-  std::string GetOracleRValue() const {
-    return oracle_r_value_;
+  JsonValueVector<std::string>& GetOracleRValues() {  // NOLINT
+    return oracle_r_values_;
   }
   /**
-   * @brief Set to oracleRValue
-   * @param[in] oracle_r_value    setting value.
+   * @brief Set to oracleRValues.
+   * @param[in] oracle_r_values    setting value.
    */
-  void SetOracleRValue(  // line separate
-    const std::string& oracle_r_value) {  // NOLINT
-    this->oracle_r_value_ = oracle_r_value;
+  void SetOracleRValues(  // line separate
+      const JsonValueVector<std::string>& oracle_r_values) {  // NOLINT
+    this->oracle_r_values_ = oracle_r_values;
   }
   /**
-   * @brief Get data type of oracleRValue
-   * @return Data type of oracleRValue
+   * @brief Get data type of oracleRValues.
+   * @return Data type of oracleRValues.
    */
-  static std::string GetOracleRValueFieldType() {
-    return "std::string";
+  static std::string GetOracleRValuesFieldType() {
+    return "JsonValueVector<std::string>";  // NOLINT
   }
   /**
-   * @brief Get json string of oracleRValue field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
+   * @brief Get json string of oracleRValues field.
+   * @param[in,out] obj     class object
+   * @return JSON string.
    */
-  static std::string GetOracleRValueString(  // line separate
+  static std::string GetOracleRValuesString(  // line separate
       const CreateCetAdaptorSignaturesRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.oracle_r_value_);
+    // Do not set to const, because substitution of member variables
+    // may occur in pre / post processing inside Serialize
+    return obj.oracle_r_values_.Serialize();
   }
   /**
-   * @brief Set json object to oracleRValue field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
+   * @brief Set json object to oracleRValues field.
+   * @param[in,out] obj     class object
+   * @param[in] json_value  JSON object
    */
-  static void SetOracleRValueString(  // line separate
+  static void SetOracleRValuesString(  // line separate
       CreateCetAdaptorSignaturesRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.oracle_r_value_, json_value);
+    obj.oracle_r_values_.DeserializeUniValue(json_value);
   }
 
   /**
@@ -2996,47 +3138,47 @@ class CreateCetAdaptorSignaturesRequest
   }
 
   /**
-   * @brief Get of messages.
-   * @return messages
+   * @brief Get of messagesList.
+   * @return messagesList
    */
-  JsonValueVector<std::string>& GetMessages() {  // NOLINT
-    return messages_;
+  JsonObjectVector<Messages, MessagesStruct>& GetMessagesList() {  // NOLINT
+    return messages_list_;
   }
   /**
-   * @brief Set to messages.
-   * @param[in] messages    setting value.
+   * @brief Set to messagesList.
+   * @param[in] messages_list    setting value.
    */
-  void SetMessages(  // line separate
-      const JsonValueVector<std::string>& messages) {  // NOLINT
-    this->messages_ = messages;
+  void SetMessagesList(  // line separate
+      const JsonObjectVector<Messages, MessagesStruct>& messages_list) {  // NOLINT
+    this->messages_list_ = messages_list;
   }
   /**
-   * @brief Get data type of messages.
-   * @return Data type of messages.
+   * @brief Get data type of messagesList.
+   * @return Data type of messagesList.
    */
-  static std::string GetMessagesFieldType() {
-    return "JsonValueVector<std::string>";  // NOLINT
+  static std::string GetMessagesListFieldType() {
+    return "JsonObjectVector<Messages, MessagesStruct>";  // NOLINT
   }
   /**
-   * @brief Get json string of messages field.
+   * @brief Get json string of messagesList field.
    * @param[in,out] obj     class object
    * @return JSON string.
    */
-  static std::string GetMessagesString(  // line separate
+  static std::string GetMessagesListString(  // line separate
       const CreateCetAdaptorSignaturesRequest& obj) {  // NOLINT
     // Do not set to const, because substitution of member variables
     // may occur in pre / post processing inside Serialize
-    return obj.messages_.Serialize();
+    return obj.messages_list_.Serialize();
   }
   /**
-   * @brief Set json object to messages field.
+   * @brief Set json object to messagesList field.
    * @param[in,out] obj     class object
    * @param[in] json_value  JSON object
    */
-  static void SetMessagesString(  // line separate
+  static void SetMessagesListString(  // line separate
       CreateCetAdaptorSignaturesRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    obj.messages_.DeserializeUniValue(json_value);
+    obj.messages_list_.DeserializeUniValue(json_value);
   }
 
   /**
@@ -3137,17 +3279,17 @@ class CreateCetAdaptorSignaturesRequest
    */
   std::string oracle_pubkey_ = "";
   /**
-   * @brief JsonAPI(oracleRValue) value
+   * @brief JsonAPI(oracleRValues) value
    */
-  std::string oracle_r_value_ = "";
+  JsonValueVector<std::string> oracle_r_values_;  // NOLINT
   /**
    * @brief JsonAPI(fundInputAmount) value
    */
   uint64_t fund_input_amount_ = 0;
   /**
-   * @brief JsonAPI(messages) value
+   * @brief JsonAPI(messagesList) value
    */
-  JsonValueVector<std::string> messages_;  // NOLINT
+  JsonObjectVector<Messages, MessagesStruct> messages_list_;  // NOLINT
 };
 
 // ------------------------------------------------------------------------
@@ -8351,46 +8493,47 @@ class SignCetRequest
   }
 
   /**
-   * @brief Get of oracleSignature
-   * @return oracleSignature
+   * @brief Get of oracleSignatures.
+   * @return oracleSignatures
    */
-  std::string GetOracleSignature() const {
-    return oracle_signature_;
+  JsonValueVector<std::string>& GetOracleSignatures() {  // NOLINT
+    return oracle_signatures_;
   }
   /**
-   * @brief Set to oracleSignature
-   * @param[in] oracle_signature    setting value.
+   * @brief Set to oracleSignatures.
+   * @param[in] oracle_signatures    setting value.
    */
-  void SetOracleSignature(  // line separate
-    const std::string& oracle_signature) {  // NOLINT
-    this->oracle_signature_ = oracle_signature;
+  void SetOracleSignatures(  // line separate
+      const JsonValueVector<std::string>& oracle_signatures) {  // NOLINT
+    this->oracle_signatures_ = oracle_signatures;
   }
   /**
-   * @brief Get data type of oracleSignature
-   * @return Data type of oracleSignature
+   * @brief Get data type of oracleSignatures.
+   * @return Data type of oracleSignatures.
    */
-  static std::string GetOracleSignatureFieldType() {
-    return "std::string";
+  static std::string GetOracleSignaturesFieldType() {
+    return "JsonValueVector<std::string>";  // NOLINT
   }
   /**
-   * @brief Get json string of oracleSignature field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
+   * @brief Get json string of oracleSignatures field.
+   * @param[in,out] obj     class object
+   * @return JSON string.
    */
-  static std::string GetOracleSignatureString(  // line separate
+  static std::string GetOracleSignaturesString(  // line separate
       const SignCetRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.oracle_signature_);
+    // Do not set to const, because substitution of member variables
+    // may occur in pre / post processing inside Serialize
+    return obj.oracle_signatures_.Serialize();
   }
   /**
-   * @brief Set json object to oracleSignature field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
+   * @brief Set json object to oracleSignatures field.
+   * @param[in,out] obj     class object
+   * @param[in] json_value  JSON object
    */
-  static void SetOracleSignatureString(  // line separate
+  static void SetOracleSignaturesString(  // line separate
       SignCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.oracle_signature_, json_value);
+    obj.oracle_signatures_.DeserializeUniValue(json_value);
   }
 
   /**
@@ -8495,9 +8638,9 @@ class SignCetRequest
    */
   std::string adaptor_signature_ = "";
   /**
-   * @brief JsonAPI(oracleSignature) value
+   * @brief JsonAPI(oracleSignatures) value
    */
-  std::string oracle_signature_ = "";
+  JsonValueVector<std::string> oracle_signatures_;  // NOLINT
 };
 
 // ------------------------------------------------------------------------
@@ -9252,46 +9395,47 @@ class VerifyCetAdaptorSignatureRequest
   }
 
   /**
-   * @brief Get of message
-   * @return message
+   * @brief Get of messages.
+   * @return messages
    */
-  std::string GetMessage() const {
-    return message_;
+  JsonValueVector<std::string>& GetMessages() {  // NOLINT
+    return messages_;
   }
   /**
-   * @brief Set to message
-   * @param[in] message    setting value.
+   * @brief Set to messages.
+   * @param[in] messages    setting value.
    */
-  void SetMessage(  // line separate
-    const std::string& message) {  // NOLINT
-    this->message_ = message;
+  void SetMessages(  // line separate
+      const JsonValueVector<std::string>& messages) {  // NOLINT
+    this->messages_ = messages;
   }
   /**
-   * @brief Get data type of message
-   * @return Data type of message
+   * @brief Get data type of messages.
+   * @return Data type of messages.
    */
-  static std::string GetMessageFieldType() {
-    return "std::string";
+  static std::string GetMessagesFieldType() {
+    return "JsonValueVector<std::string>";  // NOLINT
   }
   /**
-   * @brief Get json string of message field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
+   * @brief Get json string of messages field.
+   * @param[in,out] obj     class object
+   * @return JSON string.
    */
-  static std::string GetMessageString(  // line separate
+  static std::string GetMessagesString(  // line separate
       const VerifyCetAdaptorSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.message_);
+    // Do not set to const, because substitution of member variables
+    // may occur in pre / post processing inside Serialize
+    return obj.messages_.Serialize();
   }
   /**
-   * @brief Set json object to message field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
+   * @brief Set json object to messages field.
+   * @param[in,out] obj     class object
+   * @param[in] json_value  JSON object
    */
-  static void SetMessageString(  // line separate
+  static void SetMessagesString(  // line separate
       VerifyCetAdaptorSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.message_, json_value);
+    obj.messages_.DeserializeUniValue(json_value);
   }
 
   /**
@@ -9424,46 +9568,47 @@ class VerifyCetAdaptorSignatureRequest
   }
 
   /**
-   * @brief Get of oracleRValue
-   * @return oracleRValue
+   * @brief Get of oracleRValues.
+   * @return oracleRValues
    */
-  std::string GetOracleRValue() const {
-    return oracle_r_value_;
+  JsonValueVector<std::string>& GetOracleRValues() {  // NOLINT
+    return oracle_r_values_;
   }
   /**
-   * @brief Set to oracleRValue
-   * @param[in] oracle_r_value    setting value.
+   * @brief Set to oracleRValues.
+   * @param[in] oracle_r_values    setting value.
    */
-  void SetOracleRValue(  // line separate
-    const std::string& oracle_r_value) {  // NOLINT
-    this->oracle_r_value_ = oracle_r_value;
+  void SetOracleRValues(  // line separate
+      const JsonValueVector<std::string>& oracle_r_values) {  // NOLINT
+    this->oracle_r_values_ = oracle_r_values;
   }
   /**
-   * @brief Get data type of oracleRValue
-   * @return Data type of oracleRValue
+   * @brief Get data type of oracleRValues.
+   * @return Data type of oracleRValues.
    */
-  static std::string GetOracleRValueFieldType() {
-    return "std::string";
+  static std::string GetOracleRValuesFieldType() {
+    return "JsonValueVector<std::string>";  // NOLINT
   }
   /**
-   * @brief Get json string of oracleRValue field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
+   * @brief Get json string of oracleRValues field.
+   * @param[in,out] obj     class object
+   * @return JSON string.
    */
-  static std::string GetOracleRValueString(  // line separate
+  static std::string GetOracleRValuesString(  // line separate
       const VerifyCetAdaptorSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.oracle_r_value_);
+    // Do not set to const, because substitution of member variables
+    // may occur in pre / post processing inside Serialize
+    return obj.oracle_r_values_.Serialize();
   }
   /**
-   * @brief Set json object to oracleRValue field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
+   * @brief Set json object to oracleRValues field.
+   * @param[in,out] obj     class object
+   * @param[in] json_value  JSON object
    */
-  static void SetOracleRValueString(  // line separate
+  static void SetOracleRValuesString(  // line separate
       VerifyCetAdaptorSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.oracle_r_value_, json_value);
+    obj.oracle_r_values_.DeserializeUniValue(json_value);
   }
 
   /**
@@ -9720,9 +9865,9 @@ class VerifyCetAdaptorSignatureRequest
    */
   std::string adaptor_proof_ = "";
   /**
-   * @brief JsonAPI(message) value
+   * @brief JsonAPI(messages) value
    */
-  std::string message_ = "";
+  JsonValueVector<std::string> messages_;  // NOLINT
   /**
    * @brief JsonAPI(localFundPubkey) value
    */
@@ -9736,9 +9881,9 @@ class VerifyCetAdaptorSignatureRequest
    */
   std::string oracle_pubkey_ = "";
   /**
-   * @brief JsonAPI(oracleRValue) value
+   * @brief JsonAPI(oracleRValues) value
    */
-  std::string oracle_r_value_ = "";
+  JsonValueVector<std::string> oracle_r_values_;  // NOLINT
   /**
    * @brief JsonAPI(fundTxId) value
    */
@@ -10004,47 +10149,47 @@ class VerifyCetAdaptorSignaturesRequest
   }
 
   /**
-   * @brief Get of messages.
-   * @return messages
+   * @brief Get of messagesList.
+   * @return messagesList
    */
-  JsonValueVector<std::string>& GetMessages() {  // NOLINT
-    return messages_;
+  JsonObjectVector<Messages, MessagesStruct>& GetMessagesList() {  // NOLINT
+    return messages_list_;
   }
   /**
-   * @brief Set to messages.
-   * @param[in] messages    setting value.
+   * @brief Set to messagesList.
+   * @param[in] messages_list    setting value.
    */
-  void SetMessages(  // line separate
-      const JsonValueVector<std::string>& messages) {  // NOLINT
-    this->messages_ = messages;
+  void SetMessagesList(  // line separate
+      const JsonObjectVector<Messages, MessagesStruct>& messages_list) {  // NOLINT
+    this->messages_list_ = messages_list;
   }
   /**
-   * @brief Get data type of messages.
-   * @return Data type of messages.
+   * @brief Get data type of messagesList.
+   * @return Data type of messagesList.
    */
-  static std::string GetMessagesFieldType() {
-    return "JsonValueVector<std::string>";  // NOLINT
+  static std::string GetMessagesListFieldType() {
+    return "JsonObjectVector<Messages, MessagesStruct>";  // NOLINT
   }
   /**
-   * @brief Get json string of messages field.
+   * @brief Get json string of messagesList field.
    * @param[in,out] obj     class object
    * @return JSON string.
    */
-  static std::string GetMessagesString(  // line separate
+  static std::string GetMessagesListString(  // line separate
       const VerifyCetAdaptorSignaturesRequest& obj) {  // NOLINT
     // Do not set to const, because substitution of member variables
     // may occur in pre / post processing inside Serialize
-    return obj.messages_.Serialize();
+    return obj.messages_list_.Serialize();
   }
   /**
-   * @brief Set json object to messages field.
+   * @brief Set json object to messagesList field.
    * @param[in,out] obj     class object
    * @param[in] json_value  JSON object
    */
-  static void SetMessagesString(  // line separate
+  static void SetMessagesListString(  // line separate
       VerifyCetAdaptorSignaturesRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    obj.messages_.DeserializeUniValue(json_value);
+    obj.messages_list_.DeserializeUniValue(json_value);
   }
 
   /**
@@ -10177,46 +10322,47 @@ class VerifyCetAdaptorSignaturesRequest
   }
 
   /**
-   * @brief Get of oracleRValue
-   * @return oracleRValue
+   * @brief Get of oracleRValues.
+   * @return oracleRValues
    */
-  std::string GetOracleRValue() const {
-    return oracle_r_value_;
+  JsonValueVector<std::string>& GetOracleRValues() {  // NOLINT
+    return oracle_r_values_;
   }
   /**
-   * @brief Set to oracleRValue
-   * @param[in] oracle_r_value    setting value.
+   * @brief Set to oracleRValues.
+   * @param[in] oracle_r_values    setting value.
    */
-  void SetOracleRValue(  // line separate
-    const std::string& oracle_r_value) {  // NOLINT
-    this->oracle_r_value_ = oracle_r_value;
+  void SetOracleRValues(  // line separate
+      const JsonValueVector<std::string>& oracle_r_values) {  // NOLINT
+    this->oracle_r_values_ = oracle_r_values;
   }
   /**
-   * @brief Get data type of oracleRValue
-   * @return Data type of oracleRValue
+   * @brief Get data type of oracleRValues.
+   * @return Data type of oracleRValues.
    */
-  static std::string GetOracleRValueFieldType() {
-    return "std::string";
+  static std::string GetOracleRValuesFieldType() {
+    return "JsonValueVector<std::string>";  // NOLINT
   }
   /**
-   * @brief Get json string of oracleRValue field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
+   * @brief Get json string of oracleRValues field.
+   * @param[in,out] obj     class object
+   * @return JSON string.
    */
-  static std::string GetOracleRValueString(  // line separate
+  static std::string GetOracleRValuesString(  // line separate
       const VerifyCetAdaptorSignaturesRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.oracle_r_value_);
+    // Do not set to const, because substitution of member variables
+    // may occur in pre / post processing inside Serialize
+    return obj.oracle_r_values_.Serialize();
   }
   /**
-   * @brief Set json object to oracleRValue field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
+   * @brief Set json object to oracleRValues field.
+   * @param[in,out] obj     class object
+   * @param[in] json_value  JSON object
    */
-  static void SetOracleRValueString(  // line separate
+  static void SetOracleRValuesString(  // line separate
       VerifyCetAdaptorSignaturesRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.oracle_r_value_, json_value);
+    obj.oracle_r_values_.DeserializeUniValue(json_value);
   }
 
   /**
@@ -10469,9 +10615,9 @@ class VerifyCetAdaptorSignaturesRequest
    */
   JsonObjectVector<AdaptorPair, AdaptorPairStruct> adaptor_pairs_;  // NOLINT
   /**
-   * @brief JsonAPI(messages) value
+   * @brief JsonAPI(messagesList) value
    */
-  JsonValueVector<std::string> messages_;  // NOLINT
+  JsonObjectVector<Messages, MessagesStruct> messages_list_;  // NOLINT
   /**
    * @brief JsonAPI(localFundPubkey) value
    */
@@ -10485,9 +10631,9 @@ class VerifyCetAdaptorSignaturesRequest
    */
   std::string oracle_pubkey_ = "";
   /**
-   * @brief JsonAPI(oracleRValue) value
+   * @brief JsonAPI(oracleRValues) value
    */
-  std::string oracle_r_value_ = "";
+  JsonValueVector<std::string> oracle_r_values_;  // NOLINT
   /**
    * @brief JsonAPI(fundTxId) value
    */

@@ -16,6 +16,7 @@
 
 #include "cfdcore/cfdcore_hdwallet.h"
 #include "cfdcore/cfdcore_key.h"
+#include "cfdcore/cfdcore_schnorrsig.h"
 #include "cfddlcjs/cfddlcjs_struct.h"
 
 namespace cfd {
@@ -23,10 +24,13 @@ namespace dlc {
 namespace js {
 namespace api {
 
+using cfd::core::ByteData256;
 using cfd::core::ExtPrivkey;
 using cfd::core::ExtPubkey;
 using cfd::core::Privkey;
 using cfd::core::Pubkey;
+using cfd::core::SchnorrPubkey;
+using cfd::core::SchnorrSignature;
 
 class DlcTransactionsApi {
  public:
@@ -66,6 +70,13 @@ class DlcTransactionsApi {
  private:
   DlcTransactionsApi();
   static std::vector<Pubkey> ParsePubkeys(std::vector<std::string> input);
+  static std::vector<SchnorrPubkey> ParseSchnorrPubkeys(
+      std::vector<std::string> input);
+  static std::vector<SchnorrSignature> ParseSchnorrSignatures(
+      std::vector<std::string> input);
+  static std::vector<ByteData256> HashMessages(std::vector<std::string> input);
+  static std::vector<std::vector<ByteData256>> HashMessages(
+      std::vector<MessagesStruct> input);
 };
 
 }  // namespace api
