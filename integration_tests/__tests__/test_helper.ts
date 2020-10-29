@@ -9,16 +9,18 @@ export class DlcTestHelper {
   readonly bobWallet;
   readonly oracleKey =
     "85e9cf11bd33a4ccc6abf6c5078e2a7e44aff9c456934976cb86cffe3e1e13dc";
-  readonly oracleKValue =
-    "8864177b5ec22563e9b325c11726a270d259b7adc16a2051d9d9256eede64c79";
+  readonly oracleKValues = [
+    "8864177b5ec22563e9b325c11726a270d259b7adc16a2051d9d9256eede64c79",
+    "9e1bc6dc95ce931903cc2df67640cf6cca94ddd96aab0b847780d644e46cfae3",
+  ];
   readonly oraclePubkey = CfdUtils.GetSchnorrPubkeyFromPrivkey(this.oracleKey);
-  readonly oracleRValue = CfdUtils.GetSchnorrPubkeyFromPrivkey(
-    this.oracleKValue
+  readonly oracleRValues = this.oracleKValues.map((x) =>
+    CfdUtils.GetSchnorrPubkeyFromPrivkey(x)
   );
 
-  readonly winMessage = "WIN";
-  readonly loseMessage = "LOSE";
-  readonly messages = [this.winMessage, this.loseMessage];
+  readonly winMessages = ["1", "0"];
+  readonly loseMessages = ["0", "1"];
+  readonly messages = [this.winMessages, this.loseMessages];
   readonly winAmount = 9990000;
   readonly loseAmount = 10000;
   readonly collateral = (this.winAmount + this.loseAmount) / 2;

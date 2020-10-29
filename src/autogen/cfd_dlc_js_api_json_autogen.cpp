@@ -68,6 +68,41 @@ AdaptorPairStruct AdaptorPair::ConvertToStruct() const {  // NOLINT
 }
 
 // ------------------------------------------------------------------------
+// Messages
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<Messages>
+  Messages::json_mapper;
+std::vector<std::string> Messages::item_list;
+
+void Messages::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<Messages> func_table;  // NOLINT
+
+  func_table = {
+    Messages::GetMessagesString,
+    Messages::SetMessagesString,
+    Messages::GetMessagesFieldType,
+  };
+  json_mapper.emplace("messages", func_table);
+  item_list.push_back("messages");
+}
+
+void Messages::ConvertFromStruct(
+    const MessagesStruct& data) {
+  messages_.ConvertFromStruct(data.messages);
+  ignore_items = data.ignore_items;
+}
+
+MessagesStruct Messages::ConvertToStruct() const {  // NOLINT
+  MessagesStruct result;
+  result.messages = messages_.ConvertToStruct();
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
 // AddSignatureToFundTransactionRequest
 // ------------------------------------------------------------------------
 cfd::core::JsonTableMap<AddSignatureToFundTransactionRequest>
@@ -493,12 +528,12 @@ void CreateCetAdaptorSignatureRequest::CollectFieldName() {
   json_mapper.emplace("oraclePubkey", func_table);
   item_list.push_back("oraclePubkey");
   func_table = {
-    CreateCetAdaptorSignatureRequest::GetOracleRValueString,
-    CreateCetAdaptorSignatureRequest::SetOracleRValueString,
-    CreateCetAdaptorSignatureRequest::GetOracleRValueFieldType,
+    CreateCetAdaptorSignatureRequest::GetOracleRValuesString,
+    CreateCetAdaptorSignatureRequest::SetOracleRValuesString,
+    CreateCetAdaptorSignatureRequest::GetOracleRValuesFieldType,
   };
-  json_mapper.emplace("oracleRValue", func_table);
-  item_list.push_back("oracleRValue");
+  json_mapper.emplace("oracleRValues", func_table);
+  item_list.push_back("oracleRValues");
   func_table = {
     CreateCetAdaptorSignatureRequest::GetFundInputAmountString,
     CreateCetAdaptorSignatureRequest::SetFundInputAmountString,
@@ -507,12 +542,12 @@ void CreateCetAdaptorSignatureRequest::CollectFieldName() {
   json_mapper.emplace("fundInputAmount", func_table);
   item_list.push_back("fundInputAmount");
   func_table = {
-    CreateCetAdaptorSignatureRequest::GetMessageString,
-    CreateCetAdaptorSignatureRequest::SetMessageString,
-    CreateCetAdaptorSignatureRequest::GetMessageFieldType,
+    CreateCetAdaptorSignatureRequest::GetMessagesString,
+    CreateCetAdaptorSignatureRequest::SetMessagesString,
+    CreateCetAdaptorSignatureRequest::GetMessagesFieldType,
   };
-  json_mapper.emplace("message", func_table);
-  item_list.push_back("message");
+  json_mapper.emplace("messages", func_table);
+  item_list.push_back("messages");
 }
 
 void CreateCetAdaptorSignatureRequest::ConvertFromStruct(
@@ -524,9 +559,9 @@ void CreateCetAdaptorSignatureRequest::ConvertFromStruct(
   local_fund_pubkey_ = data.local_fund_pubkey;
   remote_fund_pubkey_ = data.remote_fund_pubkey;
   oracle_pubkey_ = data.oracle_pubkey;
-  oracle_r_value_ = data.oracle_r_value;
+  oracle_r_values_.ConvertFromStruct(data.oracle_r_values);
   fund_input_amount_ = data.fund_input_amount;
-  message_ = data.message;
+  messages_.ConvertFromStruct(data.messages);
   ignore_items = data.ignore_items;
 }
 
@@ -539,9 +574,9 @@ CreateCetAdaptorSignatureRequestStruct CreateCetAdaptorSignatureRequest::Convert
   result.local_fund_pubkey = local_fund_pubkey_;
   result.remote_fund_pubkey = remote_fund_pubkey_;
   result.oracle_pubkey = oracle_pubkey_;
-  result.oracle_r_value = oracle_r_value_;
+  result.oracle_r_values = oracle_r_values_.ConvertToStruct();
   result.fund_input_amount = fund_input_amount_;
-  result.message = message_;
+  result.messages = messages_.ConvertToStruct();
   result.ignore_items = ignore_items;
   return result;
 }
@@ -653,12 +688,12 @@ void CreateCetAdaptorSignaturesRequest::CollectFieldName() {
   json_mapper.emplace("oraclePubkey", func_table);
   item_list.push_back("oraclePubkey");
   func_table = {
-    CreateCetAdaptorSignaturesRequest::GetOracleRValueString,
-    CreateCetAdaptorSignaturesRequest::SetOracleRValueString,
-    CreateCetAdaptorSignaturesRequest::GetOracleRValueFieldType,
+    CreateCetAdaptorSignaturesRequest::GetOracleRValuesString,
+    CreateCetAdaptorSignaturesRequest::SetOracleRValuesString,
+    CreateCetAdaptorSignaturesRequest::GetOracleRValuesFieldType,
   };
-  json_mapper.emplace("oracleRValue", func_table);
-  item_list.push_back("oracleRValue");
+  json_mapper.emplace("oracleRValues", func_table);
+  item_list.push_back("oracleRValues");
   func_table = {
     CreateCetAdaptorSignaturesRequest::GetFundInputAmountString,
     CreateCetAdaptorSignaturesRequest::SetFundInputAmountString,
@@ -667,12 +702,12 @@ void CreateCetAdaptorSignaturesRequest::CollectFieldName() {
   json_mapper.emplace("fundInputAmount", func_table);
   item_list.push_back("fundInputAmount");
   func_table = {
-    CreateCetAdaptorSignaturesRequest::GetMessagesString,
-    CreateCetAdaptorSignaturesRequest::SetMessagesString,
-    CreateCetAdaptorSignaturesRequest::GetMessagesFieldType,
+    CreateCetAdaptorSignaturesRequest::GetMessagesListString,
+    CreateCetAdaptorSignaturesRequest::SetMessagesListString,
+    CreateCetAdaptorSignaturesRequest::GetMessagesListFieldType,
   };
-  json_mapper.emplace("messages", func_table);
-  item_list.push_back("messages");
+  json_mapper.emplace("messagesList", func_table);
+  item_list.push_back("messagesList");
 }
 
 void CreateCetAdaptorSignaturesRequest::ConvertFromStruct(
@@ -684,9 +719,9 @@ void CreateCetAdaptorSignaturesRequest::ConvertFromStruct(
   local_fund_pubkey_ = data.local_fund_pubkey;
   remote_fund_pubkey_ = data.remote_fund_pubkey;
   oracle_pubkey_ = data.oracle_pubkey;
-  oracle_r_value_ = data.oracle_r_value;
+  oracle_r_values_.ConvertFromStruct(data.oracle_r_values);
   fund_input_amount_ = data.fund_input_amount;
-  messages_.ConvertFromStruct(data.messages);
+  messages_list_.ConvertFromStruct(data.messages_list);
   ignore_items = data.ignore_items;
 }
 
@@ -699,9 +734,9 @@ CreateCetAdaptorSignaturesRequestStruct CreateCetAdaptorSignaturesRequest::Conve
   result.local_fund_pubkey = local_fund_pubkey_;
   result.remote_fund_pubkey = remote_fund_pubkey_;
   result.oracle_pubkey = oracle_pubkey_;
-  result.oracle_r_value = oracle_r_value_;
+  result.oracle_r_values = oracle_r_values_.ConvertToStruct();
   result.fund_input_amount = fund_input_amount_;
-  result.messages = messages_.ConvertToStruct();
+  result.messages_list = messages_list_.ConvertToStruct();
   result.ignore_items = ignore_items;
   return result;
 }
@@ -1835,12 +1870,12 @@ void SignCetRequest::CollectFieldName() {
   json_mapper.emplace("adaptorSignature", func_table);
   item_list.push_back("adaptorSignature");
   func_table = {
-    SignCetRequest::GetOracleSignatureString,
-    SignCetRequest::SetOracleSignatureString,
-    SignCetRequest::GetOracleSignatureFieldType,
+    SignCetRequest::GetOracleSignaturesString,
+    SignCetRequest::SetOracleSignaturesString,
+    SignCetRequest::GetOracleSignaturesFieldType,
   };
-  json_mapper.emplace("oracleSignature", func_table);
-  item_list.push_back("oracleSignature");
+  json_mapper.emplace("oracleSignatures", func_table);
+  item_list.push_back("oracleSignatures");
 }
 
 void SignCetRequest::ConvertFromStruct(
@@ -1853,7 +1888,7 @@ void SignCetRequest::ConvertFromStruct(
   remote_fund_pubkey_ = data.remote_fund_pubkey;
   fund_input_amount_ = data.fund_input_amount;
   adaptor_signature_ = data.adaptor_signature;
-  oracle_signature_ = data.oracle_signature;
+  oracle_signatures_.ConvertFromStruct(data.oracle_signatures);
   ignore_items = data.ignore_items;
 }
 
@@ -1867,7 +1902,7 @@ SignCetRequestStruct SignCetRequest::ConvertToStruct() const {  // NOLINT
   result.remote_fund_pubkey = remote_fund_pubkey_;
   result.fund_input_amount = fund_input_amount_;
   result.adaptor_signature = adaptor_signature_;
-  result.oracle_signature = oracle_signature_;
+  result.oracle_signatures = oracle_signatures_.ConvertToStruct();
   result.ignore_items = ignore_items;
   return result;
 }
@@ -2048,12 +2083,12 @@ void VerifyCetAdaptorSignatureRequest::CollectFieldName() {
   json_mapper.emplace("adaptorProof", func_table);
   item_list.push_back("adaptorProof");
   func_table = {
-    VerifyCetAdaptorSignatureRequest::GetMessageString,
-    VerifyCetAdaptorSignatureRequest::SetMessageString,
-    VerifyCetAdaptorSignatureRequest::GetMessageFieldType,
+    VerifyCetAdaptorSignatureRequest::GetMessagesString,
+    VerifyCetAdaptorSignatureRequest::SetMessagesString,
+    VerifyCetAdaptorSignatureRequest::GetMessagesFieldType,
   };
-  json_mapper.emplace("message", func_table);
-  item_list.push_back("message");
+  json_mapper.emplace("messages", func_table);
+  item_list.push_back("messages");
   func_table = {
     VerifyCetAdaptorSignatureRequest::GetLocalFundPubkeyString,
     VerifyCetAdaptorSignatureRequest::SetLocalFundPubkeyString,
@@ -2076,12 +2111,12 @@ void VerifyCetAdaptorSignatureRequest::CollectFieldName() {
   json_mapper.emplace("oraclePubkey", func_table);
   item_list.push_back("oraclePubkey");
   func_table = {
-    VerifyCetAdaptorSignatureRequest::GetOracleRValueString,
-    VerifyCetAdaptorSignatureRequest::SetOracleRValueString,
-    VerifyCetAdaptorSignatureRequest::GetOracleRValueFieldType,
+    VerifyCetAdaptorSignatureRequest::GetOracleRValuesString,
+    VerifyCetAdaptorSignatureRequest::SetOracleRValuesString,
+    VerifyCetAdaptorSignatureRequest::GetOracleRValuesFieldType,
   };
-  json_mapper.emplace("oracleRValue", func_table);
-  item_list.push_back("oracleRValue");
+  json_mapper.emplace("oracleRValues", func_table);
+  item_list.push_back("oracleRValues");
   func_table = {
     VerifyCetAdaptorSignatureRequest::GetFundTxIdString,
     VerifyCetAdaptorSignatureRequest::SetFundTxIdString,
@@ -2117,11 +2152,11 @@ void VerifyCetAdaptorSignatureRequest::ConvertFromStruct(
   cet_hex_ = data.cet_hex;
   adaptor_signature_ = data.adaptor_signature;
   adaptor_proof_ = data.adaptor_proof;
-  message_ = data.message;
+  messages_.ConvertFromStruct(data.messages);
   local_fund_pubkey_ = data.local_fund_pubkey;
   remote_fund_pubkey_ = data.remote_fund_pubkey;
   oracle_pubkey_ = data.oracle_pubkey;
-  oracle_r_value_ = data.oracle_r_value;
+  oracle_r_values_.ConvertFromStruct(data.oracle_r_values);
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
   fund_input_amount_ = data.fund_input_amount;
@@ -2134,11 +2169,11 @@ VerifyCetAdaptorSignatureRequestStruct VerifyCetAdaptorSignatureRequest::Convert
   result.cet_hex = cet_hex_;
   result.adaptor_signature = adaptor_signature_;
   result.adaptor_proof = adaptor_proof_;
-  result.message = message_;
+  result.messages = messages_.ConvertToStruct();
   result.local_fund_pubkey = local_fund_pubkey_;
   result.remote_fund_pubkey = remote_fund_pubkey_;
   result.oracle_pubkey = oracle_pubkey_;
-  result.oracle_r_value = oracle_r_value_;
+  result.oracle_r_values = oracle_r_values_.ConvertToStruct();
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
   result.fund_input_amount = fund_input_amount_;
@@ -2210,12 +2245,12 @@ void VerifyCetAdaptorSignaturesRequest::CollectFieldName() {
   json_mapper.emplace("adaptorPairs", func_table);
   item_list.push_back("adaptorPairs");
   func_table = {
-    VerifyCetAdaptorSignaturesRequest::GetMessagesString,
-    VerifyCetAdaptorSignaturesRequest::SetMessagesString,
-    VerifyCetAdaptorSignaturesRequest::GetMessagesFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetMessagesListString,
+    VerifyCetAdaptorSignaturesRequest::SetMessagesListString,
+    VerifyCetAdaptorSignaturesRequest::GetMessagesListFieldType,
   };
-  json_mapper.emplace("messages", func_table);
-  item_list.push_back("messages");
+  json_mapper.emplace("messagesList", func_table);
+  item_list.push_back("messagesList");
   func_table = {
     VerifyCetAdaptorSignaturesRequest::GetLocalFundPubkeyString,
     VerifyCetAdaptorSignaturesRequest::SetLocalFundPubkeyString,
@@ -2238,12 +2273,12 @@ void VerifyCetAdaptorSignaturesRequest::CollectFieldName() {
   json_mapper.emplace("oraclePubkey", func_table);
   item_list.push_back("oraclePubkey");
   func_table = {
-    VerifyCetAdaptorSignaturesRequest::GetOracleRValueString,
-    VerifyCetAdaptorSignaturesRequest::SetOracleRValueString,
-    VerifyCetAdaptorSignaturesRequest::GetOracleRValueFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetOracleRValuesString,
+    VerifyCetAdaptorSignaturesRequest::SetOracleRValuesString,
+    VerifyCetAdaptorSignaturesRequest::GetOracleRValuesFieldType,
   };
-  json_mapper.emplace("oracleRValue", func_table);
-  item_list.push_back("oracleRValue");
+  json_mapper.emplace("oracleRValues", func_table);
+  item_list.push_back("oracleRValues");
   func_table = {
     VerifyCetAdaptorSignaturesRequest::GetFundTxIdString,
     VerifyCetAdaptorSignaturesRequest::SetFundTxIdString,
@@ -2278,11 +2313,11 @@ void VerifyCetAdaptorSignaturesRequest::ConvertFromStruct(
     const VerifyCetAdaptorSignaturesRequestStruct& data) {
   cets_hex_.ConvertFromStruct(data.cets_hex);
   adaptor_pairs_.ConvertFromStruct(data.adaptor_pairs);
-  messages_.ConvertFromStruct(data.messages);
+  messages_list_.ConvertFromStruct(data.messages_list);
   local_fund_pubkey_ = data.local_fund_pubkey;
   remote_fund_pubkey_ = data.remote_fund_pubkey;
   oracle_pubkey_ = data.oracle_pubkey;
-  oracle_r_value_ = data.oracle_r_value;
+  oracle_r_values_.ConvertFromStruct(data.oracle_r_values);
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
   fund_input_amount_ = data.fund_input_amount;
@@ -2294,11 +2329,11 @@ VerifyCetAdaptorSignaturesRequestStruct VerifyCetAdaptorSignaturesRequest::Conve
   VerifyCetAdaptorSignaturesRequestStruct result;
   result.cets_hex = cets_hex_.ConvertToStruct();
   result.adaptor_pairs = adaptor_pairs_.ConvertToStruct();
-  result.messages = messages_.ConvertToStruct();
+  result.messages_list = messages_list_.ConvertToStruct();
   result.local_fund_pubkey = local_fund_pubkey_;
   result.remote_fund_pubkey = remote_fund_pubkey_;
   result.oracle_pubkey = oracle_pubkey_;
-  result.oracle_r_value = oracle_r_value_;
+  result.oracle_r_values = oracle_r_values_.ConvertToStruct();
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
   result.fund_input_amount = fund_input_amount_;

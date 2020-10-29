@@ -14,7 +14,7 @@
     "fundInputAmount": 0,
     "fundInputAmount:type": "uint64_t",
     "adaptorSignature": "",
-    "oracleSignature": ""
+    "oracleSignatures": [""]
   },
   "response": {
     ":class": "SignCetResponse",

@@ -28,9 +28,12 @@ const testCase = [
         },
       ],
       verifyRemote: false,
-      messages: TestData.Messages,
+      messagesList: [
+        { messages: [TestData.Messages[0]] },
+        { messages: [TestData.Messages[1]] },
+      ],
       oraclePubkey: TestData.OraclePubkey,
-      oracleRValue: TestData.OracleRPoint,
+      oracleRValues: [TestData.OracleRPoint],
     },
     {
       valid: true,
@@ -61,9 +64,12 @@ const testCase = [
         },
       ],
       verifyRemote: false,
-      messages: TestData.Messages,
+      messagesList: [
+        { messages: [TestData.Messages[0]] },
+        { messages: [TestData.Messages[1]] },
+      ],
       oraclePubkey: TestData.OraclePubkey,
-      oracleRValue: TestData.OracleRPoint,
+      oracleRValues: [TestData.OracleRPoint],
     },
     {
       valid: false,
