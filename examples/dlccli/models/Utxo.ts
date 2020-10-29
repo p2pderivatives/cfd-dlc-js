@@ -5,6 +5,7 @@ export default class Utxo {
     readonly txid: string,
     readonly vout: number,
     readonly amount: Amount,
-    readonly address: string
+    readonly address: string,
+    readonly maxWitnessLength: number
   ) {}
 }

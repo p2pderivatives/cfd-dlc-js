@@ -1,5 +1,5 @@
+import * as cfdjs from "cfd-js";
 import * as CfdUtils from "../utils/Utils";
-import * as cfddlcjs from "../../../index";
 import OracleInfo from "./OracleInfo";
 
 export default class Oracle {
@@ -13,10 +13,10 @@ export default class Oracle {
     this.name = name;
     let keyPair = CfdUtils.CreateKeyPair();
     this.privateKey = keyPair.privkey;
-    this.publicKey = keyPair.pubkey;
+    this.publicKey = CfdUtils.GetSchnorrPubkeyFromPrivkey(this.privateKey);
     keyPair = CfdUtils.CreateKeyPair();
     this.kValue = keyPair.privkey;
-    this.rValue = cfddlcjs.GetSchnorrPublicNonce({ kValue: this.kValue }).hex;
+    this.rValue = CfdUtils.GetSchnorrPubkeyFromPrivkey(this.kValue);
   }
 
   // Returns the public information for the Oracle.
@@ -26,12 +26,13 @@ export default class Oracle {
 
   // Sign a given message using the private key and the R value.
   public GetSignature(message: string) {
-    const signRequest: cfddlcjs.SchnorrSignRequest = {
+    const signRequest: cfdjs.SchnorrSignRequest = {
       privkey: this.privateKey,
-      kValue: this.kValue,
       message,
+      nonceOrAux: this.kValue,
+      isNonce: true,
     };
 
-    return cfddlcjs.SchnorrSign(signRequest).hex;
+    return cfdjs.SchnorrSign(signRequest).hex;
   }
 }

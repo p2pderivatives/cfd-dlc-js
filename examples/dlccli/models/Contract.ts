@@ -1,22 +1,22 @@
-import Outcome from "./Outcome";
-import PartyInputs from "./PartyInputs";
-import OracleInfo from "./OracleInfo";
-import OfferMessage from "./OfferMessage";
+import { AdaptorPair } from "../../..";
 import AcceptMessage from "./AcceptMessage";
-import SignMessage from "./SignMessage";
 import Amount from "./Amount";
+import OfferMessage from "./OfferMessage";
+import OracleInfo from "./OracleInfo";
+import PartyInputs from "./PartyInputs";
+import Payout from "./Payout";
+import SignMessage from "./SignMessage";
 
 export default class Contract {
   id: string;
   localCollateral: Amount;
   remoteCollateral: Amount;
-  outcomes: Outcome[];
-  maturityTime: Date;
+  payouts: Payout[];
+  messages: string[];
   feeRate: number;
   localPartyInputs: PartyInputs;
   remotePartyInputs: PartyInputs;
   oracleInfo: OracleInfo;
-  cetCsvDelay: number;
   refundLockTime: number;
   isLocalParty: boolean;
   fundTxHex: string;
@@ -26,12 +26,12 @@ export default class Contract {
   refundTransaction: string;
   refundLocalSignature: string;
   refundRemoteSignature: string;
-  localCetsHex: string[];
-  remoteCetsHex: string[];
-  cetSignatures: string[];
+  cetsHex: string[];
+  cetAdaptorPairs: AdaptorPair[];
 
   constructor() {
-    this.outcomes = [];
+    this.payouts = [];
+    this.messages = [];
   }
 
   public static FromOfferMessage(offerMessage: OfferMessage) {
@@ -39,14 +39,13 @@ export default class Contract {
     contract.id = offerMessage.contractId;
     contract.localCollateral = offerMessage.localCollateral;
     contract.remoteCollateral = offerMessage.remoteCollateral;
-    contract.maturityTime = offerMessage.maturityTime;
-    contract.outcomes = offerMessage.outcomes;
+    contract.payouts = offerMessage.payouts;
     contract.oracleInfo = offerMessage.oracleInfo;
     contract.localPartyInputs = offerMessage.localPartyInputs;
     contract.feeRate = offerMessage.feeRate;
-    contract.cetCsvDelay = offerMessage.cetCsvDelay;
     contract.refundLockTime = offerMessage.refundLockTime;
     contract.isLocalParty = false;
+    contract.messages = offerMessage.messages;
     return contract;
   }
 
@@ -56,24 +55,23 @@ export default class Contract {
       contractId: this.id,
       localCollateral: this.localCollateral,
       remoteCollateral: this.remoteCollateral,
-      maturityTime: this.maturityTime,
-      outcomes: this.outcomes,
+      payouts: this.payouts,
       oracleInfo: this.oracleInfo,
       localPartyInputs: this.localPartyInputs,
       feeRate: this.feeRate,
-      cetCsvDelay: this.cetCsvDelay,
       refundLockTime: this.refundLockTime,
+      messages: this.messages,
     };
   }
 
   public ApplyAcceptMessage(acceptMessage: AcceptMessage) {
-    this.cetSignatures = acceptMessage.cetSignatures;
+    this.cetAdaptorPairs = acceptMessage.cetAdaptorPairs;
     this.refundRemoteSignature = acceptMessage.refundSignature;
     this.remotePartyInputs = acceptMessage.remotePartyInputs;
   }
 
   public ApplySignMessage(signMessage: SignMessage) {
-    this.cetSignatures = signMessage.cetSignatures;
+    this.cetAdaptorPairs = signMessage.cetAdaptorPairs;
     this.refundLocalSignature = signMessage.refundSignature;
     this.fundTxSignatures = signMessage.fundTxSignatures;
   }
