@@ -1,5 +1,4 @@
 import * as cfdjs from "cfd-js";
-import Client, { ClientConstructorOption } from "bitcoin-core";
 
 export function CreateKeyPair() {
   const reqJson: cfdjs.CreateKeyPairRequest = {
@@ -17,6 +16,14 @@ export function GetPubkeyFromPrivkey(privkey: string) {
   return cfdjs.GetPubkeyFromPrivkey(reqPrivKey).pubkey;
 }
 
+export function GetSchnorrPubkeyFromPrivkey(privkey: string) {
+  const reqPrivKey = {
+    privkey,
+  };
+
+  return cfdjs.GetSchnorrPubkeyFromPrivkey(reqPrivKey).pubkey;
+}
+
 export function GetPrivkeyFromWif(wif: string) {
   const req = {
     wif,
@@ -31,4 +38,11 @@ export function DecodeRawTransaction(rawTransaction: string) {
   };
 
   return cfdjs.DecodeRawTransaction(reqJson);
+}
+
+export function GetAddressScript(address: string) {
+  const req = { address };
+
+  const info = cfdjs.GetAddressInfo(req);
+  return info.lockingScript;
 }

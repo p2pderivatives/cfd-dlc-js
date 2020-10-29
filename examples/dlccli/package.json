@@ -10,7 +10,7 @@
   "author": "CryptoGarage Inc.",
   "license": "MIT",
   "dependencies": {
-    "bitcoin-core": "github:wleev/bitcoin-core#test-version",
+    "bitcoin-simple-rpc": "0.0.1",
     "inquirer": "^7.1.0",
     "inquirer-datepicker": "^1.1.0",
     "tslint": "^6.1.2",

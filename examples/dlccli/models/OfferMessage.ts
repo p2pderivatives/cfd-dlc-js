@@ -1,19 +1,18 @@
-import Outcome from "./Outcome";
+import Amount from "./Amount";
 import OracleInfo from "./OracleInfo";
 import PartyInputs from "./PartyInputs";
-import Amount from "./Amount";
+import Payout from "./Payout";
 
 export default class OfferMessage {
   constructor(
     readonly contractId: string,
     readonly localCollateral: Amount,
     readonly remoteCollateral: Amount,
-    readonly maturityTime: Date,
-    readonly outcomes: Outcome[],
+    readonly payouts: Payout[],
+    readonly messages: string[],
     readonly oracleInfo: OracleInfo,
     readonly localPartyInputs: PartyInputs,
     readonly feeRate: number,
-    readonly cetCsvDelay: number,
     readonly refundLockTime: number
   ) {}
 }
