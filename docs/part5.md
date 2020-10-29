@@ -28,12 +28,10 @@ import { v4 as uuidv4 } from "uuid";
 import Client, { ClientConstructorOption } from "bitcoin-core";
 
 export function CreateWalletClient(walletName: string) {
-  const clientConfig: ClientConstructorOption = {};
-  clientConfig.network = "regtest";
-  clientConfig.username = "user";
-  clientConfig.password = "pass";
-  clientConfig.port = 18443;
-  clientConfig.wallet = walletName;
+  const clientConfig: ClientOption = {
+    baseURL: `http://localhost:18443/wallet/${walletName}`,
+  };
+  clientConfig.auth = { username: "user", password: "pass" };
 
   return new Client(clientConfig);
 }
@@ -60,9 +58,7 @@ import inquirer from "inquirer";
 export enum InitialInputNames {
   LocalCollateral = "Local Collateral",
   RemoteCollateral = "Remote Collateral",
-  Maturity = "Maturity time",
   Refund = "RefundTime",
-  CsvDelay = "CSV delay",
   FeeRate = "Fee Rate",
 }
 
@@ -81,19 +77,8 @@ export const InitialInputs: inquirer.Question[] = [
   },
   {
     type: "datepicker",
-    name: InitialInputNames.Maturity,
-    message: "Choose contract maturity date and time",
-  },
-  {
-    type: "datepicker",
     name: InitialInputNames.Refund,
     message: "Choose refund date and time",
-  },
-  {
-    type: "number",
-    name: InitialInputNames.CsvDelay,
-    message: "Enter CSV delay",
-    default: 1,
   },
   {
     type: "number",
@@ -116,9 +101,8 @@ async function GetInitialInputs() {
       values[InitialInputNames.RemoteCollateral]
     );
     contract.feeRate = values[InitialInputNames.FeeRate];
-    contract.maturityTime = values[InitialInputNames.Maturity];
-    contract.refundLockTime = values[InitialInputNames.Refund];
-    contract.cetCsvDelay = values[InitialInputNames.CsvDelay];
+    contract.refundLockTime =
+      Date.parse(values[InitialInputNames.Refund]) / 1000;
   });
 }
 ```
@@ -175,13 +159,16 @@ As there usually are multiple outcomes, we recurse until the user has finished i
 async function GetOutcomes() {
   const values = await inquirer.prompt(OutcomeInputs);
   const addMore = values[OutcomeInputNames.AddMore];
-  const localAmount = Amount.FromBitcoin(values[OutcomeInputNames.LocalPayout]);
+  const localAmount = Amount.FromBitcoin(
+    values[OutcomeInputNames.LocalPayout]
+  );
   const remoteAmount = Amount.FromBitcoin(
     values[OutcomeInputNames.RemotePayout]
   );
   const message = values[OutcomeInputNames.Message];
-  const outcome = new Outcome(message, localAmount, remoteAmount);
-  contract.outcomes.push(outcome);
+  const payout = new Payout(localAmount, remoteAmount);
+  contract.payouts.push(payout);
+  contract.messages.push(message);
 
   if (addMore) {
     await GetOutcomes();
@@ -193,7 +180,7 @@ And add the required imports:
 
 ```typescript
 import { OutcomeInputs, OutcomeInputNames } from "./prompts/Outcomes";
-import Outcome from "./models/Outcome";
+import Payout from "./models/Payout";
 ```
 
 ## Accepting or rejecting the contract
@@ -202,6 +189,7 @@ We now create a function to enable Bob to accept or reject the contract.
 We display the contract and ask him whether to accept it or not:
 
 ```typescript
+
 async function ProposeContractToBob(offerMessage: OfferMessage) {
   console.log("Contract received: ");
   console.log(util.inspect(offerMessage, false, null, true));
@@ -230,18 +218,18 @@ import OfferMessage from "./models/OfferMessage";
 For the purpose of this simple application, we will let the user decide on the outcome:
 
 ```typescript
-async function DecideOutcome() {
+async function DecideOutcome(): Promise<{ message: string; index: number }> {
   const name = "Outcome choice";
   const answers = await inquirer.prompt([
     {
       name,
       message: "Choose the outcome of the event",
       type: "list",
-      choices: contract.outcomes.map((outcome, index) => {
+      choices: contract.messages.map((message, index) => {
         return {
-          name: outcome.message,
-          short: outcome.message,
-          value: { outcome, index },
+          name: message,
+          short: message,
+          value: { message, index },
         };
       }),
     },
@@ -252,15 +240,14 @@ async function DecideOutcome() {
 
 ## Decide how to close the contract
 
-We will now create a function to let the user decide on how to close the contract.
-Recall that they are three choices:
+We will now create a function to let the user decide on who should close the contract.
+Recall that both Alice and Bob can close the contract.
 
-1. Collaborative closing using a mutual closing transaction
-1. Unilateral closing by Alice
-1. Unilateral closing by Bob
+1. Closing by Alice
+1. Closing by Bob
 
 ```typescript
-async function DecideClosing(outcome: Outcome, index: number): Promise<number> {
+async function DecideClosing(message: string, index: number): Promise<number> {
   const name = "Closing choice";
   const answers = await inquirer.prompt([
     {
@@ -269,16 +256,12 @@ async function DecideClosing(outcome: Outcome, index: number): Promise<number> {
       type: "list",
       choices: [
         {
-          name: "Collaborative closing",
+          name: "Alice closes",
           value: 0,
         },
         {
-          name: "Unilateral closing by Alice",
+          name: "Bob closes",
           value: 1,
-        },
-        {
-          name: "Unilateral closing by Bob",
-          value: 2,
         },
       ],
     },
@@ -311,18 +294,13 @@ alice.GenerateBlocks(101).then(async () => {
     const acceptMessage = await bob.OnOfferMessage(offerMessage);
     const signMessage = alice.OnAcceptMessage(acceptMessage);
     await bob.OnSignMessage(signMessage);
-    const { outcome, index } = await DecideOutcome();
-    const closingType = await DecideClosing(outcome, index);
+    const { message, index } = await DecideOutcome();
+    const signature = oracle.GetSignature(message);
+    const closingType = await DecideClosing(message, index);
     if (closingType === 0) {
-      const mutualClosingMessage = alice.CreateMutualClosingMessage(outcome);
-      await bob.OnMutualClosingMessage(mutualClosingMessage);
+      await alice.SignAndBroadcastCet(index, signature);
     } else {
-      const signature = oracle.GetSignature(outcome.message);
-      if (closingType === 1) {
-        await alice.ExecuteUnilateralClose(signature, index);
-      } else {
-        await bob.ExecuteUnilateralClose(signature, index);
-      }
+      await bob.SignAndBroadcastCet(index, signature);
     }
   }
   await PrintBalances();

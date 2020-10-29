@@ -85,7 +85,8 @@ export default class Utxo {
     readonly txid: string,
     readonly vout: number,
     readonly amount: Amount,
-    readonly address: string
+    readonly address: string,
+    readonly maxWitnessSize: number,
   ) {}
 }
 ```
@@ -103,7 +104,6 @@ import Utxo from "./Utxo";
 export default class PartyInputs {
   constructor(
     readonly fundPublicKey: string,
-    readonly sweepPublicKey: string,
     readonly changeAddress: string,
     readonly finalAddress: string,
     readonly utxos: Utxo[]
@@ -122,18 +122,14 @@ We also added a convenient method to get the sum of the Utxo values.
 
 ## Outcomes
 
-As we saw in [Part 1](./index.md), a DLC can have multiple different outcomes, each potentially giving different payouts to each party.
-We define the `Outcome` class to represent a single outcome:
+As we saw in [Part 1](./index.md), a DLC gives different payouts to each party depending on the event outcome attested by the oracle.
+We define the `Payout` class to represent a single payout:
 
 ```typescript
 import Amount from "./Amount";
 
-export default class Outcome {
-  constructor(
-    readonly message: string,
-    readonly local: Amount,
-    readonly remote: Amount
-  ) {}
+export default class Payout {
+  constructor(readonly local: Amount, readonly remote: Amount) {}
 }
 ```
 
@@ -172,15 +168,32 @@ export function CreateKeyPair() {
   };
   return cfdjs.CreateKeyPair(reqJson);
 }
+
+export function GetPubkeyFromPrivkey(privkey: string) {
+  const reqPrivKey = {
+    privkey,
+    isCompressed: true,
+  };
+
+  return cfdjs.GetPubkeyFromPrivkey(reqPrivKey).pubkey;
+}
+
+export function GetSchnorrPubkeyFromPrivkey(privkey: string) {
+  const reqPrivKey = {
+    privkey,
+  };
+
+  return cfdjs.GetSchnorrPubkeyFromPrivkey(reqPrivKey).pubkey;
+}
 ```
 
-This will enable us to generate public/private key pairs.
+This will enable us to generate public/private key pairs for both ECDSA and Schnorr signature schemes.
 
 We can now define the Oracle class:
 
 ```typescript
-import * as Utils from "../Utils/Utils";
-import * as cfddlcjs from "cfd-dlc-js";
+import * as cfdjs from "cfd-js";
+import * as CfdUtils from "../utils/Utils";
 import OracleInfo from "./OracleInfo";
 
 export default class Oracle {
@@ -192,12 +205,12 @@ export default class Oracle {
 
   constructor(name: string) {
     this.name = name;
-    let keyPair = Utils.CreateKeyPair();
+    let keyPair = CfdUtils.CreateKeyPair();
     this.privateKey = keyPair.privkey;
-    this.publicKey = keyPair.pubkey;
-    keyPair = Utils.CreateKeyPair();
+    this.publicKey = CfdUtils.GetSchnorrPubkeyFromPrivkey(this.privateKey);
+    keyPair = CfdUtils.CreateKeyPair();
     this.kValue = keyPair.privkey;
-    this.rValue = cfddlcjs.GetSchnorrPublicNonce({ kValue: this.kValue }).hex;
+    this.rValue = CfdUtils.GetSchnorrPubkeyFromPrivkey(this.kValue);
   }
 
   // Returns the public information for the Oracle.
@@ -207,25 +220,23 @@ export default class Oracle {
 
   // Sign a given message using the private key and the R value.
   public GetSignature(message: string) {
-    const signRequest: cfddlcjs.SchnorrSignRequest = {
+    const signRequest: cfdjs.SchnorrSignRequest = {
       privkey: this.privateKey,
-      kValue: this.kValue,
       message,
+      nonceOrAux: this.kValue,
+      isNonce: true,
     };
 
-    return cfddlcjs.SchnorrSign(signRequest).hex;
+    return cfdjs.SchnorrSign(signRequest).hex;
   }
 }
 ```
 
-Here we use two functions from the DLC library:
-
-- `GetSchnorrPublicNonce` enable getting the R value from the k value of the oracle. Note that in a further update this API will change due to updates to the BIP 340 defining Schnorr signature usage in Bitcoin.
-- `SchnorrSignRequest` is the function performing the actual signing.
+The `SchnorrSign` function simply creates a Schnorr signature for a given message, in this case using a fixed nonce (as required for DLC).
 
 ## Protocol messages
 
-We will now define the four message types that make up the DLC protocol.
+We will now define the three message types that make up the DLC protocol.
 
 ### OfferMessage
 
@@ -233,22 +244,21 @@ In the offer message we include information about the contract for the remote pa
 After receiving this message, and if they decide to accept the contract, the remote party will have all the required information to create the set of transaction for the DLC.
 
 ```typescript
-import Outcome from "./Outcome";
+import Amount from "./Amount";
 import OracleInfo from "./OracleInfo";
 import PartyInputs from "./PartyInputs";
-import Amount from "./Amount";
+import Payout from "./Payout";
 
 export default class OfferMessage {
   constructor(
     readonly contractId: string,
     readonly localCollateral: Amount,
     readonly remoteCollateral: Amount,
-    readonly maturityTime: Date,
-    readonly outcomes: Outcome[],
+    readonly payouts: Payout[],
+    readonly messages: string[],
     readonly oracleInfo: OracleInfo,
     readonly localPartyInputs: PartyInputs,
     readonly feeRate: number,
-    readonly cetCsvDelay: number,
     readonly refundLockTime: number
   ) {}
 }
@@ -256,46 +266,39 @@ export default class OfferMessage {
 
 ### AcceptMessage
 
-The accept message contains the DLC inputs for the remote party as well as their signatures for the CETs and refund transaction:
+The accept message contains the DLC inputs for the remote party as well as their adaptor signatures for the CETs and a signature for the refund transaction:
 
 ```typescript
+import { AdaptorPair } from "../../..";
 import PartyInputs from "./PartyInputs";
 
 export default class AcceptMessage {
   constructor(
     readonly remotePartyInputs: PartyInputs,
-    readonly cetSignatures: string[],
+    readonly cetAdaptorPairs: AdaptorPair[],
     readonly refundSignature: string
   ) {}
 }
 ```
 
+Note that because we are using ECDSA adaptor signatures, we also need to provide Discrete Log Equivalence (DLEq) proofs along with the adaptor signatures.
+We will not go into details about this, you can find more information about adaptor signatures in DLC [here](https://medium.com/crypto-garage/adaptor-signature-in-discreet-log-contracts-on-ecdsa-c8c04197e11f).
+
 ### SignMessage
 
-The sign message contains the signatures for the fund transaction, CETs and refund transaction.
+The sign message contains the signatures for the fund and refund transactions, and adaptor signatures for the CETs.
 We also add the public keys for the set of UTXOs that are used as input to the fund transaction as a convenience.
 
 ```typescript
+import { AdaptorPair } from "../../..";
+
 export default class SignMessage {
   constructor(
     readonly fundTxSignatures: string[],
-    readonly cetSignatures: string[],
+    readonly cetAdaptorPairs: AdaptorPair[],
     readonly refundSignature: string,
     readonly utxoPublicKeys: string[]
   ) {}
-}
-```
-
-### Mutual closing message
-
-The last message is used for a party to propose a cooperative closing of the DLC.
-It contains the outcome on which the party proposes to close, as well as a signature for the corresponding mutual closing transaction.
-
-```typescript
-import Outcome from "./Outcome";
-
-export default class MutualClosingMessage {
-  constructor(readonly outcome: Outcome, readonly signature: string) {}
 }
 ```
 
@@ -306,25 +309,25 @@ This class will keep track of everything needed to create the transactions as we
 We also add some useful function to create the offer message and update the contract based on the content of the accept and sign messages.
 
 ```typescript
-import Outcome from "./Outcome";
-import PartyInputs from "./PartyInputs";
-import OracleInfo from "./OracleInfo";
-import OfferMessage from "./OfferMessage";
+import { AdaptorPair } from "../../..";
 import AcceptMessage from "./AcceptMessage";
-import SignMessage from "./SignMessage";
 import Amount from "./Amount";
+import OfferMessage from "./OfferMessage";
+import OracleInfo from "./OracleInfo";
+import PartyInputs from "./PartyInputs";
+import Payout from "./Payout";
+import SignMessage from "./SignMessage";
 
 export default class Contract {
   id: string;
   localCollateral: Amount;
   remoteCollateral: Amount;
-  outcomes: Outcome[];
-  maturityTime: Date;
+  payouts: Payout[];
+  messages: string[];
   feeRate: number;
   localPartyInputs: PartyInputs;
   remotePartyInputs: PartyInputs;
   oracleInfo: OracleInfo;
-  cetCsvDelay: number;
   refundLockTime: number;
   isLocalParty: boolean;
   fundTxHex: string;
@@ -334,12 +337,12 @@ export default class Contract {
   refundTransaction: string;
   refundLocalSignature: string;
   refundRemoteSignature: string;
-  localCetsHex: string[];
-  remoteCetsHex: string[];
-  cetSignatures: string[];
+  cetsHex: string[];
+  cetAdaptorPairs: AdaptorPair[];
 
   constructor() {
-    this.outcomes = [];
+    this.payouts = [];
+    this.messages = [];
   }
 
   public static FromOfferMessage(offerMessage: OfferMessage) {
@@ -347,14 +350,13 @@ export default class Contract {
     contract.id = offerMessage.contractId;
     contract.localCollateral = offerMessage.localCollateral;
     contract.remoteCollateral = offerMessage.remoteCollateral;
-    contract.maturityTime = offerMessage.maturityTime;
-    contract.outcomes = offerMessage.outcomes;
+    contract.payouts = offerMessage.payouts;
     contract.oracleInfo = offerMessage.oracleInfo;
     contract.localPartyInputs = offerMessage.localPartyInputs;
     contract.feeRate = offerMessage.feeRate;
-    contract.cetCsvDelay = offerMessage.cetCsvDelay;
     contract.refundLockTime = offerMessage.refundLockTime;
     contract.isLocalParty = false;
+    contract.messages = offerMessage.messages;
     return contract;
   }
 
@@ -364,24 +366,23 @@ export default class Contract {
       contractId: this.id,
       localCollateral: this.localCollateral,
       remoteCollateral: this.remoteCollateral,
-      maturityTime: this.maturityTime,
-      outcomes: this.outcomes,
+      payouts: this.payouts,
       oracleInfo: this.oracleInfo,
       localPartyInputs: this.localPartyInputs,
       feeRate: this.feeRate,
-      cetCsvDelay: this.cetCsvDelay,
       refundLockTime: this.refundLockTime,
+      messages: this.messages,
     };
   }
 
   public ApplyAcceptMessage(acceptMessage: AcceptMessage) {
-    this.cetSignatures = acceptMessage.cetSignatures;
+    this.cetAdaptorPairs = acceptMessage.cetAdaptorPairs;
     this.refundRemoteSignature = acceptMessage.refundSignature;
     this.remotePartyInputs = acceptMessage.remotePartyInputs;
   }
 
   public ApplySignMessage(signMessage: SignMessage) {
-    this.cetSignatures = signMessage.cetSignatures;
+    this.cetAdaptorPairs = signMessage.cetAdaptorPairs;
     this.refundLocalSignature = signMessage.refundSignature;
     this.fundTxSignatures = signMessage.fundTxSignatures;
   }

@@ -5,25 +5,22 @@ In this part we will write the functions to create the protocol messages as well
 We encapsulate these function in a `DlcParty` class, which represents a single party in a DLC.
 We include this class within the `models` directory.
 The logic of the application will also require interacting with a bitcoind instance.
-To do so we use the `bitcoin-core` library, which enables communication through JSON-RPC.
-You can find the type definition files (`bitcoin-core.d.ts`) [here](https://github.com/p2pderivatives/cfd-js/blob/master/example/dlccli/types/bitcoin-core.d.ts).
-Put this file in a `types` folder in the root directory.
+To do so we use the [`bitcoin-simple-rpc` library](https://github.com/p2pderivatives/bitcoin-simple-rpc), which enables communication through JSON-RPC.
 
 ## Class members
 
 We start by writing down the class members, including the private keys used by the party to sign the various transactions, as well as a `Contract` instance to keep track of the DLC information and a `Client` object to communicate with a bitcoind instance.
 
 ```typescript
-import PartyInputs from "./PartyInputs";
+import { Client } from "bitcoin-simple-rpc";
 import Contract from "./Contract";
-import Client from "bitcoin-core";
+import PartyInputs from "./PartyInputs";
 
 export default class DlcParty {
   readonly walletClient: Client;
   readonly passphrase: string;
   partyInputs: PartyInputs;
   fundPrivateKey: string;
-  sweepPrivateKey: string;
   inputPrivateKeys: string[];
   contract: Contract;
 
@@ -31,7 +28,6 @@ export default class DlcParty {
     this.walletClient = walletClient;
     this.passphrase = passphrase;
   }
-}
 ```
 
 ## Initialization
@@ -41,15 +37,6 @@ At initialization, we need to get the required private keys, some addresses for 
 We first add some utility functions to our `Utils.ts` file (the names should be explicit about what they do):
 
 ```typescript
-export function GetPubkeyFromPrivkey(privkey: string) {
-  const reqPrivKey = {
-    privkey,
-    isCompressed: true,
-  };
-
-  return cfdjs.GetPubkeyFromPrivkey(reqPrivKey).pubkey;
-}
-
 export function GetPrivkeyFromWif(wif: string) {
   const req = {
     wif,
@@ -67,27 +54,21 @@ export function DecodeRawTransaction(rawTransaction: string) {
 }
 ```
 
-We can the write our `Initialize` method.
+We can then write our `Initialize` method.
 As the number of Utxos required depends on the amount of collateral input in the contract, we take this as a parameter.
 We also extract a couple of functions to make our code more readable.
 
 ```typescript
-
   private async Initialize(collateral: Amount) {
     await this.walletClient.walletPassphrase(this.passphrase, 10);
     const changeAddress = await this.walletClient.getNewAddress();
     const finalAddress = await this.walletClient.getNewAddress();
     this.fundPrivateKey = await this.GetNewPrivateKey();
-    this.sweepPrivateKey = await this.GetNewPrivateKey();
     const fundPublicKey = Utils.GetPubkeyFromPrivkey(this.fundPrivateKey);
-    const sweepPublicKey = Utils.GetPubkeyFromPrivkey(this.sweepPrivateKey);
-    const utxos = await this.GetUtxosForAmount(
-      collateral
-    );
+    const utxos = await this.GetUtxosForAmount(collateral);
 
     const inputs = new PartyInputs(
       fundPublicKey,
-      sweepPublicKey,
       changeAddress,
       finalAddress,
       utxos
@@ -147,48 +128,49 @@ The DLC library provides a function to create them using the parameters generate
 We encapsulate it in a `CreateDlcTransactions` function:
 
 ```typescript
-
   private CreateDlcTransactions() {
     const dlcTxRequest: cfddlcjs.CreateDlcTransactionsRequest = {
-      outcomes: this.contract.outcomes.map((outcome) => {
+      payouts: this.contract.payouts.map((payout) => {
         return {
-          messages: [outcome.message],
-          local: outcome.local.GetSatoshiAmount(),
-          remote: outcome.remote.GetSatoshiAmount(),
+          local: payout.local.GetSatoshiAmount(),
+          remote: payout.remote.GetSatoshiAmount(),
         };
       }),
-      oracleRPoints: [this.contract.oracleInfo.rValue],
-      oraclePubkey: this.contract.oracleInfo.publicKey,
       localFundPubkey: this.contract.localPartyInputs.fundPublicKey,
-      localSweepPubkey: this.contract.localPartyInputs.sweepPublicKey,
-      localFinalAddress: this.contract.localPartyInputs.finalAddress,
+      localFinalScriptPubkey: Utils.GetAddressScript(
+        this.contract.localPartyInputs.finalAddress
+      ),
       remoteFundPubkey: this.contract.remotePartyInputs.fundPublicKey,
-      remoteSweepPubkey: this.contract.remotePartyInputs.sweepPublicKey,
-      remoteFinalAddress: this.contract.remotePartyInputs.finalAddress,
+      remoteFinalScriptPubkey: Utils.GetAddressScript(
+        this.contract.remotePartyInputs.finalAddress
+      ),
       localInputAmount: this.contract.localPartyInputs.GetTotalInputAmount(),
       localCollateralAmount: this.contract.localCollateral.GetSatoshiAmount(),
       remoteInputAmount: this.contract.remotePartyInputs.GetTotalInputAmount(),
       remoteCollateralAmount: this.contract.remoteCollateral.GetSatoshiAmount(),
-      csvDelay: this.contract.cetCsvDelay,
       refundLocktime: this.contract.refundLockTime,
       localInputs: this.contract.localPartyInputs.utxos,
       remoteInputs: this.contract.remotePartyInputs.utxos,
-      localChangeAddress: this.contract.localPartyInputs.changeAddress,
-      remoteChangeAddress: this.contract.remotePartyInputs.changeAddress,
+      localChangeScriptPubkey: Utils.GetAddressScript(
+        this.contract.localPartyInputs.changeAddress
+      ),
+      remoteChangeScriptPubkey: Utils.GetAddressScript(
+        this.contract.remotePartyInputs.changeAddress
+      ),
       feeRate: this.contract.feeRate,
-      maturityTime: Math.floor(this.contract.maturityTime.getTime() / 1000),
     };
 
     const dlcTransactions = cfddlcjs.CreateDlcTransactions(dlcTxRequest);
     this.contract.fundTxHex = dlcTransactions.fundTxHex;
-    const fundTransaction = Utils.DecodeRawTransaction(this.contract.fundTxHex);
+    const fundTransaction = Utils.DecodeRawTransaction(
+      this.contract.fundTxHex
+    );
     this.contract.fundTxId = fundTransaction.txid;
     this.contract.fundTxOutAmount = Amount.FromSatoshis(
       Number(fundTransaction.vout[0].value)
     );
     this.contract.refundTransaction = dlcTransactions.refundTxHex;
-    this.contract.localCetsHex = dlcTransactions.localCetsHex;
-    this.contract.remoteCetsHex = dlcTransactions.remoteCetsHex;
+    this.contract.cetsHex = dlcTransactions.cetsHex;
   }
 ```
 
@@ -225,25 +207,27 @@ When we receive an offer message, a couple of thing need to happen:
 
 - First we will initialize our instance using the remote collateral amount (if we receive an offer message, we are the remote party),
 - Second we can create the transactions, as we got the necessary information from the local party,
-- Finally we can create the signatures for the CETs and the refund transaction, that we use to create an accept message, which also contains our set of Utxos.
+- Finally we can create the adaptor signatures for the CETs and the signature for the refund transaction, that we use to create an accept message, which also contains our set of Utxos.
 
 ```typescript
-
   public async OnOfferMessage(offerMessage: OfferMessage) {
     this.contract = Contract.FromOfferMessage(offerMessage);
     await this.Initialize(offerMessage.remoteCollateral);
     this.contract.remotePartyInputs = this.partyInputs;
     this.CreateDlcTransactions();
-    const cetSignRequest: cfddlcjs.GetRawCetSignaturesRequest = {
-      cetsHex: this.contract.localCetsHex,
+    const cetSignRequest: cfddlcjs.CreateCetAdaptorSignaturesRequest = {
+      messages: this.contract.messages,
+      cetsHex: this.contract.cetsHex,
       privkey: this.fundPrivateKey,
       fundTxId: this.contract.fundTxId,
       localFundPubkey: offerMessage.localPartyInputs.fundPublicKey,
       remoteFundPubkey: this.partyInputs.fundPublicKey,
       fundInputAmount: this.contract.fundTxOutAmount.GetSatoshiAmount(),
+      oraclePubkey: this.contract.oracleInfo.publicKey,
+      oracleRValue: this.contract.oracleInfo.rValue,
     };
 
-    const cetSignatures = cfddlcjs.GetRawCetSignatures(cetSignRequest);
+    const cetSignatures = cfddlcjs.CreateCetAdaptorSignatures(cetSignRequest);
 
     const refundSignRequest: cfddlcjs.GetRawRefundTxSignatureRequest = {
       refundTxHex: this.contract.refundTransaction,
@@ -254,11 +238,13 @@ When we receive an offer message, a couple of thing need to happen:
       fundInputAmount: this.contract.fundTxOutAmount.GetSatoshiAmount(),
     };
 
-    const refundSignature = cfddlcjs.GetRawRefundTxSignature(refundSignRequest);
+    const refundSignature = cfddlcjs.GetRawRefundTxSignature(
+      refundSignRequest
+    );
 
     const acceptMessage = new AcceptMessage(
       this.partyInputs,
-      cetSignatures.hex,
+      cetSignatures.adaptorPairs,
       refundSignature.hex
     );
 
@@ -282,9 +268,12 @@ When receiving an accept message, the local party can create the transactions, v
     this.contract.ApplyAcceptMessage(acceptMessage);
     this.CreateDlcTransactions();
 
-    const verifyCetSignaturesRequest: cfddlcjs.VerifyCetSignaturesRequest = {
-      cetsHex: this.contract.localCetsHex,
-      signatures: acceptMessage.cetSignatures,
+    const verifyCetAdaptorSignaturesRequest = {
+      cetsHex: this.contract.cetsHex,
+      messages: this.contract.messages,
+      oraclePubkey: this.contract.oracleInfo.publicKey,
+      oracleRValue: this.contract.oracleInfo.rValue,
+      adaptorPairs: acceptMessage.cetAdaptorPairs,
       localFundPubkey: this.contract.localPartyInputs.fundPublicKey,
       remoteFundPubkey: acceptMessage.remotePartyInputs.fundPublicKey,
       fundTxId: this.contract.fundTxId,
@@ -292,8 +281,9 @@ When receiving an accept message, the local party can create the transactions, v
       verifyRemote: true,
     };
 
-    let areSigsValid = cfddlcjs.VerifyCetSignatures(verifyCetSignaturesRequest)
-      .valid;
+    let areSigsValid = cfddlcjs.VerifyCetAdaptorSignatures(
+      verifyCetAdaptorSignaturesRequest
+    ).valid;
 
     const verifyRefundSigRequest: cfddlcjs.VerifyRefundTxSignatureRequest = {
       refundTxHex: this.contract.refundTransaction,
@@ -313,16 +303,21 @@ When receiving an accept message, the local party can create the transactions, v
       throw new Error("Invalid signatures received");
     }
 
-    const cetSignRequest: cfddlcjs.GetRawCetSignaturesRequest = {
-      cetsHex: this.contract.remoteCetsHex,
+    const cetAdaptorSignRequest: cfddlcjs.CreateCetAdaptorSignaturesRequest = {
+      cetsHex: this.contract.cetsHex,
       privkey: this.fundPrivateKey,
       fundTxId: this.contract.fundTxId,
       localFundPubkey: this.partyInputs.fundPublicKey,
       remoteFundPubkey: this.contract.remotePartyInputs.fundPublicKey,
       fundInputAmount: this.contract.fundTxOutAmount.GetSatoshiAmount(),
+      oraclePubkey: this.contract.oracleInfo.publicKey,
+      oracleRValue: this.contract.oracleInfo.rValue,
+      messages: this.contract.messages,
     };
 
-    const cetSignatures = cfddlcjs.GetRawCetSignatures(cetSignRequest).hex;
+    const cetAdaptorPairs = cfddlcjs.CreateCetAdaptorSignatures(
+      cetAdaptorSignRequest
+    ).adaptorPairs;
 
     const refundSignRequest: cfddlcjs.GetRawRefundTxSignatureRequest = {
       refundTxHex: this.contract.refundTransaction,
@@ -354,7 +349,7 @@ When receiving an accept message, the local party can create the transactions, v
 
     return new SignMessage(
       fundTxSigs,
-      cetSignatures,
+      cetAdaptorPairs,
       refundSignature,
       inputPubKeys
     );
@@ -369,25 +364,29 @@ import SignMessage from "./SignMessage";
 
 ## Receiving a sign message
 
-When receiving a sign message, the remote party should verify the signatures for the CETs and refund transaction, and can then sign and broadcast the fund transaction.
+When receiving a sign message, the remote party should verify the adaptor signatures for the CETs and the signature for the refund transaction, and can then sign and broadcast the fund transaction.
 Note that we could also verify the signature(s) for the fund transaction, but an invalid transaction for it will simply trigger an error from the bitcoind instance so we will skip that here.
 
 ```typescript
   public async OnSignMessage(signMessage: SignMessage) {
     this.contract.ApplySignMessage(signMessage);
 
-    const verifyCetSignaturesRequest: cfddlcjs.VerifyCetSignaturesRequest = {
-      cetsHex: this.contract.remoteCetsHex,
-      signatures: this.contract.cetSignatures,
+    const verifyCetSignaturesRequest = {
+      cetsHex: this.contract.cetsHex,
+      adaptorPairs: this.contract.cetAdaptorPairs,
       localFundPubkey: this.contract.localPartyInputs.fundPublicKey,
       remoteFundPubkey: this.contract.remotePartyInputs.fundPublicKey,
       fundTxId: this.contract.fundTxId,
       fundInputAmount: this.contract.fundTxOutAmount.GetSatoshiAmount(),
       verifyRemote: false,
+      messages: this.contract.messages,
+      oraclePubkey: this.contract.oracleInfo.publicKey,
+      oracleRValue: this.contract.oracleInfo.rValue,
     };
 
-    let areSigsValid = cfddlcjs.VerifyCetSignatures(verifyCetSignaturesRequest)
-      .valid;
+    let areSigsValid = cfddlcjs.VerifyCetAdaptorSignatures(
+      verifyCetSignaturesRequest
+    ).valid;
 
     const verifyRefundSigRequest: cfddlcjs.VerifyRefundTxSignatureRequest = {
       refundTxHex: this.contract.refundTransaction,
@@ -455,177 +454,31 @@ We use a burn address to generate the block to avoid changing the balance of the
 
 ## Closing the contract
 
-Recall that the contract can be closed either cooperatively using a mutual closing transaction, or unilaterally.
-
-### Cooperative closing
-
-To handle cooperative closing, we add two functions, one to create a mutual closing message, and another one to receive it.
-We of course need to know the outcome on which to close the contract so we take that as a parameter.
-
-```typescript
-  public CreateMutualClosingMessage(outcome: Outcome) {
-    const mutualClosingRequest = {
-      localFinalAddress: this.contract.localPartyInputs.finalAddress,
-      remoteFinalAddress: this.contract.remotePartyInputs.finalAddress,
-      localAmount: outcome.local.GetSatoshiAmount(),
-      remoteAmount: outcome.remote.GetSatoshiAmount(),
-      fundTxId: this.contract.fundTxId,
-      feeRate: this.contract.feeRate,
-    };
-
-    const mutualClosingTx = cfddlcjs.CreateMutualClosingTransaction(
-      mutualClosingRequest
-    ).hex;
-
-    const signRequest: cfddlcjs.GetRawMutualClosingTxSignatureRequest = {
-      fundTxId: this.contract.fundTxId,
-      mutualClosingHex: mutualClosingTx,
-      privkey: this.fundPrivateKey,
-      localFundPubkey: this.contract.localPartyInputs.fundPublicKey,
-      remoteFundPubkey: this.contract.remotePartyInputs.fundPublicKey,
-      fundInputAmount: this.contract.fundTxOutAmount.GetSatoshiAmount(),
-    };
-
-    const signature = cfddlcjs.GetRawMutualClosingTxSignature(signRequest).hex;
-
-    return new MutualClosingMessage(outcome, signature);
-  }
-
-  public async OnMutualClosingMessage(
-    mutualClosingMessage: MutualClosingMessage
-  ) {
-    const mutualClosingRequest = {
-      localFinalAddress: this.contract.localPartyInputs.finalAddress,
-      remoteFinalAddress: this.contract.remotePartyInputs.finalAddress,
-      localAmount: mutualClosingMessage.outcome.local.GetSatoshiAmount(),
-      remoteAmount: mutualClosingMessage.outcome.remote.GetSatoshiAmount(),
-      fundTxId: this.contract.fundTxId,
-      feeRate: this.contract.feeRate,
-    };
-
-    let mutualClosingTx = cfddlcjs.CreateMutualClosingTransaction(
-      mutualClosingRequest
-    ).hex;
-
-    const signRequest: cfddlcjs.GetRawMutualClosingTxSignatureRequest = {
-      fundTxId: this.contract.fundTxId,
-      mutualClosingHex: mutualClosingTx,
-      privkey: this.fundPrivateKey,
-      localFundPubkey: this.contract.localPartyInputs.fundPublicKey,
-      remoteFundPubkey: this.contract.remotePartyInputs.fundPublicKey,
-      fundInputAmount: this.contract.fundTxOutAmount.GetSatoshiAmount(),
-    };
-
-    const signature = cfddlcjs.GetRawMutualClosingTxSignature(signRequest).hex;
-
-    const signatures = this.contract.isLocalParty
-      ? [signature, mutualClosingMessage.signature]
-      : [mutualClosingMessage.signature, signature];
-
-    const addSigsRequest: cfddlcjs.AddSignaturesToMutualClosingTxRequest = {
-      mutualClosingTxHex: mutualClosingTx,
-      signatures,
-      fundTxId: this.contract.fundTxId,
-      localFundPubkey: this.contract.localPartyInputs.fundPublicKey,
-      remoteFundPubkey: this.contract.remotePartyInputs.fundPublicKey,
-    };
-
-    mutualClosingTx = cfddlcjs.AddSignaturesToMutualClosingTx(addSigsRequest)
-      .hex;
-
-    await this.walletClient.sendRawTransaction(mutualClosingTx);
-
-    await this.GenerateBlocks(1);
-  }
-```
-
-You will need the following imports:
-
-```typescript
-import Outcome from "./Outcome";
-import MutualClosingMessage from "./MutualClosingMessage";
-```
-
-### Unilateral closing
-
-To close the channel unilaterally, we need to get the oracle signature, as well as which CET to use.
+Recall that the contract can be closed by either party, without any required communication between them.
+We simply need to get the oracle signature, as well as which CET to use.
 We thus take the signature as a parameter, and the outcome index that will determine which CET to select.
-We first sign the adequate CET, and add the signature from our counter party (that we received during the setup).
-We then sign the closing transaction using our private key and the oracle signature, and then broadcast both transactions:
+We then simply call the `SignCet` function that will take care of decrypting the adaptor signature of our counter-party and adding our own signature.
+We can then finally broadcast the CET to receive our payout.
 
 ```typescript
-
-  public async ExecuteUnilateralClose(
-    oracleSignature: string,
-    outcomeIndex: number
+  public async SignAndBroadcastCet(
+    outcomeIndex: number,
+    oracleSignature: string
   ) {
-    const cets = this.contract.isLocalParty
-      ? this.contract.localCetsHex
-      : this.contract.remoteCetsHex;
-
-    let cetHex = cets[outcomeIndex];
-
-    const signRequest: cfddlcjs.GetRawCetSignatureRequest = {
-      cetHex,
-      privkey: this.fundPrivateKey,
+    const signCetRequest: cfddlcjs.SignCetRequest = {
+      cetHex: this.contract.cetsHex[outcomeIndex],
+      fundPrivkey: this.fundPrivateKey,
       fundTxId: this.contract.fundTxId,
       localFundPubkey: this.contract.localPartyInputs.fundPublicKey,
       remoteFundPubkey: this.contract.remotePartyInputs.fundPublicKey,
+      oracleSignature,
       fundInputAmount: this.contract.fundTxOutAmount.GetSatoshiAmount(),
+      adaptorSignature: this.contract.cetAdaptorPairs[outcomeIndex].signature,
     };
 
-    const cetSign = cfddlcjs.GetRawCetSignature(signRequest).hex;
+    const finalCet = cfddlcjs.SignCet(signCetRequest).hex;
 
-    const signatures = this.contract.isLocalParty
-      ? [cetSign, this.contract.cetSignatures[outcomeIndex]]
-      : [this.contract.cetSignatures[outcomeIndex], cetSign];
-
-    const addSignRequest: cfddlcjs.AddSignaturesToCetRequest = {
-      cetHex,
-      signatures,
-      fundTxId: this.contract.fundTxId,
-      localFundPubkey: this.contract.localPartyInputs.fundPublicKey,
-      remoteFundPubkey: this.contract.remotePartyInputs.fundPublicKey,
-    };
-
-    cetHex = cfddlcjs.AddSignaturesToCet(addSignRequest).hex;
-
-    const cet = Utils.DecodeRawTransaction(cetHex);
-
-    const outcomeAmount = this.contract.isLocalParty
-      ? this.contract.outcomes[outcomeIndex].local
-      : this.contract.outcomes[outcomeIndex].remote;
-
-    const closingTxRequest: cfddlcjs.CreateClosingTransactionRequest = {
-      address: this.partyInputs.finalAddress,
-      amount: outcomeAmount.GetSatoshiAmount(),
-      cetTxId: cet.txid,
-    };
-
-    let closingTxHex = cfddlcjs.CreateClosingTransaction(closingTxRequest).hex;
-
-    const remoteSweepKey = this.contract.isLocalParty
-      ? this.contract.remotePartyInputs.sweepPublicKey
-      : this.contract.localPartyInputs.sweepPublicKey;
-
-    const signClosingRequest: cfddlcjs.SignClosingTransactionRequest = {
-      closingTxHex,
-      cetTxId: cet.txid,
-      amount: cet.vout[0].value,
-      localFundPrivkey: this.fundPrivateKey,
-      localSweepPubkey: this.partyInputs.sweepPublicKey,
-      remoteSweepPubkey: remoteSweepKey,
-      oraclePubkey: this.contract.oracleInfo.publicKey,
-      oracleRPoints: [this.contract.oracleInfo.rValue],
-      oracleSigs: [oracleSignature],
-      messages: [this.contract.outcomes[outcomeIndex].message],
-      csvDelay: this.contract.cetCsvDelay,
-    };
-
-    closingTxHex = cfddlcjs.SignClosingTransaction(signClosingRequest).hex;
-
-    await this.walletClient.sendRawTransaction(cetHex);
-    await this.walletClient.sendRawTransaction(closingTxHex);
+    await this.walletClient.sendRawTransaction(finalCet);
     await this.GenerateBlocks(1);
   }
 ```

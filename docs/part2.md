@@ -30,17 +30,14 @@ Fill the rest however you want.
 We will then install some dependencies:
 
 ```bash
-npm install bitcoin-core inquirer inquirer-datepicker uuid --save
+npm install bitcoin-simple-rpc inquirer inquirer-datepicker uuid --save
 ```
 
 Then install the DLC library as well as the base CFD library (useful for some utility functions):
 
 ```bash
-npm install github:cryptogarageinc/cfd-js#v0.0.21 github:cryptogarageinc/cfd-dlc-js#v0.0.1
+npm install github:cryptogarageinc/cfd-js#v0.2.5 github:cryptogarageinc/cfd-dlc-js#v0.0.8
 ```
-
-This can take sometimes as it will build the binaries for the C++ layer.
-Unfortunately that means that you need to have some C++ build tools installed (we are working on improving this!).
 
 Add some dev dependencies (you can skip those if you prefer to use plain JavaScript):
 
