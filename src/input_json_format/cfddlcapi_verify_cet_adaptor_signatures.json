@@ -4,12 +4,14 @@
     ":class": "VerifyCetAdaptorSignaturesRequest",
     ":class:comment": "Verify a set of signatures for a set of CET",
     "cetsHex": [""],
-    "adaptorPairs": [{ ":class": "AdaptorPair", "signature": "", "proof": "" }],
-    "messages": [""],
+    "adaptorPairs": [
+      { ":class": "AdaptorPair", "signature": "", "proof": "" }
+    ],
+    "messagesList": [{ ":class": "Messages", "messages": [""] }],
     "localFundPubkey": "",
     "remoteFundPubkey": "",
     "oraclePubkey": "",
-    "oracleRValue": "",
+    "oracleRValues": [""],
     "fundTxId": "",
     "fundVout": 0,
     "fundVout:type": "uint32_t",

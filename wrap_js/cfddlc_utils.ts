@@ -1,6 +1,14 @@
 import * as cfddlcjs from "../index.js";
 import * as CfdUtils from "./cfd_utils";
 
+function MessagesToMessagesList(input: string[][]): cfddlcjs.Messages[] {
+  return input.map((x) => {
+    return {
+      messages: x,
+    };
+  });
+}
+
 export function SignFundTransactionInput(
   transaction: string,
   input: any,
@@ -23,10 +31,9 @@ export function SignCet(
   fundInputAmount: number,
   adaptorSignature: string,
   prv: string,
-  oracleSignature: string,
+  oracleSignatures: string[],
   localFundPubkey: string,
-  remoteFundPubkey: string,
-  isLocal: boolean
+  remoteFundPubkey: string
 ): string {
   const reqJson: cfddlcjs.SignCetRequest = {
     cetHex: transaction,
@@ -36,7 +43,7 @@ export function SignCet(
     fundInputAmount,
     localFundPubkey,
     remoteFundPubkey,
-    oracleSignature,
+    oracleSignatures,
     adaptorSignature,
   };
 
@@ -94,8 +101,8 @@ export function CreateCetAdaptorSignatures(
   cets: string[],
   privkey: string,
   oraclePubkey: string,
-  oracleRValue: string,
-  messages: string[],
+  oracleRValues: string[],
+  messages: string[][],
   fundTxId: string,
   fundVout: number,
   fundInputAmount: number,
@@ -110,8 +117,8 @@ export function CreateCetAdaptorSignatures(
     localFundPubkey,
     remoteFundPubkey,
     oraclePubkey,
-    oracleRValue,
-    messages,
+    oracleRValues,
+    messagesList: MessagesToMessagesList(messages),
     fundInputAmount,
   };
 
@@ -121,9 +128,9 @@ export function CreateCetAdaptorSignatures(
 export function VerifyAdaptorSignatures(
   cets: string[],
   adaptorPairs: cfddlcjs.AdaptorPair[],
-  messages: string[],
+  messages: string[][],
   oraclePubkey: string,
-  oracleRValue: string,
+  oracleRValues: string[],
   localFundPubkey: string,
   remoteFundPubkey: string,
   fundTxId: string,
@@ -133,11 +140,11 @@ export function VerifyAdaptorSignatures(
   const req: cfddlcjs.VerifyCetAdaptorSignaturesRequest = {
     cetsHex: cets,
     adaptorPairs,
-    messages,
+    messagesList: MessagesToMessagesList(messages),
     localFundPubkey,
     remoteFundPubkey,
     oraclePubkey,
-    oracleRValue,
+    oracleRValues,
     fundTxId,
     fundInputAmount,
     verifyRemote,

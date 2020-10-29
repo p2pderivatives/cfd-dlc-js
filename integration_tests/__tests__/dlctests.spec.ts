@@ -21,17 +21,21 @@ describe("dlc tests", () => {
 
     await testHelper.Initialize();
 
-    const oracleSignature = CfdUtils.SchnorrSign(
-      testHelper.winMessage,
-      testHelper.oracleKey,
-      testHelper.oracleKValue
+    const oracleSignatures = testHelper.winMessages.map((m, i) =>
+      CfdUtils.SchnorrSign(
+        m,
+        testHelper.oracleKey,
+        testHelper.oracleKValues[i]
+      )
     );
 
     expect(
-      CfdUtils.SchnorrVerify(
-        testHelper.winMessage,
-        oracleSignature,
-        testHelper.oraclePubkey
+      oracleSignatures.every((s, i) =>
+        CfdUtils.SchnorrVerify(
+          testHelper.winMessages[i],
+          s,
+          testHelper.oraclePubkey
+        )
       )
     ).toBeTruthy();
 
@@ -45,7 +49,7 @@ describe("dlc tests", () => {
       dlctxs.cetsHex,
       testHelper.aliceFundPrivkey,
       testHelper.oraclePubkey,
-      testHelper.oracleRValue,
+      testHelper.oracleRValues,
       testHelper.messages,
       fundTx.txid,
       0,
@@ -59,7 +63,7 @@ describe("dlc tests", () => {
       localAdaptorPairs,
       testHelper.messages,
       testHelper.oraclePubkey,
-      testHelper.oracleRValue,
+      testHelper.oracleRValues,
       testHelper.aliceFundPubkey,
       testHelper.bobFundPubkey,
       fundTxId,
@@ -73,7 +77,7 @@ describe("dlc tests", () => {
       dlctxs.cetsHex,
       testHelper.bobFundPrivkey,
       testHelper.oraclePubkey,
-      testHelper.oracleRValue,
+      testHelper.oracleRValues,
       testHelper.messages,
       fundTx.txid,
       0,
@@ -87,7 +91,7 @@ describe("dlc tests", () => {
       remoteAdaptorPairs,
       testHelper.messages,
       testHelper.oraclePubkey,
-      testHelper.oracleRValue,
+      testHelper.oracleRValues,
       testHelper.aliceFundPubkey,
       testHelper.bobFundPubkey,
       fundTxId,
@@ -143,10 +147,9 @@ describe("dlc tests", () => {
       fundInputAmount,
       remoteAdaptorPairs[0].signature,
       testHelper.aliceFundPrivkey,
-      oracleSignature,
+      oracleSignatures,
       testHelper.aliceFundPubkey,
-      testHelper.bobFundPubkey,
-      true
+      testHelper.bobFundPubkey
     );
     const cet = CfdUtils.DecodeRawTransaction(cetHex);
 
@@ -197,7 +200,9 @@ describe("dlc tests", () => {
       testHelper.bobInputPrv
     );
 
-    const fundTxId = await testHelper.aliceWallet.sendRawTransaction(fundTxHex);
+    const fundTxId = await testHelper.aliceWallet.sendRawTransaction(
+      fundTxHex
+    );
 
     const fundTx = CfdUtils.DecodeRawTransaction(fundTxHex);
 

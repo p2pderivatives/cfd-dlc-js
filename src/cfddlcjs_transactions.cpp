@@ -331,6 +331,42 @@ std::vector<Pubkey> DlcTransactionsApi::ParsePubkeys(
   return output;
 }
 
+std::vector<SchnorrPubkey> DlcTransactionsApi::ParseSchnorrPubkeys(
+    std::vector<std::string> input) {
+  std::vector<SchnorrPubkey> output;
+  for (int i = 0; i < input.size(); i++) {
+    output.push_back(SchnorrPubkey(input[i]));
+  }
+  return output;
+}
+
+std::vector<SchnorrSignature> DlcTransactionsApi::ParseSchnorrSignatures(
+    std::vector<std::string> input) {
+  std::vector<SchnorrSignature> output;
+  for (int i = 0; i < input.size(); i++) {
+    output.push_back(SchnorrSignature(input[i]));
+  }
+  return output;
+}
+
+std::vector<ByteData256> DlcTransactionsApi::HashMessages(
+    std::vector<std::string> input) {
+  std::vector<ByteData256> output(input.size());
+  for (int i = 0; i < input.size(); i++) {
+    output[i] = HashUtil::Sha256(input[i]);
+  }
+  return output;
+}
+
+std::vector<std::vector<ByteData256>> DlcTransactionsApi::HashMessages(
+    std::vector<MessagesStruct> input) {
+  std::vector<std::vector<ByteData256>> output(input.size());
+  for (int i = 0; i < input.size(); i++) {
+    output[i] = HashMessages(input[i].messages);
+  }
+  return output;
+}
+
 CreateCetAdaptorSignatureResponseStruct
 DlcTransactionsApi::CreateCetAdaptorSignature(
     const CreateCetAdaptorSignatureRequestStruct& request) {
@@ -342,16 +378,19 @@ DlcTransactionsApi::CreateCetAdaptorSignature(
     Pubkey local_fund_pubkey(request.local_fund_pubkey);
     Pubkey remote_fund_pubkey(request.remote_fund_pubkey);
     SchnorrPubkey oracle_pubkey(request.oracle_pubkey);
-    SchnorrPubkey oracle_r_value(request.oracle_r_value);
+    auto oracle_r_values = ParseSchnorrPubkeys(request.oracle_r_values);
+
     Txid fund_txid(request.fund_tx_id);
     auto fund_input_amount =
         Amount::CreateBySatoshiAmount(request.fund_input_amount);
     auto fund_script = DlcManager::CreateFundTxLockingScript(
         local_fund_pubkey, remote_fund_pubkey);
-    auto hashed_msg = HashUtil::Sha256(request.message);
+
+    auto hashed_msgs = HashMessages(request.messages);
+
     auto adaptor_pair = DlcManager::CreateCetAdaptorSignature(
-        cet, oracle_pubkey, oracle_r_value, privkey, fund_script,
-        fund_input_amount, hashed_msg);
+        cet, oracle_pubkey, oracle_r_values, privkey, fund_script,
+        fund_input_amount, hashed_msgs);
     response.signature = adaptor_pair.signature.GetData().GetHex();
     response.proof = adaptor_pair.proof.GetData().GetHex();
     return response;
@@ -372,17 +411,13 @@ DlcTransactionsApi::CreateCetAdaptorSignatures(
     std::vector<TransactionController> cets;
     cets.reserve(request.cets_hex.size());
     SchnorrPubkey oracle_pubkey(request.oracle_pubkey);
-    SchnorrPubkey oracle_r_value(request.oracle_r_value);
+    auto oracle_r_values = ParseSchnorrPubkeys(request.oracle_r_values);
 
     for (auto cet_hex : request.cets_hex) {
       cets.push_back(TransactionController(cet_hex));
     }
 
-    std::vector<ByteData256> hashed_messages;
-    hashed_messages.reserve(request.messages.size());
-    for (auto msg : request.messages) {
-      hashed_messages.push_back(HashUtil::Sha256(msg));
-    }
+    auto hashed_messages = HashMessages(request.messages_list);
 
     Privkey privkey(request.privkey);
     Pubkey local_fund_pubkey(request.local_fund_pubkey);
@@ -393,7 +428,7 @@ DlcTransactionsApi::CreateCetAdaptorSignatures(
     auto fund_input_amount =
         Amount::CreateBySatoshiAmount(request.fund_input_amount);
     auto adaptor_pairs = DlcManager::CreateCetAdaptorSignatures(
-        cets, oracle_pubkey, oracle_r_value, privkey, fund_script,
+        cets, oracle_pubkey, oracle_r_values, privkey, fund_script,
         fund_input_amount, hashed_messages);
     response.adaptor_pairs.reserve(adaptor_pairs.size());
 
@@ -423,14 +458,14 @@ SignCetResponseStruct DlcTransactionsApi::SignCet(
     Pubkey remote_fund_pubkey(request.remote_fund_pubkey);
     Txid fund_txid(request.fund_tx_id);
     AdaptorSignature adaptor_signature(request.adaptor_signature);
-    SchnorrSignature oracle_signature(request.oracle_signature);
+    auto oracle_signatures = ParseSchnorrSignatures(request.oracle_signatures);
     Privkey privkey(request.fund_privkey);
     auto fund_script = DlcManager::CreateFundTxLockingScript(
         local_fund_pubkey, remote_fund_pubkey);
     Txid fund_tx_id(request.fund_tx_id);
     auto fund_amount = Amount::CreateBySatoshiAmount(request.fund_input_amount);
 
-    DlcManager::SignCet(&cet, adaptor_signature, oracle_signature, privkey,
+    DlcManager::SignCet(&cet, adaptor_signature, oracle_signatures, privkey,
                         fund_script, fund_tx_id, request.fund_vout,
                         fund_amount);
     response.hex = cet.GetHex();
@@ -449,7 +484,8 @@ DlcTransactionsApi::VerifyCetAdaptorSignatures(
       -> VerifyCetAdaptorSignaturesResponseStruct {
     VerifyCetAdaptorSignaturesResponseStruct response;
     size_t nb = request.cets_hex.size();
-    if (nb != request.adaptor_pairs.size() || nb != request.messages.size()) {
+    if (nb != request.adaptor_pairs.size() ||
+        nb != request.messages_list.size()) {
       throw CfdException(
           CfdError::kCfdIllegalArgumentError,
           "Number of transactions and number of signatures differs.");
@@ -457,14 +493,14 @@ DlcTransactionsApi::VerifyCetAdaptorSignatures(
 
     std::vector<TransactionController> cets;
     std::vector<AdaptorPair> adaptor_pairs;
-    std::vector<ByteData256> msgs;
+    std::vector<std::vector<ByteData256>> msgs;
     cets.reserve(nb);
     adaptor_pairs.reserve(nb);
     msgs.reserve(nb);
     Pubkey local_fund_pubkey(request.local_fund_pubkey);
     Pubkey remote_fund_pubkey(request.remote_fund_pubkey);
     SchnorrPubkey oracle_pubkey(request.oracle_pubkey);
-    SchnorrPubkey oracle_r_value(request.oracle_r_value);
+    auto oracle_r_values = ParseSchnorrPubkeys(request.oracle_r_values);
     auto pubkey =
         request.verify_remote ? remote_fund_pubkey : local_fund_pubkey;
     Txid fund_txid(request.fund_tx_id);
@@ -476,14 +512,14 @@ DlcTransactionsApi::VerifyCetAdaptorSignatures(
       adaptor_pairs.push_back(
           {AdaptorSignature(request.adaptor_pairs[i].signature),
            AdaptorProof(request.adaptor_pairs[i].proof)});
-      msgs.push_back(HashUtil::Sha256(request.messages[i]));
+      msgs.push_back(HashMessages(request.messages_list[i].messages));
     }
 
     auto fund_script = DlcManager::CreateFundTxLockingScript(
         local_fund_pubkey, remote_fund_pubkey);
 
     response.valid = DlcManager::VerifyCetAdaptorSignatures(
-        cets, adaptor_pairs, msgs, pubkey, oracle_pubkey, oracle_r_value,
+        cets, adaptor_pairs, msgs, pubkey, oracle_pubkey, oracle_r_values,
         fund_script, fund_input_amount);
     return response;
   };
@@ -508,17 +544,17 @@ DlcTransactionsApi::VerifyCetAdaptorSignature(
     SchnorrPubkey oracle_pubkey(request.oracle_pubkey);
     auto pubkey =
         request.verify_remote ? remote_fund_pubkey : local_fund_pubkey;
-    SchnorrPubkey oracle_r_value(request.oracle_r_value);
+    auto oracle_r_values = ParseSchnorrPubkeys(request.oracle_r_values);
     Txid fund_txid(request.fund_tx_id);
     auto fund_input_amount =
         Amount::CreateBySatoshiAmount(request.fund_input_amount);
     auto fund_script = DlcManager::CreateFundTxLockingScript(
         local_fund_pubkey, remote_fund_pubkey);
-    auto msg = HashUtil::Sha256(request.message);
+    auto msg = HashMessages(request.messages);
 
     response.valid = DlcManager::VerifyCetAdaptorSignature(
         {adaptor_signature, adaptor_proof}, cet, pubkey, oracle_pubkey,
-        oracle_r_value, fund_script, fund_input_amount, msg);
+        oracle_r_values, fund_script, fund_input_amount, msg);
     return response;
   };
   VerifyCetAdaptorSignatureResponseStruct result;
