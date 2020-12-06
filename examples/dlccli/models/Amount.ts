@@ -5,7 +5,7 @@ export default class Amount {
   // Holds the actual amount in satoshis
   private readonly _satoshis: number;
 
-  private constructor(satoshis) {
+  private constructor(satoshis: number) {
     this._satoshis = satoshis;
   }
 
