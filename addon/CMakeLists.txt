@@ -102,6 +102,13 @@ endif()
 if(CMAKE_JS_INC)
 message(STATUS "[CMAKE_JS_INC]=${CMAKE_JS_INC}")
 
+if(NOT napi_build_version)
+add_compile_definitions(NAPI_VERSION=3)
+else()
+message(STATUS "[napi_build_version]=${napi_build_version}")
+add_compile_definitions(NAPI_VERSION=${napi_build_version})
+endif()
+
 # cfd-js
 project(cfddlc_js CXX)
 set(CMAKE_CXX_STANDARD 11)

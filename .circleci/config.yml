@@ -136,7 +136,7 @@ jobs:
           name: Build prebuilt binaries
           command: |
             << parameters.pre-prebuild-cmd >>
-            npm run-script prebuild_all
+            npm run-script prebuild_napi
       - store_artifacts:
           path: ./prebuilds
       - persist_to_workspace:
