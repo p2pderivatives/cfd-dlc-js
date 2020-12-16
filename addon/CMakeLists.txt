@@ -101,6 +101,7 @@ endif()
 ####################
 if(CMAKE_JS_INC)
 message(STATUS "[CMAKE_JS_INC]=${CMAKE_JS_INC}")
+add_compile_definitions(NAPI_VERSION=3)
 
 # cfd-js
 project(cfddlc_js CXX)
