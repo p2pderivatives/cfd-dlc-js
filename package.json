@@ -1,6 +1,6 @@
 {
   "name": "cfd-dlc-js",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "cfd-dlc node.js api",
   "domain": "p2pderivatives",
   "main": "index.js",
