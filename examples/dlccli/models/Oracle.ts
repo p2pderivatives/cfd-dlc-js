@@ -5,7 +5,7 @@ import OracleInfo from "./OracleInfo";
 export default class Oracle {
   readonly name: string;
   readonly kValue: string;
-  readonly rValue: string;
+  readonly rValues: string[];
   readonly publicKey: string;
   readonly privateKey: string;
 
@@ -16,12 +16,12 @@ export default class Oracle {
     this.publicKey = CfdUtils.GetSchnorrPubkeyFromPrivkey(this.privateKey);
     keyPair = CfdUtils.CreateKeyPair();
     this.kValue = keyPair.privkey;
-    this.rValue = CfdUtils.GetSchnorrPubkeyFromPrivkey(this.kValue);
+    this.rValues = [CfdUtils.GetSchnorrPubkeyFromPrivkey(this.kValue)];
   }
 
   // Returns the public information for the Oracle.
   public GetOracleInfo() {
-    return new OracleInfo(this.name, this.rValue, this.publicKey);
+    return new OracleInfo(this.name, this.rValues, this.publicKey);
   }
 
   // Sign a given message using the private key and the R value.

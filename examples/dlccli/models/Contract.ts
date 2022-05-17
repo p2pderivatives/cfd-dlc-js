@@ -1,4 +1,4 @@
-import { AdaptorPair } from "../../..";
+import { AdaptorPair, Messages } from "../../..";
 import AcceptMessage from "./AcceptMessage";
 import Amount from "./Amount";
 import OfferMessage from "./OfferMessage";
@@ -12,7 +12,7 @@ export default class Contract {
   localCollateral: Amount;
   remoteCollateral: Amount;
   payouts: Payout[];
-  messages: string[];
+  messagesList: Messages[];
   feeRate: number;
   localPartyInputs: PartyInputs;
   remotePartyInputs: PartyInputs;
@@ -31,7 +31,7 @@ export default class Contract {
 
   constructor() {
     this.payouts = [];
-    this.messages = [];
+    this.messagesList = [];
   }
 
   public static FromOfferMessage(offerMessage: OfferMessage) {
@@ -45,7 +45,7 @@ export default class Contract {
     contract.feeRate = offerMessage.feeRate;
     contract.refundLockTime = offerMessage.refundLockTime;
     contract.isLocalParty = false;
-    contract.messages = offerMessage.messages;
+    contract.messagesList = offerMessage.messagesList;
     return contract;
   }
 
@@ -60,7 +60,7 @@ export default class Contract {
       localPartyInputs: this.localPartyInputs,
       feeRate: this.feeRate,
       refundLockTime: this.refundLockTime,
-      messages: this.messages,
+      messagesList: this.messagesList,
     };
   }
 
