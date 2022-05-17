@@ -4,7 +4,8 @@ bitcoind=$(command -v bitcoind)
 bitcoincli=$(command -v bitcoin-cli)
 net="regtest"
 conf="bitcoin.${net}.conf"
-opts=( -datadir=./bitcoind -conf=$conf )
+datadir="bitcoind"
+opts=( -datadir=./"${datadir}" -conf=$conf )
 
 # start deamon if not running
 function getnetworkinfo() {
@@ -43,11 +44,24 @@ function getblockcount() {
 height=$(getblockcount)
 echo "Block Height: ${height}"
 
-echo "Creating wallets"
-$bitcoincli "${opts[@]}" createwallet "alice" "false" "false" "alice"
-$bitcoincli "${opts[@]}" createwallet "bob" "false" "false" "bob"
+echo "Creating or loading wallets"
+
+aliceWalletFile="./${datadir}/${net}/wallets/alice"
+if [ ! -d "${aliceWalletFile}" ]; then
+  $bitcoincli "${opts[@]}" -named createwallet wallet_name=alice descriptors=false passphrase=alice
+else
+  $bitcoincli "${opts[@]}" loadwallet "alice"
+fi
+
+bobWalletFile="./${datadir}/${net}/wallets/bob"
+if [ ! -d "${bobWalletFile}" ]; then
+  $bitcoincli "${opts[@]}" -named createwallet wallet_name=bob descriptors=false passphrase=bob
+else
+  $bitcoincli "${opts[@]}" loadwallet "bob"
+fi
 
 aliceAddress=$($bitcoincli "${opts[@]}" -rpcwallet=alice getnewaddress bec32)
 $bitcoincli "${opts[@]}" generatetoaddress 101 ${aliceAddress} &> /dev/null
+
 bobAddress=$($bitcoincli "${opts[@]}" -rpcwallet=bob getnewaddress bec32)
 $bitcoincli "${opts[@]}" generatetoaddress 101 ${bobAddress} &> /dev/null
