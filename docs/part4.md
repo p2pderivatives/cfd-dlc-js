@@ -224,7 +224,7 @@ When we receive an offer message, a couple of thing need to happen:
       remoteFundPubkey: this.partyInputs.fundPublicKey,
       fundInputAmount: this.contract.fundTxOutAmount.GetSatoshiAmount(),
       oraclePubkey: this.contract.oracleInfo.publicKey,
-      oracleRValue: this.contract.oracleInfo.rValue,
+      oracleRValues: this.contract.oracleInfo.rValues,
     };
 
     const cetSignatures = cfddlcjs.CreateCetAdaptorSignatures(cetSignRequest);
@@ -272,7 +272,7 @@ When receiving an accept message, the local party can create the transactions, v
       cetsHex: this.contract.cetsHex,
       messages: this.contract.messages,
       oraclePubkey: this.contract.oracleInfo.publicKey,
-      oracleRValue: this.contract.oracleInfo.rValue,
+      oracleRValues: this.contract.oracleInfo.rValues,
       adaptorPairs: acceptMessage.cetAdaptorPairs,
       localFundPubkey: this.contract.localPartyInputs.fundPublicKey,
       remoteFundPubkey: acceptMessage.remotePartyInputs.fundPublicKey,
@@ -311,7 +311,7 @@ When receiving an accept message, the local party can create the transactions, v
       remoteFundPubkey: this.contract.remotePartyInputs.fundPublicKey,
       fundInputAmount: this.contract.fundTxOutAmount.GetSatoshiAmount(),
       oraclePubkey: this.contract.oracleInfo.publicKey,
-      oracleRValue: this.contract.oracleInfo.rValue,
+      oracleRValues: this.contract.oracleInfo.rValues,
       messages: this.contract.messages,
     };
 
@@ -381,7 +381,7 @@ Note that we could also verify the signature(s) for the fund transaction, but an
       verifyRemote: false,
       messages: this.contract.messages,
       oraclePubkey: this.contract.oracleInfo.publicKey,
-      oracleRValue: this.contract.oracleInfo.rValue,
+      oracleRValues: this.contract.oracleInfo.rValues,
     };
 
     let areSigsValid = cfddlcjs.VerifyCetAdaptorSignatures(

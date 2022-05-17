@@ -168,7 +168,7 @@ async function GetOutcomes() {
   const message = values[OutcomeInputNames.Message];
   const payout = new Payout(localAmount, remoteAmount);
   contract.payouts.push(payout);
-  contract.messages.push(message);
+  contract.messagesList.push({ messages: [message] });
 
   if (addMore) {
     await GetOutcomes();
@@ -218,18 +218,19 @@ import OfferMessage from "./models/OfferMessage";
 For the purpose of this simple application, we will let the user decide on the outcome:
 
 ```typescript
-async function DecideOutcome(): Promise<{ message: string; index: number }> {
+async function DecideOutcome(): Promise<{ message_string: string; index: number }> {
   const name = "Outcome choice";
   const answers = await inquirer.prompt([
     {
       name,
       message: "Choose the outcome of the event",
       type: "list",
-      choices: contract.messages.map((message, index) => {
+      choices: contract.messagesList.map((message, index) => {
+        const message_string = message['messages'][0];
         return {
-          name: message,
-          short: message,
-          value: { message, index },
+          name: message_string,
+          short: message_string,
+          value: { message_string, index },
         };
       }),
     },

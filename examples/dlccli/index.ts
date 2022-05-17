@@ -1,4 +1,5 @@
 import { Client, ClientOption } from "bitcoin-simple-rpc";
+import { Messages } from "../..";
 import inquirer from "inquirer";
 import datepicker from "inquirer-datepicker";
 import util from "util";
@@ -60,7 +61,7 @@ async function GetOutcomes() {
   const message = values[OutcomeInputNames.Message];
   const payout = new Payout(localAmount, remoteAmount);
   contract.payouts.push(payout);
-  contract.messages.push(message);
+  contract.messagesList.push({ messages: [message] });
 
   if (addMore) {
     await GetOutcomes();
@@ -82,18 +83,19 @@ async function ProposeContractToBob(offerMessage: OfferMessage) {
   return values[name];
 }
 
-async function DecideOutcome(): Promise<{ message: string; index: number }> {
+async function DecideOutcome(): Promise<{ message_string: string; index: number }> {
   const name = "Outcome choice";
   const answers = await inquirer.prompt([
     {
       name,
       message: "Choose the outcome of the event",
       type: "list",
-      choices: contract.messages.map((message, index) => {
+      choices: contract.messagesList.map((message, index) => {
+        const message_string = message['messages'][0];
         return {
-          name: message,
-          short: message,
-          value: { message, index },
+          name: message_string,
+          short: message_string,
+          value: { message_string, index },
         };
       }),
     },
@@ -140,13 +142,13 @@ alice.GenerateBlocks(101).then(async () => {
     const acceptMessage = await bob.OnOfferMessage(offerMessage);
     const signMessage = alice.OnAcceptMessage(acceptMessage);
     await bob.OnSignMessage(signMessage);
-    const { message, index } = await DecideOutcome();
-    const signature = oracle.GetSignature(message);
-    const closingType = await DecideClosing(message, index);
+    const { message_string, index } = await DecideOutcome();
+    const signatures = [oracle.GetSignature(message_string)];
+    const closingType = await DecideClosing(message_string, index);
     if (closingType === 0) {
-      await alice.SignAndBroadcastCet(index, signature);
+      await alice.SignAndBroadcastCet(index, signatures);
     } else {
-      await bob.SignAndBroadcastCet(index, signature);
+      await bob.SignAndBroadcastCet(index, signatures);
     }
   }
   await PrintBalances();
