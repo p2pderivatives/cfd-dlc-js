@@ -18,15 +18,13 @@ import PartyInputs from "./PartyInputs";
 
 export default class DlcParty {
   readonly walletClient: Client;
-  readonly passphrase: string;
   partyInputs: PartyInputs;
   fundPrivateKey: string;
   inputPrivateKeys: string[];
   contract: Contract;
 
-  constructor(walletClient: Client, passphrase: string) {
+  constructor(walletClient: Client) {
     this.walletClient = walletClient;
-    this.passphrase = passphrase;
   }
 ```
 
@@ -60,7 +58,6 @@ We also extract a couple of functions to make our code more readable.
 
 ```typescript
   private async Initialize(collateral: Amount) {
-    await this.walletClient.walletPassphrase(this.passphrase, 10);
     const changeAddress = await this.walletClient.getNewAddress();
     const finalAddress = await this.walletClient.getNewAddress();
     this.fundPrivateKey = await this.GetNewPrivateKey();
