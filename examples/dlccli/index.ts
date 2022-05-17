@@ -23,8 +23,8 @@ export function CreateWalletClient(walletName: string) {
 
 const aliceClient = CreateWalletClient("alice");
 const bobClient = CreateWalletClient("bob");
-const alice = new DlcParty(aliceClient, "alice");
-const bob = new DlcParty(bobClient, "bob");
+const alice = new DlcParty(aliceClient);
+const bob = new DlcParty(bobClient);
 const oracle = new Oracle("Olivia");
 
 const contract = new Contract();
