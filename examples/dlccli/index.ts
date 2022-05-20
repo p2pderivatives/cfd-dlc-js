@@ -1,5 +1,4 @@
 import { Client, ClientOption } from "bitcoin-simple-rpc";
-import { Messages } from "../..";
 import inquirer from "inquirer";
 import datepicker from "inquirer-datepicker";
 import util from "util";
