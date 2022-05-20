@@ -90,7 +90,7 @@ async function DecideOutcome(): Promise<{ message_string: string; index: number 
       message: "Choose the outcome of the event",
       type: "list",
       choices: contract.messagesList.map((message, index) => {
-        const message_string = message['messages'][0];
+        const message_string = message.messages[0];
         return {
           name: message_string,
           short: message_string,
