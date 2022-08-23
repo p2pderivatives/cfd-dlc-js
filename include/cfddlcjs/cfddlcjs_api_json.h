@@ -2,19 +2,21 @@
 /**
  * @file cfddlcjs_api_json.h
  *
- * @brief cfd-apiで利用するJsonApiクラス定義
+ * @brief Define JsonApi class used in cfd-api.
  *
- * JSON形式のAPIを提供する.
+ * Provide JSON format API.
  */
 #ifndef CFD_DLC_JS_INCLUDE_CFDDLCJS_CFDDLCJS_API_JSON_H_
 #define CFD_DLC_JS_INCLUDE_CFDDLCJS_CFDDLCJS_API_JSON_H_
 
+#include <functional>
+#include <map>
 #include <string>
 
 #include "cfddlcjs/cfddlcjs_api_common.h"
 
 /**
- * @brief cfdapi名前空間
+ * @brief cfdapi namespace
  */
 namespace cfd {
 namespace dlc {
@@ -22,11 +24,28 @@ namespace js {
 namespace api {
 namespace json {
 
+/// request and response function type.
+using RequestFunction = std::function<std::string(const std::string &)>;
+/// request and response function map.
+using RequestFunctionMap = std::map<std::string, RequestFunction>;
+/// response only function type.
+using ResponseOnlyFunction = std::function<std::string()>;
+/// response only function map.
+using ResponseOnlyFunctionMap = std::map<std::string, ResponseOnlyFunction>;
+
 /**
- * @brief 共通系の関数群クラス
+ * @brief Json mapped api class.
  */
 class CFD_DLC_JS_API_EXPORT JsonMappingApi {
- public:
+public:
+  /**
+   * @brief load functions.
+   * @param[out] request_map        request-response function map.
+   * @param[out] response_only_map  response-only function map.
+   */
+  static void LoadFunctions(RequestFunctionMap *request_map,
+                            ResponseOnlyFunctionMap *response_only_map);
+
   static std::string CreateFundTransaction(const std::string &request_message);
 
   static std::string SignFundTransaction(const std::string &request_message);

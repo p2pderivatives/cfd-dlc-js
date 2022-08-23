@@ -221,6 +221,42 @@ std::string JsonMappingApi::VerifyRefundTxSignature(
       request_message, DlcTransactionsApi::VerifyRefundTxSignature);
 }
 
+void JsonMappingApi::LoadFunctions(RequestFunctionMap *request_map,
+                                   ResponseOnlyFunctionMap *response_only_map) {
+  if (request_map != nullptr) {
+    request_map->emplace("CreateFundTransaction",
+                         JsonMappingApi::CreateFundTransaction);
+    request_map->emplace("GetRawFundTxSignature",
+                         JsonMappingApi::GetRawFundTxSignature);
+    request_map->emplace("AddSignatureToFundTransaction",
+                         JsonMappingApi::AddSignatureToFundTransaction);
+    request_map->emplace("SignFundTransaction",
+                         JsonMappingApi::SignFundTransaction);
+    request_map->emplace("VerifyFundTxSignature",
+                         JsonMappingApi::VerifyFundTxSignature);
+    request_map->emplace("CreateRefundTransaction",
+                         JsonMappingApi::CreateRefundTransaction);
+    request_map->emplace("CreateCet", JsonMappingApi::CreateCet);
+    request_map->emplace("CreateDlcTransactions",
+                         JsonMappingApi::CreateDlcTransactions);
+    request_map->emplace("CreateCetAdaptorSignature",
+                         JsonMappingApi::CreateCetAdaptorSignature);
+    request_map->emplace("CreateCetAdaptorSignatures",
+                         JsonMappingApi::CreateCetAdaptorSignatures);
+    request_map->emplace("SignCet", JsonMappingApi::SignCet);
+    request_map->emplace("VerifyCetAdaptorSignature",
+                         JsonMappingApi::VerifyCetAdaptorSignature);
+    request_map->emplace("VerifyCetAdaptorSignatures",
+                         JsonMappingApi::VerifyCetAdaptorSignatures);
+    request_map->emplace("GetRawRefundTxSignature",
+                         JsonMappingApi::GetRawRefundTxSignature);
+    request_map->emplace("AddSignaturesToRefundTx",
+                         JsonMappingApi::AddSignaturesToRefundTx);
+    request_map->emplace("VerifyRefundTxSignature",
+                         JsonMappingApi::VerifyRefundTxSignature);
+  }
+}
+
 }  // namespace json
 }  // namespace api
 }  // namespace js
