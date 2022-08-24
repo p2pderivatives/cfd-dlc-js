@@ -6,27 +6,31 @@
     "payouts": [
       {
         ":class": "PayoutRequest",
-        "local": 0,
-        "local:type": "uint64_t",
-        "remote": 0,
-        "remote:type": "uint64_t"
+        "offer": 0,
+        "offer:type": "uint64_t",
+        "accept": 0,
+        "accept:type": "uint64_t"
       }
     ],
-    "localFundPubkey": "",
-    "localFinalScriptPubkey": "",
-    "remoteFundPubkey": "",
-    "remoteFinalScriptPubkey": "",
-    "localInputAmount": 0,
-    "localInputAmount:type": "uint64_t",
-    "localCollateralAmount": 0,
-    "localCollateralAmount:type": "uint64_t",
-    "remoteInputAmount": 0,
-    "remoteInputAmount:type": "uint64_t",
-    "remoteCollateralAmount": 0,
-    "remoteCollateralAmount:type": "uint64_t",
+    "offerFundPubkey": "",
+    "offerPayoutScriptPubkey": "",
+    "offerPayoutSerialId": 0,
+    "offerPayoutSerialId:type": "uint64_t",
+    "acceptFundPubkey": "",
+    "acceptPayoutScriptPubkey": "",
+    "acceptPayoutSerialId": 0,
+    "acceptPayoutSerialId:type": "uint64_t",
+    "offerInputAmount": 0,
+    "offerInputAmount:type": "uint64_t",
+    "offerCollateralAmount": 0,
+    "offerCollateralAmount:type": "uint64_t",
+    "acceptInputAmount": 0,
+    "acceptInputAmount:type": "uint64_t",
+    "acceptCollateralAmount": 0,
+    "acceptCollateralAmount:type": "uint64_t",
     "refundLocktime": 0,
     "refundLocktime:type": "uint64_t",
-    "localInputs": [
+    "offerInputs": [
       {
         ":class": "TxInInfoRequest",
         "txid": "",
@@ -35,11 +39,15 @@
         "redeemScript": "",
         "redeemScript:require": "optional",
         "maxWitnessLength": 108,
-        "maxWitnessLength:type": "uint32_t"
+        "maxWitnessLength:type": "uint32_t",
+        "serialId": 0,
+        "serialId:type": "uint64_t"
       }
     ],
-    "localChangeScriptPubkey": "",
-    "remoteInputs": [
+    "offerChangeScriptPubkey": "",
+    "offerChangeSerialId": 0,
+    "offerChangeSerialId:type": "uint64_t",
+    "acceptInputs": [
       {
         ":class": "TxInInfoRequest",
         "txid": "",
@@ -48,12 +56,18 @@
         "redeemScript": "",
         "redeemScript:require": "optional",
         "maxWitnessLength": 108,
-        "maxWitnessLength:type": "uint32_t"
+        "maxWitnessLength:type": "uint32_t",
+        "serialId": 0,
+        "serialId:type": "uint64_t"
       }
     ],
-    "remoteChangeScriptPubkey": "",
+    "acceptChangeScriptPubkey": "",
+    "acceptChangeSerialId": 0,
+    "acceptChangeSerialId:type": "uint64_t",
     "feeRate": 0,
     "feeRate:type": "uint32_t",
+    "fundOutputSerialId": 0,
+    "fundOutputSerialId:type": "uint64_t",
     "cetLockTime": 0,
     "cetLockTime:type": "uint64_t",
     "cetLockTime:require": "optional",
@@ -70,6 +84,7 @@
     ":class": "CreateDlcTransactionsResponse",
     "fundTxHex": "",
     "cetsHex": [""],
-    "refundTxHex": ""
+    "refundTxHex": "",
+    "fundingScriptPubkey": ""
   }
 }

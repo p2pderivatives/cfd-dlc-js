@@ -5,15 +5,15 @@
     ":class:comment": "Verify a signature for a refund transaction",
     "refundTxHex": "",
     "signature": "",
-    "localFundPubkey": "",
-    "remoteFundPubkey": "",
+    "offerFundPubkey": "",
+    "acceptFundPubkey": "",
     "fundTxId": "",
     "fundVout": 0,
     "fundVout:type": "uint32_t",
     "fundVout:require": "optional",
     "fundInputAmount": 0,
     "fundInputAmount:type": "uint64_t",
-    "verifyRemote": true
+    "verifyAccept": true
   },
   "response": {
     ":class": "VerifyRefundTxSignatureResponse",

@@ -9,8 +9,8 @@
     "fundVout": 0,
     "fundVout:type": "uint32_t",
     "fundVout:require": "optional",
-    "localFundPubkey": "",
-    "remoteFundPubkey": "",
+    "offerFundPubkey": "",
+    "acceptFundPubkey": "",
     "fundInputAmount": 0,
     "fundInputAmount:type": "uint64_t"
   },

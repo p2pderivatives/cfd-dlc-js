@@ -3,39 +3,55 @@
   "request": {
     ":class": "CreateFundTransactionRequest",
     ":class:comment": "Create a fund transaction",
-    "localPubkey": "",
-    "remotePubkey": "",
-    "outputAmount": 0,
-    "outputAmount:type": "uint64_t",
-    "localInputs": [
+    "offerPubkey": "",
+    "acceptPubkey": "",
+    "offerCollateralAmount": 0,
+    "offerCollateralAmount:type": "uint64_t",
+    "acceptCollateralAmount": 0,
+    "acceptCollateralAmount:type": "uint64_t",
+    "offerInputs": [
       {
-        ":class": "TxInRequest",
+        ":class": "TxInInfoRequest",
         "txid": "",
         "vout": 0,
-        "vout:type": "uint32_t"
+        "vout:type": "uint32_t",
+        "redeemScript": "",
+        "redeemScript:require": "optional",
+        "maxWitnessLength": 108,
+        "maxWitnessLength:type": "uint32_t",
+        "serialId": 0,
+        "serialId:type": "uint64_t"
       }
     ],
-    "localChange": {
-      ":class": "TxOutRequest",
-      "amount": 0,
-      "amount:type": "uint64_t",
-      "address": ""
-    },
-    "remoteInputs": [
+    "acceptInputs": [
       {
-        ":class": "TxInRequest",
+        ":class": "TxInInfoRequest",
         "txid": "",
         "vout": 0,
-        "vout:type": "uint32_t"
+        "vout:type": "uint32_t",
+        "redeemScript": "",
+        "redeemScript:require": "optional",
+        "maxWitnessLength": 108,
+        "maxWitnessLength:type": "uint32_t",
+        "serialId": 0,
+        "serialId:type": "uint64_t"
       }
     ],
-    "remoteChange": {
-      ":class": "TxOutRequest",
-      "amount": 0,
-      "amount:type": "uint64_t",
-      "address": ""
-    },
+    "offerChangeScriptPubkey": "",
+    "offerChangeSerialId": 0,
+    "offerChangeSerialId:type": "uint64_t",
+    "acceptChangeScriptPubkey": "",
+    "acceptChangeSerialId": 0,
+    "acceptChangeSerialId:type": "uint64_t",
+    "offerPayoutScriptPubkey": "",
+    "offerPayoutSerialId": 0,
+    "offerPayoutSerialId:type": "uint64_t",
+    "acceptPayoutScriptPubkey": "",
+    "acceptPayoutSerialId": 0,
+    "acceptPayoutSerialId:type": "uint64_t",
     "feeRate": 1,
+    "fundOutputSerialId": 0,
+    "fundOutputSerialId:type": "uint64_t",
     "optionDest": "",
     "optionDest:require": "optional",
     "optionPremium": 0,
