@@ -1,5 +1,22 @@
 project(external_download NONE)
 
+# ###################
+# find pkgconfig
+# ###################
+find_package(PkgConfig)
+
+if(PKG_CONFIG_FOUND AND(NOT WIN32))
+  pkg_check_modules(CFDDLC cfddlc)
+
+  if(NOT CFDDLC_FOUND)
+    set(CFDDLC_INSTALLED FALSE)
+  else() # PkgConfig
+    set(CFDDLC_INSTALLED ${CFDDLC_FOUND})
+  endif()
+else() # PkgConfig
+  set(CFDDLC_INSTALLED FALSE)
+endif() # PkgConfig
+
 # load file
 set(EXTERNAL_DEBUG_FILENAME external_project_debug.config)
 set(DEBUG_VERSION_FILE ${CMAKE_SOURCE_DIR}/${EXTERNAL_DEBUG_FILENAME})
@@ -60,7 +77,12 @@ else()
       ${CFD_DLC_ROOT_BINARY_DIR}/external/${TEMPLATE_PROJECT_NAME}/external)
   endif()
 
-  add_subdirectory(${CMAKE_SOURCE_DIR}/external/${TEMPLATE_PROJECT_NAME}
-    ${DIR_PATH}/build)
+  if(NOT ${CFDDLC_INSTALLED})
+    add_subdirectory(${CMAKE_SOURCE_DIR}/external/${TEMPLATE_PROJECT_NAME}
+      ${DIR_PATH}/build)
+  else()
+    message(STATUS "[external project local] use cfd-dlc cache")
+  endif(NOT ${CFDDLC_INSTALLED})
+
   set_property(GLOBAL PROPERTY ${TEMPLATE_PROJECT_NAME} 1)
 endif()
