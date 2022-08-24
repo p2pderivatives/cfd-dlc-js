@@ -5,10 +5,9 @@
     ":class:comment": "Verify a signature for a CET",
     "cetHex": "",
     "adaptorSignature": "",
-    "adaptorProof": "",
     "messages": [""],
-    "localFundPubkey": "",
-    "remoteFundPubkey": "",
+    "offerFundPubkey": "",
+    "acceptFundPubkey": "",
     "oraclePubkey": "",
     "oracleRValues": [""],
     "fundTxId": "",
@@ -17,7 +16,7 @@
     "fundVout:require": "optional",
     "fundInputAmount": 0,
     "fundInputAmount:type": "uint64_t",
-    "verifyRemote": true
+    "verifyAccept": true
   },
   "response": {
     ":class": "VerifyCetAdaptorSignatureResponse",

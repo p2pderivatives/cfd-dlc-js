@@ -24,50 +24,6 @@ using cfd::core::JsonVector;
 // @formatter:off
 
 // ------------------------------------------------------------------------
-// AdaptorPair
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<AdaptorPair>
-  AdaptorPair::json_mapper;
-std::vector<std::string> AdaptorPair::item_list;
-
-void AdaptorPair::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<AdaptorPair> func_table;  // NOLINT
-
-  func_table = {
-    AdaptorPair::GetSignatureString,
-    AdaptorPair::SetSignatureString,
-    AdaptorPair::GetSignatureFieldType,
-  };
-  json_mapper.emplace("signature", func_table);
-  item_list.push_back("signature");
-  func_table = {
-    AdaptorPair::GetProofString,
-    AdaptorPair::SetProofString,
-    AdaptorPair::GetProofFieldType,
-  };
-  json_mapper.emplace("proof", func_table);
-  item_list.push_back("proof");
-}
-
-void AdaptorPair::ConvertFromStruct(
-    const AdaptorPairStruct& data) {
-  signature_ = data.signature;
-  proof_ = data.proof;
-  ignore_items = data.ignore_items;
-}
-
-AdaptorPairStruct AdaptorPair::ConvertToStruct() const {  // NOLINT
-  AdaptorPairStruct result;
-  result.signature = signature_;
-  result.proof = proof_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
 // Messages
 // ------------------------------------------------------------------------
 cfd::core::JsonTableMap<Messages>
@@ -98,6 +54,77 @@ void Messages::ConvertFromStruct(
 MessagesStruct Messages::ConvertToStruct() const {  // NOLINT
   MessagesStruct result;
   result.messages = messages_.ConvertToStruct();
+  result.ignore_items = ignore_items;
+  return result;
+}
+
+// ------------------------------------------------------------------------
+// TxInInfoRequest
+// ------------------------------------------------------------------------
+cfd::core::JsonTableMap<TxInInfoRequest>
+  TxInInfoRequest::json_mapper;
+std::vector<std::string> TxInInfoRequest::item_list;
+
+void TxInInfoRequest::CollectFieldName() {
+  if (!json_mapper.empty()) {
+    return;
+  }
+  cfd::core::CLASS_FUNCTION_TABLE<TxInInfoRequest> func_table;  // NOLINT
+
+  func_table = {
+    TxInInfoRequest::GetTxidString,
+    TxInInfoRequest::SetTxidString,
+    TxInInfoRequest::GetTxidFieldType,
+  };
+  json_mapper.emplace("txid", func_table);
+  item_list.push_back("txid");
+  func_table = {
+    TxInInfoRequest::GetVoutString,
+    TxInInfoRequest::SetVoutString,
+    TxInInfoRequest::GetVoutFieldType,
+  };
+  json_mapper.emplace("vout", func_table);
+  item_list.push_back("vout");
+  func_table = {
+    TxInInfoRequest::GetRedeemScriptString,
+    TxInInfoRequest::SetRedeemScriptString,
+    TxInInfoRequest::GetRedeemScriptFieldType,
+  };
+  json_mapper.emplace("redeemScript", func_table);
+  item_list.push_back("redeemScript");
+  func_table = {
+    TxInInfoRequest::GetMaxWitnessLengthString,
+    TxInInfoRequest::SetMaxWitnessLengthString,
+    TxInInfoRequest::GetMaxWitnessLengthFieldType,
+  };
+  json_mapper.emplace("maxWitnessLength", func_table);
+  item_list.push_back("maxWitnessLength");
+  func_table = {
+    TxInInfoRequest::GetSerialIdString,
+    TxInInfoRequest::SetSerialIdString,
+    TxInInfoRequest::GetSerialIdFieldType,
+  };
+  json_mapper.emplace("serialId", func_table);
+  item_list.push_back("serialId");
+}
+
+void TxInInfoRequest::ConvertFromStruct(
+    const TxInInfoRequestStruct& data) {
+  txid_ = data.txid;
+  vout_ = data.vout;
+  redeem_script_ = data.redeem_script;
+  max_witness_length_ = data.max_witness_length;
+  serial_id_ = data.serial_id;
+  ignore_items = data.ignore_items;
+}
+
+TxInInfoRequestStruct TxInInfoRequest::ConvertToStruct() const {  // NOLINT
+  TxInInfoRequestStruct result;
+  result.txid = txid_;
+  result.vout = vout_;
+  result.redeem_script = redeem_script_;
+  result.max_witness_length = max_witness_length_;
+  result.serial_id = serial_id_;
   result.ignore_items = ignore_items;
   return result;
 }
@@ -250,19 +277,19 @@ void AddSignaturesToRefundTxRequest::CollectFieldName() {
   json_mapper.emplace("fundVout", func_table);
   item_list.push_back("fundVout");
   func_table = {
-    AddSignaturesToRefundTxRequest::GetLocalFundPubkeyString,
-    AddSignaturesToRefundTxRequest::SetLocalFundPubkeyString,
-    AddSignaturesToRefundTxRequest::GetLocalFundPubkeyFieldType,
+    AddSignaturesToRefundTxRequest::GetOfferFundPubkeyString,
+    AddSignaturesToRefundTxRequest::SetOfferFundPubkeyString,
+    AddSignaturesToRefundTxRequest::GetOfferFundPubkeyFieldType,
   };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
+  json_mapper.emplace("offerFundPubkey", func_table);
+  item_list.push_back("offerFundPubkey");
   func_table = {
-    AddSignaturesToRefundTxRequest::GetRemoteFundPubkeyString,
-    AddSignaturesToRefundTxRequest::SetRemoteFundPubkeyString,
-    AddSignaturesToRefundTxRequest::GetRemoteFundPubkeyFieldType,
+    AddSignaturesToRefundTxRequest::GetAcceptFundPubkeyString,
+    AddSignaturesToRefundTxRequest::SetAcceptFundPubkeyString,
+    AddSignaturesToRefundTxRequest::GetAcceptFundPubkeyFieldType,
   };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
+  json_mapper.emplace("acceptFundPubkey", func_table);
+  item_list.push_back("acceptFundPubkey");
 }
 
 void AddSignaturesToRefundTxRequest::ConvertFromStruct(
@@ -271,8 +298,8 @@ void AddSignaturesToRefundTxRequest::ConvertFromStruct(
   signatures_.ConvertFromStruct(data.signatures);
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
+  offer_fund_pubkey_ = data.offer_fund_pubkey;
+  accept_fund_pubkey_ = data.accept_fund_pubkey;
   ignore_items = data.ignore_items;
 }
 
@@ -282,8 +309,8 @@ AddSignaturesToRefundTxRequestStruct AddSignaturesToRefundTxRequest::ConvertToSt
   result.signatures = signatures_.ConvertToStruct();
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.offer_fund_pubkey = offer_fund_pubkey_;
+  result.accept_fund_pubkey = accept_fund_pubkey_;
   result.ignore_items = ignore_items;
   return result;
 }
@@ -337,47 +364,61 @@ void CreateCetRequest::CollectFieldName() {
   cfd::core::CLASS_FUNCTION_TABLE<CreateCetRequest> func_table;  // NOLINT
 
   func_table = {
-    CreateCetRequest::GetLocalFundPubkeyString,
-    CreateCetRequest::SetLocalFundPubkeyString,
-    CreateCetRequest::GetLocalFundPubkeyFieldType,
+    CreateCetRequest::GetOfferFundPubkeyString,
+    CreateCetRequest::SetOfferFundPubkeyString,
+    CreateCetRequest::GetOfferFundPubkeyFieldType,
   };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
+  json_mapper.emplace("offerFundPubkey", func_table);
+  item_list.push_back("offerFundPubkey");
   func_table = {
-    CreateCetRequest::GetRemoteFundPubkeyString,
-    CreateCetRequest::SetRemoteFundPubkeyString,
-    CreateCetRequest::GetRemoteFundPubkeyFieldType,
+    CreateCetRequest::GetAcceptFundPubkeyString,
+    CreateCetRequest::SetAcceptFundPubkeyString,
+    CreateCetRequest::GetAcceptFundPubkeyFieldType,
   };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
+  json_mapper.emplace("acceptFundPubkey", func_table);
+  item_list.push_back("acceptFundPubkey");
   func_table = {
-    CreateCetRequest::GetLocalFinalAddressString,
-    CreateCetRequest::SetLocalFinalAddressString,
-    CreateCetRequest::GetLocalFinalAddressFieldType,
+    CreateCetRequest::GetOfferFinalAddressString,
+    CreateCetRequest::SetOfferFinalAddressString,
+    CreateCetRequest::GetOfferFinalAddressFieldType,
   };
-  json_mapper.emplace("localFinalAddress", func_table);
-  item_list.push_back("localFinalAddress");
+  json_mapper.emplace("offerFinalAddress", func_table);
+  item_list.push_back("offerFinalAddress");
   func_table = {
-    CreateCetRequest::GetRemoteFinalAddressString,
-    CreateCetRequest::SetRemoteFinalAddressString,
-    CreateCetRequest::GetRemoteFinalAddressFieldType,
+    CreateCetRequest::GetAcceptFinalAddressString,
+    CreateCetRequest::SetAcceptFinalAddressString,
+    CreateCetRequest::GetAcceptFinalAddressFieldType,
   };
-  json_mapper.emplace("remoteFinalAddress", func_table);
-  item_list.push_back("remoteFinalAddress");
+  json_mapper.emplace("acceptFinalAddress", func_table);
+  item_list.push_back("acceptFinalAddress");
   func_table = {
-    CreateCetRequest::GetLocalPayoutString,
-    CreateCetRequest::SetLocalPayoutString,
-    CreateCetRequest::GetLocalPayoutFieldType,
+    CreateCetRequest::GetOfferPayoutString,
+    CreateCetRequest::SetOfferPayoutString,
+    CreateCetRequest::GetOfferPayoutFieldType,
   };
-  json_mapper.emplace("localPayout", func_table);
-  item_list.push_back("localPayout");
+  json_mapper.emplace("offerPayout", func_table);
+  item_list.push_back("offerPayout");
   func_table = {
-    CreateCetRequest::GetRemotePayoutString,
-    CreateCetRequest::SetRemotePayoutString,
-    CreateCetRequest::GetRemotePayoutFieldType,
+    CreateCetRequest::GetAcceptPayoutString,
+    CreateCetRequest::SetAcceptPayoutString,
+    CreateCetRequest::GetAcceptPayoutFieldType,
   };
-  json_mapper.emplace("remotePayout", func_table);
-  item_list.push_back("remotePayout");
+  json_mapper.emplace("acceptPayout", func_table);
+  item_list.push_back("acceptPayout");
+  func_table = {
+    CreateCetRequest::GetOfferPayoutSerialIdString,
+    CreateCetRequest::SetOfferPayoutSerialIdString,
+    CreateCetRequest::GetOfferPayoutSerialIdFieldType,
+  };
+  json_mapper.emplace("offerPayoutSerialId", func_table);
+  item_list.push_back("offerPayoutSerialId");
+  func_table = {
+    CreateCetRequest::GetAcceptPayoutSerialIdString,
+    CreateCetRequest::SetAcceptPayoutSerialIdString,
+    CreateCetRequest::GetAcceptPayoutSerialIdFieldType,
+  };
+  json_mapper.emplace("acceptPayoutSerialId", func_table);
+  item_list.push_back("acceptPayoutSerialId");
   func_table = {
     CreateCetRequest::GetFundTxIdString,
     CreateCetRequest::SetFundTxIdString,
@@ -403,12 +444,14 @@ void CreateCetRequest::CollectFieldName() {
 
 void CreateCetRequest::ConvertFromStruct(
     const CreateCetRequestStruct& data) {
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
-  local_final_address_ = data.local_final_address;
-  remote_final_address_ = data.remote_final_address;
-  local_payout_ = data.local_payout;
-  remote_payout_ = data.remote_payout;
+  offer_fund_pubkey_ = data.offer_fund_pubkey;
+  accept_fund_pubkey_ = data.accept_fund_pubkey;
+  offer_final_address_ = data.offer_final_address;
+  accept_final_address_ = data.accept_final_address;
+  offer_payout_ = data.offer_payout;
+  accept_payout_ = data.accept_payout;
+  offer_payout_serial_id_ = data.offer_payout_serial_id;
+  accept_payout_serial_id_ = data.accept_payout_serial_id;
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
   lock_time_ = data.lock_time;
@@ -417,12 +460,14 @@ void CreateCetRequest::ConvertFromStruct(
 
 CreateCetRequestStruct CreateCetRequest::ConvertToStruct() const {  // NOLINT
   CreateCetRequestStruct result;
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
-  result.local_final_address = local_final_address_;
-  result.remote_final_address = remote_final_address_;
-  result.local_payout = local_payout_;
-  result.remote_payout = remote_payout_;
+  result.offer_fund_pubkey = offer_fund_pubkey_;
+  result.accept_fund_pubkey = accept_fund_pubkey_;
+  result.offer_final_address = offer_final_address_;
+  result.accept_final_address = accept_final_address_;
+  result.offer_payout = offer_payout_;
+  result.accept_payout = accept_payout_;
+  result.offer_payout_serial_id = offer_payout_serial_id_;
+  result.accept_payout_serial_id = accept_payout_serial_id_;
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
   result.lock_time = lock_time_;
@@ -507,19 +552,19 @@ void CreateCetAdaptorSignatureRequest::CollectFieldName() {
   json_mapper.emplace("fundVout", func_table);
   item_list.push_back("fundVout");
   func_table = {
-    CreateCetAdaptorSignatureRequest::GetLocalFundPubkeyString,
-    CreateCetAdaptorSignatureRequest::SetLocalFundPubkeyString,
-    CreateCetAdaptorSignatureRequest::GetLocalFundPubkeyFieldType,
+    CreateCetAdaptorSignatureRequest::GetOfferFundPubkeyString,
+    CreateCetAdaptorSignatureRequest::SetOfferFundPubkeyString,
+    CreateCetAdaptorSignatureRequest::GetOfferFundPubkeyFieldType,
   };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
+  json_mapper.emplace("offerFundPubkey", func_table);
+  item_list.push_back("offerFundPubkey");
   func_table = {
-    CreateCetAdaptorSignatureRequest::GetRemoteFundPubkeyString,
-    CreateCetAdaptorSignatureRequest::SetRemoteFundPubkeyString,
-    CreateCetAdaptorSignatureRequest::GetRemoteFundPubkeyFieldType,
+    CreateCetAdaptorSignatureRequest::GetAcceptFundPubkeyString,
+    CreateCetAdaptorSignatureRequest::SetAcceptFundPubkeyString,
+    CreateCetAdaptorSignatureRequest::GetAcceptFundPubkeyFieldType,
   };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
+  json_mapper.emplace("acceptFundPubkey", func_table);
+  item_list.push_back("acceptFundPubkey");
   func_table = {
     CreateCetAdaptorSignatureRequest::GetOraclePubkeyString,
     CreateCetAdaptorSignatureRequest::SetOraclePubkeyString,
@@ -556,8 +601,8 @@ void CreateCetAdaptorSignatureRequest::ConvertFromStruct(
   privkey_ = data.privkey;
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
+  offer_fund_pubkey_ = data.offer_fund_pubkey;
+  accept_fund_pubkey_ = data.accept_fund_pubkey;
   oracle_pubkey_ = data.oracle_pubkey;
   oracle_r_values_.ConvertFromStruct(data.oracle_r_values);
   fund_input_amount_ = data.fund_input_amount;
@@ -571,8 +616,8 @@ CreateCetAdaptorSignatureRequestStruct CreateCetAdaptorSignatureRequest::Convert
   result.privkey = privkey_;
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.offer_fund_pubkey = offer_fund_pubkey_;
+  result.accept_fund_pubkey = accept_fund_pubkey_;
   result.oracle_pubkey = oracle_pubkey_;
   result.oracle_r_values = oracle_r_values_.ConvertToStruct();
   result.fund_input_amount = fund_input_amount_;
@@ -601,26 +646,17 @@ void CreateCetAdaptorSignatureResponse::CollectFieldName() {
   };
   json_mapper.emplace("signature", func_table);
   item_list.push_back("signature");
-  func_table = {
-    CreateCetAdaptorSignatureResponse::GetProofString,
-    CreateCetAdaptorSignatureResponse::SetProofString,
-    CreateCetAdaptorSignatureResponse::GetProofFieldType,
-  };
-  json_mapper.emplace("proof", func_table);
-  item_list.push_back("proof");
 }
 
 void CreateCetAdaptorSignatureResponse::ConvertFromStruct(
     const CreateCetAdaptorSignatureResponseStruct& data) {
   signature_ = data.signature;
-  proof_ = data.proof;
   ignore_items = data.ignore_items;
 }
 
 CreateCetAdaptorSignatureResponseStruct CreateCetAdaptorSignatureResponse::ConvertToStruct() const {  // NOLINT
   CreateCetAdaptorSignatureResponseStruct result;
   result.signature = signature_;
-  result.proof = proof_;
   result.ignore_items = ignore_items;
   return result;
 }
@@ -667,19 +703,19 @@ void CreateCetAdaptorSignaturesRequest::CollectFieldName() {
   json_mapper.emplace("fundVout", func_table);
   item_list.push_back("fundVout");
   func_table = {
-    CreateCetAdaptorSignaturesRequest::GetLocalFundPubkeyString,
-    CreateCetAdaptorSignaturesRequest::SetLocalFundPubkeyString,
-    CreateCetAdaptorSignaturesRequest::GetLocalFundPubkeyFieldType,
+    CreateCetAdaptorSignaturesRequest::GetOfferFundPubkeyString,
+    CreateCetAdaptorSignaturesRequest::SetOfferFundPubkeyString,
+    CreateCetAdaptorSignaturesRequest::GetOfferFundPubkeyFieldType,
   };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
+  json_mapper.emplace("offerFundPubkey", func_table);
+  item_list.push_back("offerFundPubkey");
   func_table = {
-    CreateCetAdaptorSignaturesRequest::GetRemoteFundPubkeyString,
-    CreateCetAdaptorSignaturesRequest::SetRemoteFundPubkeyString,
-    CreateCetAdaptorSignaturesRequest::GetRemoteFundPubkeyFieldType,
+    CreateCetAdaptorSignaturesRequest::GetAcceptFundPubkeyString,
+    CreateCetAdaptorSignaturesRequest::SetAcceptFundPubkeyString,
+    CreateCetAdaptorSignaturesRequest::GetAcceptFundPubkeyFieldType,
   };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
+  json_mapper.emplace("acceptFundPubkey", func_table);
+  item_list.push_back("acceptFundPubkey");
   func_table = {
     CreateCetAdaptorSignaturesRequest::GetOraclePubkeyString,
     CreateCetAdaptorSignaturesRequest::SetOraclePubkeyString,
@@ -716,8 +752,8 @@ void CreateCetAdaptorSignaturesRequest::ConvertFromStruct(
   privkey_ = data.privkey;
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
+  offer_fund_pubkey_ = data.offer_fund_pubkey;
+  accept_fund_pubkey_ = data.accept_fund_pubkey;
   oracle_pubkey_ = data.oracle_pubkey;
   oracle_r_values_.ConvertFromStruct(data.oracle_r_values);
   fund_input_amount_ = data.fund_input_amount;
@@ -731,8 +767,8 @@ CreateCetAdaptorSignaturesRequestStruct CreateCetAdaptorSignaturesRequest::Conve
   result.privkey = privkey_;
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.offer_fund_pubkey = offer_fund_pubkey_;
+  result.accept_fund_pubkey = accept_fund_pubkey_;
   result.oracle_pubkey = oracle_pubkey_;
   result.oracle_r_values = oracle_r_values_.ConvertToStruct();
   result.fund_input_amount = fund_input_amount_;
@@ -755,23 +791,23 @@ void CreateCetAdaptorSignaturesResponse::CollectFieldName() {
   cfd::core::CLASS_FUNCTION_TABLE<CreateCetAdaptorSignaturesResponse> func_table;  // NOLINT
 
   func_table = {
-    CreateCetAdaptorSignaturesResponse::GetAdaptorPairsString,
-    CreateCetAdaptorSignaturesResponse::SetAdaptorPairsString,
-    CreateCetAdaptorSignaturesResponse::GetAdaptorPairsFieldType,
+    CreateCetAdaptorSignaturesResponse::GetAdaptorSignaturesString,
+    CreateCetAdaptorSignaturesResponse::SetAdaptorSignaturesString,
+    CreateCetAdaptorSignaturesResponse::GetAdaptorSignaturesFieldType,
   };
-  json_mapper.emplace("adaptorPairs", func_table);
-  item_list.push_back("adaptorPairs");
+  json_mapper.emplace("adaptorSignatures", func_table);
+  item_list.push_back("adaptorSignatures");
 }
 
 void CreateCetAdaptorSignaturesResponse::ConvertFromStruct(
     const CreateCetAdaptorSignaturesResponseStruct& data) {
-  adaptor_pairs_.ConvertFromStruct(data.adaptor_pairs);
+  adaptor_signatures_.ConvertFromStruct(data.adaptor_signatures);
   ignore_items = data.ignore_items;
 }
 
 CreateCetAdaptorSignaturesResponseStruct CreateCetAdaptorSignaturesResponse::ConvertToStruct() const {  // NOLINT
   CreateCetAdaptorSignaturesResponseStruct result;
-  result.adaptor_pairs = adaptor_pairs_.ConvertToStruct();
+  result.adaptor_signatures = adaptor_signatures_.ConvertToStruct();
   result.ignore_items = ignore_items;
   return result;
 }
@@ -790,94 +826,32 @@ void PayoutRequest::CollectFieldName() {
   cfd::core::CLASS_FUNCTION_TABLE<PayoutRequest> func_table;  // NOLINT
 
   func_table = {
-    PayoutRequest::GetLocalString,
-    PayoutRequest::SetLocalString,
-    PayoutRequest::GetLocalFieldType,
+    PayoutRequest::GetOfferString,
+    PayoutRequest::SetOfferString,
+    PayoutRequest::GetOfferFieldType,
   };
-  json_mapper.emplace("local", func_table);
-  item_list.push_back("local");
+  json_mapper.emplace("offer", func_table);
+  item_list.push_back("offer");
   func_table = {
-    PayoutRequest::GetRemoteString,
-    PayoutRequest::SetRemoteString,
-    PayoutRequest::GetRemoteFieldType,
+    PayoutRequest::GetAcceptString,
+    PayoutRequest::SetAcceptString,
+    PayoutRequest::GetAcceptFieldType,
   };
-  json_mapper.emplace("remote", func_table);
-  item_list.push_back("remote");
+  json_mapper.emplace("accept", func_table);
+  item_list.push_back("accept");
 }
 
 void PayoutRequest::ConvertFromStruct(
     const PayoutRequestStruct& data) {
-  local_ = data.local;
-  remote_ = data.remote;
+  offer_ = data.offer;
+  accept_ = data.accept;
   ignore_items = data.ignore_items;
 }
 
 PayoutRequestStruct PayoutRequest::ConvertToStruct() const {  // NOLINT
   PayoutRequestStruct result;
-  result.local = local_;
-  result.remote = remote_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// TxInInfoRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<TxInInfoRequest>
-  TxInInfoRequest::json_mapper;
-std::vector<std::string> TxInInfoRequest::item_list;
-
-void TxInInfoRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<TxInInfoRequest> func_table;  // NOLINT
-
-  func_table = {
-    TxInInfoRequest::GetTxidString,
-    TxInInfoRequest::SetTxidString,
-    TxInInfoRequest::GetTxidFieldType,
-  };
-  json_mapper.emplace("txid", func_table);
-  item_list.push_back("txid");
-  func_table = {
-    TxInInfoRequest::GetVoutString,
-    TxInInfoRequest::SetVoutString,
-    TxInInfoRequest::GetVoutFieldType,
-  };
-  json_mapper.emplace("vout", func_table);
-  item_list.push_back("vout");
-  func_table = {
-    TxInInfoRequest::GetRedeemScriptString,
-    TxInInfoRequest::SetRedeemScriptString,
-    TxInInfoRequest::GetRedeemScriptFieldType,
-  };
-  json_mapper.emplace("redeemScript", func_table);
-  item_list.push_back("redeemScript");
-  func_table = {
-    TxInInfoRequest::GetMaxWitnessLengthString,
-    TxInInfoRequest::SetMaxWitnessLengthString,
-    TxInInfoRequest::GetMaxWitnessLengthFieldType,
-  };
-  json_mapper.emplace("maxWitnessLength", func_table);
-  item_list.push_back("maxWitnessLength");
-}
-
-void TxInInfoRequest::ConvertFromStruct(
-    const TxInInfoRequestStruct& data) {
-  txid_ = data.txid;
-  vout_ = data.vout;
-  redeem_script_ = data.redeem_script;
-  max_witness_length_ = data.max_witness_length;
-  ignore_items = data.ignore_items;
-}
-
-TxInInfoRequestStruct TxInInfoRequest::ConvertToStruct() const {  // NOLINT
-  TxInInfoRequestStruct result;
-  result.txid = txid_;
-  result.vout = vout_;
-  result.redeem_script = redeem_script_;
-  result.max_witness_length = max_witness_length_;
+  result.offer = offer_;
+  result.accept = accept_;
   result.ignore_items = ignore_items;
   return result;
 }
@@ -903,61 +877,75 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
   json_mapper.emplace("payouts", func_table);
   item_list.push_back("payouts");
   func_table = {
-    CreateDlcTransactionsRequest::GetLocalFundPubkeyString,
-    CreateDlcTransactionsRequest::SetLocalFundPubkeyString,
-    CreateDlcTransactionsRequest::GetLocalFundPubkeyFieldType,
+    CreateDlcTransactionsRequest::GetOfferFundPubkeyString,
+    CreateDlcTransactionsRequest::SetOfferFundPubkeyString,
+    CreateDlcTransactionsRequest::GetOfferFundPubkeyFieldType,
   };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
+  json_mapper.emplace("offerFundPubkey", func_table);
+  item_list.push_back("offerFundPubkey");
   func_table = {
-    CreateDlcTransactionsRequest::GetLocalFinalScriptPubkeyString,
-    CreateDlcTransactionsRequest::SetLocalFinalScriptPubkeyString,
-    CreateDlcTransactionsRequest::GetLocalFinalScriptPubkeyFieldType,
+    CreateDlcTransactionsRequest::GetOfferPayoutScriptPubkeyString,
+    CreateDlcTransactionsRequest::SetOfferPayoutScriptPubkeyString,
+    CreateDlcTransactionsRequest::GetOfferPayoutScriptPubkeyFieldType,
   };
-  json_mapper.emplace("localFinalScriptPubkey", func_table);
-  item_list.push_back("localFinalScriptPubkey");
+  json_mapper.emplace("offerPayoutScriptPubkey", func_table);
+  item_list.push_back("offerPayoutScriptPubkey");
   func_table = {
-    CreateDlcTransactionsRequest::GetRemoteFundPubkeyString,
-    CreateDlcTransactionsRequest::SetRemoteFundPubkeyString,
-    CreateDlcTransactionsRequest::GetRemoteFundPubkeyFieldType,
+    CreateDlcTransactionsRequest::GetOfferPayoutSerialIdString,
+    CreateDlcTransactionsRequest::SetOfferPayoutSerialIdString,
+    CreateDlcTransactionsRequest::GetOfferPayoutSerialIdFieldType,
   };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
+  json_mapper.emplace("offerPayoutSerialId", func_table);
+  item_list.push_back("offerPayoutSerialId");
   func_table = {
-    CreateDlcTransactionsRequest::GetRemoteFinalScriptPubkeyString,
-    CreateDlcTransactionsRequest::SetRemoteFinalScriptPubkeyString,
-    CreateDlcTransactionsRequest::GetRemoteFinalScriptPubkeyFieldType,
+    CreateDlcTransactionsRequest::GetAcceptFundPubkeyString,
+    CreateDlcTransactionsRequest::SetAcceptFundPubkeyString,
+    CreateDlcTransactionsRequest::GetAcceptFundPubkeyFieldType,
   };
-  json_mapper.emplace("remoteFinalScriptPubkey", func_table);
-  item_list.push_back("remoteFinalScriptPubkey");
+  json_mapper.emplace("acceptFundPubkey", func_table);
+  item_list.push_back("acceptFundPubkey");
   func_table = {
-    CreateDlcTransactionsRequest::GetLocalInputAmountString,
-    CreateDlcTransactionsRequest::SetLocalInputAmountString,
-    CreateDlcTransactionsRequest::GetLocalInputAmountFieldType,
+    CreateDlcTransactionsRequest::GetAcceptPayoutScriptPubkeyString,
+    CreateDlcTransactionsRequest::SetAcceptPayoutScriptPubkeyString,
+    CreateDlcTransactionsRequest::GetAcceptPayoutScriptPubkeyFieldType,
   };
-  json_mapper.emplace("localInputAmount", func_table);
-  item_list.push_back("localInputAmount");
+  json_mapper.emplace("acceptPayoutScriptPubkey", func_table);
+  item_list.push_back("acceptPayoutScriptPubkey");
   func_table = {
-    CreateDlcTransactionsRequest::GetLocalCollateralAmountString,
-    CreateDlcTransactionsRequest::SetLocalCollateralAmountString,
-    CreateDlcTransactionsRequest::GetLocalCollateralAmountFieldType,
+    CreateDlcTransactionsRequest::GetAcceptPayoutSerialIdString,
+    CreateDlcTransactionsRequest::SetAcceptPayoutSerialIdString,
+    CreateDlcTransactionsRequest::GetAcceptPayoutSerialIdFieldType,
   };
-  json_mapper.emplace("localCollateralAmount", func_table);
-  item_list.push_back("localCollateralAmount");
+  json_mapper.emplace("acceptPayoutSerialId", func_table);
+  item_list.push_back("acceptPayoutSerialId");
   func_table = {
-    CreateDlcTransactionsRequest::GetRemoteInputAmountString,
-    CreateDlcTransactionsRequest::SetRemoteInputAmountString,
-    CreateDlcTransactionsRequest::GetRemoteInputAmountFieldType,
+    CreateDlcTransactionsRequest::GetOfferInputAmountString,
+    CreateDlcTransactionsRequest::SetOfferInputAmountString,
+    CreateDlcTransactionsRequest::GetOfferInputAmountFieldType,
   };
-  json_mapper.emplace("remoteInputAmount", func_table);
-  item_list.push_back("remoteInputAmount");
+  json_mapper.emplace("offerInputAmount", func_table);
+  item_list.push_back("offerInputAmount");
   func_table = {
-    CreateDlcTransactionsRequest::GetRemoteCollateralAmountString,
-    CreateDlcTransactionsRequest::SetRemoteCollateralAmountString,
-    CreateDlcTransactionsRequest::GetRemoteCollateralAmountFieldType,
+    CreateDlcTransactionsRequest::GetOfferCollateralAmountString,
+    CreateDlcTransactionsRequest::SetOfferCollateralAmountString,
+    CreateDlcTransactionsRequest::GetOfferCollateralAmountFieldType,
   };
-  json_mapper.emplace("remoteCollateralAmount", func_table);
-  item_list.push_back("remoteCollateralAmount");
+  json_mapper.emplace("offerCollateralAmount", func_table);
+  item_list.push_back("offerCollateralAmount");
+  func_table = {
+    CreateDlcTransactionsRequest::GetAcceptInputAmountString,
+    CreateDlcTransactionsRequest::SetAcceptInputAmountString,
+    CreateDlcTransactionsRequest::GetAcceptInputAmountFieldType,
+  };
+  json_mapper.emplace("acceptInputAmount", func_table);
+  item_list.push_back("acceptInputAmount");
+  func_table = {
+    CreateDlcTransactionsRequest::GetAcceptCollateralAmountString,
+    CreateDlcTransactionsRequest::SetAcceptCollateralAmountString,
+    CreateDlcTransactionsRequest::GetAcceptCollateralAmountFieldType,
+  };
+  json_mapper.emplace("acceptCollateralAmount", func_table);
+  item_list.push_back("acceptCollateralAmount");
   func_table = {
     CreateDlcTransactionsRequest::GetRefundLocktimeString,
     CreateDlcTransactionsRequest::SetRefundLocktimeString,
@@ -966,33 +954,47 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
   json_mapper.emplace("refundLocktime", func_table);
   item_list.push_back("refundLocktime");
   func_table = {
-    CreateDlcTransactionsRequest::GetLocalInputsString,
-    CreateDlcTransactionsRequest::SetLocalInputsString,
-    CreateDlcTransactionsRequest::GetLocalInputsFieldType,
+    CreateDlcTransactionsRequest::GetOfferInputsString,
+    CreateDlcTransactionsRequest::SetOfferInputsString,
+    CreateDlcTransactionsRequest::GetOfferInputsFieldType,
   };
-  json_mapper.emplace("localInputs", func_table);
-  item_list.push_back("localInputs");
+  json_mapper.emplace("offerInputs", func_table);
+  item_list.push_back("offerInputs");
   func_table = {
-    CreateDlcTransactionsRequest::GetLocalChangeScriptPubkeyString,
-    CreateDlcTransactionsRequest::SetLocalChangeScriptPubkeyString,
-    CreateDlcTransactionsRequest::GetLocalChangeScriptPubkeyFieldType,
+    CreateDlcTransactionsRequest::GetOfferChangeScriptPubkeyString,
+    CreateDlcTransactionsRequest::SetOfferChangeScriptPubkeyString,
+    CreateDlcTransactionsRequest::GetOfferChangeScriptPubkeyFieldType,
   };
-  json_mapper.emplace("localChangeScriptPubkey", func_table);
-  item_list.push_back("localChangeScriptPubkey");
+  json_mapper.emplace("offerChangeScriptPubkey", func_table);
+  item_list.push_back("offerChangeScriptPubkey");
   func_table = {
-    CreateDlcTransactionsRequest::GetRemoteInputsString,
-    CreateDlcTransactionsRequest::SetRemoteInputsString,
-    CreateDlcTransactionsRequest::GetRemoteInputsFieldType,
+    CreateDlcTransactionsRequest::GetOfferChangeSerialIdString,
+    CreateDlcTransactionsRequest::SetOfferChangeSerialIdString,
+    CreateDlcTransactionsRequest::GetOfferChangeSerialIdFieldType,
   };
-  json_mapper.emplace("remoteInputs", func_table);
-  item_list.push_back("remoteInputs");
+  json_mapper.emplace("offerChangeSerialId", func_table);
+  item_list.push_back("offerChangeSerialId");
   func_table = {
-    CreateDlcTransactionsRequest::GetRemoteChangeScriptPubkeyString,
-    CreateDlcTransactionsRequest::SetRemoteChangeScriptPubkeyString,
-    CreateDlcTransactionsRequest::GetRemoteChangeScriptPubkeyFieldType,
+    CreateDlcTransactionsRequest::GetAcceptInputsString,
+    CreateDlcTransactionsRequest::SetAcceptInputsString,
+    CreateDlcTransactionsRequest::GetAcceptInputsFieldType,
   };
-  json_mapper.emplace("remoteChangeScriptPubkey", func_table);
-  item_list.push_back("remoteChangeScriptPubkey");
+  json_mapper.emplace("acceptInputs", func_table);
+  item_list.push_back("acceptInputs");
+  func_table = {
+    CreateDlcTransactionsRequest::GetAcceptChangeScriptPubkeyString,
+    CreateDlcTransactionsRequest::SetAcceptChangeScriptPubkeyString,
+    CreateDlcTransactionsRequest::GetAcceptChangeScriptPubkeyFieldType,
+  };
+  json_mapper.emplace("acceptChangeScriptPubkey", func_table);
+  item_list.push_back("acceptChangeScriptPubkey");
+  func_table = {
+    CreateDlcTransactionsRequest::GetAcceptChangeSerialIdString,
+    CreateDlcTransactionsRequest::SetAcceptChangeSerialIdString,
+    CreateDlcTransactionsRequest::GetAcceptChangeSerialIdFieldType,
+  };
+  json_mapper.emplace("acceptChangeSerialId", func_table);
+  item_list.push_back("acceptChangeSerialId");
   func_table = {
     CreateDlcTransactionsRequest::GetFeeRateString,
     CreateDlcTransactionsRequest::SetFeeRateString,
@@ -1000,6 +1002,13 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
   };
   json_mapper.emplace("feeRate", func_table);
   item_list.push_back("feeRate");
+  func_table = {
+    CreateDlcTransactionsRequest::GetFundOutputSerialIdString,
+    CreateDlcTransactionsRequest::SetFundOutputSerialIdString,
+    CreateDlcTransactionsRequest::GetFundOutputSerialIdFieldType,
+  };
+  json_mapper.emplace("fundOutputSerialId", func_table);
+  item_list.push_back("fundOutputSerialId");
   func_table = {
     CreateDlcTransactionsRequest::GetCetLockTimeString,
     CreateDlcTransactionsRequest::SetCetLockTimeString,
@@ -1033,20 +1042,25 @@ void CreateDlcTransactionsRequest::CollectFieldName() {
 void CreateDlcTransactionsRequest::ConvertFromStruct(
     const CreateDlcTransactionsRequestStruct& data) {
   payouts_.ConvertFromStruct(data.payouts);
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  local_final_script_pubkey_ = data.local_final_script_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
-  remote_final_script_pubkey_ = data.remote_final_script_pubkey;
-  local_input_amount_ = data.local_input_amount;
-  local_collateral_amount_ = data.local_collateral_amount;
-  remote_input_amount_ = data.remote_input_amount;
-  remote_collateral_amount_ = data.remote_collateral_amount;
+  offer_fund_pubkey_ = data.offer_fund_pubkey;
+  offer_payout_script_pubkey_ = data.offer_payout_script_pubkey;
+  offer_payout_serial_id_ = data.offer_payout_serial_id;
+  accept_fund_pubkey_ = data.accept_fund_pubkey;
+  accept_payout_script_pubkey_ = data.accept_payout_script_pubkey;
+  accept_payout_serial_id_ = data.accept_payout_serial_id;
+  offer_input_amount_ = data.offer_input_amount;
+  offer_collateral_amount_ = data.offer_collateral_amount;
+  accept_input_amount_ = data.accept_input_amount;
+  accept_collateral_amount_ = data.accept_collateral_amount;
   refund_locktime_ = data.refund_locktime;
-  local_inputs_.ConvertFromStruct(data.local_inputs);
-  local_change_script_pubkey_ = data.local_change_script_pubkey;
-  remote_inputs_.ConvertFromStruct(data.remote_inputs);
-  remote_change_script_pubkey_ = data.remote_change_script_pubkey;
+  offer_inputs_.ConvertFromStruct(data.offer_inputs);
+  offer_change_script_pubkey_ = data.offer_change_script_pubkey;
+  offer_change_serial_id_ = data.offer_change_serial_id;
+  accept_inputs_.ConvertFromStruct(data.accept_inputs);
+  accept_change_script_pubkey_ = data.accept_change_script_pubkey;
+  accept_change_serial_id_ = data.accept_change_serial_id;
   fee_rate_ = data.fee_rate;
+  fund_output_serial_id_ = data.fund_output_serial_id;
   cet_lock_time_ = data.cet_lock_time;
   fund_lock_time_ = data.fund_lock_time;
   option_dest_ = data.option_dest;
@@ -1057,20 +1071,25 @@ void CreateDlcTransactionsRequest::ConvertFromStruct(
 CreateDlcTransactionsRequestStruct CreateDlcTransactionsRequest::ConvertToStruct() const {  // NOLINT
   CreateDlcTransactionsRequestStruct result;
   result.payouts = payouts_.ConvertToStruct();
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.local_final_script_pubkey = local_final_script_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
-  result.remote_final_script_pubkey = remote_final_script_pubkey_;
-  result.local_input_amount = local_input_amount_;
-  result.local_collateral_amount = local_collateral_amount_;
-  result.remote_input_amount = remote_input_amount_;
-  result.remote_collateral_amount = remote_collateral_amount_;
+  result.offer_fund_pubkey = offer_fund_pubkey_;
+  result.offer_payout_script_pubkey = offer_payout_script_pubkey_;
+  result.offer_payout_serial_id = offer_payout_serial_id_;
+  result.accept_fund_pubkey = accept_fund_pubkey_;
+  result.accept_payout_script_pubkey = accept_payout_script_pubkey_;
+  result.accept_payout_serial_id = accept_payout_serial_id_;
+  result.offer_input_amount = offer_input_amount_;
+  result.offer_collateral_amount = offer_collateral_amount_;
+  result.accept_input_amount = accept_input_amount_;
+  result.accept_collateral_amount = accept_collateral_amount_;
   result.refund_locktime = refund_locktime_;
-  result.local_inputs = local_inputs_.ConvertToStruct();
-  result.local_change_script_pubkey = local_change_script_pubkey_;
-  result.remote_inputs = remote_inputs_.ConvertToStruct();
-  result.remote_change_script_pubkey = remote_change_script_pubkey_;
+  result.offer_inputs = offer_inputs_.ConvertToStruct();
+  result.offer_change_script_pubkey = offer_change_script_pubkey_;
+  result.offer_change_serial_id = offer_change_serial_id_;
+  result.accept_inputs = accept_inputs_.ConvertToStruct();
+  result.accept_change_script_pubkey = accept_change_script_pubkey_;
+  result.accept_change_serial_id = accept_change_serial_id_;
   result.fee_rate = fee_rate_;
+  result.fund_output_serial_id = fund_output_serial_id_;
   result.cet_lock_time = cet_lock_time_;
   result.fund_lock_time = fund_lock_time_;
   result.option_dest = option_dest_;
@@ -1113,6 +1132,20 @@ void CreateDlcTransactionsResponse::CollectFieldName() {
   };
   json_mapper.emplace("refundTxHex", func_table);
   item_list.push_back("refundTxHex");
+  func_table = {
+    CreateDlcTransactionsResponse::GetFundingScriptPubkeyString,
+    CreateDlcTransactionsResponse::SetFundingScriptPubkeyString,
+    CreateDlcTransactionsResponse::GetFundingScriptPubkeyFieldType,
+  };
+  json_mapper.emplace("fundingScriptPubkey", func_table);
+  item_list.push_back("fundingScriptPubkey");
+  func_table = {
+    CreateDlcTransactionsResponse::GetFundVoutString,
+    CreateDlcTransactionsResponse::SetFundVoutString,
+    CreateDlcTransactionsResponse::GetFundVoutFieldType,
+  };
+  json_mapper.emplace("fundVout", func_table);
+  item_list.push_back("fundVout");
 }
 
 void CreateDlcTransactionsResponse::ConvertFromStruct(
@@ -1120,6 +1153,8 @@ void CreateDlcTransactionsResponse::ConvertFromStruct(
   fund_tx_hex_ = data.fund_tx_hex;
   cets_hex_.ConvertFromStruct(data.cets_hex);
   refund_tx_hex_ = data.refund_tx_hex;
+  funding_script_pubkey_ = data.funding_script_pubkey;
+  fund_vout_ = data.fund_vout;
   ignore_items = data.ignore_items;
 }
 
@@ -1128,94 +1163,8 @@ CreateDlcTransactionsResponseStruct CreateDlcTransactionsResponse::ConvertToStru
   result.fund_tx_hex = fund_tx_hex_;
   result.cets_hex = cets_hex_.ConvertToStruct();
   result.refund_tx_hex = refund_tx_hex_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// TxInRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<TxInRequest>
-  TxInRequest::json_mapper;
-std::vector<std::string> TxInRequest::item_list;
-
-void TxInRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<TxInRequest> func_table;  // NOLINT
-
-  func_table = {
-    TxInRequest::GetTxidString,
-    TxInRequest::SetTxidString,
-    TxInRequest::GetTxidFieldType,
-  };
-  json_mapper.emplace("txid", func_table);
-  item_list.push_back("txid");
-  func_table = {
-    TxInRequest::GetVoutString,
-    TxInRequest::SetVoutString,
-    TxInRequest::GetVoutFieldType,
-  };
-  json_mapper.emplace("vout", func_table);
-  item_list.push_back("vout");
-}
-
-void TxInRequest::ConvertFromStruct(
-    const TxInRequestStruct& data) {
-  txid_ = data.txid;
-  vout_ = data.vout;
-  ignore_items = data.ignore_items;
-}
-
-TxInRequestStruct TxInRequest::ConvertToStruct() const {  // NOLINT
-  TxInRequestStruct result;
-  result.txid = txid_;
-  result.vout = vout_;
-  result.ignore_items = ignore_items;
-  return result;
-}
-
-// ------------------------------------------------------------------------
-// TxOutRequest
-// ------------------------------------------------------------------------
-cfd::core::JsonTableMap<TxOutRequest>
-  TxOutRequest::json_mapper;
-std::vector<std::string> TxOutRequest::item_list;
-
-void TxOutRequest::CollectFieldName() {
-  if (!json_mapper.empty()) {
-    return;
-  }
-  cfd::core::CLASS_FUNCTION_TABLE<TxOutRequest> func_table;  // NOLINT
-
-  func_table = {
-    TxOutRequest::GetAmountString,
-    TxOutRequest::SetAmountString,
-    TxOutRequest::GetAmountFieldType,
-  };
-  json_mapper.emplace("amount", func_table);
-  item_list.push_back("amount");
-  func_table = {
-    TxOutRequest::GetAddressString,
-    TxOutRequest::SetAddressString,
-    TxOutRequest::GetAddressFieldType,
-  };
-  json_mapper.emplace("address", func_table);
-  item_list.push_back("address");
-}
-
-void TxOutRequest::ConvertFromStruct(
-    const TxOutRequestStruct& data) {
-  amount_ = data.amount;
-  address_ = data.address;
-  ignore_items = data.ignore_items;
-}
-
-TxOutRequestStruct TxOutRequest::ConvertToStruct() const {  // NOLINT
-  TxOutRequestStruct result;
-  result.amount = amount_;
-  result.address = address_;
+  result.funding_script_pubkey = funding_script_pubkey_;
+  result.fund_vout = fund_vout_;
   result.ignore_items = ignore_items;
   return result;
 }
@@ -1234,54 +1183,103 @@ void CreateFundTransactionRequest::CollectFieldName() {
   cfd::core::CLASS_FUNCTION_TABLE<CreateFundTransactionRequest> func_table;  // NOLINT
 
   func_table = {
-    CreateFundTransactionRequest::GetLocalPubkeyString,
-    CreateFundTransactionRequest::SetLocalPubkeyString,
-    CreateFundTransactionRequest::GetLocalPubkeyFieldType,
+    CreateFundTransactionRequest::GetOfferPubkeyString,
+    CreateFundTransactionRequest::SetOfferPubkeyString,
+    CreateFundTransactionRequest::GetOfferPubkeyFieldType,
   };
-  json_mapper.emplace("localPubkey", func_table);
-  item_list.push_back("localPubkey");
+  json_mapper.emplace("offerPubkey", func_table);
+  item_list.push_back("offerPubkey");
   func_table = {
-    CreateFundTransactionRequest::GetRemotePubkeyString,
-    CreateFundTransactionRequest::SetRemotePubkeyString,
-    CreateFundTransactionRequest::GetRemotePubkeyFieldType,
+    CreateFundTransactionRequest::GetAcceptPubkeyString,
+    CreateFundTransactionRequest::SetAcceptPubkeyString,
+    CreateFundTransactionRequest::GetAcceptPubkeyFieldType,
   };
-  json_mapper.emplace("remotePubkey", func_table);
-  item_list.push_back("remotePubkey");
+  json_mapper.emplace("acceptPubkey", func_table);
+  item_list.push_back("acceptPubkey");
   func_table = {
-    CreateFundTransactionRequest::GetOutputAmountString,
-    CreateFundTransactionRequest::SetOutputAmountString,
-    CreateFundTransactionRequest::GetOutputAmountFieldType,
+    CreateFundTransactionRequest::GetOfferCollateralAmountString,
+    CreateFundTransactionRequest::SetOfferCollateralAmountString,
+    CreateFundTransactionRequest::GetOfferCollateralAmountFieldType,
   };
-  json_mapper.emplace("outputAmount", func_table);
-  item_list.push_back("outputAmount");
+  json_mapper.emplace("offerCollateralAmount", func_table);
+  item_list.push_back("offerCollateralAmount");
   func_table = {
-    CreateFundTransactionRequest::GetLocalInputsString,
-    CreateFundTransactionRequest::SetLocalInputsString,
-    CreateFundTransactionRequest::GetLocalInputsFieldType,
+    CreateFundTransactionRequest::GetAcceptCollateralAmountString,
+    CreateFundTransactionRequest::SetAcceptCollateralAmountString,
+    CreateFundTransactionRequest::GetAcceptCollateralAmountFieldType,
   };
-  json_mapper.emplace("localInputs", func_table);
-  item_list.push_back("localInputs");
+  json_mapper.emplace("acceptCollateralAmount", func_table);
+  item_list.push_back("acceptCollateralAmount");
   func_table = {
-    CreateFundTransactionRequest::GetLocalChangeString,
-    CreateFundTransactionRequest::SetLocalChangeString,
-    CreateFundTransactionRequest::GetLocalChangeFieldType,
+    CreateFundTransactionRequest::GetOfferInputsString,
+    CreateFundTransactionRequest::SetOfferInputsString,
+    CreateFundTransactionRequest::GetOfferInputsFieldType,
   };
-  json_mapper.emplace("localChange", func_table);
-  item_list.push_back("localChange");
+  json_mapper.emplace("offerInputs", func_table);
+  item_list.push_back("offerInputs");
   func_table = {
-    CreateFundTransactionRequest::GetRemoteInputsString,
-    CreateFundTransactionRequest::SetRemoteInputsString,
-    CreateFundTransactionRequest::GetRemoteInputsFieldType,
+    CreateFundTransactionRequest::GetAcceptInputsString,
+    CreateFundTransactionRequest::SetAcceptInputsString,
+    CreateFundTransactionRequest::GetAcceptInputsFieldType,
   };
-  json_mapper.emplace("remoteInputs", func_table);
-  item_list.push_back("remoteInputs");
+  json_mapper.emplace("acceptInputs", func_table);
+  item_list.push_back("acceptInputs");
   func_table = {
-    CreateFundTransactionRequest::GetRemoteChangeString,
-    CreateFundTransactionRequest::SetRemoteChangeString,
-    CreateFundTransactionRequest::GetRemoteChangeFieldType,
+    CreateFundTransactionRequest::GetOfferChangeScriptPubkeyString,
+    CreateFundTransactionRequest::SetOfferChangeScriptPubkeyString,
+    CreateFundTransactionRequest::GetOfferChangeScriptPubkeyFieldType,
   };
-  json_mapper.emplace("remoteChange", func_table);
-  item_list.push_back("remoteChange");
+  json_mapper.emplace("offerChangeScriptPubkey", func_table);
+  item_list.push_back("offerChangeScriptPubkey");
+  func_table = {
+    CreateFundTransactionRequest::GetOfferChangeSerialIdString,
+    CreateFundTransactionRequest::SetOfferChangeSerialIdString,
+    CreateFundTransactionRequest::GetOfferChangeSerialIdFieldType,
+  };
+  json_mapper.emplace("offerChangeSerialId", func_table);
+  item_list.push_back("offerChangeSerialId");
+  func_table = {
+    CreateFundTransactionRequest::GetAcceptChangeScriptPubkeyString,
+    CreateFundTransactionRequest::SetAcceptChangeScriptPubkeyString,
+    CreateFundTransactionRequest::GetAcceptChangeScriptPubkeyFieldType,
+  };
+  json_mapper.emplace("acceptChangeScriptPubkey", func_table);
+  item_list.push_back("acceptChangeScriptPubkey");
+  func_table = {
+    CreateFundTransactionRequest::GetAcceptChangeSerialIdString,
+    CreateFundTransactionRequest::SetAcceptChangeSerialIdString,
+    CreateFundTransactionRequest::GetAcceptChangeSerialIdFieldType,
+  };
+  json_mapper.emplace("acceptChangeSerialId", func_table);
+  item_list.push_back("acceptChangeSerialId");
+  func_table = {
+    CreateFundTransactionRequest::GetOfferPayoutScriptPubkeyString,
+    CreateFundTransactionRequest::SetOfferPayoutScriptPubkeyString,
+    CreateFundTransactionRequest::GetOfferPayoutScriptPubkeyFieldType,
+  };
+  json_mapper.emplace("offerPayoutScriptPubkey", func_table);
+  item_list.push_back("offerPayoutScriptPubkey");
+  func_table = {
+    CreateFundTransactionRequest::GetOfferPayoutSerialIdString,
+    CreateFundTransactionRequest::SetOfferPayoutSerialIdString,
+    CreateFundTransactionRequest::GetOfferPayoutSerialIdFieldType,
+  };
+  json_mapper.emplace("offerPayoutSerialId", func_table);
+  item_list.push_back("offerPayoutSerialId");
+  func_table = {
+    CreateFundTransactionRequest::GetAcceptPayoutScriptPubkeyString,
+    CreateFundTransactionRequest::SetAcceptPayoutScriptPubkeyString,
+    CreateFundTransactionRequest::GetAcceptPayoutScriptPubkeyFieldType,
+  };
+  json_mapper.emplace("acceptPayoutScriptPubkey", func_table);
+  item_list.push_back("acceptPayoutScriptPubkey");
+  func_table = {
+    CreateFundTransactionRequest::GetAcceptPayoutSerialIdString,
+    CreateFundTransactionRequest::SetAcceptPayoutSerialIdString,
+    CreateFundTransactionRequest::GetAcceptPayoutSerialIdFieldType,
+  };
+  json_mapper.emplace("acceptPayoutSerialId", func_table);
+  item_list.push_back("acceptPayoutSerialId");
   func_table = {
     CreateFundTransactionRequest::GetFeeRateString,
     CreateFundTransactionRequest::SetFeeRateString,
@@ -1289,6 +1287,13 @@ void CreateFundTransactionRequest::CollectFieldName() {
   };
   json_mapper.emplace("feeRate", func_table);
   item_list.push_back("feeRate");
+  func_table = {
+    CreateFundTransactionRequest::GetFundOutputSerialIdString,
+    CreateFundTransactionRequest::SetFundOutputSerialIdString,
+    CreateFundTransactionRequest::GetFundOutputSerialIdFieldType,
+  };
+  json_mapper.emplace("fundOutputSerialId", func_table);
+  item_list.push_back("fundOutputSerialId");
   func_table = {
     CreateFundTransactionRequest::GetOptionDestString,
     CreateFundTransactionRequest::SetOptionDestString,
@@ -1307,14 +1312,22 @@ void CreateFundTransactionRequest::CollectFieldName() {
 
 void CreateFundTransactionRequest::ConvertFromStruct(
     const CreateFundTransactionRequestStruct& data) {
-  local_pubkey_ = data.local_pubkey;
-  remote_pubkey_ = data.remote_pubkey;
-  output_amount_ = data.output_amount;
-  local_inputs_.ConvertFromStruct(data.local_inputs);
-  local_change_.ConvertFromStruct(data.local_change);
-  remote_inputs_.ConvertFromStruct(data.remote_inputs);
-  remote_change_.ConvertFromStruct(data.remote_change);
+  offer_pubkey_ = data.offer_pubkey;
+  accept_pubkey_ = data.accept_pubkey;
+  offer_collateral_amount_ = data.offer_collateral_amount;
+  accept_collateral_amount_ = data.accept_collateral_amount;
+  offer_inputs_.ConvertFromStruct(data.offer_inputs);
+  accept_inputs_.ConvertFromStruct(data.accept_inputs);
+  offer_change_script_pubkey_ = data.offer_change_script_pubkey;
+  offer_change_serial_id_ = data.offer_change_serial_id;
+  accept_change_script_pubkey_ = data.accept_change_script_pubkey;
+  accept_change_serial_id_ = data.accept_change_serial_id;
+  offer_payout_script_pubkey_ = data.offer_payout_script_pubkey;
+  offer_payout_serial_id_ = data.offer_payout_serial_id;
+  accept_payout_script_pubkey_ = data.accept_payout_script_pubkey;
+  accept_payout_serial_id_ = data.accept_payout_serial_id;
   fee_rate_ = data.fee_rate;
+  fund_output_serial_id_ = data.fund_output_serial_id;
   option_dest_ = data.option_dest;
   option_premium_ = data.option_premium;
   ignore_items = data.ignore_items;
@@ -1322,14 +1335,22 @@ void CreateFundTransactionRequest::ConvertFromStruct(
 
 CreateFundTransactionRequestStruct CreateFundTransactionRequest::ConvertToStruct() const {  // NOLINT
   CreateFundTransactionRequestStruct result;
-  result.local_pubkey = local_pubkey_;
-  result.remote_pubkey = remote_pubkey_;
-  result.output_amount = output_amount_;
-  result.local_inputs = local_inputs_.ConvertToStruct();
-  result.local_change = local_change_.ConvertToStruct();
-  result.remote_inputs = remote_inputs_.ConvertToStruct();
-  result.remote_change = remote_change_.ConvertToStruct();
+  result.offer_pubkey = offer_pubkey_;
+  result.accept_pubkey = accept_pubkey_;
+  result.offer_collateral_amount = offer_collateral_amount_;
+  result.accept_collateral_amount = accept_collateral_amount_;
+  result.offer_inputs = offer_inputs_.ConvertToStruct();
+  result.accept_inputs = accept_inputs_.ConvertToStruct();
+  result.offer_change_script_pubkey = offer_change_script_pubkey_;
+  result.offer_change_serial_id = offer_change_serial_id_;
+  result.accept_change_script_pubkey = accept_change_script_pubkey_;
+  result.accept_change_serial_id = accept_change_serial_id_;
+  result.offer_payout_script_pubkey = offer_payout_script_pubkey_;
+  result.offer_payout_serial_id = offer_payout_serial_id_;
+  result.accept_payout_script_pubkey = accept_payout_script_pubkey_;
+  result.accept_payout_serial_id = accept_payout_serial_id_;
   result.fee_rate = fee_rate_;
+  result.fund_output_serial_id = fund_output_serial_id_;
   result.option_dest = option_dest_;
   result.option_premium = option_premium_;
   result.ignore_items = ignore_items;
@@ -1385,33 +1406,33 @@ void CreateRefundTransactionRequest::CollectFieldName() {
   cfd::core::CLASS_FUNCTION_TABLE<CreateRefundTransactionRequest> func_table;  // NOLINT
 
   func_table = {
-    CreateRefundTransactionRequest::GetLocalFinalScriptPubkeyString,
-    CreateRefundTransactionRequest::SetLocalFinalScriptPubkeyString,
-    CreateRefundTransactionRequest::GetLocalFinalScriptPubkeyFieldType,
+    CreateRefundTransactionRequest::GetOfferFinalScriptPubkeyString,
+    CreateRefundTransactionRequest::SetOfferFinalScriptPubkeyString,
+    CreateRefundTransactionRequest::GetOfferFinalScriptPubkeyFieldType,
   };
-  json_mapper.emplace("localFinalScriptPubkey", func_table);
-  item_list.push_back("localFinalScriptPubkey");
+  json_mapper.emplace("offerFinalScriptPubkey", func_table);
+  item_list.push_back("offerFinalScriptPubkey");
   func_table = {
-    CreateRefundTransactionRequest::GetRemoteFinalScriptPubkeyString,
-    CreateRefundTransactionRequest::SetRemoteFinalScriptPubkeyString,
-    CreateRefundTransactionRequest::GetRemoteFinalScriptPubkeyFieldType,
+    CreateRefundTransactionRequest::GetAcceptFinalScriptPubkeyString,
+    CreateRefundTransactionRequest::SetAcceptFinalScriptPubkeyString,
+    CreateRefundTransactionRequest::GetAcceptFinalScriptPubkeyFieldType,
   };
-  json_mapper.emplace("remoteFinalScriptPubkey", func_table);
-  item_list.push_back("remoteFinalScriptPubkey");
+  json_mapper.emplace("acceptFinalScriptPubkey", func_table);
+  item_list.push_back("acceptFinalScriptPubkey");
   func_table = {
-    CreateRefundTransactionRequest::GetLocalAmountString,
-    CreateRefundTransactionRequest::SetLocalAmountString,
-    CreateRefundTransactionRequest::GetLocalAmountFieldType,
+    CreateRefundTransactionRequest::GetOfferAmountString,
+    CreateRefundTransactionRequest::SetOfferAmountString,
+    CreateRefundTransactionRequest::GetOfferAmountFieldType,
   };
-  json_mapper.emplace("localAmount", func_table);
-  item_list.push_back("localAmount");
+  json_mapper.emplace("offerAmount", func_table);
+  item_list.push_back("offerAmount");
   func_table = {
-    CreateRefundTransactionRequest::GetRemoteAmountString,
-    CreateRefundTransactionRequest::SetRemoteAmountString,
-    CreateRefundTransactionRequest::GetRemoteAmountFieldType,
+    CreateRefundTransactionRequest::GetAcceptAmountString,
+    CreateRefundTransactionRequest::SetAcceptAmountString,
+    CreateRefundTransactionRequest::GetAcceptAmountFieldType,
   };
-  json_mapper.emplace("remoteAmount", func_table);
-  item_list.push_back("remoteAmount");
+  json_mapper.emplace("acceptAmount", func_table);
+  item_list.push_back("acceptAmount");
   func_table = {
     CreateRefundTransactionRequest::GetLockTimeString,
     CreateRefundTransactionRequest::SetLockTimeString,
@@ -1437,10 +1458,10 @@ void CreateRefundTransactionRequest::CollectFieldName() {
 
 void CreateRefundTransactionRequest::ConvertFromStruct(
     const CreateRefundTransactionRequestStruct& data) {
-  local_final_script_pubkey_ = data.local_final_script_pubkey;
-  remote_final_script_pubkey_ = data.remote_final_script_pubkey;
-  local_amount_ = data.local_amount;
-  remote_amount_ = data.remote_amount;
+  offer_final_script_pubkey_ = data.offer_final_script_pubkey;
+  accept_final_script_pubkey_ = data.accept_final_script_pubkey;
+  offer_amount_ = data.offer_amount;
+  accept_amount_ = data.accept_amount;
   lock_time_ = data.lock_time;
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
@@ -1449,10 +1470,10 @@ void CreateRefundTransactionRequest::ConvertFromStruct(
 
 CreateRefundTransactionRequestStruct CreateRefundTransactionRequest::ConvertToStruct() const {  // NOLINT
   CreateRefundTransactionRequestStruct result;
-  result.local_final_script_pubkey = local_final_script_pubkey_;
-  result.remote_final_script_pubkey = remote_final_script_pubkey_;
-  result.local_amount = local_amount_;
-  result.remote_amount = remote_amount_;
+  result.offer_final_script_pubkey = offer_final_script_pubkey_;
+  result.accept_final_script_pubkey = accept_final_script_pubkey_;
+  result.offer_amount = offer_amount_;
+  result.accept_amount = accept_amount_;
   result.lock_time = lock_time_;
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
@@ -1718,19 +1739,19 @@ void GetRawRefundTxSignatureRequest::CollectFieldName() {
   json_mapper.emplace("fundVout", func_table);
   item_list.push_back("fundVout");
   func_table = {
-    GetRawRefundTxSignatureRequest::GetLocalFundPubkeyString,
-    GetRawRefundTxSignatureRequest::SetLocalFundPubkeyString,
-    GetRawRefundTxSignatureRequest::GetLocalFundPubkeyFieldType,
+    GetRawRefundTxSignatureRequest::GetOfferFundPubkeyString,
+    GetRawRefundTxSignatureRequest::SetOfferFundPubkeyString,
+    GetRawRefundTxSignatureRequest::GetOfferFundPubkeyFieldType,
   };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
+  json_mapper.emplace("offerFundPubkey", func_table);
+  item_list.push_back("offerFundPubkey");
   func_table = {
-    GetRawRefundTxSignatureRequest::GetRemoteFundPubkeyString,
-    GetRawRefundTxSignatureRequest::SetRemoteFundPubkeyString,
-    GetRawRefundTxSignatureRequest::GetRemoteFundPubkeyFieldType,
+    GetRawRefundTxSignatureRequest::GetAcceptFundPubkeyString,
+    GetRawRefundTxSignatureRequest::SetAcceptFundPubkeyString,
+    GetRawRefundTxSignatureRequest::GetAcceptFundPubkeyFieldType,
   };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
+  json_mapper.emplace("acceptFundPubkey", func_table);
+  item_list.push_back("acceptFundPubkey");
   func_table = {
     GetRawRefundTxSignatureRequest::GetFundInputAmountString,
     GetRawRefundTxSignatureRequest::SetFundInputAmountString,
@@ -1746,8 +1767,8 @@ void GetRawRefundTxSignatureRequest::ConvertFromStruct(
   privkey_ = data.privkey;
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
+  offer_fund_pubkey_ = data.offer_fund_pubkey;
+  accept_fund_pubkey_ = data.accept_fund_pubkey;
   fund_input_amount_ = data.fund_input_amount;
   ignore_items = data.ignore_items;
 }
@@ -1758,8 +1779,8 @@ GetRawRefundTxSignatureRequestStruct GetRawRefundTxSignatureRequest::ConvertToSt
   result.privkey = privkey_;
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.offer_fund_pubkey = offer_fund_pubkey_;
+  result.accept_fund_pubkey = accept_fund_pubkey_;
   result.fund_input_amount = fund_input_amount_;
   result.ignore_items = ignore_items;
   return result;
@@ -1842,19 +1863,19 @@ void SignCetRequest::CollectFieldName() {
   json_mapper.emplace("fundVout", func_table);
   item_list.push_back("fundVout");
   func_table = {
-    SignCetRequest::GetLocalFundPubkeyString,
-    SignCetRequest::SetLocalFundPubkeyString,
-    SignCetRequest::GetLocalFundPubkeyFieldType,
+    SignCetRequest::GetOfferFundPubkeyString,
+    SignCetRequest::SetOfferFundPubkeyString,
+    SignCetRequest::GetOfferFundPubkeyFieldType,
   };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
+  json_mapper.emplace("offerFundPubkey", func_table);
+  item_list.push_back("offerFundPubkey");
   func_table = {
-    SignCetRequest::GetRemoteFundPubkeyString,
-    SignCetRequest::SetRemoteFundPubkeyString,
-    SignCetRequest::GetRemoteFundPubkeyFieldType,
+    SignCetRequest::GetAcceptFundPubkeyString,
+    SignCetRequest::SetAcceptFundPubkeyString,
+    SignCetRequest::GetAcceptFundPubkeyFieldType,
   };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
+  json_mapper.emplace("acceptFundPubkey", func_table);
+  item_list.push_back("acceptFundPubkey");
   func_table = {
     SignCetRequest::GetFundInputAmountString,
     SignCetRequest::SetFundInputAmountString,
@@ -1884,8 +1905,8 @@ void SignCetRequest::ConvertFromStruct(
   fund_privkey_ = data.fund_privkey;
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
+  offer_fund_pubkey_ = data.offer_fund_pubkey;
+  accept_fund_pubkey_ = data.accept_fund_pubkey;
   fund_input_amount_ = data.fund_input_amount;
   adaptor_signature_ = data.adaptor_signature;
   oracle_signatures_.ConvertFromStruct(data.oracle_signatures);
@@ -1898,8 +1919,8 @@ SignCetRequestStruct SignCetRequest::ConvertToStruct() const {  // NOLINT
   result.fund_privkey = fund_privkey_;
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.offer_fund_pubkey = offer_fund_pubkey_;
+  result.accept_fund_pubkey = accept_fund_pubkey_;
   result.fund_input_amount = fund_input_amount_;
   result.adaptor_signature = adaptor_signature_;
   result.oracle_signatures = oracle_signatures_.ConvertToStruct();
@@ -2076,13 +2097,6 @@ void VerifyCetAdaptorSignatureRequest::CollectFieldName() {
   json_mapper.emplace("adaptorSignature", func_table);
   item_list.push_back("adaptorSignature");
   func_table = {
-    VerifyCetAdaptorSignatureRequest::GetAdaptorProofString,
-    VerifyCetAdaptorSignatureRequest::SetAdaptorProofString,
-    VerifyCetAdaptorSignatureRequest::GetAdaptorProofFieldType,
-  };
-  json_mapper.emplace("adaptorProof", func_table);
-  item_list.push_back("adaptorProof");
-  func_table = {
     VerifyCetAdaptorSignatureRequest::GetMessagesString,
     VerifyCetAdaptorSignatureRequest::SetMessagesString,
     VerifyCetAdaptorSignatureRequest::GetMessagesFieldType,
@@ -2090,19 +2104,19 @@ void VerifyCetAdaptorSignatureRequest::CollectFieldName() {
   json_mapper.emplace("messages", func_table);
   item_list.push_back("messages");
   func_table = {
-    VerifyCetAdaptorSignatureRequest::GetLocalFundPubkeyString,
-    VerifyCetAdaptorSignatureRequest::SetLocalFundPubkeyString,
-    VerifyCetAdaptorSignatureRequest::GetLocalFundPubkeyFieldType,
+    VerifyCetAdaptorSignatureRequest::GetOfferFundPubkeyString,
+    VerifyCetAdaptorSignatureRequest::SetOfferFundPubkeyString,
+    VerifyCetAdaptorSignatureRequest::GetOfferFundPubkeyFieldType,
   };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
+  json_mapper.emplace("offerFundPubkey", func_table);
+  item_list.push_back("offerFundPubkey");
   func_table = {
-    VerifyCetAdaptorSignatureRequest::GetRemoteFundPubkeyString,
-    VerifyCetAdaptorSignatureRequest::SetRemoteFundPubkeyString,
-    VerifyCetAdaptorSignatureRequest::GetRemoteFundPubkeyFieldType,
+    VerifyCetAdaptorSignatureRequest::GetAcceptFundPubkeyString,
+    VerifyCetAdaptorSignatureRequest::SetAcceptFundPubkeyString,
+    VerifyCetAdaptorSignatureRequest::GetAcceptFundPubkeyFieldType,
   };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
+  json_mapper.emplace("acceptFundPubkey", func_table);
+  item_list.push_back("acceptFundPubkey");
   func_table = {
     VerifyCetAdaptorSignatureRequest::GetOraclePubkeyString,
     VerifyCetAdaptorSignatureRequest::SetOraclePubkeyString,
@@ -2139,28 +2153,27 @@ void VerifyCetAdaptorSignatureRequest::CollectFieldName() {
   json_mapper.emplace("fundInputAmount", func_table);
   item_list.push_back("fundInputAmount");
   func_table = {
-    VerifyCetAdaptorSignatureRequest::GetVerifyRemoteString,
-    VerifyCetAdaptorSignatureRequest::SetVerifyRemoteString,
-    VerifyCetAdaptorSignatureRequest::GetVerifyRemoteFieldType,
+    VerifyCetAdaptorSignatureRequest::GetVerifyAcceptString,
+    VerifyCetAdaptorSignatureRequest::SetVerifyAcceptString,
+    VerifyCetAdaptorSignatureRequest::GetVerifyAcceptFieldType,
   };
-  json_mapper.emplace("verifyRemote", func_table);
-  item_list.push_back("verifyRemote");
+  json_mapper.emplace("verifyAccept", func_table);
+  item_list.push_back("verifyAccept");
 }
 
 void VerifyCetAdaptorSignatureRequest::ConvertFromStruct(
     const VerifyCetAdaptorSignatureRequestStruct& data) {
   cet_hex_ = data.cet_hex;
   adaptor_signature_ = data.adaptor_signature;
-  adaptor_proof_ = data.adaptor_proof;
   messages_.ConvertFromStruct(data.messages);
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
+  offer_fund_pubkey_ = data.offer_fund_pubkey;
+  accept_fund_pubkey_ = data.accept_fund_pubkey;
   oracle_pubkey_ = data.oracle_pubkey;
   oracle_r_values_.ConvertFromStruct(data.oracle_r_values);
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
   fund_input_amount_ = data.fund_input_amount;
-  verify_remote_ = data.verify_remote;
+  verify_accept_ = data.verify_accept;
   ignore_items = data.ignore_items;
 }
 
@@ -2168,16 +2181,15 @@ VerifyCetAdaptorSignatureRequestStruct VerifyCetAdaptorSignatureRequest::Convert
   VerifyCetAdaptorSignatureRequestStruct result;
   result.cet_hex = cet_hex_;
   result.adaptor_signature = adaptor_signature_;
-  result.adaptor_proof = adaptor_proof_;
   result.messages = messages_.ConvertToStruct();
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.offer_fund_pubkey = offer_fund_pubkey_;
+  result.accept_fund_pubkey = accept_fund_pubkey_;
   result.oracle_pubkey = oracle_pubkey_;
   result.oracle_r_values = oracle_r_values_.ConvertToStruct();
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
   result.fund_input_amount = fund_input_amount_;
-  result.verify_remote = verify_remote_;
+  result.verify_accept = verify_accept_;
   result.ignore_items = ignore_items;
   return result;
 }
@@ -2238,12 +2250,12 @@ void VerifyCetAdaptorSignaturesRequest::CollectFieldName() {
   json_mapper.emplace("cetsHex", func_table);
   item_list.push_back("cetsHex");
   func_table = {
-    VerifyCetAdaptorSignaturesRequest::GetAdaptorPairsString,
-    VerifyCetAdaptorSignaturesRequest::SetAdaptorPairsString,
-    VerifyCetAdaptorSignaturesRequest::GetAdaptorPairsFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetAdaptorSignaturesString,
+    VerifyCetAdaptorSignaturesRequest::SetAdaptorSignaturesString,
+    VerifyCetAdaptorSignaturesRequest::GetAdaptorSignaturesFieldType,
   };
-  json_mapper.emplace("adaptorPairs", func_table);
-  item_list.push_back("adaptorPairs");
+  json_mapper.emplace("adaptorSignatures", func_table);
+  item_list.push_back("adaptorSignatures");
   func_table = {
     VerifyCetAdaptorSignaturesRequest::GetMessagesListString,
     VerifyCetAdaptorSignaturesRequest::SetMessagesListString,
@@ -2252,19 +2264,19 @@ void VerifyCetAdaptorSignaturesRequest::CollectFieldName() {
   json_mapper.emplace("messagesList", func_table);
   item_list.push_back("messagesList");
   func_table = {
-    VerifyCetAdaptorSignaturesRequest::GetLocalFundPubkeyString,
-    VerifyCetAdaptorSignaturesRequest::SetLocalFundPubkeyString,
-    VerifyCetAdaptorSignaturesRequest::GetLocalFundPubkeyFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetOfferFundPubkeyString,
+    VerifyCetAdaptorSignaturesRequest::SetOfferFundPubkeyString,
+    VerifyCetAdaptorSignaturesRequest::GetOfferFundPubkeyFieldType,
   };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
+  json_mapper.emplace("offerFundPubkey", func_table);
+  item_list.push_back("offerFundPubkey");
   func_table = {
-    VerifyCetAdaptorSignaturesRequest::GetRemoteFundPubkeyString,
-    VerifyCetAdaptorSignaturesRequest::SetRemoteFundPubkeyString,
-    VerifyCetAdaptorSignaturesRequest::GetRemoteFundPubkeyFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetAcceptFundPubkeyString,
+    VerifyCetAdaptorSignaturesRequest::SetAcceptFundPubkeyString,
+    VerifyCetAdaptorSignaturesRequest::GetAcceptFundPubkeyFieldType,
   };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
+  json_mapper.emplace("acceptFundPubkey", func_table);
+  item_list.push_back("acceptFundPubkey");
   func_table = {
     VerifyCetAdaptorSignaturesRequest::GetOraclePubkeyString,
     VerifyCetAdaptorSignaturesRequest::SetOraclePubkeyString,
@@ -2301,43 +2313,43 @@ void VerifyCetAdaptorSignaturesRequest::CollectFieldName() {
   json_mapper.emplace("fundInputAmount", func_table);
   item_list.push_back("fundInputAmount");
   func_table = {
-    VerifyCetAdaptorSignaturesRequest::GetVerifyRemoteString,
-    VerifyCetAdaptorSignaturesRequest::SetVerifyRemoteString,
-    VerifyCetAdaptorSignaturesRequest::GetVerifyRemoteFieldType,
+    VerifyCetAdaptorSignaturesRequest::GetVerifyAcceptString,
+    VerifyCetAdaptorSignaturesRequest::SetVerifyAcceptString,
+    VerifyCetAdaptorSignaturesRequest::GetVerifyAcceptFieldType,
   };
-  json_mapper.emplace("verifyRemote", func_table);
-  item_list.push_back("verifyRemote");
+  json_mapper.emplace("verifyAccept", func_table);
+  item_list.push_back("verifyAccept");
 }
 
 void VerifyCetAdaptorSignaturesRequest::ConvertFromStruct(
     const VerifyCetAdaptorSignaturesRequestStruct& data) {
   cets_hex_.ConvertFromStruct(data.cets_hex);
-  adaptor_pairs_.ConvertFromStruct(data.adaptor_pairs);
+  adaptor_signatures_.ConvertFromStruct(data.adaptor_signatures);
   messages_list_.ConvertFromStruct(data.messages_list);
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
+  offer_fund_pubkey_ = data.offer_fund_pubkey;
+  accept_fund_pubkey_ = data.accept_fund_pubkey;
   oracle_pubkey_ = data.oracle_pubkey;
   oracle_r_values_.ConvertFromStruct(data.oracle_r_values);
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
   fund_input_amount_ = data.fund_input_amount;
-  verify_remote_ = data.verify_remote;
+  verify_accept_ = data.verify_accept;
   ignore_items = data.ignore_items;
 }
 
 VerifyCetAdaptorSignaturesRequestStruct VerifyCetAdaptorSignaturesRequest::ConvertToStruct() const {  // NOLINT
   VerifyCetAdaptorSignaturesRequestStruct result;
   result.cets_hex = cets_hex_.ConvertToStruct();
-  result.adaptor_pairs = adaptor_pairs_.ConvertToStruct();
+  result.adaptor_signatures = adaptor_signatures_.ConvertToStruct();
   result.messages_list = messages_list_.ConvertToStruct();
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.offer_fund_pubkey = offer_fund_pubkey_;
+  result.accept_fund_pubkey = accept_fund_pubkey_;
   result.oracle_pubkey = oracle_pubkey_;
   result.oracle_r_values = oracle_r_values_.ConvertToStruct();
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
   result.fund_input_amount = fund_input_amount_;
-  result.verify_remote = verify_remote_;
+  result.verify_accept = verify_accept_;
   result.ignore_items = ignore_items;
   return result;
 }
@@ -2520,19 +2532,19 @@ void VerifyRefundTxSignatureRequest::CollectFieldName() {
   json_mapper.emplace("signature", func_table);
   item_list.push_back("signature");
   func_table = {
-    VerifyRefundTxSignatureRequest::GetLocalFundPubkeyString,
-    VerifyRefundTxSignatureRequest::SetLocalFundPubkeyString,
-    VerifyRefundTxSignatureRequest::GetLocalFundPubkeyFieldType,
+    VerifyRefundTxSignatureRequest::GetOfferFundPubkeyString,
+    VerifyRefundTxSignatureRequest::SetOfferFundPubkeyString,
+    VerifyRefundTxSignatureRequest::GetOfferFundPubkeyFieldType,
   };
-  json_mapper.emplace("localFundPubkey", func_table);
-  item_list.push_back("localFundPubkey");
+  json_mapper.emplace("offerFundPubkey", func_table);
+  item_list.push_back("offerFundPubkey");
   func_table = {
-    VerifyRefundTxSignatureRequest::GetRemoteFundPubkeyString,
-    VerifyRefundTxSignatureRequest::SetRemoteFundPubkeyString,
-    VerifyRefundTxSignatureRequest::GetRemoteFundPubkeyFieldType,
+    VerifyRefundTxSignatureRequest::GetAcceptFundPubkeyString,
+    VerifyRefundTxSignatureRequest::SetAcceptFundPubkeyString,
+    VerifyRefundTxSignatureRequest::GetAcceptFundPubkeyFieldType,
   };
-  json_mapper.emplace("remoteFundPubkey", func_table);
-  item_list.push_back("remoteFundPubkey");
+  json_mapper.emplace("acceptFundPubkey", func_table);
+  item_list.push_back("acceptFundPubkey");
   func_table = {
     VerifyRefundTxSignatureRequest::GetFundTxIdString,
     VerifyRefundTxSignatureRequest::SetFundTxIdString,
@@ -2555,24 +2567,24 @@ void VerifyRefundTxSignatureRequest::CollectFieldName() {
   json_mapper.emplace("fundInputAmount", func_table);
   item_list.push_back("fundInputAmount");
   func_table = {
-    VerifyRefundTxSignatureRequest::GetVerifyRemoteString,
-    VerifyRefundTxSignatureRequest::SetVerifyRemoteString,
-    VerifyRefundTxSignatureRequest::GetVerifyRemoteFieldType,
+    VerifyRefundTxSignatureRequest::GetVerifyAcceptString,
+    VerifyRefundTxSignatureRequest::SetVerifyAcceptString,
+    VerifyRefundTxSignatureRequest::GetVerifyAcceptFieldType,
   };
-  json_mapper.emplace("verifyRemote", func_table);
-  item_list.push_back("verifyRemote");
+  json_mapper.emplace("verifyAccept", func_table);
+  item_list.push_back("verifyAccept");
 }
 
 void VerifyRefundTxSignatureRequest::ConvertFromStruct(
     const VerifyRefundTxSignatureRequestStruct& data) {
   refund_tx_hex_ = data.refund_tx_hex;
   signature_ = data.signature;
-  local_fund_pubkey_ = data.local_fund_pubkey;
-  remote_fund_pubkey_ = data.remote_fund_pubkey;
+  offer_fund_pubkey_ = data.offer_fund_pubkey;
+  accept_fund_pubkey_ = data.accept_fund_pubkey;
   fund_tx_id_ = data.fund_tx_id;
   fund_vout_ = data.fund_vout;
   fund_input_amount_ = data.fund_input_amount;
-  verify_remote_ = data.verify_remote;
+  verify_accept_ = data.verify_accept;
   ignore_items = data.ignore_items;
 }
 
@@ -2580,12 +2592,12 @@ VerifyRefundTxSignatureRequestStruct VerifyRefundTxSignatureRequest::ConvertToSt
   VerifyRefundTxSignatureRequestStruct result;
   result.refund_tx_hex = refund_tx_hex_;
   result.signature = signature_;
-  result.local_fund_pubkey = local_fund_pubkey_;
-  result.remote_fund_pubkey = remote_fund_pubkey_;
+  result.offer_fund_pubkey = offer_fund_pubkey_;
+  result.accept_fund_pubkey = accept_fund_pubkey_;
   result.fund_tx_id = fund_tx_id_;
   result.fund_vout = fund_vout_;
   result.fund_input_amount = fund_input_amount_;
-  result.verify_remote = verify_remote_;
+  result.verify_accept = verify_accept_;
   result.ignore_items = ignore_items;
   return result;
 }

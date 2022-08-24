@@ -29,191 +29,6 @@ using cfd::core::JsonVector;
 // @formatter:off
 
 // ------------------------------------------------------------------------
-// AdaptorPair
-// ------------------------------------------------------------------------
-/**
- * @brief JSON-API (AdaptorPair) class
- */
-class AdaptorPair
-  : public cfd::core::JsonClassBase<AdaptorPair> {
- public:
-  AdaptorPair() {
-    CollectFieldName();
-  }
-  virtual ~AdaptorPair() {
-    // do nothing
-  }
-  /**
-   * @brief collect field name.
-   */
-  static void CollectFieldName();
-
-  /**
-   * @brief Get of signature
-   * @return signature
-   */
-  std::string GetSignature() const {
-    return signature_;
-  }
-  /**
-   * @brief Set to signature
-   * @param[in] signature    setting value.
-   */
-  void SetSignature(  // line separate
-    const std::string& signature) {  // NOLINT
-    this->signature_ = signature;
-  }
-  /**
-   * @brief Get data type of signature
-   * @return Data type of signature
-   */
-  static std::string GetSignatureFieldType() {
-    return "std::string";
-  }
-  /**
-   * @brief Get json string of signature field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetSignatureString(  // line separate
-      const AdaptorPair& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.signature_);
-  }
-  /**
-   * @brief Set json object to signature field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetSignatureString(  // line separate
-      AdaptorPair& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.signature_, json_value);
-  }
-
-  /**
-   * @brief Get of proof
-   * @return proof
-   */
-  std::string GetProof() const {
-    return proof_;
-  }
-  /**
-   * @brief Set to proof
-   * @param[in] proof    setting value.
-   */
-  void SetProof(  // line separate
-    const std::string& proof) {  // NOLINT
-    this->proof_ = proof;
-  }
-  /**
-   * @brief Get data type of proof
-   * @return Data type of proof
-   */
-  static std::string GetProofFieldType() {
-    return "std::string";
-  }
-  /**
-   * @brief Get json string of proof field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetProofString(  // line separate
-      const AdaptorPair& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.proof_);
-  }
-  /**
-   * @brief Set json object to proof field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetProofString(  // line separate
-      AdaptorPair& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.proof_, json_value);
-  }
-
-  /**
-   * @brief Set ignore item.
-   * @param[in] key   ignore target key name.
-   */
-  void SetIgnoreItem(const std::string& key) {
-    ignore_items.insert(key);
-  }
-
-  /**
-   * @brief Convert struct to class.
-   * @param[in] data   struct data.
-   */
-  void ConvertFromStruct(
-      const AdaptorPairStruct& data);
-
-  /**
-   * @brief Convert class to struct.
-   * @return  struct data.
-   */
-  AdaptorPairStruct ConvertToStruct()  const;
-
- protected:
-  /**
-   * @brief definition type of Map table.
-   */
-  using AdaptorPairMapTable =
-    cfd::core::JsonTableMap<AdaptorPair>;
-
-  /**
-   * @brief Get JSON mapping object.
-   * @return JSON mapping object.
-   * @see cfd::core::JsonClassBase::GetJsonMapper()
-   */
-  virtual const AdaptorPairMapTable& GetJsonMapper() const {  // NOLINT
-    return json_mapper;
-  }
-  /**
-   * @brief Get item lists of JSON mapping.
-   * Fetch a list of target variable names in the order of definition.
-   * @return Item lists of JSON mapping.
-   * @see cfd::core::JsonClassBase::GetJsonItemList()
-   */
-  virtual const std::vector<std::string>& GetJsonItemList() const {
-    return item_list;
-  }
-  /**
-   * @brief Get ignore item lists of JSON mapping.
-   * Ignore the target variable at Serialize.
-   * @return Item list of JSON mapping.
-   * @see cfd::core::JsonClassBase::GetIgnoreItem()
-   */
-  virtual const std::set<std::string>& GetIgnoreItem() const {
-    return ignore_items;
-  }
-
- private:
- /**
-  * @brief JsonFunctionMap table
-  */
-  static AdaptorPairMapTable json_mapper;
-  /**
-   * @brief field name list.
-   */
-  static std::vector<std::string> item_list;
-  /**
-   * @brief ignore item list.
-   */
-  std::set<std::string> ignore_items;
-
-  /**
-   * @brief JsonAPI(signature) value
-   */
-  std::string signature_ = "";
-  /**
-   * @brief JsonAPI(proof) value
-   */
-  std::string proof_ = "";
-};
-
-// ------------------------------------------------------------------------
 // Messages
 // ------------------------------------------------------------------------
 /**
@@ -350,6 +165,332 @@ class Messages
    * @brief JsonAPI(messages) value
    */
   JsonValueVector<std::string> messages_;  // NOLINT
+};
+
+// ------------------------------------------------------------------------
+// TxInInfoRequest
+// ------------------------------------------------------------------------
+/**
+ * @brief JSON-API (TxInInfoRequest) class
+ */
+class TxInInfoRequest
+  : public cfd::core::JsonClassBase<TxInInfoRequest> {
+ public:
+  TxInInfoRequest() {
+    CollectFieldName();
+  }
+  virtual ~TxInInfoRequest() {
+    // do nothing
+  }
+  /**
+   * @brief collect field name.
+   */
+  static void CollectFieldName();
+
+  /**
+   * @brief Get of txid
+   * @return txid
+   */
+  std::string GetTxid() const {
+    return txid_;
+  }
+  /**
+   * @brief Set to txid
+   * @param[in] txid    setting value.
+   */
+  void SetTxid(  // line separate
+    const std::string& txid) {  // NOLINT
+    this->txid_ = txid;
+  }
+  /**
+   * @brief Get data type of txid
+   * @return Data type of txid
+   */
+  static std::string GetTxidFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of txid field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetTxidString(  // line separate
+      const TxInInfoRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.txid_);
+  }
+  /**
+   * @brief Set json object to txid field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetTxidString(  // line separate
+      TxInInfoRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.txid_, json_value);
+  }
+
+  /**
+   * @brief Get of vout
+   * @return vout
+   */
+  uint32_t GetVout() const {
+    return vout_;
+  }
+  /**
+   * @brief Set to vout
+   * @param[in] vout    setting value.
+   */
+  void SetVout(  // line separate
+    const uint32_t& vout) {  // NOLINT
+    this->vout_ = vout;
+  }
+  /**
+   * @brief Get data type of vout
+   * @return Data type of vout
+   */
+  static std::string GetVoutFieldType() {
+    return "uint32_t";
+  }
+  /**
+   * @brief Get json string of vout field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetVoutString(  // line separate
+      const TxInInfoRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.vout_);
+  }
+  /**
+   * @brief Set json object to vout field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetVoutString(  // line separate
+      TxInInfoRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.vout_, json_value);
+  }
+
+  /**
+   * @brief Get of redeemScript
+   * @return redeemScript
+   */
+  std::string GetRedeemScript() const {
+    return redeem_script_;
+  }
+  /**
+   * @brief Set to redeemScript
+   * @param[in] redeem_script    setting value.
+   */
+  void SetRedeemScript(  // line separate
+    const std::string& redeem_script) {  // NOLINT
+    this->redeem_script_ = redeem_script;
+  }
+  /**
+   * @brief Get data type of redeemScript
+   * @return Data type of redeemScript
+   */
+  static std::string GetRedeemScriptFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of redeemScript field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetRedeemScriptString(  // line separate
+      const TxInInfoRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.redeem_script_);
+  }
+  /**
+   * @brief Set json object to redeemScript field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetRedeemScriptString(  // line separate
+      TxInInfoRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.redeem_script_, json_value);
+  }
+
+  /**
+   * @brief Get of maxWitnessLength
+   * @return maxWitnessLength
+   */
+  uint32_t GetMaxWitnessLength() const {
+    return max_witness_length_;
+  }
+  /**
+   * @brief Set to maxWitnessLength
+   * @param[in] max_witness_length    setting value.
+   */
+  void SetMaxWitnessLength(  // line separate
+    const uint32_t& max_witness_length) {  // NOLINT
+    this->max_witness_length_ = max_witness_length;
+  }
+  /**
+   * @brief Get data type of maxWitnessLength
+   * @return Data type of maxWitnessLength
+   */
+  static std::string GetMaxWitnessLengthFieldType() {
+    return "uint32_t";
+  }
+  /**
+   * @brief Get json string of maxWitnessLength field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetMaxWitnessLengthString(  // line separate
+      const TxInInfoRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.max_witness_length_);
+  }
+  /**
+   * @brief Set json object to maxWitnessLength field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetMaxWitnessLengthString(  // line separate
+      TxInInfoRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.max_witness_length_, json_value);
+  }
+
+  /**
+   * @brief Get of serialId
+   * @return serialId
+   */
+  uint64_t GetSerialId() const {
+    return serial_id_;
+  }
+  /**
+   * @brief Set to serialId
+   * @param[in] serial_id    setting value.
+   */
+  void SetSerialId(  // line separate
+    const uint64_t& serial_id) {  // NOLINT
+    this->serial_id_ = serial_id;
+  }
+  /**
+   * @brief Get data type of serialId
+   * @return Data type of serialId
+   */
+  static std::string GetSerialIdFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of serialId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetSerialIdString(  // line separate
+      const TxInInfoRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.serial_id_);
+  }
+  /**
+   * @brief Set json object to serialId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetSerialIdString(  // line separate
+      TxInInfoRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.serial_id_, json_value);
+  }
+
+  /**
+   * @brief Set ignore item.
+   * @param[in] key   ignore target key name.
+   */
+  void SetIgnoreItem(const std::string& key) {
+    ignore_items.insert(key);
+  }
+
+  /**
+   * @brief Convert struct to class.
+   * @param[in] data   struct data.
+   */
+  void ConvertFromStruct(
+      const TxInInfoRequestStruct& data);
+
+  /**
+   * @brief Convert class to struct.
+   * @return  struct data.
+   */
+  TxInInfoRequestStruct ConvertToStruct()  const;
+
+ protected:
+  /**
+   * @brief definition type of Map table.
+   */
+  using TxInInfoRequestMapTable =
+    cfd::core::JsonTableMap<TxInInfoRequest>;
+
+  /**
+   * @brief Get JSON mapping object.
+   * @return JSON mapping object.
+   * @see cfd::core::JsonClassBase::GetJsonMapper()
+   */
+  virtual const TxInInfoRequestMapTable& GetJsonMapper() const {  // NOLINT
+    return json_mapper;
+  }
+  /**
+   * @brief Get item lists of JSON mapping.
+   * Fetch a list of target variable names in the order of definition.
+   * @return Item lists of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetJsonItemList()
+   */
+  virtual const std::vector<std::string>& GetJsonItemList() const {
+    return item_list;
+  }
+  /**
+   * @brief Get ignore item lists of JSON mapping.
+   * Ignore the target variable at Serialize.
+   * @return Item list of JSON mapping.
+   * @see cfd::core::JsonClassBase::GetIgnoreItem()
+   */
+  virtual const std::set<std::string>& GetIgnoreItem() const {
+    return ignore_items;
+  }
+
+ private:
+ /**
+  * @brief JsonFunctionMap table
+  */
+  static TxInInfoRequestMapTable json_mapper;
+  /**
+   * @brief field name list.
+   */
+  static std::vector<std::string> item_list;
+  /**
+   * @brief ignore item list.
+   */
+  std::set<std::string> ignore_items;
+
+  /**
+   * @brief JsonAPI(txid) value
+   */
+  std::string txid_ = "";
+  /**
+   * @brief JsonAPI(vout) value
+   */
+  uint32_t vout_ = 0;
+  /**
+   * @brief JsonAPI(redeemScript) value
+   */
+  std::string redeem_script_ = "";
+  /**
+   * @brief JsonAPI(maxWitnessLength) value
+   */
+  uint32_t max_witness_length_ = 108;
+  /**
+   * @brief JsonAPI(serialId) value
+   */
+  uint64_t serial_id_ = 0;
 };
 
 // ------------------------------------------------------------------------
@@ -1010,89 +1151,89 @@ class AddSignaturesToRefundTxRequest
   }
 
   /**
-   * @brief Get of localFundPubkey
-   * @return localFundPubkey
+   * @brief Get of offerFundPubkey
+   * @return offerFundPubkey
    */
-  std::string GetLocalFundPubkey() const {
-    return local_fund_pubkey_;
+  std::string GetOfferFundPubkey() const {
+    return offer_fund_pubkey_;
   }
   /**
-   * @brief Set to localFundPubkey
-   * @param[in] local_fund_pubkey    setting value.
+   * @brief Set to offerFundPubkey
+   * @param[in] offer_fund_pubkey    setting value.
    */
-  void SetLocalFundPubkey(  // line separate
-    const std::string& local_fund_pubkey) {  // NOLINT
-    this->local_fund_pubkey_ = local_fund_pubkey;
+  void SetOfferFundPubkey(  // line separate
+    const std::string& offer_fund_pubkey) {  // NOLINT
+    this->offer_fund_pubkey_ = offer_fund_pubkey;
   }
   /**
-   * @brief Get data type of localFundPubkey
-   * @return Data type of localFundPubkey
+   * @brief Get data type of offerFundPubkey
+   * @return Data type of offerFundPubkey
    */
-  static std::string GetLocalFundPubkeyFieldType() {
+  static std::string GetOfferFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localFundPubkey field.
+   * @brief Get json string of offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalFundPubkeyString(  // line separate
+  static std::string GetOfferFundPubkeyString(  // line separate
       const AddSignaturesToRefundTxRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_fund_pubkey_);
   }
   /**
-   * @brief Set json object to localFundPubkey field.
+   * @brief Set json object to offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalFundPubkeyString(  // line separate
+  static void SetOfferFundPubkeyString(  // line separate
       AddSignaturesToRefundTxRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_fund_pubkey_, json_value);
+      obj.offer_fund_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remoteFundPubkey
-   * @return remoteFundPubkey
+   * @brief Get of acceptFundPubkey
+   * @return acceptFundPubkey
    */
-  std::string GetRemoteFundPubkey() const {
-    return remote_fund_pubkey_;
+  std::string GetAcceptFundPubkey() const {
+    return accept_fund_pubkey_;
   }
   /**
-   * @brief Set to remoteFundPubkey
-   * @param[in] remote_fund_pubkey    setting value.
+   * @brief Set to acceptFundPubkey
+   * @param[in] accept_fund_pubkey    setting value.
    */
-  void SetRemoteFundPubkey(  // line separate
-    const std::string& remote_fund_pubkey) {  // NOLINT
-    this->remote_fund_pubkey_ = remote_fund_pubkey;
+  void SetAcceptFundPubkey(  // line separate
+    const std::string& accept_fund_pubkey) {  // NOLINT
+    this->accept_fund_pubkey_ = accept_fund_pubkey;
   }
   /**
-   * @brief Get data type of remoteFundPubkey
-   * @return Data type of remoteFundPubkey
+   * @brief Get data type of acceptFundPubkey
+   * @return Data type of acceptFundPubkey
    */
-  static std::string GetRemoteFundPubkeyFieldType() {
+  static std::string GetAcceptFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteFundPubkey field.
+   * @brief Get json string of acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteFundPubkeyString(  // line separate
+  static std::string GetAcceptFundPubkeyString(  // line separate
       const AddSignaturesToRefundTxRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_fund_pubkey_);
   }
   /**
-   * @brief Set json object to remoteFundPubkey field.
+   * @brief Set json object to acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteFundPubkeyString(  // line separate
+  static void SetAcceptFundPubkeyString(  // line separate
       AddSignaturesToRefundTxRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_fund_pubkey_, json_value);
+      obj.accept_fund_pubkey_, json_value);
   }
 
   /**
@@ -1181,13 +1322,13 @@ class AddSignaturesToRefundTxRequest
    */
   uint32_t fund_vout_ = 0;
   /**
-   * @brief JsonAPI(localFundPubkey) value
+   * @brief JsonAPI(offerFundPubkey) value
    */
-  std::string local_fund_pubkey_ = "";
+  std::string offer_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(remoteFundPubkey) value
+   * @brief JsonAPI(acceptFundPubkey) value
    */
-  std::string remote_fund_pubkey_ = "";
+  std::string accept_fund_pubkey_ = "";
 };
 
 // ------------------------------------------------------------------------
@@ -1349,261 +1490,347 @@ class CreateCetRequest
   static void CollectFieldName();
 
   /**
-   * @brief Get of localFundPubkey
-   * @return localFundPubkey
+   * @brief Get of offerFundPubkey
+   * @return offerFundPubkey
    */
-  std::string GetLocalFundPubkey() const {
-    return local_fund_pubkey_;
+  std::string GetOfferFundPubkey() const {
+    return offer_fund_pubkey_;
   }
   /**
-   * @brief Set to localFundPubkey
-   * @param[in] local_fund_pubkey    setting value.
+   * @brief Set to offerFundPubkey
+   * @param[in] offer_fund_pubkey    setting value.
    */
-  void SetLocalFundPubkey(  // line separate
-    const std::string& local_fund_pubkey) {  // NOLINT
-    this->local_fund_pubkey_ = local_fund_pubkey;
+  void SetOfferFundPubkey(  // line separate
+    const std::string& offer_fund_pubkey) {  // NOLINT
+    this->offer_fund_pubkey_ = offer_fund_pubkey;
   }
   /**
-   * @brief Get data type of localFundPubkey
-   * @return Data type of localFundPubkey
+   * @brief Get data type of offerFundPubkey
+   * @return Data type of offerFundPubkey
    */
-  static std::string GetLocalFundPubkeyFieldType() {
+  static std::string GetOfferFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localFundPubkey field.
+   * @brief Get json string of offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalFundPubkeyString(  // line separate
+  static std::string GetOfferFundPubkeyString(  // line separate
       const CreateCetRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_fund_pubkey_);
   }
   /**
-   * @brief Set json object to localFundPubkey field.
+   * @brief Set json object to offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalFundPubkeyString(  // line separate
+  static void SetOfferFundPubkeyString(  // line separate
       CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_fund_pubkey_, json_value);
+      obj.offer_fund_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remoteFundPubkey
-   * @return remoteFundPubkey
+   * @brief Get of acceptFundPubkey
+   * @return acceptFundPubkey
    */
-  std::string GetRemoteFundPubkey() const {
-    return remote_fund_pubkey_;
+  std::string GetAcceptFundPubkey() const {
+    return accept_fund_pubkey_;
   }
   /**
-   * @brief Set to remoteFundPubkey
-   * @param[in] remote_fund_pubkey    setting value.
+   * @brief Set to acceptFundPubkey
+   * @param[in] accept_fund_pubkey    setting value.
    */
-  void SetRemoteFundPubkey(  // line separate
-    const std::string& remote_fund_pubkey) {  // NOLINT
-    this->remote_fund_pubkey_ = remote_fund_pubkey;
+  void SetAcceptFundPubkey(  // line separate
+    const std::string& accept_fund_pubkey) {  // NOLINT
+    this->accept_fund_pubkey_ = accept_fund_pubkey;
   }
   /**
-   * @brief Get data type of remoteFundPubkey
-   * @return Data type of remoteFundPubkey
+   * @brief Get data type of acceptFundPubkey
+   * @return Data type of acceptFundPubkey
    */
-  static std::string GetRemoteFundPubkeyFieldType() {
+  static std::string GetAcceptFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteFundPubkey field.
+   * @brief Get json string of acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteFundPubkeyString(  // line separate
+  static std::string GetAcceptFundPubkeyString(  // line separate
       const CreateCetRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_fund_pubkey_);
   }
   /**
-   * @brief Set json object to remoteFundPubkey field.
+   * @brief Set json object to acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteFundPubkeyString(  // line separate
+  static void SetAcceptFundPubkeyString(  // line separate
       CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_fund_pubkey_, json_value);
+      obj.accept_fund_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of localFinalAddress
-   * @return localFinalAddress
+   * @brief Get of offerFinalAddress
+   * @return offerFinalAddress
    */
-  std::string GetLocalFinalAddress() const {
-    return local_final_address_;
+  std::string GetOfferFinalAddress() const {
+    return offer_final_address_;
   }
   /**
-   * @brief Set to localFinalAddress
-   * @param[in] local_final_address    setting value.
+   * @brief Set to offerFinalAddress
+   * @param[in] offer_final_address    setting value.
    */
-  void SetLocalFinalAddress(  // line separate
-    const std::string& local_final_address) {  // NOLINT
-    this->local_final_address_ = local_final_address;
+  void SetOfferFinalAddress(  // line separate
+    const std::string& offer_final_address) {  // NOLINT
+    this->offer_final_address_ = offer_final_address;
   }
   /**
-   * @brief Get data type of localFinalAddress
-   * @return Data type of localFinalAddress
+   * @brief Get data type of offerFinalAddress
+   * @return Data type of offerFinalAddress
    */
-  static std::string GetLocalFinalAddressFieldType() {
+  static std::string GetOfferFinalAddressFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localFinalAddress field.
+   * @brief Get json string of offerFinalAddress field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalFinalAddressString(  // line separate
+  static std::string GetOfferFinalAddressString(  // line separate
       const CreateCetRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_final_address_);
+    return cfd::core::ConvertToString(obj.offer_final_address_);
   }
   /**
-   * @brief Set json object to localFinalAddress field.
+   * @brief Set json object to offerFinalAddress field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalFinalAddressString(  // line separate
+  static void SetOfferFinalAddressString(  // line separate
       CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_final_address_, json_value);
+      obj.offer_final_address_, json_value);
   }
 
   /**
-   * @brief Get of remoteFinalAddress
-   * @return remoteFinalAddress
+   * @brief Get of acceptFinalAddress
+   * @return acceptFinalAddress
    */
-  std::string GetRemoteFinalAddress() const {
-    return remote_final_address_;
+  std::string GetAcceptFinalAddress() const {
+    return accept_final_address_;
   }
   /**
-   * @brief Set to remoteFinalAddress
-   * @param[in] remote_final_address    setting value.
+   * @brief Set to acceptFinalAddress
+   * @param[in] accept_final_address    setting value.
    */
-  void SetRemoteFinalAddress(  // line separate
-    const std::string& remote_final_address) {  // NOLINT
-    this->remote_final_address_ = remote_final_address;
+  void SetAcceptFinalAddress(  // line separate
+    const std::string& accept_final_address) {  // NOLINT
+    this->accept_final_address_ = accept_final_address;
   }
   /**
-   * @brief Get data type of remoteFinalAddress
-   * @return Data type of remoteFinalAddress
+   * @brief Get data type of acceptFinalAddress
+   * @return Data type of acceptFinalAddress
    */
-  static std::string GetRemoteFinalAddressFieldType() {
+  static std::string GetAcceptFinalAddressFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteFinalAddress field.
+   * @brief Get json string of acceptFinalAddress field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteFinalAddressString(  // line separate
+  static std::string GetAcceptFinalAddressString(  // line separate
       const CreateCetRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_final_address_);
+    return cfd::core::ConvertToString(obj.accept_final_address_);
   }
   /**
-   * @brief Set json object to remoteFinalAddress field.
+   * @brief Set json object to acceptFinalAddress field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteFinalAddressString(  // line separate
+  static void SetAcceptFinalAddressString(  // line separate
       CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_final_address_, json_value);
+      obj.accept_final_address_, json_value);
   }
 
   /**
-   * @brief Get of localPayout
-   * @return localPayout
+   * @brief Get of offerPayout
+   * @return offerPayout
    */
-  uint64_t GetLocalPayout() const {
-    return local_payout_;
+  uint64_t GetOfferPayout() const {
+    return offer_payout_;
   }
   /**
-   * @brief Set to localPayout
-   * @param[in] local_payout    setting value.
+   * @brief Set to offerPayout
+   * @param[in] offer_payout    setting value.
    */
-  void SetLocalPayout(  // line separate
-    const uint64_t& local_payout) {  // NOLINT
-    this->local_payout_ = local_payout;
+  void SetOfferPayout(  // line separate
+    const uint64_t& offer_payout) {  // NOLINT
+    this->offer_payout_ = offer_payout;
   }
   /**
-   * @brief Get data type of localPayout
-   * @return Data type of localPayout
+   * @brief Get data type of offerPayout
+   * @return Data type of offerPayout
    */
-  static std::string GetLocalPayoutFieldType() {
+  static std::string GetOfferPayoutFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of localPayout field.
+   * @brief Get json string of offerPayout field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalPayoutString(  // line separate
+  static std::string GetOfferPayoutString(  // line separate
       const CreateCetRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_payout_);
+    return cfd::core::ConvertToString(obj.offer_payout_);
   }
   /**
-   * @brief Set json object to localPayout field.
+   * @brief Set json object to offerPayout field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalPayoutString(  // line separate
+  static void SetOfferPayoutString(  // line separate
       CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_payout_, json_value);
+      obj.offer_payout_, json_value);
   }
 
   /**
-   * @brief Get of remotePayout
-   * @return remotePayout
+   * @brief Get of acceptPayout
+   * @return acceptPayout
    */
-  uint64_t GetRemotePayout() const {
-    return remote_payout_;
+  uint64_t GetAcceptPayout() const {
+    return accept_payout_;
   }
   /**
-   * @brief Set to remotePayout
-   * @param[in] remote_payout    setting value.
+   * @brief Set to acceptPayout
+   * @param[in] accept_payout    setting value.
    */
-  void SetRemotePayout(  // line separate
-    const uint64_t& remote_payout) {  // NOLINT
-    this->remote_payout_ = remote_payout;
+  void SetAcceptPayout(  // line separate
+    const uint64_t& accept_payout) {  // NOLINT
+    this->accept_payout_ = accept_payout;
   }
   /**
-   * @brief Get data type of remotePayout
-   * @return Data type of remotePayout
+   * @brief Get data type of acceptPayout
+   * @return Data type of acceptPayout
    */
-  static std::string GetRemotePayoutFieldType() {
+  static std::string GetAcceptPayoutFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of remotePayout field.
+   * @brief Get json string of acceptPayout field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemotePayoutString(  // line separate
+  static std::string GetAcceptPayoutString(  // line separate
       const CreateCetRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_payout_);
+    return cfd::core::ConvertToString(obj.accept_payout_);
   }
   /**
-   * @brief Set json object to remotePayout field.
+   * @brief Set json object to acceptPayout field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemotePayoutString(  // line separate
+  static void SetAcceptPayoutString(  // line separate
       CreateCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_payout_, json_value);
+      obj.accept_payout_, json_value);
+  }
+
+  /**
+   * @brief Get of offerPayoutSerialId
+   * @return offerPayoutSerialId
+   */
+  uint64_t GetOfferPayoutSerialId() const {
+    return offer_payout_serial_id_;
+  }
+  /**
+   * @brief Set to offerPayoutSerialId
+   * @param[in] offer_payout_serial_id    setting value.
+   */
+  void SetOfferPayoutSerialId(  // line separate
+    const uint64_t& offer_payout_serial_id) {  // NOLINT
+    this->offer_payout_serial_id_ = offer_payout_serial_id;
+  }
+  /**
+   * @brief Get data type of offerPayoutSerialId
+   * @return Data type of offerPayoutSerialId
+   */
+  static std::string GetOfferPayoutSerialIdFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of offerPayoutSerialId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetOfferPayoutSerialIdString(  // line separate
+      const CreateCetRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.offer_payout_serial_id_);
+  }
+  /**
+   * @brief Set json object to offerPayoutSerialId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetOfferPayoutSerialIdString(  // line separate
+      CreateCetRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.offer_payout_serial_id_, json_value);
+  }
+
+  /**
+   * @brief Get of acceptPayoutSerialId
+   * @return acceptPayoutSerialId
+   */
+  uint64_t GetAcceptPayoutSerialId() const {
+    return accept_payout_serial_id_;
+  }
+  /**
+   * @brief Set to acceptPayoutSerialId
+   * @param[in] accept_payout_serial_id    setting value.
+   */
+  void SetAcceptPayoutSerialId(  // line separate
+    const uint64_t& accept_payout_serial_id) {  // NOLINT
+    this->accept_payout_serial_id_ = accept_payout_serial_id;
+  }
+  /**
+   * @brief Get data type of acceptPayoutSerialId
+   * @return Data type of acceptPayoutSerialId
+   */
+  static std::string GetAcceptPayoutSerialIdFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of acceptPayoutSerialId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetAcceptPayoutSerialIdString(  // line separate
+      const CreateCetRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.accept_payout_serial_id_);
+  }
+  /**
+   * @brief Set json object to acceptPayoutSerialId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetAcceptPayoutSerialIdString(  // line separate
+      CreateCetRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.accept_payout_serial_id_, json_value);
   }
 
   /**
@@ -1805,29 +2032,37 @@ class CreateCetRequest
   std::set<std::string> ignore_items;
 
   /**
-   * @brief JsonAPI(localFundPubkey) value
+   * @brief JsonAPI(offerFundPubkey) value
    */
-  std::string local_fund_pubkey_ = "";
+  std::string offer_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(remoteFundPubkey) value
+   * @brief JsonAPI(acceptFundPubkey) value
    */
-  std::string remote_fund_pubkey_ = "";
+  std::string accept_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(localFinalAddress) value
+   * @brief JsonAPI(offerFinalAddress) value
    */
-  std::string local_final_address_ = "";
+  std::string offer_final_address_ = "";
   /**
-   * @brief JsonAPI(remoteFinalAddress) value
+   * @brief JsonAPI(acceptFinalAddress) value
    */
-  std::string remote_final_address_ = "";
+  std::string accept_final_address_ = "";
   /**
-   * @brief JsonAPI(localPayout) value
+   * @brief JsonAPI(offerPayout) value
    */
-  uint64_t local_payout_ = 0;
+  uint64_t offer_payout_ = 0;
   /**
-   * @brief JsonAPI(remotePayout) value
+   * @brief JsonAPI(acceptPayout) value
    */
-  uint64_t remote_payout_ = 0;
+  uint64_t accept_payout_ = 0;
+  /**
+   * @brief JsonAPI(offerPayoutSerialId) value
+   */
+  uint64_t offer_payout_serial_id_ = 0;
+  /**
+   * @brief JsonAPI(acceptPayoutSerialId) value
+   */
+  uint64_t accept_payout_serial_id_ = 0;
   /**
    * @brief JsonAPI(fundTxId) value
    */
@@ -2173,89 +2408,89 @@ class CreateCetAdaptorSignatureRequest
   }
 
   /**
-   * @brief Get of localFundPubkey
-   * @return localFundPubkey
+   * @brief Get of offerFundPubkey
+   * @return offerFundPubkey
    */
-  std::string GetLocalFundPubkey() const {
-    return local_fund_pubkey_;
+  std::string GetOfferFundPubkey() const {
+    return offer_fund_pubkey_;
   }
   /**
-   * @brief Set to localFundPubkey
-   * @param[in] local_fund_pubkey    setting value.
+   * @brief Set to offerFundPubkey
+   * @param[in] offer_fund_pubkey    setting value.
    */
-  void SetLocalFundPubkey(  // line separate
-    const std::string& local_fund_pubkey) {  // NOLINT
-    this->local_fund_pubkey_ = local_fund_pubkey;
+  void SetOfferFundPubkey(  // line separate
+    const std::string& offer_fund_pubkey) {  // NOLINT
+    this->offer_fund_pubkey_ = offer_fund_pubkey;
   }
   /**
-   * @brief Get data type of localFundPubkey
-   * @return Data type of localFundPubkey
+   * @brief Get data type of offerFundPubkey
+   * @return Data type of offerFundPubkey
    */
-  static std::string GetLocalFundPubkeyFieldType() {
+  static std::string GetOfferFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localFundPubkey field.
+   * @brief Get json string of offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalFundPubkeyString(  // line separate
+  static std::string GetOfferFundPubkeyString(  // line separate
       const CreateCetAdaptorSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_fund_pubkey_);
   }
   /**
-   * @brief Set json object to localFundPubkey field.
+   * @brief Set json object to offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalFundPubkeyString(  // line separate
+  static void SetOfferFundPubkeyString(  // line separate
       CreateCetAdaptorSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_fund_pubkey_, json_value);
+      obj.offer_fund_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remoteFundPubkey
-   * @return remoteFundPubkey
+   * @brief Get of acceptFundPubkey
+   * @return acceptFundPubkey
    */
-  std::string GetRemoteFundPubkey() const {
-    return remote_fund_pubkey_;
+  std::string GetAcceptFundPubkey() const {
+    return accept_fund_pubkey_;
   }
   /**
-   * @brief Set to remoteFundPubkey
-   * @param[in] remote_fund_pubkey    setting value.
+   * @brief Set to acceptFundPubkey
+   * @param[in] accept_fund_pubkey    setting value.
    */
-  void SetRemoteFundPubkey(  // line separate
-    const std::string& remote_fund_pubkey) {  // NOLINT
-    this->remote_fund_pubkey_ = remote_fund_pubkey;
+  void SetAcceptFundPubkey(  // line separate
+    const std::string& accept_fund_pubkey) {  // NOLINT
+    this->accept_fund_pubkey_ = accept_fund_pubkey;
   }
   /**
-   * @brief Get data type of remoteFundPubkey
-   * @return Data type of remoteFundPubkey
+   * @brief Get data type of acceptFundPubkey
+   * @return Data type of acceptFundPubkey
    */
-  static std::string GetRemoteFundPubkeyFieldType() {
+  static std::string GetAcceptFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteFundPubkey field.
+   * @brief Get json string of acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteFundPubkeyString(  // line separate
+  static std::string GetAcceptFundPubkeyString(  // line separate
       const CreateCetAdaptorSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_fund_pubkey_);
   }
   /**
-   * @brief Set json object to remoteFundPubkey field.
+   * @brief Set json object to acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteFundPubkeyString(  // line separate
+  static void SetAcceptFundPubkeyString(  // line separate
       CreateCetAdaptorSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_fund_pubkey_, json_value);
+      obj.accept_fund_pubkey_, json_value);
   }
 
   /**
@@ -2518,13 +2753,13 @@ class CreateCetAdaptorSignatureRequest
    */
   uint32_t fund_vout_ = 0;
   /**
-   * @brief JsonAPI(localFundPubkey) value
+   * @brief JsonAPI(offerFundPubkey) value
    */
-  std::string local_fund_pubkey_ = "";
+  std::string offer_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(remoteFundPubkey) value
+   * @brief JsonAPI(acceptFundPubkey) value
    */
-  std::string remote_fund_pubkey_ = "";
+  std::string accept_fund_pubkey_ = "";
   /**
    * @brief JsonAPI(oraclePubkey) value
    */
@@ -2607,49 +2842,6 @@ class CreateCetAdaptorSignatureResponse
   }
 
   /**
-   * @brief Get of proof
-   * @return proof
-   */
-  std::string GetProof() const {
-    return proof_;
-  }
-  /**
-   * @brief Set to proof
-   * @param[in] proof    setting value.
-   */
-  void SetProof(  // line separate
-    const std::string& proof) {  // NOLINT
-    this->proof_ = proof;
-  }
-  /**
-   * @brief Get data type of proof
-   * @return Data type of proof
-   */
-  static std::string GetProofFieldType() {
-    return "std::string";
-  }
-  /**
-   * @brief Get json string of proof field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetProofString(  // line separate
-      const CreateCetAdaptorSignatureResponse& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.proof_);
-  }
-  /**
-   * @brief Set json object to proof field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetProofString(  // line separate
-      CreateCetAdaptorSignatureResponse& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.proof_, json_value);
-  }
-
-  /**
    * @brief Set ignore item.
    * @param[in] key   ignore target key name.
    */
@@ -2722,10 +2914,6 @@ class CreateCetAdaptorSignatureResponse
    * @brief JsonAPI(signature) value
    */
   std::string signature_ = "";
-  /**
-   * @brief JsonAPI(proof) value
-   */
-  std::string proof_ = "";
 };
 
 // ------------------------------------------------------------------------
@@ -2922,89 +3110,89 @@ class CreateCetAdaptorSignaturesRequest
   }
 
   /**
-   * @brief Get of localFundPubkey
-   * @return localFundPubkey
+   * @brief Get of offerFundPubkey
+   * @return offerFundPubkey
    */
-  std::string GetLocalFundPubkey() const {
-    return local_fund_pubkey_;
+  std::string GetOfferFundPubkey() const {
+    return offer_fund_pubkey_;
   }
   /**
-   * @brief Set to localFundPubkey
-   * @param[in] local_fund_pubkey    setting value.
+   * @brief Set to offerFundPubkey
+   * @param[in] offer_fund_pubkey    setting value.
    */
-  void SetLocalFundPubkey(  // line separate
-    const std::string& local_fund_pubkey) {  // NOLINT
-    this->local_fund_pubkey_ = local_fund_pubkey;
+  void SetOfferFundPubkey(  // line separate
+    const std::string& offer_fund_pubkey) {  // NOLINT
+    this->offer_fund_pubkey_ = offer_fund_pubkey;
   }
   /**
-   * @brief Get data type of localFundPubkey
-   * @return Data type of localFundPubkey
+   * @brief Get data type of offerFundPubkey
+   * @return Data type of offerFundPubkey
    */
-  static std::string GetLocalFundPubkeyFieldType() {
+  static std::string GetOfferFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localFundPubkey field.
+   * @brief Get json string of offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalFundPubkeyString(  // line separate
+  static std::string GetOfferFundPubkeyString(  // line separate
       const CreateCetAdaptorSignaturesRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_fund_pubkey_);
   }
   /**
-   * @brief Set json object to localFundPubkey field.
+   * @brief Set json object to offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalFundPubkeyString(  // line separate
+  static void SetOfferFundPubkeyString(  // line separate
       CreateCetAdaptorSignaturesRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_fund_pubkey_, json_value);
+      obj.offer_fund_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remoteFundPubkey
-   * @return remoteFundPubkey
+   * @brief Get of acceptFundPubkey
+   * @return acceptFundPubkey
    */
-  std::string GetRemoteFundPubkey() const {
-    return remote_fund_pubkey_;
+  std::string GetAcceptFundPubkey() const {
+    return accept_fund_pubkey_;
   }
   /**
-   * @brief Set to remoteFundPubkey
-   * @param[in] remote_fund_pubkey    setting value.
+   * @brief Set to acceptFundPubkey
+   * @param[in] accept_fund_pubkey    setting value.
    */
-  void SetRemoteFundPubkey(  // line separate
-    const std::string& remote_fund_pubkey) {  // NOLINT
-    this->remote_fund_pubkey_ = remote_fund_pubkey;
+  void SetAcceptFundPubkey(  // line separate
+    const std::string& accept_fund_pubkey) {  // NOLINT
+    this->accept_fund_pubkey_ = accept_fund_pubkey;
   }
   /**
-   * @brief Get data type of remoteFundPubkey
-   * @return Data type of remoteFundPubkey
+   * @brief Get data type of acceptFundPubkey
+   * @return Data type of acceptFundPubkey
    */
-  static std::string GetRemoteFundPubkeyFieldType() {
+  static std::string GetAcceptFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteFundPubkey field.
+   * @brief Get json string of acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteFundPubkeyString(  // line separate
+  static std::string GetAcceptFundPubkeyString(  // line separate
       const CreateCetAdaptorSignaturesRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_fund_pubkey_);
   }
   /**
-   * @brief Set json object to remoteFundPubkey field.
+   * @brief Set json object to acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteFundPubkeyString(  // line separate
+  static void SetAcceptFundPubkeyString(  // line separate
       CreateCetAdaptorSignaturesRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_fund_pubkey_, json_value);
+      obj.accept_fund_pubkey_, json_value);
   }
 
   /**
@@ -3267,13 +3455,13 @@ class CreateCetAdaptorSignaturesRequest
    */
   uint32_t fund_vout_ = 0;
   /**
-   * @brief JsonAPI(localFundPubkey) value
+   * @brief JsonAPI(offerFundPubkey) value
    */
-  std::string local_fund_pubkey_ = "";
+  std::string offer_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(remoteFundPubkey) value
+   * @brief JsonAPI(acceptFundPubkey) value
    */
-  std::string remote_fund_pubkey_ = "";
+  std::string accept_fund_pubkey_ = "";
   /**
    * @brief JsonAPI(oraclePubkey) value
    */
@@ -3313,47 +3501,47 @@ class CreateCetAdaptorSignaturesResponse
   static void CollectFieldName();
 
   /**
-   * @brief Get of adaptorPairs.
-   * @return adaptorPairs
+   * @brief Get of adaptorSignatures.
+   * @return adaptorSignatures
    */
-  JsonObjectVector<AdaptorPair, AdaptorPairStruct>& GetAdaptorPairs() {  // NOLINT
-    return adaptor_pairs_;
+  JsonValueVector<std::string>& GetAdaptorSignatures() {  // NOLINT
+    return adaptor_signatures_;
   }
   /**
-   * @brief Set to adaptorPairs.
-   * @param[in] adaptor_pairs    setting value.
+   * @brief Set to adaptorSignatures.
+   * @param[in] adaptor_signatures    setting value.
    */
-  void SetAdaptorPairs(  // line separate
-      const JsonObjectVector<AdaptorPair, AdaptorPairStruct>& adaptor_pairs) {  // NOLINT
-    this->adaptor_pairs_ = adaptor_pairs;
+  void SetAdaptorSignatures(  // line separate
+      const JsonValueVector<std::string>& adaptor_signatures) {  // NOLINT
+    this->adaptor_signatures_ = adaptor_signatures;
   }
   /**
-   * @brief Get data type of adaptorPairs.
-   * @return Data type of adaptorPairs.
+   * @brief Get data type of adaptorSignatures.
+   * @return Data type of adaptorSignatures.
    */
-  static std::string GetAdaptorPairsFieldType() {
-    return "JsonObjectVector<AdaptorPair, AdaptorPairStruct>";  // NOLINT
+  static std::string GetAdaptorSignaturesFieldType() {
+    return "JsonValueVector<std::string>";  // NOLINT
   }
   /**
-   * @brief Get json string of adaptorPairs field.
+   * @brief Get json string of adaptorSignatures field.
    * @param[in,out] obj     class object
    * @return JSON string.
    */
-  static std::string GetAdaptorPairsString(  // line separate
+  static std::string GetAdaptorSignaturesString(  // line separate
       const CreateCetAdaptorSignaturesResponse& obj) {  // NOLINT
     // Do not set to const, because substitution of member variables
     // may occur in pre / post processing inside Serialize
-    return obj.adaptor_pairs_.Serialize();
+    return obj.adaptor_signatures_.Serialize();
   }
   /**
-   * @brief Set json object to adaptorPairs field.
+   * @brief Set json object to adaptorSignatures field.
    * @param[in,out] obj     class object
    * @param[in] json_value  JSON object
    */
-  static void SetAdaptorPairsString(  // line separate
+  static void SetAdaptorSignaturesString(  // line separate
       CreateCetAdaptorSignaturesResponse& obj,  // NOLINT
       const UniValue& json_value) {
-    obj.adaptor_pairs_.DeserializeUniValue(json_value);
+    obj.adaptor_signatures_.DeserializeUniValue(json_value);
   }
 
   /**
@@ -3426,9 +3614,9 @@ class CreateCetAdaptorSignaturesResponse
   std::set<std::string> ignore_items;
 
   /**
-   * @brief JsonAPI(adaptorPairs) value
+   * @brief JsonAPI(adaptorSignatures) value
    */
-  JsonObjectVector<AdaptorPair, AdaptorPairStruct> adaptor_pairs_;  // NOLINT
+  JsonValueVector<std::string> adaptor_signatures_;  // NOLINT
 };
 
 // ------------------------------------------------------------------------
@@ -3452,89 +3640,89 @@ class PayoutRequest
   static void CollectFieldName();
 
   /**
-   * @brief Get of local
-   * @return local
+   * @brief Get of offer
+   * @return offer
    */
-  uint64_t GetLocal() const {
-    return local_;
+  uint64_t GetOffer() const {
+    return offer_;
   }
   /**
-   * @brief Set to local
-   * @param[in] local    setting value.
+   * @brief Set to offer
+   * @param[in] offer    setting value.
    */
-  void SetLocal(  // line separate
-    const uint64_t& local) {  // NOLINT
-    this->local_ = local;
+  void SetOffer(  // line separate
+    const uint64_t& offer) {  // NOLINT
+    this->offer_ = offer;
   }
   /**
-   * @brief Get data type of local
-   * @return Data type of local
+   * @brief Get data type of offer
+   * @return Data type of offer
    */
-  static std::string GetLocalFieldType() {
+  static std::string GetOfferFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of local field.
+   * @brief Get json string of offer field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalString(  // line separate
+  static std::string GetOfferString(  // line separate
       const PayoutRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_);
+    return cfd::core::ConvertToString(obj.offer_);
   }
   /**
-   * @brief Set json object to local field.
+   * @brief Set json object to offer field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalString(  // line separate
+  static void SetOfferString(  // line separate
       PayoutRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_, json_value);
+      obj.offer_, json_value);
   }
 
   /**
-   * @brief Get of remote
-   * @return remote
+   * @brief Get of accept
+   * @return accept
    */
-  uint64_t GetRemote() const {
-    return remote_;
+  uint64_t GetAccept() const {
+    return accept_;
   }
   /**
-   * @brief Set to remote
-   * @param[in] remote    setting value.
+   * @brief Set to accept
+   * @param[in] accept    setting value.
    */
-  void SetRemote(  // line separate
-    const uint64_t& remote) {  // NOLINT
-    this->remote_ = remote;
+  void SetAccept(  // line separate
+    const uint64_t& accept) {  // NOLINT
+    this->accept_ = accept;
   }
   /**
-   * @brief Get data type of remote
-   * @return Data type of remote
+   * @brief Get data type of accept
+   * @return Data type of accept
    */
-  static std::string GetRemoteFieldType() {
+  static std::string GetAcceptFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of remote field.
+   * @brief Get json string of accept field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteString(  // line separate
+  static std::string GetAcceptString(  // line separate
       const PayoutRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_);
+    return cfd::core::ConvertToString(obj.accept_);
   }
   /**
-   * @brief Set json object to remote field.
+   * @brief Set json object to accept field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteString(  // line separate
+  static void SetAcceptString(  // line separate
       PayoutRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_, json_value);
+      obj.accept_, json_value);
   }
 
   /**
@@ -3607,292 +3795,13 @@ class PayoutRequest
   std::set<std::string> ignore_items;
 
   /**
-   * @brief JsonAPI(local) value
+   * @brief JsonAPI(offer) value
    */
-  uint64_t local_ = 0;
+  uint64_t offer_ = 0;
   /**
-   * @brief JsonAPI(remote) value
+   * @brief JsonAPI(accept) value
    */
-  uint64_t remote_ = 0;
-};
-
-// ------------------------------------------------------------------------
-// TxInInfoRequest
-// ------------------------------------------------------------------------
-/**
- * @brief JSON-API (TxInInfoRequest) class
- */
-class TxInInfoRequest
-  : public cfd::core::JsonClassBase<TxInInfoRequest> {
- public:
-  TxInInfoRequest() {
-    CollectFieldName();
-  }
-  virtual ~TxInInfoRequest() {
-    // do nothing
-  }
-  /**
-   * @brief collect field name.
-   */
-  static void CollectFieldName();
-
-  /**
-   * @brief Get of txid
-   * @return txid
-   */
-  std::string GetTxid() const {
-    return txid_;
-  }
-  /**
-   * @brief Set to txid
-   * @param[in] txid    setting value.
-   */
-  void SetTxid(  // line separate
-    const std::string& txid) {  // NOLINT
-    this->txid_ = txid;
-  }
-  /**
-   * @brief Get data type of txid
-   * @return Data type of txid
-   */
-  static std::string GetTxidFieldType() {
-    return "std::string";
-  }
-  /**
-   * @brief Get json string of txid field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetTxidString(  // line separate
-      const TxInInfoRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.txid_);
-  }
-  /**
-   * @brief Set json object to txid field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetTxidString(  // line separate
-      TxInInfoRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.txid_, json_value);
-  }
-
-  /**
-   * @brief Get of vout
-   * @return vout
-   */
-  uint32_t GetVout() const {
-    return vout_;
-  }
-  /**
-   * @brief Set to vout
-   * @param[in] vout    setting value.
-   */
-  void SetVout(  // line separate
-    const uint32_t& vout) {  // NOLINT
-    this->vout_ = vout;
-  }
-  /**
-   * @brief Get data type of vout
-   * @return Data type of vout
-   */
-  static std::string GetVoutFieldType() {
-    return "uint32_t";
-  }
-  /**
-   * @brief Get json string of vout field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetVoutString(  // line separate
-      const TxInInfoRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.vout_);
-  }
-  /**
-   * @brief Set json object to vout field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetVoutString(  // line separate
-      TxInInfoRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.vout_, json_value);
-  }
-
-  /**
-   * @brief Get of redeemScript
-   * @return redeemScript
-   */
-  std::string GetRedeemScript() const {
-    return redeem_script_;
-  }
-  /**
-   * @brief Set to redeemScript
-   * @param[in] redeem_script    setting value.
-   */
-  void SetRedeemScript(  // line separate
-    const std::string& redeem_script) {  // NOLINT
-    this->redeem_script_ = redeem_script;
-  }
-  /**
-   * @brief Get data type of redeemScript
-   * @return Data type of redeemScript
-   */
-  static std::string GetRedeemScriptFieldType() {
-    return "std::string";
-  }
-  /**
-   * @brief Get json string of redeemScript field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetRedeemScriptString(  // line separate
-      const TxInInfoRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.redeem_script_);
-  }
-  /**
-   * @brief Set json object to redeemScript field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetRedeemScriptString(  // line separate
-      TxInInfoRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.redeem_script_, json_value);
-  }
-
-  /**
-   * @brief Get of maxWitnessLength
-   * @return maxWitnessLength
-   */
-  uint32_t GetMaxWitnessLength() const {
-    return max_witness_length_;
-  }
-  /**
-   * @brief Set to maxWitnessLength
-   * @param[in] max_witness_length    setting value.
-   */
-  void SetMaxWitnessLength(  // line separate
-    const uint32_t& max_witness_length) {  // NOLINT
-    this->max_witness_length_ = max_witness_length;
-  }
-  /**
-   * @brief Get data type of maxWitnessLength
-   * @return Data type of maxWitnessLength
-   */
-  static std::string GetMaxWitnessLengthFieldType() {
-    return "uint32_t";
-  }
-  /**
-   * @brief Get json string of maxWitnessLength field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetMaxWitnessLengthString(  // line separate
-      const TxInInfoRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.max_witness_length_);
-  }
-  /**
-   * @brief Set json object to maxWitnessLength field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetMaxWitnessLengthString(  // line separate
-      TxInInfoRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.max_witness_length_, json_value);
-  }
-
-  /**
-   * @brief Set ignore item.
-   * @param[in] key   ignore target key name.
-   */
-  void SetIgnoreItem(const std::string& key) {
-    ignore_items.insert(key);
-  }
-
-  /**
-   * @brief Convert struct to class.
-   * @param[in] data   struct data.
-   */
-  void ConvertFromStruct(
-      const TxInInfoRequestStruct& data);
-
-  /**
-   * @brief Convert class to struct.
-   * @return  struct data.
-   */
-  TxInInfoRequestStruct ConvertToStruct()  const;
-
- protected:
-  /**
-   * @brief definition type of Map table.
-   */
-  using TxInInfoRequestMapTable =
-    cfd::core::JsonTableMap<TxInInfoRequest>;
-
-  /**
-   * @brief Get JSON mapping object.
-   * @return JSON mapping object.
-   * @see cfd::core::JsonClassBase::GetJsonMapper()
-   */
-  virtual const TxInInfoRequestMapTable& GetJsonMapper() const {  // NOLINT
-    return json_mapper;
-  }
-  /**
-   * @brief Get item lists of JSON mapping.
-   * Fetch a list of target variable names in the order of definition.
-   * @return Item lists of JSON mapping.
-   * @see cfd::core::JsonClassBase::GetJsonItemList()
-   */
-  virtual const std::vector<std::string>& GetJsonItemList() const {
-    return item_list;
-  }
-  /**
-   * @brief Get ignore item lists of JSON mapping.
-   * Ignore the target variable at Serialize.
-   * @return Item list of JSON mapping.
-   * @see cfd::core::JsonClassBase::GetIgnoreItem()
-   */
-  virtual const std::set<std::string>& GetIgnoreItem() const {
-    return ignore_items;
-  }
-
- private:
- /**
-  * @brief JsonFunctionMap table
-  */
-  static TxInInfoRequestMapTable json_mapper;
-  /**
-   * @brief field name list.
-   */
-  static std::vector<std::string> item_list;
-  /**
-   * @brief ignore item list.
-   */
-  std::set<std::string> ignore_items;
-
-  /**
-   * @brief JsonAPI(txid) value
-   */
-  std::string txid_ = "";
-  /**
-   * @brief JsonAPI(vout) value
-   */
-  uint32_t vout_ = 0;
-  /**
-   * @brief JsonAPI(redeemScript) value
-   */
-  std::string redeem_script_ = "";
-  /**
-   * @brief JsonAPI(maxWitnessLength) value
-   */
-  uint32_t max_witness_length_ = 108;
+  uint64_t accept_ = 0;
 };
 
 // ------------------------------------------------------------------------
@@ -3960,347 +3869,433 @@ class CreateDlcTransactionsRequest
   }
 
   /**
-   * @brief Get of localFundPubkey
-   * @return localFundPubkey
+   * @brief Get of offerFundPubkey
+   * @return offerFundPubkey
    */
-  std::string GetLocalFundPubkey() const {
-    return local_fund_pubkey_;
+  std::string GetOfferFundPubkey() const {
+    return offer_fund_pubkey_;
   }
   /**
-   * @brief Set to localFundPubkey
-   * @param[in] local_fund_pubkey    setting value.
+   * @brief Set to offerFundPubkey
+   * @param[in] offer_fund_pubkey    setting value.
    */
-  void SetLocalFundPubkey(  // line separate
-    const std::string& local_fund_pubkey) {  // NOLINT
-    this->local_fund_pubkey_ = local_fund_pubkey;
+  void SetOfferFundPubkey(  // line separate
+    const std::string& offer_fund_pubkey) {  // NOLINT
+    this->offer_fund_pubkey_ = offer_fund_pubkey;
   }
   /**
-   * @brief Get data type of localFundPubkey
-   * @return Data type of localFundPubkey
+   * @brief Get data type of offerFundPubkey
+   * @return Data type of offerFundPubkey
    */
-  static std::string GetLocalFundPubkeyFieldType() {
+  static std::string GetOfferFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localFundPubkey field.
+   * @brief Get json string of offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalFundPubkeyString(  // line separate
+  static std::string GetOfferFundPubkeyString(  // line separate
       const CreateDlcTransactionsRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_fund_pubkey_);
   }
   /**
-   * @brief Set json object to localFundPubkey field.
+   * @brief Set json object to offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalFundPubkeyString(  // line separate
+  static void SetOfferFundPubkeyString(  // line separate
       CreateDlcTransactionsRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_fund_pubkey_, json_value);
+      obj.offer_fund_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of localFinalScriptPubkey
-   * @return localFinalScriptPubkey
+   * @brief Get of offerPayoutScriptPubkey
+   * @return offerPayoutScriptPubkey
    */
-  std::string GetLocalFinalScriptPubkey() const {
-    return local_final_script_pubkey_;
+  std::string GetOfferPayoutScriptPubkey() const {
+    return offer_payout_script_pubkey_;
   }
   /**
-   * @brief Set to localFinalScriptPubkey
-   * @param[in] local_final_script_pubkey    setting value.
+   * @brief Set to offerPayoutScriptPubkey
+   * @param[in] offer_payout_script_pubkey    setting value.
    */
-  void SetLocalFinalScriptPubkey(  // line separate
-    const std::string& local_final_script_pubkey) {  // NOLINT
-    this->local_final_script_pubkey_ = local_final_script_pubkey;
+  void SetOfferPayoutScriptPubkey(  // line separate
+    const std::string& offer_payout_script_pubkey) {  // NOLINT
+    this->offer_payout_script_pubkey_ = offer_payout_script_pubkey;
   }
   /**
-   * @brief Get data type of localFinalScriptPubkey
-   * @return Data type of localFinalScriptPubkey
+   * @brief Get data type of offerPayoutScriptPubkey
+   * @return Data type of offerPayoutScriptPubkey
    */
-  static std::string GetLocalFinalScriptPubkeyFieldType() {
+  static std::string GetOfferPayoutScriptPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localFinalScriptPubkey field.
+   * @brief Get json string of offerPayoutScriptPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalFinalScriptPubkeyString(  // line separate
+  static std::string GetOfferPayoutScriptPubkeyString(  // line separate
       const CreateDlcTransactionsRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_final_script_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_payout_script_pubkey_);
   }
   /**
-   * @brief Set json object to localFinalScriptPubkey field.
+   * @brief Set json object to offerPayoutScriptPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalFinalScriptPubkeyString(  // line separate
+  static void SetOfferPayoutScriptPubkeyString(  // line separate
       CreateDlcTransactionsRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_final_script_pubkey_, json_value);
+      obj.offer_payout_script_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remoteFundPubkey
-   * @return remoteFundPubkey
+   * @brief Get of offerPayoutSerialId
+   * @return offerPayoutSerialId
    */
-  std::string GetRemoteFundPubkey() const {
-    return remote_fund_pubkey_;
+  uint64_t GetOfferPayoutSerialId() const {
+    return offer_payout_serial_id_;
   }
   /**
-   * @brief Set to remoteFundPubkey
-   * @param[in] remote_fund_pubkey    setting value.
+   * @brief Set to offerPayoutSerialId
+   * @param[in] offer_payout_serial_id    setting value.
    */
-  void SetRemoteFundPubkey(  // line separate
-    const std::string& remote_fund_pubkey) {  // NOLINT
-    this->remote_fund_pubkey_ = remote_fund_pubkey;
+  void SetOfferPayoutSerialId(  // line separate
+    const uint64_t& offer_payout_serial_id) {  // NOLINT
+    this->offer_payout_serial_id_ = offer_payout_serial_id;
   }
   /**
-   * @brief Get data type of remoteFundPubkey
-   * @return Data type of remoteFundPubkey
+   * @brief Get data type of offerPayoutSerialId
+   * @return Data type of offerPayoutSerialId
    */
-  static std::string GetRemoteFundPubkeyFieldType() {
+  static std::string GetOfferPayoutSerialIdFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of offerPayoutSerialId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetOfferPayoutSerialIdString(  // line separate
+      const CreateDlcTransactionsRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.offer_payout_serial_id_);
+  }
+  /**
+   * @brief Set json object to offerPayoutSerialId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetOfferPayoutSerialIdString(  // line separate
+      CreateDlcTransactionsRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.offer_payout_serial_id_, json_value);
+  }
+
+  /**
+   * @brief Get of acceptFundPubkey
+   * @return acceptFundPubkey
+   */
+  std::string GetAcceptFundPubkey() const {
+    return accept_fund_pubkey_;
+  }
+  /**
+   * @brief Set to acceptFundPubkey
+   * @param[in] accept_fund_pubkey    setting value.
+   */
+  void SetAcceptFundPubkey(  // line separate
+    const std::string& accept_fund_pubkey) {  // NOLINT
+    this->accept_fund_pubkey_ = accept_fund_pubkey;
+  }
+  /**
+   * @brief Get data type of acceptFundPubkey
+   * @return Data type of acceptFundPubkey
+   */
+  static std::string GetAcceptFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteFundPubkey field.
+   * @brief Get json string of acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteFundPubkeyString(  // line separate
+  static std::string GetAcceptFundPubkeyString(  // line separate
       const CreateDlcTransactionsRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_fund_pubkey_);
   }
   /**
-   * @brief Set json object to remoteFundPubkey field.
+   * @brief Set json object to acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteFundPubkeyString(  // line separate
+  static void SetAcceptFundPubkeyString(  // line separate
       CreateDlcTransactionsRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_fund_pubkey_, json_value);
+      obj.accept_fund_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remoteFinalScriptPubkey
-   * @return remoteFinalScriptPubkey
+   * @brief Get of acceptPayoutScriptPubkey
+   * @return acceptPayoutScriptPubkey
    */
-  std::string GetRemoteFinalScriptPubkey() const {
-    return remote_final_script_pubkey_;
+  std::string GetAcceptPayoutScriptPubkey() const {
+    return accept_payout_script_pubkey_;
   }
   /**
-   * @brief Set to remoteFinalScriptPubkey
-   * @param[in] remote_final_script_pubkey    setting value.
+   * @brief Set to acceptPayoutScriptPubkey
+   * @param[in] accept_payout_script_pubkey    setting value.
    */
-  void SetRemoteFinalScriptPubkey(  // line separate
-    const std::string& remote_final_script_pubkey) {  // NOLINT
-    this->remote_final_script_pubkey_ = remote_final_script_pubkey;
+  void SetAcceptPayoutScriptPubkey(  // line separate
+    const std::string& accept_payout_script_pubkey) {  // NOLINT
+    this->accept_payout_script_pubkey_ = accept_payout_script_pubkey;
   }
   /**
-   * @brief Get data type of remoteFinalScriptPubkey
-   * @return Data type of remoteFinalScriptPubkey
+   * @brief Get data type of acceptPayoutScriptPubkey
+   * @return Data type of acceptPayoutScriptPubkey
    */
-  static std::string GetRemoteFinalScriptPubkeyFieldType() {
+  static std::string GetAcceptPayoutScriptPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteFinalScriptPubkey field.
+   * @brief Get json string of acceptPayoutScriptPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteFinalScriptPubkeyString(  // line separate
+  static std::string GetAcceptPayoutScriptPubkeyString(  // line separate
       const CreateDlcTransactionsRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_final_script_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_payout_script_pubkey_);
   }
   /**
-   * @brief Set json object to remoteFinalScriptPubkey field.
+   * @brief Set json object to acceptPayoutScriptPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteFinalScriptPubkeyString(  // line separate
+  static void SetAcceptPayoutScriptPubkeyString(  // line separate
       CreateDlcTransactionsRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_final_script_pubkey_, json_value);
+      obj.accept_payout_script_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of localInputAmount
-   * @return localInputAmount
+   * @brief Get of acceptPayoutSerialId
+   * @return acceptPayoutSerialId
    */
-  uint64_t GetLocalInputAmount() const {
-    return local_input_amount_;
+  uint64_t GetAcceptPayoutSerialId() const {
+    return accept_payout_serial_id_;
   }
   /**
-   * @brief Set to localInputAmount
-   * @param[in] local_input_amount    setting value.
+   * @brief Set to acceptPayoutSerialId
+   * @param[in] accept_payout_serial_id    setting value.
    */
-  void SetLocalInputAmount(  // line separate
-    const uint64_t& local_input_amount) {  // NOLINT
-    this->local_input_amount_ = local_input_amount;
+  void SetAcceptPayoutSerialId(  // line separate
+    const uint64_t& accept_payout_serial_id) {  // NOLINT
+    this->accept_payout_serial_id_ = accept_payout_serial_id;
   }
   /**
-   * @brief Get data type of localInputAmount
-   * @return Data type of localInputAmount
+   * @brief Get data type of acceptPayoutSerialId
+   * @return Data type of acceptPayoutSerialId
    */
-  static std::string GetLocalInputAmountFieldType() {
+  static std::string GetAcceptPayoutSerialIdFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of localInputAmount field.
+   * @brief Get json string of acceptPayoutSerialId field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalInputAmountString(  // line separate
+  static std::string GetAcceptPayoutSerialIdString(  // line separate
       const CreateDlcTransactionsRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_input_amount_);
+    return cfd::core::ConvertToString(obj.accept_payout_serial_id_);
   }
   /**
-   * @brief Set json object to localInputAmount field.
+   * @brief Set json object to acceptPayoutSerialId field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalInputAmountString(  // line separate
+  static void SetAcceptPayoutSerialIdString(  // line separate
       CreateDlcTransactionsRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_input_amount_, json_value);
+      obj.accept_payout_serial_id_, json_value);
   }
 
   /**
-   * @brief Get of localCollateralAmount
-   * @return localCollateralAmount
+   * @brief Get of offerInputAmount
+   * @return offerInputAmount
    */
-  uint64_t GetLocalCollateralAmount() const {
-    return local_collateral_amount_;
+  uint64_t GetOfferInputAmount() const {
+    return offer_input_amount_;
   }
   /**
-   * @brief Set to localCollateralAmount
-   * @param[in] local_collateral_amount    setting value.
+   * @brief Set to offerInputAmount
+   * @param[in] offer_input_amount    setting value.
    */
-  void SetLocalCollateralAmount(  // line separate
-    const uint64_t& local_collateral_amount) {  // NOLINT
-    this->local_collateral_amount_ = local_collateral_amount;
+  void SetOfferInputAmount(  // line separate
+    const uint64_t& offer_input_amount) {  // NOLINT
+    this->offer_input_amount_ = offer_input_amount;
   }
   /**
-   * @brief Get data type of localCollateralAmount
-   * @return Data type of localCollateralAmount
+   * @brief Get data type of offerInputAmount
+   * @return Data type of offerInputAmount
    */
-  static std::string GetLocalCollateralAmountFieldType() {
+  static std::string GetOfferInputAmountFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of localCollateralAmount field.
+   * @brief Get json string of offerInputAmount field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalCollateralAmountString(  // line separate
+  static std::string GetOfferInputAmountString(  // line separate
       const CreateDlcTransactionsRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_collateral_amount_);
+    return cfd::core::ConvertToString(obj.offer_input_amount_);
   }
   /**
-   * @brief Set json object to localCollateralAmount field.
+   * @brief Set json object to offerInputAmount field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalCollateralAmountString(  // line separate
+  static void SetOfferInputAmountString(  // line separate
       CreateDlcTransactionsRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_collateral_amount_, json_value);
+      obj.offer_input_amount_, json_value);
   }
 
   /**
-   * @brief Get of remoteInputAmount
-   * @return remoteInputAmount
+   * @brief Get of offerCollateralAmount
+   * @return offerCollateralAmount
    */
-  uint64_t GetRemoteInputAmount() const {
-    return remote_input_amount_;
+  uint64_t GetOfferCollateralAmount() const {
+    return offer_collateral_amount_;
   }
   /**
-   * @brief Set to remoteInputAmount
-   * @param[in] remote_input_amount    setting value.
+   * @brief Set to offerCollateralAmount
+   * @param[in] offer_collateral_amount    setting value.
    */
-  void SetRemoteInputAmount(  // line separate
-    const uint64_t& remote_input_amount) {  // NOLINT
-    this->remote_input_amount_ = remote_input_amount;
+  void SetOfferCollateralAmount(  // line separate
+    const uint64_t& offer_collateral_amount) {  // NOLINT
+    this->offer_collateral_amount_ = offer_collateral_amount;
   }
   /**
-   * @brief Get data type of remoteInputAmount
-   * @return Data type of remoteInputAmount
+   * @brief Get data type of offerCollateralAmount
+   * @return Data type of offerCollateralAmount
    */
-  static std::string GetRemoteInputAmountFieldType() {
+  static std::string GetOfferCollateralAmountFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of remoteInputAmount field.
+   * @brief Get json string of offerCollateralAmount field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteInputAmountString(  // line separate
+  static std::string GetOfferCollateralAmountString(  // line separate
       const CreateDlcTransactionsRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_input_amount_);
+    return cfd::core::ConvertToString(obj.offer_collateral_amount_);
   }
   /**
-   * @brief Set json object to remoteInputAmount field.
+   * @brief Set json object to offerCollateralAmount field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteInputAmountString(  // line separate
+  static void SetOfferCollateralAmountString(  // line separate
       CreateDlcTransactionsRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_input_amount_, json_value);
+      obj.offer_collateral_amount_, json_value);
   }
 
   /**
-   * @brief Get of remoteCollateralAmount
-   * @return remoteCollateralAmount
+   * @brief Get of acceptInputAmount
+   * @return acceptInputAmount
    */
-  uint64_t GetRemoteCollateralAmount() const {
-    return remote_collateral_amount_;
+  uint64_t GetAcceptInputAmount() const {
+    return accept_input_amount_;
   }
   /**
-   * @brief Set to remoteCollateralAmount
-   * @param[in] remote_collateral_amount    setting value.
+   * @brief Set to acceptInputAmount
+   * @param[in] accept_input_amount    setting value.
    */
-  void SetRemoteCollateralAmount(  // line separate
-    const uint64_t& remote_collateral_amount) {  // NOLINT
-    this->remote_collateral_amount_ = remote_collateral_amount;
+  void SetAcceptInputAmount(  // line separate
+    const uint64_t& accept_input_amount) {  // NOLINT
+    this->accept_input_amount_ = accept_input_amount;
   }
   /**
-   * @brief Get data type of remoteCollateralAmount
-   * @return Data type of remoteCollateralAmount
+   * @brief Get data type of acceptInputAmount
+   * @return Data type of acceptInputAmount
    */
-  static std::string GetRemoteCollateralAmountFieldType() {
+  static std::string GetAcceptInputAmountFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of remoteCollateralAmount field.
+   * @brief Get json string of acceptInputAmount field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteCollateralAmountString(  // line separate
+  static std::string GetAcceptInputAmountString(  // line separate
       const CreateDlcTransactionsRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_collateral_amount_);
+    return cfd::core::ConvertToString(obj.accept_input_amount_);
   }
   /**
-   * @brief Set json object to remoteCollateralAmount field.
+   * @brief Set json object to acceptInputAmount field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteCollateralAmountString(  // line separate
+  static void SetAcceptInputAmountString(  // line separate
       CreateDlcTransactionsRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_collateral_amount_, json_value);
+      obj.accept_input_amount_, json_value);
+  }
+
+  /**
+   * @brief Get of acceptCollateralAmount
+   * @return acceptCollateralAmount
+   */
+  uint64_t GetAcceptCollateralAmount() const {
+    return accept_collateral_amount_;
+  }
+  /**
+   * @brief Set to acceptCollateralAmount
+   * @param[in] accept_collateral_amount    setting value.
+   */
+  void SetAcceptCollateralAmount(  // line separate
+    const uint64_t& accept_collateral_amount) {  // NOLINT
+    this->accept_collateral_amount_ = accept_collateral_amount;
+  }
+  /**
+   * @brief Get data type of acceptCollateralAmount
+   * @return Data type of acceptCollateralAmount
+   */
+  static std::string GetAcceptCollateralAmountFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of acceptCollateralAmount field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetAcceptCollateralAmountString(  // line separate
+      const CreateDlcTransactionsRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.accept_collateral_amount_);
+  }
+  /**
+   * @brief Set json object to acceptCollateralAmount field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetAcceptCollateralAmountString(  // line separate
+      CreateDlcTransactionsRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.accept_collateral_amount_, json_value);
   }
 
   /**
@@ -4347,177 +4342,263 @@ class CreateDlcTransactionsRequest
   }
 
   /**
-   * @brief Get of localInputs.
-   * @return localInputs
+   * @brief Get of offerInputs.
+   * @return offerInputs
    */
-  JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>& GetLocalInputs() {  // NOLINT
-    return local_inputs_;
+  JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>& GetOfferInputs() {  // NOLINT
+    return offer_inputs_;
   }
   /**
-   * @brief Set to localInputs.
-   * @param[in] local_inputs    setting value.
+   * @brief Set to offerInputs.
+   * @param[in] offer_inputs    setting value.
    */
-  void SetLocalInputs(  // line separate
-      const JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>& local_inputs) {  // NOLINT
-    this->local_inputs_ = local_inputs;
+  void SetOfferInputs(  // line separate
+      const JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>& offer_inputs) {  // NOLINT
+    this->offer_inputs_ = offer_inputs;
   }
   /**
-   * @brief Get data type of localInputs.
-   * @return Data type of localInputs.
+   * @brief Get data type of offerInputs.
+   * @return Data type of offerInputs.
    */
-  static std::string GetLocalInputsFieldType() {
+  static std::string GetOfferInputsFieldType() {
     return "JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>";  // NOLINT
   }
   /**
-   * @brief Get json string of localInputs field.
+   * @brief Get json string of offerInputs field.
    * @param[in,out] obj     class object
    * @return JSON string.
    */
-  static std::string GetLocalInputsString(  // line separate
+  static std::string GetOfferInputsString(  // line separate
       const CreateDlcTransactionsRequest& obj) {  // NOLINT
     // Do not set to const, because substitution of member variables
     // may occur in pre / post processing inside Serialize
-    return obj.local_inputs_.Serialize();
+    return obj.offer_inputs_.Serialize();
   }
   /**
-   * @brief Set json object to localInputs field.
+   * @brief Set json object to offerInputs field.
    * @param[in,out] obj     class object
    * @param[in] json_value  JSON object
    */
-  static void SetLocalInputsString(  // line separate
+  static void SetOfferInputsString(  // line separate
       CreateDlcTransactionsRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    obj.local_inputs_.DeserializeUniValue(json_value);
+    obj.offer_inputs_.DeserializeUniValue(json_value);
   }
 
   /**
-   * @brief Get of localChangeScriptPubkey
-   * @return localChangeScriptPubkey
+   * @brief Get of offerChangeScriptPubkey
+   * @return offerChangeScriptPubkey
    */
-  std::string GetLocalChangeScriptPubkey() const {
-    return local_change_script_pubkey_;
+  std::string GetOfferChangeScriptPubkey() const {
+    return offer_change_script_pubkey_;
   }
   /**
-   * @brief Set to localChangeScriptPubkey
-   * @param[in] local_change_script_pubkey    setting value.
+   * @brief Set to offerChangeScriptPubkey
+   * @param[in] offer_change_script_pubkey    setting value.
    */
-  void SetLocalChangeScriptPubkey(  // line separate
-    const std::string& local_change_script_pubkey) {  // NOLINT
-    this->local_change_script_pubkey_ = local_change_script_pubkey;
+  void SetOfferChangeScriptPubkey(  // line separate
+    const std::string& offer_change_script_pubkey) {  // NOLINT
+    this->offer_change_script_pubkey_ = offer_change_script_pubkey;
   }
   /**
-   * @brief Get data type of localChangeScriptPubkey
-   * @return Data type of localChangeScriptPubkey
+   * @brief Get data type of offerChangeScriptPubkey
+   * @return Data type of offerChangeScriptPubkey
    */
-  static std::string GetLocalChangeScriptPubkeyFieldType() {
+  static std::string GetOfferChangeScriptPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localChangeScriptPubkey field.
+   * @brief Get json string of offerChangeScriptPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalChangeScriptPubkeyString(  // line separate
+  static std::string GetOfferChangeScriptPubkeyString(  // line separate
       const CreateDlcTransactionsRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_change_script_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_change_script_pubkey_);
   }
   /**
-   * @brief Set json object to localChangeScriptPubkey field.
+   * @brief Set json object to offerChangeScriptPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalChangeScriptPubkeyString(  // line separate
+  static void SetOfferChangeScriptPubkeyString(  // line separate
       CreateDlcTransactionsRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_change_script_pubkey_, json_value);
+      obj.offer_change_script_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remoteInputs.
-   * @return remoteInputs
+   * @brief Get of offerChangeSerialId
+   * @return offerChangeSerialId
    */
-  JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>& GetRemoteInputs() {  // NOLINT
-    return remote_inputs_;
+  uint64_t GetOfferChangeSerialId() const {
+    return offer_change_serial_id_;
   }
   /**
-   * @brief Set to remoteInputs.
-   * @param[in] remote_inputs    setting value.
+   * @brief Set to offerChangeSerialId
+   * @param[in] offer_change_serial_id    setting value.
    */
-  void SetRemoteInputs(  // line separate
-      const JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>& remote_inputs) {  // NOLINT
-    this->remote_inputs_ = remote_inputs;
+  void SetOfferChangeSerialId(  // line separate
+    const uint64_t& offer_change_serial_id) {  // NOLINT
+    this->offer_change_serial_id_ = offer_change_serial_id;
   }
   /**
-   * @brief Get data type of remoteInputs.
-   * @return Data type of remoteInputs.
+   * @brief Get data type of offerChangeSerialId
+   * @return Data type of offerChangeSerialId
    */
-  static std::string GetRemoteInputsFieldType() {
+  static std::string GetOfferChangeSerialIdFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of offerChangeSerialId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetOfferChangeSerialIdString(  // line separate
+      const CreateDlcTransactionsRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.offer_change_serial_id_);
+  }
+  /**
+   * @brief Set json object to offerChangeSerialId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetOfferChangeSerialIdString(  // line separate
+      CreateDlcTransactionsRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.offer_change_serial_id_, json_value);
+  }
+
+  /**
+   * @brief Get of acceptInputs.
+   * @return acceptInputs
+   */
+  JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>& GetAcceptInputs() {  // NOLINT
+    return accept_inputs_;
+  }
+  /**
+   * @brief Set to acceptInputs.
+   * @param[in] accept_inputs    setting value.
+   */
+  void SetAcceptInputs(  // line separate
+      const JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>& accept_inputs) {  // NOLINT
+    this->accept_inputs_ = accept_inputs;
+  }
+  /**
+   * @brief Get data type of acceptInputs.
+   * @return Data type of acceptInputs.
+   */
+  static std::string GetAcceptInputsFieldType() {
     return "JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>";  // NOLINT
   }
   /**
-   * @brief Get json string of remoteInputs field.
+   * @brief Get json string of acceptInputs field.
    * @param[in,out] obj     class object
    * @return JSON string.
    */
-  static std::string GetRemoteInputsString(  // line separate
+  static std::string GetAcceptInputsString(  // line separate
       const CreateDlcTransactionsRequest& obj) {  // NOLINT
     // Do not set to const, because substitution of member variables
     // may occur in pre / post processing inside Serialize
-    return obj.remote_inputs_.Serialize();
+    return obj.accept_inputs_.Serialize();
   }
   /**
-   * @brief Set json object to remoteInputs field.
+   * @brief Set json object to acceptInputs field.
    * @param[in,out] obj     class object
    * @param[in] json_value  JSON object
    */
-  static void SetRemoteInputsString(  // line separate
+  static void SetAcceptInputsString(  // line separate
       CreateDlcTransactionsRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    obj.remote_inputs_.DeserializeUniValue(json_value);
+    obj.accept_inputs_.DeserializeUniValue(json_value);
   }
 
   /**
-   * @brief Get of remoteChangeScriptPubkey
-   * @return remoteChangeScriptPubkey
+   * @brief Get of acceptChangeScriptPubkey
+   * @return acceptChangeScriptPubkey
    */
-  std::string GetRemoteChangeScriptPubkey() const {
-    return remote_change_script_pubkey_;
+  std::string GetAcceptChangeScriptPubkey() const {
+    return accept_change_script_pubkey_;
   }
   /**
-   * @brief Set to remoteChangeScriptPubkey
-   * @param[in] remote_change_script_pubkey    setting value.
+   * @brief Set to acceptChangeScriptPubkey
+   * @param[in] accept_change_script_pubkey    setting value.
    */
-  void SetRemoteChangeScriptPubkey(  // line separate
-    const std::string& remote_change_script_pubkey) {  // NOLINT
-    this->remote_change_script_pubkey_ = remote_change_script_pubkey;
+  void SetAcceptChangeScriptPubkey(  // line separate
+    const std::string& accept_change_script_pubkey) {  // NOLINT
+    this->accept_change_script_pubkey_ = accept_change_script_pubkey;
   }
   /**
-   * @brief Get data type of remoteChangeScriptPubkey
-   * @return Data type of remoteChangeScriptPubkey
+   * @brief Get data type of acceptChangeScriptPubkey
+   * @return Data type of acceptChangeScriptPubkey
    */
-  static std::string GetRemoteChangeScriptPubkeyFieldType() {
+  static std::string GetAcceptChangeScriptPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteChangeScriptPubkey field.
+   * @brief Get json string of acceptChangeScriptPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteChangeScriptPubkeyString(  // line separate
+  static std::string GetAcceptChangeScriptPubkeyString(  // line separate
       const CreateDlcTransactionsRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_change_script_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_change_script_pubkey_);
   }
   /**
-   * @brief Set json object to remoteChangeScriptPubkey field.
+   * @brief Set json object to acceptChangeScriptPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteChangeScriptPubkeyString(  // line separate
+  static void SetAcceptChangeScriptPubkeyString(  // line separate
       CreateDlcTransactionsRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_change_script_pubkey_, json_value);
+      obj.accept_change_script_pubkey_, json_value);
+  }
+
+  /**
+   * @brief Get of acceptChangeSerialId
+   * @return acceptChangeSerialId
+   */
+  uint64_t GetAcceptChangeSerialId() const {
+    return accept_change_serial_id_;
+  }
+  /**
+   * @brief Set to acceptChangeSerialId
+   * @param[in] accept_change_serial_id    setting value.
+   */
+  void SetAcceptChangeSerialId(  // line separate
+    const uint64_t& accept_change_serial_id) {  // NOLINT
+    this->accept_change_serial_id_ = accept_change_serial_id;
+  }
+  /**
+   * @brief Get data type of acceptChangeSerialId
+   * @return Data type of acceptChangeSerialId
+   */
+  static std::string GetAcceptChangeSerialIdFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of acceptChangeSerialId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetAcceptChangeSerialIdString(  // line separate
+      const CreateDlcTransactionsRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.accept_change_serial_id_);
+  }
+  /**
+   * @brief Set json object to acceptChangeSerialId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetAcceptChangeSerialIdString(  // line separate
+      CreateDlcTransactionsRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.accept_change_serial_id_, json_value);
   }
 
   /**
@@ -4561,6 +4642,49 @@ class CreateDlcTransactionsRequest
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.fee_rate_, json_value);
+  }
+
+  /**
+   * @brief Get of fundOutputSerialId
+   * @return fundOutputSerialId
+   */
+  uint64_t GetFundOutputSerialId() const {
+    return fund_output_serial_id_;
+  }
+  /**
+   * @brief Set to fundOutputSerialId
+   * @param[in] fund_output_serial_id    setting value.
+   */
+  void SetFundOutputSerialId(  // line separate
+    const uint64_t& fund_output_serial_id) {  // NOLINT
+    this->fund_output_serial_id_ = fund_output_serial_id;
+  }
+  /**
+   * @brief Get data type of fundOutputSerialId
+   * @return Data type of fundOutputSerialId
+   */
+  static std::string GetFundOutputSerialIdFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of fundOutputSerialId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetFundOutputSerialIdString(  // line separate
+      const CreateDlcTransactionsRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.fund_output_serial_id_);
+  }
+  /**
+   * @brief Set json object to fundOutputSerialId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetFundOutputSerialIdString(  // line separate
+      CreateDlcTransactionsRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.fund_output_serial_id_, json_value);
   }
 
   /**
@@ -4809,61 +4933,81 @@ class CreateDlcTransactionsRequest
    */
   JsonObjectVector<PayoutRequest, PayoutRequestStruct> payouts_;  // NOLINT
   /**
-   * @brief JsonAPI(localFundPubkey) value
+   * @brief JsonAPI(offerFundPubkey) value
    */
-  std::string local_fund_pubkey_ = "";
+  std::string offer_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(localFinalScriptPubkey) value
+   * @brief JsonAPI(offerPayoutScriptPubkey) value
    */
-  std::string local_final_script_pubkey_ = "";
+  std::string offer_payout_script_pubkey_ = "";
   /**
-   * @brief JsonAPI(remoteFundPubkey) value
+   * @brief JsonAPI(offerPayoutSerialId) value
    */
-  std::string remote_fund_pubkey_ = "";
+  uint64_t offer_payout_serial_id_ = 0;
   /**
-   * @brief JsonAPI(remoteFinalScriptPubkey) value
+   * @brief JsonAPI(acceptFundPubkey) value
    */
-  std::string remote_final_script_pubkey_ = "";
+  std::string accept_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(localInputAmount) value
+   * @brief JsonAPI(acceptPayoutScriptPubkey) value
    */
-  uint64_t local_input_amount_ = 0;
+  std::string accept_payout_script_pubkey_ = "";
   /**
-   * @brief JsonAPI(localCollateralAmount) value
+   * @brief JsonAPI(acceptPayoutSerialId) value
    */
-  uint64_t local_collateral_amount_ = 0;
+  uint64_t accept_payout_serial_id_ = 0;
   /**
-   * @brief JsonAPI(remoteInputAmount) value
+   * @brief JsonAPI(offerInputAmount) value
    */
-  uint64_t remote_input_amount_ = 0;
+  uint64_t offer_input_amount_ = 0;
   /**
-   * @brief JsonAPI(remoteCollateralAmount) value
+   * @brief JsonAPI(offerCollateralAmount) value
    */
-  uint64_t remote_collateral_amount_ = 0;
+  uint64_t offer_collateral_amount_ = 0;
+  /**
+   * @brief JsonAPI(acceptInputAmount) value
+   */
+  uint64_t accept_input_amount_ = 0;
+  /**
+   * @brief JsonAPI(acceptCollateralAmount) value
+   */
+  uint64_t accept_collateral_amount_ = 0;
   /**
    * @brief JsonAPI(refundLocktime) value
    */
   uint64_t refund_locktime_ = 0;
   /**
-   * @brief JsonAPI(localInputs) value
+   * @brief JsonAPI(offerInputs) value
    */
-  JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct> local_inputs_;  // NOLINT
+  JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct> offer_inputs_;  // NOLINT
   /**
-   * @brief JsonAPI(localChangeScriptPubkey) value
+   * @brief JsonAPI(offerChangeScriptPubkey) value
    */
-  std::string local_change_script_pubkey_ = "";
+  std::string offer_change_script_pubkey_ = "";
   /**
-   * @brief JsonAPI(remoteInputs) value
+   * @brief JsonAPI(offerChangeSerialId) value
    */
-  JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct> remote_inputs_;  // NOLINT
+  uint64_t offer_change_serial_id_ = 0;
   /**
-   * @brief JsonAPI(remoteChangeScriptPubkey) value
+   * @brief JsonAPI(acceptInputs) value
    */
-  std::string remote_change_script_pubkey_ = "";
+  JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct> accept_inputs_;  // NOLINT
+  /**
+   * @brief JsonAPI(acceptChangeScriptPubkey) value
+   */
+  std::string accept_change_script_pubkey_ = "";
+  /**
+   * @brief JsonAPI(acceptChangeSerialId) value
+   */
+  uint64_t accept_change_serial_id_ = 0;
   /**
    * @brief JsonAPI(feeRate) value
    */
   uint32_t fee_rate_ = 0;
+  /**
+   * @brief JsonAPI(fundOutputSerialId) value
+   */
+  uint64_t fund_output_serial_id_ = 0;
   /**
    * @brief JsonAPI(cetLockTime) value
    */
@@ -5033,6 +5177,92 @@ class CreateDlcTransactionsResponse
   }
 
   /**
+   * @brief Get of fundingScriptPubkey
+   * @return fundingScriptPubkey
+   */
+  std::string GetFundingScriptPubkey() const {
+    return funding_script_pubkey_;
+  }
+  /**
+   * @brief Set to fundingScriptPubkey
+   * @param[in] funding_script_pubkey    setting value.
+   */
+  void SetFundingScriptPubkey(  // line separate
+    const std::string& funding_script_pubkey) {  // NOLINT
+    this->funding_script_pubkey_ = funding_script_pubkey;
+  }
+  /**
+   * @brief Get data type of fundingScriptPubkey
+   * @return Data type of fundingScriptPubkey
+   */
+  static std::string GetFundingScriptPubkeyFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of fundingScriptPubkey field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetFundingScriptPubkeyString(  // line separate
+      const CreateDlcTransactionsResponse& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.funding_script_pubkey_);
+  }
+  /**
+   * @brief Set json object to fundingScriptPubkey field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetFundingScriptPubkeyString(  // line separate
+      CreateDlcTransactionsResponse& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.funding_script_pubkey_, json_value);
+  }
+
+  /**
+   * @brief Get of fundVout
+   * @return fundVout
+   */
+  uint32_t GetFundVout() const {
+    return fund_vout_;
+  }
+  /**
+   * @brief Set to fundVout
+   * @param[in] fund_vout    setting value.
+   */
+  void SetFundVout(  // line separate
+    const uint32_t& fund_vout) {  // NOLINT
+    this->fund_vout_ = fund_vout;
+  }
+  /**
+   * @brief Get data type of fundVout
+   * @return Data type of fundVout
+   */
+  static std::string GetFundVoutFieldType() {
+    return "uint32_t";
+  }
+  /**
+   * @brief Get json string of fundVout field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetFundVoutString(  // line separate
+      const CreateDlcTransactionsResponse& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.fund_vout_);
+  }
+  /**
+   * @brief Set json object to fundVout field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetFundVoutString(  // line separate
+      CreateDlcTransactionsResponse& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.fund_vout_, json_value);
+  }
+
+  /**
    * @brief Set ignore item.
    * @param[in] key   ignore target key name.
    */
@@ -5113,376 +5343,14 @@ class CreateDlcTransactionsResponse
    * @brief JsonAPI(refundTxHex) value
    */
   std::string refund_tx_hex_ = "";
-};
-
-// ------------------------------------------------------------------------
-// TxInRequest
-// ------------------------------------------------------------------------
-/**
- * @brief JSON-API (TxInRequest) class
- */
-class TxInRequest
-  : public cfd::core::JsonClassBase<TxInRequest> {
- public:
-  TxInRequest() {
-    CollectFieldName();
-  }
-  virtual ~TxInRequest() {
-    // do nothing
-  }
   /**
-   * @brief collect field name.
+   * @brief JsonAPI(fundingScriptPubkey) value
    */
-  static void CollectFieldName();
-
+  std::string funding_script_pubkey_ = "";
   /**
-   * @brief Get of txid
-   * @return txid
+   * @brief JsonAPI(fundVout) value
    */
-  std::string GetTxid() const {
-    return txid_;
-  }
-  /**
-   * @brief Set to txid
-   * @param[in] txid    setting value.
-   */
-  void SetTxid(  // line separate
-    const std::string& txid) {  // NOLINT
-    this->txid_ = txid;
-  }
-  /**
-   * @brief Get data type of txid
-   * @return Data type of txid
-   */
-  static std::string GetTxidFieldType() {
-    return "std::string";
-  }
-  /**
-   * @brief Get json string of txid field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetTxidString(  // line separate
-      const TxInRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.txid_);
-  }
-  /**
-   * @brief Set json object to txid field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetTxidString(  // line separate
-      TxInRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.txid_, json_value);
-  }
-
-  /**
-   * @brief Get of vout
-   * @return vout
-   */
-  uint32_t GetVout() const {
-    return vout_;
-  }
-  /**
-   * @brief Set to vout
-   * @param[in] vout    setting value.
-   */
-  void SetVout(  // line separate
-    const uint32_t& vout) {  // NOLINT
-    this->vout_ = vout;
-  }
-  /**
-   * @brief Get data type of vout
-   * @return Data type of vout
-   */
-  static std::string GetVoutFieldType() {
-    return "uint32_t";
-  }
-  /**
-   * @brief Get json string of vout field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetVoutString(  // line separate
-      const TxInRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.vout_);
-  }
-  /**
-   * @brief Set json object to vout field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetVoutString(  // line separate
-      TxInRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.vout_, json_value);
-  }
-
-  /**
-   * @brief Set ignore item.
-   * @param[in] key   ignore target key name.
-   */
-  void SetIgnoreItem(const std::string& key) {
-    ignore_items.insert(key);
-  }
-
-  /**
-   * @brief Convert struct to class.
-   * @param[in] data   struct data.
-   */
-  void ConvertFromStruct(
-      const TxInRequestStruct& data);
-
-  /**
-   * @brief Convert class to struct.
-   * @return  struct data.
-   */
-  TxInRequestStruct ConvertToStruct()  const;
-
- protected:
-  /**
-   * @brief definition type of Map table.
-   */
-  using TxInRequestMapTable =
-    cfd::core::JsonTableMap<TxInRequest>;
-
-  /**
-   * @brief Get JSON mapping object.
-   * @return JSON mapping object.
-   * @see cfd::core::JsonClassBase::GetJsonMapper()
-   */
-  virtual const TxInRequestMapTable& GetJsonMapper() const {  // NOLINT
-    return json_mapper;
-  }
-  /**
-   * @brief Get item lists of JSON mapping.
-   * Fetch a list of target variable names in the order of definition.
-   * @return Item lists of JSON mapping.
-   * @see cfd::core::JsonClassBase::GetJsonItemList()
-   */
-  virtual const std::vector<std::string>& GetJsonItemList() const {
-    return item_list;
-  }
-  /**
-   * @brief Get ignore item lists of JSON mapping.
-   * Ignore the target variable at Serialize.
-   * @return Item list of JSON mapping.
-   * @see cfd::core::JsonClassBase::GetIgnoreItem()
-   */
-  virtual const std::set<std::string>& GetIgnoreItem() const {
-    return ignore_items;
-  }
-
- private:
- /**
-  * @brief JsonFunctionMap table
-  */
-  static TxInRequestMapTable json_mapper;
-  /**
-   * @brief field name list.
-   */
-  static std::vector<std::string> item_list;
-  /**
-   * @brief ignore item list.
-   */
-  std::set<std::string> ignore_items;
-
-  /**
-   * @brief JsonAPI(txid) value
-   */
-  std::string txid_ = "";
-  /**
-   * @brief JsonAPI(vout) value
-   */
-  uint32_t vout_ = 0;
-};
-
-// ------------------------------------------------------------------------
-// TxOutRequest
-// ------------------------------------------------------------------------
-/**
- * @brief JSON-API (TxOutRequest) class
- */
-class TxOutRequest
-  : public cfd::core::JsonClassBase<TxOutRequest> {
- public:
-  TxOutRequest() {
-    CollectFieldName();
-  }
-  virtual ~TxOutRequest() {
-    // do nothing
-  }
-  /**
-   * @brief collect field name.
-   */
-  static void CollectFieldName();
-
-  /**
-   * @brief Get of amount
-   * @return amount
-   */
-  uint64_t GetAmount() const {
-    return amount_;
-  }
-  /**
-   * @brief Set to amount
-   * @param[in] amount    setting value.
-   */
-  void SetAmount(  // line separate
-    const uint64_t& amount) {  // NOLINT
-    this->amount_ = amount;
-  }
-  /**
-   * @brief Get data type of amount
-   * @return Data type of amount
-   */
-  static std::string GetAmountFieldType() {
-    return "uint64_t";
-  }
-  /**
-   * @brief Get json string of amount field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetAmountString(  // line separate
-      const TxOutRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.amount_);
-  }
-  /**
-   * @brief Set json object to amount field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetAmountString(  // line separate
-      TxOutRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.amount_, json_value);
-  }
-
-  /**
-   * @brief Get of address
-   * @return address
-   */
-  std::string GetAddress() const {
-    return address_;
-  }
-  /**
-   * @brief Set to address
-   * @param[in] address    setting value.
-   */
-  void SetAddress(  // line separate
-    const std::string& address) {  // NOLINT
-    this->address_ = address;
-  }
-  /**
-   * @brief Get data type of address
-   * @return Data type of address
-   */
-  static std::string GetAddressFieldType() {
-    return "std::string";
-  }
-  /**
-   * @brief Get json string of address field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetAddressString(  // line separate
-      const TxOutRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.address_);
-  }
-  /**
-   * @brief Set json object to address field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetAddressString(  // line separate
-      TxOutRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.address_, json_value);
-  }
-
-  /**
-   * @brief Set ignore item.
-   * @param[in] key   ignore target key name.
-   */
-  void SetIgnoreItem(const std::string& key) {
-    ignore_items.insert(key);
-  }
-
-  /**
-   * @brief Convert struct to class.
-   * @param[in] data   struct data.
-   */
-  void ConvertFromStruct(
-      const TxOutRequestStruct& data);
-
-  /**
-   * @brief Convert class to struct.
-   * @return  struct data.
-   */
-  TxOutRequestStruct ConvertToStruct()  const;
-
- protected:
-  /**
-   * @brief definition type of Map table.
-   */
-  using TxOutRequestMapTable =
-    cfd::core::JsonTableMap<TxOutRequest>;
-
-  /**
-   * @brief Get JSON mapping object.
-   * @return JSON mapping object.
-   * @see cfd::core::JsonClassBase::GetJsonMapper()
-   */
-  virtual const TxOutRequestMapTable& GetJsonMapper() const {  // NOLINT
-    return json_mapper;
-  }
-  /**
-   * @brief Get item lists of JSON mapping.
-   * Fetch a list of target variable names in the order of definition.
-   * @return Item lists of JSON mapping.
-   * @see cfd::core::JsonClassBase::GetJsonItemList()
-   */
-  virtual const std::vector<std::string>& GetJsonItemList() const {
-    return item_list;
-  }
-  /**
-   * @brief Get ignore item lists of JSON mapping.
-   * Ignore the target variable at Serialize.
-   * @return Item list of JSON mapping.
-   * @see cfd::core::JsonClassBase::GetIgnoreItem()
-   */
-  virtual const std::set<std::string>& GetIgnoreItem() const {
-    return ignore_items;
-  }
-
- private:
- /**
-  * @brief JsonFunctionMap table
-  */
-  static TxOutRequestMapTable json_mapper;
-  /**
-   * @brief field name list.
-   */
-  static std::vector<std::string> item_list;
-  /**
-   * @brief ignore item list.
-   */
-  std::set<std::string> ignore_items;
-
-  /**
-   * @brief JsonAPI(amount) value
-   */
-  uint64_t amount_ = 0;
-  /**
-   * @brief JsonAPI(address) value
-   */
-  std::string address_ = "";
+  uint32_t fund_vout_ = 0;
 };
 
 // ------------------------------------------------------------------------
@@ -5506,308 +5374,607 @@ class CreateFundTransactionRequest
   static void CollectFieldName();
 
   /**
-   * @brief Get of localPubkey
-   * @return localPubkey
+   * @brief Get of offerPubkey
+   * @return offerPubkey
    */
-  std::string GetLocalPubkey() const {
-    return local_pubkey_;
+  std::string GetOfferPubkey() const {
+    return offer_pubkey_;
   }
   /**
-   * @brief Set to localPubkey
-   * @param[in] local_pubkey    setting value.
+   * @brief Set to offerPubkey
+   * @param[in] offer_pubkey    setting value.
    */
-  void SetLocalPubkey(  // line separate
-    const std::string& local_pubkey) {  // NOLINT
-    this->local_pubkey_ = local_pubkey;
+  void SetOfferPubkey(  // line separate
+    const std::string& offer_pubkey) {  // NOLINT
+    this->offer_pubkey_ = offer_pubkey;
   }
   /**
-   * @brief Get data type of localPubkey
-   * @return Data type of localPubkey
+   * @brief Get data type of offerPubkey
+   * @return Data type of offerPubkey
    */
-  static std::string GetLocalPubkeyFieldType() {
+  static std::string GetOfferPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localPubkey field.
+   * @brief Get json string of offerPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalPubkeyString(  // line separate
+  static std::string GetOfferPubkeyString(  // line separate
       const CreateFundTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_pubkey_);
   }
   /**
-   * @brief Set json object to localPubkey field.
+   * @brief Set json object to offerPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalPubkeyString(  // line separate
+  static void SetOfferPubkeyString(  // line separate
       CreateFundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_pubkey_, json_value);
+      obj.offer_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remotePubkey
-   * @return remotePubkey
+   * @brief Get of acceptPubkey
+   * @return acceptPubkey
    */
-  std::string GetRemotePubkey() const {
-    return remote_pubkey_;
+  std::string GetAcceptPubkey() const {
+    return accept_pubkey_;
   }
   /**
-   * @brief Set to remotePubkey
-   * @param[in] remote_pubkey    setting value.
+   * @brief Set to acceptPubkey
+   * @param[in] accept_pubkey    setting value.
    */
-  void SetRemotePubkey(  // line separate
-    const std::string& remote_pubkey) {  // NOLINT
-    this->remote_pubkey_ = remote_pubkey;
+  void SetAcceptPubkey(  // line separate
+    const std::string& accept_pubkey) {  // NOLINT
+    this->accept_pubkey_ = accept_pubkey;
   }
   /**
-   * @brief Get data type of remotePubkey
-   * @return Data type of remotePubkey
+   * @brief Get data type of acceptPubkey
+   * @return Data type of acceptPubkey
    */
-  static std::string GetRemotePubkeyFieldType() {
+  static std::string GetAcceptPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remotePubkey field.
+   * @brief Get json string of acceptPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemotePubkeyString(  // line separate
+  static std::string GetAcceptPubkeyString(  // line separate
       const CreateFundTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_pubkey_);
   }
   /**
-   * @brief Set json object to remotePubkey field.
+   * @brief Set json object to acceptPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemotePubkeyString(  // line separate
+  static void SetAcceptPubkeyString(  // line separate
       CreateFundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_pubkey_, json_value);
+      obj.accept_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of outputAmount
-   * @return outputAmount
+   * @brief Get of offerCollateralAmount
+   * @return offerCollateralAmount
    */
-  uint64_t GetOutputAmount() const {
-    return output_amount_;
+  uint64_t GetOfferCollateralAmount() const {
+    return offer_collateral_amount_;
   }
   /**
-   * @brief Set to outputAmount
-   * @param[in] output_amount    setting value.
+   * @brief Set to offerCollateralAmount
+   * @param[in] offer_collateral_amount    setting value.
    */
-  void SetOutputAmount(  // line separate
-    const uint64_t& output_amount) {  // NOLINT
-    this->output_amount_ = output_amount;
+  void SetOfferCollateralAmount(  // line separate
+    const uint64_t& offer_collateral_amount) {  // NOLINT
+    this->offer_collateral_amount_ = offer_collateral_amount;
   }
   /**
-   * @brief Get data type of outputAmount
-   * @return Data type of outputAmount
+   * @brief Get data type of offerCollateralAmount
+   * @return Data type of offerCollateralAmount
    */
-  static std::string GetOutputAmountFieldType() {
+  static std::string GetOfferCollateralAmountFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of outputAmount field.
+   * @brief Get json string of offerCollateralAmount field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetOutputAmountString(  // line separate
+  static std::string GetOfferCollateralAmountString(  // line separate
       const CreateFundTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.output_amount_);
+    return cfd::core::ConvertToString(obj.offer_collateral_amount_);
   }
   /**
-   * @brief Set json object to outputAmount field.
+   * @brief Set json object to offerCollateralAmount field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetOutputAmountString(  // line separate
+  static void SetOfferCollateralAmountString(  // line separate
       CreateFundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.output_amount_, json_value);
+      obj.offer_collateral_amount_, json_value);
   }
 
   /**
-   * @brief Get of localInputs.
-   * @return localInputs
+   * @brief Get of acceptCollateralAmount
+   * @return acceptCollateralAmount
    */
-  JsonObjectVector<TxInRequest, TxInRequestStruct>& GetLocalInputs() {  // NOLINT
-    return local_inputs_;
+  uint64_t GetAcceptCollateralAmount() const {
+    return accept_collateral_amount_;
   }
   /**
-   * @brief Set to localInputs.
-   * @param[in] local_inputs    setting value.
+   * @brief Set to acceptCollateralAmount
+   * @param[in] accept_collateral_amount    setting value.
    */
-  void SetLocalInputs(  // line separate
-      const JsonObjectVector<TxInRequest, TxInRequestStruct>& local_inputs) {  // NOLINT
-    this->local_inputs_ = local_inputs;
+  void SetAcceptCollateralAmount(  // line separate
+    const uint64_t& accept_collateral_amount) {  // NOLINT
+    this->accept_collateral_amount_ = accept_collateral_amount;
   }
   /**
-   * @brief Get data type of localInputs.
-   * @return Data type of localInputs.
+   * @brief Get data type of acceptCollateralAmount
+   * @return Data type of acceptCollateralAmount
    */
-  static std::string GetLocalInputsFieldType() {
-    return "JsonObjectVector<TxInRequest, TxInRequestStruct>";  // NOLINT
+  static std::string GetAcceptCollateralAmountFieldType() {
+    return "uint64_t";
   }
   /**
-   * @brief Get json string of localInputs field.
-   * @param[in,out] obj     class object
-   * @return JSON string.
+   * @brief Get json string of acceptCollateralAmount field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
    */
-  static std::string GetLocalInputsString(  // line separate
+  static std::string GetAcceptCollateralAmountString(  // line separate
       const CreateFundTransactionRequest& obj) {  // NOLINT
-    // Do not set to const, because substitution of member variables
-    // may occur in pre / post processing inside Serialize
-    return obj.local_inputs_.Serialize();
+    return cfd::core::ConvertToString(obj.accept_collateral_amount_);
   }
   /**
-   * @brief Set json object to localInputs field.
-   * @param[in,out] obj     class object
-   * @param[in] json_value  JSON object
+   * @brief Set json object to acceptCollateralAmount field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
    */
-  static void SetLocalInputsString(  // line separate
+  static void SetAcceptCollateralAmountString(  // line separate
       CreateFundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    obj.local_inputs_.DeserializeUniValue(json_value);
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.accept_collateral_amount_, json_value);
   }
 
   /**
-   * @brief Get of localChange.
-   * @return localChange
+   * @brief Get of offerInputs.
+   * @return offerInputs
    */
-  TxOutRequest& GetLocalChange() {  // NOLINT
-    return local_change_;
+  JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>& GetOfferInputs() {  // NOLINT
+    return offer_inputs_;
   }
   /**
-   * @brief Set to localChange.
-   * @param[in] local_change    setting value.
+   * @brief Set to offerInputs.
+   * @param[in] offer_inputs    setting value.
    */
-  void SetLocalChange(  // line separate
-      const TxOutRequest& local_change) {  // NOLINT
-    this->local_change_ = local_change;
+  void SetOfferInputs(  // line separate
+      const JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>& offer_inputs) {  // NOLINT
+    this->offer_inputs_ = offer_inputs;
   }
   /**
-   * @brief Get data type of localChange.
-   * @return Data type of localChange.
+   * @brief Get data type of offerInputs.
+   * @return Data type of offerInputs.
    */
-  static std::string GetLocalChangeFieldType() {
-    return "TxOutRequest";  // NOLINT
+  static std::string GetOfferInputsFieldType() {
+    return "JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>";  // NOLINT
   }
   /**
-   * @brief Get json string of localChange field.
+   * @brief Get json string of offerInputs field.
    * @param[in,out] obj     class object
    * @return JSON string.
    */
-  static std::string GetLocalChangeString(  // line separate
+  static std::string GetOfferInputsString(  // line separate
       const CreateFundTransactionRequest& obj) {  // NOLINT
     // Do not set to const, because substitution of member variables
     // may occur in pre / post processing inside Serialize
-    return obj.local_change_.Serialize();
+    return obj.offer_inputs_.Serialize();
   }
   /**
-   * @brief Set json object to localChange field.
+   * @brief Set json object to offerInputs field.
    * @param[in,out] obj     class object
    * @param[in] json_value  JSON object
    */
-  static void SetLocalChangeString(  // line separate
+  static void SetOfferInputsString(  // line separate
       CreateFundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    obj.local_change_.DeserializeUniValue(json_value);
+    obj.offer_inputs_.DeserializeUniValue(json_value);
   }
 
   /**
-   * @brief Get of remoteInputs.
-   * @return remoteInputs
+   * @brief Get of acceptInputs.
+   * @return acceptInputs
    */
-  JsonObjectVector<TxInRequest, TxInRequestStruct>& GetRemoteInputs() {  // NOLINT
-    return remote_inputs_;
+  JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>& GetAcceptInputs() {  // NOLINT
+    return accept_inputs_;
   }
   /**
-   * @brief Set to remoteInputs.
-   * @param[in] remote_inputs    setting value.
+   * @brief Set to acceptInputs.
+   * @param[in] accept_inputs    setting value.
    */
-  void SetRemoteInputs(  // line separate
-      const JsonObjectVector<TxInRequest, TxInRequestStruct>& remote_inputs) {  // NOLINT
-    this->remote_inputs_ = remote_inputs;
+  void SetAcceptInputs(  // line separate
+      const JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>& accept_inputs) {  // NOLINT
+    this->accept_inputs_ = accept_inputs;
   }
   /**
-   * @brief Get data type of remoteInputs.
-   * @return Data type of remoteInputs.
+   * @brief Get data type of acceptInputs.
+   * @return Data type of acceptInputs.
    */
-  static std::string GetRemoteInputsFieldType() {
-    return "JsonObjectVector<TxInRequest, TxInRequestStruct>";  // NOLINT
+  static std::string GetAcceptInputsFieldType() {
+    return "JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct>";  // NOLINT
   }
   /**
-   * @brief Get json string of remoteInputs field.
+   * @brief Get json string of acceptInputs field.
    * @param[in,out] obj     class object
    * @return JSON string.
    */
-  static std::string GetRemoteInputsString(  // line separate
+  static std::string GetAcceptInputsString(  // line separate
       const CreateFundTransactionRequest& obj) {  // NOLINT
     // Do not set to const, because substitution of member variables
     // may occur in pre / post processing inside Serialize
-    return obj.remote_inputs_.Serialize();
+    return obj.accept_inputs_.Serialize();
   }
   /**
-   * @brief Set json object to remoteInputs field.
+   * @brief Set json object to acceptInputs field.
    * @param[in,out] obj     class object
    * @param[in] json_value  JSON object
    */
-  static void SetRemoteInputsString(  // line separate
+  static void SetAcceptInputsString(  // line separate
       CreateFundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    obj.remote_inputs_.DeserializeUniValue(json_value);
+    obj.accept_inputs_.DeserializeUniValue(json_value);
   }
 
   /**
-   * @brief Get of remoteChange.
-   * @return remoteChange
+   * @brief Get of offerChangeScriptPubkey
+   * @return offerChangeScriptPubkey
    */
-  TxOutRequest& GetRemoteChange() {  // NOLINT
-    return remote_change_;
+  std::string GetOfferChangeScriptPubkey() const {
+    return offer_change_script_pubkey_;
   }
   /**
-   * @brief Set to remoteChange.
-   * @param[in] remote_change    setting value.
+   * @brief Set to offerChangeScriptPubkey
+   * @param[in] offer_change_script_pubkey    setting value.
    */
-  void SetRemoteChange(  // line separate
-      const TxOutRequest& remote_change) {  // NOLINT
-    this->remote_change_ = remote_change;
+  void SetOfferChangeScriptPubkey(  // line separate
+    const std::string& offer_change_script_pubkey) {  // NOLINT
+    this->offer_change_script_pubkey_ = offer_change_script_pubkey;
   }
   /**
-   * @brief Get data type of remoteChange.
-   * @return Data type of remoteChange.
+   * @brief Get data type of offerChangeScriptPubkey
+   * @return Data type of offerChangeScriptPubkey
    */
-  static std::string GetRemoteChangeFieldType() {
-    return "TxOutRequest";  // NOLINT
+  static std::string GetOfferChangeScriptPubkeyFieldType() {
+    return "std::string";
   }
   /**
-   * @brief Get json string of remoteChange field.
-   * @param[in,out] obj     class object
-   * @return JSON string.
+   * @brief Get json string of offerChangeScriptPubkey field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
    */
-  static std::string GetRemoteChangeString(  // line separate
+  static std::string GetOfferChangeScriptPubkeyString(  // line separate
       const CreateFundTransactionRequest& obj) {  // NOLINT
-    // Do not set to const, because substitution of member variables
-    // may occur in pre / post processing inside Serialize
-    return obj.remote_change_.Serialize();
+    return cfd::core::ConvertToString(obj.offer_change_script_pubkey_);
   }
   /**
-   * @brief Set json object to remoteChange field.
-   * @param[in,out] obj     class object
-   * @param[in] json_value  JSON object
+   * @brief Set json object to offerChangeScriptPubkey field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
    */
-  static void SetRemoteChangeString(  // line separate
+  static void SetOfferChangeScriptPubkeyString(  // line separate
       CreateFundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    obj.remote_change_.DeserializeUniValue(json_value);
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.offer_change_script_pubkey_, json_value);
+  }
+
+  /**
+   * @brief Get of offerChangeSerialId
+   * @return offerChangeSerialId
+   */
+  uint64_t GetOfferChangeSerialId() const {
+    return offer_change_serial_id_;
+  }
+  /**
+   * @brief Set to offerChangeSerialId
+   * @param[in] offer_change_serial_id    setting value.
+   */
+  void SetOfferChangeSerialId(  // line separate
+    const uint64_t& offer_change_serial_id) {  // NOLINT
+    this->offer_change_serial_id_ = offer_change_serial_id;
+  }
+  /**
+   * @brief Get data type of offerChangeSerialId
+   * @return Data type of offerChangeSerialId
+   */
+  static std::string GetOfferChangeSerialIdFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of offerChangeSerialId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetOfferChangeSerialIdString(  // line separate
+      const CreateFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.offer_change_serial_id_);
+  }
+  /**
+   * @brief Set json object to offerChangeSerialId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetOfferChangeSerialIdString(  // line separate
+      CreateFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.offer_change_serial_id_, json_value);
+  }
+
+  /**
+   * @brief Get of acceptChangeScriptPubkey
+   * @return acceptChangeScriptPubkey
+   */
+  std::string GetAcceptChangeScriptPubkey() const {
+    return accept_change_script_pubkey_;
+  }
+  /**
+   * @brief Set to acceptChangeScriptPubkey
+   * @param[in] accept_change_script_pubkey    setting value.
+   */
+  void SetAcceptChangeScriptPubkey(  // line separate
+    const std::string& accept_change_script_pubkey) {  // NOLINT
+    this->accept_change_script_pubkey_ = accept_change_script_pubkey;
+  }
+  /**
+   * @brief Get data type of acceptChangeScriptPubkey
+   * @return Data type of acceptChangeScriptPubkey
+   */
+  static std::string GetAcceptChangeScriptPubkeyFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of acceptChangeScriptPubkey field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetAcceptChangeScriptPubkeyString(  // line separate
+      const CreateFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.accept_change_script_pubkey_);
+  }
+  /**
+   * @brief Set json object to acceptChangeScriptPubkey field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetAcceptChangeScriptPubkeyString(  // line separate
+      CreateFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.accept_change_script_pubkey_, json_value);
+  }
+
+  /**
+   * @brief Get of acceptChangeSerialId
+   * @return acceptChangeSerialId
+   */
+  uint64_t GetAcceptChangeSerialId() const {
+    return accept_change_serial_id_;
+  }
+  /**
+   * @brief Set to acceptChangeSerialId
+   * @param[in] accept_change_serial_id    setting value.
+   */
+  void SetAcceptChangeSerialId(  // line separate
+    const uint64_t& accept_change_serial_id) {  // NOLINT
+    this->accept_change_serial_id_ = accept_change_serial_id;
+  }
+  /**
+   * @brief Get data type of acceptChangeSerialId
+   * @return Data type of acceptChangeSerialId
+   */
+  static std::string GetAcceptChangeSerialIdFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of acceptChangeSerialId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetAcceptChangeSerialIdString(  // line separate
+      const CreateFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.accept_change_serial_id_);
+  }
+  /**
+   * @brief Set json object to acceptChangeSerialId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetAcceptChangeSerialIdString(  // line separate
+      CreateFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.accept_change_serial_id_, json_value);
+  }
+
+  /**
+   * @brief Get of offerPayoutScriptPubkey
+   * @return offerPayoutScriptPubkey
+   */
+  std::string GetOfferPayoutScriptPubkey() const {
+    return offer_payout_script_pubkey_;
+  }
+  /**
+   * @brief Set to offerPayoutScriptPubkey
+   * @param[in] offer_payout_script_pubkey    setting value.
+   */
+  void SetOfferPayoutScriptPubkey(  // line separate
+    const std::string& offer_payout_script_pubkey) {  // NOLINT
+    this->offer_payout_script_pubkey_ = offer_payout_script_pubkey;
+  }
+  /**
+   * @brief Get data type of offerPayoutScriptPubkey
+   * @return Data type of offerPayoutScriptPubkey
+   */
+  static std::string GetOfferPayoutScriptPubkeyFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of offerPayoutScriptPubkey field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetOfferPayoutScriptPubkeyString(  // line separate
+      const CreateFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.offer_payout_script_pubkey_);
+  }
+  /**
+   * @brief Set json object to offerPayoutScriptPubkey field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetOfferPayoutScriptPubkeyString(  // line separate
+      CreateFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.offer_payout_script_pubkey_, json_value);
+  }
+
+  /**
+   * @brief Get of offerPayoutSerialId
+   * @return offerPayoutSerialId
+   */
+  uint64_t GetOfferPayoutSerialId() const {
+    return offer_payout_serial_id_;
+  }
+  /**
+   * @brief Set to offerPayoutSerialId
+   * @param[in] offer_payout_serial_id    setting value.
+   */
+  void SetOfferPayoutSerialId(  // line separate
+    const uint64_t& offer_payout_serial_id) {  // NOLINT
+    this->offer_payout_serial_id_ = offer_payout_serial_id;
+  }
+  /**
+   * @brief Get data type of offerPayoutSerialId
+   * @return Data type of offerPayoutSerialId
+   */
+  static std::string GetOfferPayoutSerialIdFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of offerPayoutSerialId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetOfferPayoutSerialIdString(  // line separate
+      const CreateFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.offer_payout_serial_id_);
+  }
+  /**
+   * @brief Set json object to offerPayoutSerialId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetOfferPayoutSerialIdString(  // line separate
+      CreateFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.offer_payout_serial_id_, json_value);
+  }
+
+  /**
+   * @brief Get of acceptPayoutScriptPubkey
+   * @return acceptPayoutScriptPubkey
+   */
+  std::string GetAcceptPayoutScriptPubkey() const {
+    return accept_payout_script_pubkey_;
+  }
+  /**
+   * @brief Set to acceptPayoutScriptPubkey
+   * @param[in] accept_payout_script_pubkey    setting value.
+   */
+  void SetAcceptPayoutScriptPubkey(  // line separate
+    const std::string& accept_payout_script_pubkey) {  // NOLINT
+    this->accept_payout_script_pubkey_ = accept_payout_script_pubkey;
+  }
+  /**
+   * @brief Get data type of acceptPayoutScriptPubkey
+   * @return Data type of acceptPayoutScriptPubkey
+   */
+  static std::string GetAcceptPayoutScriptPubkeyFieldType() {
+    return "std::string";
+  }
+  /**
+   * @brief Get json string of acceptPayoutScriptPubkey field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetAcceptPayoutScriptPubkeyString(  // line separate
+      const CreateFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.accept_payout_script_pubkey_);
+  }
+  /**
+   * @brief Set json object to acceptPayoutScriptPubkey field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetAcceptPayoutScriptPubkeyString(  // line separate
+      CreateFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.accept_payout_script_pubkey_, json_value);
+  }
+
+  /**
+   * @brief Get of acceptPayoutSerialId
+   * @return acceptPayoutSerialId
+   */
+  uint64_t GetAcceptPayoutSerialId() const {
+    return accept_payout_serial_id_;
+  }
+  /**
+   * @brief Set to acceptPayoutSerialId
+   * @param[in] accept_payout_serial_id    setting value.
+   */
+  void SetAcceptPayoutSerialId(  // line separate
+    const uint64_t& accept_payout_serial_id) {  // NOLINT
+    this->accept_payout_serial_id_ = accept_payout_serial_id;
+  }
+  /**
+   * @brief Get data type of acceptPayoutSerialId
+   * @return Data type of acceptPayoutSerialId
+   */
+  static std::string GetAcceptPayoutSerialIdFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of acceptPayoutSerialId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetAcceptPayoutSerialIdString(  // line separate
+      const CreateFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.accept_payout_serial_id_);
+  }
+  /**
+   * @brief Set json object to acceptPayoutSerialId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetAcceptPayoutSerialIdString(  // line separate
+      CreateFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.accept_payout_serial_id_, json_value);
   }
 
   /**
@@ -5851,6 +6018,49 @@ class CreateFundTransactionRequest
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
       obj.fee_rate_, json_value);
+  }
+
+  /**
+   * @brief Get of fundOutputSerialId
+   * @return fundOutputSerialId
+   */
+  uint64_t GetFundOutputSerialId() const {
+    return fund_output_serial_id_;
+  }
+  /**
+   * @brief Set to fundOutputSerialId
+   * @param[in] fund_output_serial_id    setting value.
+   */
+  void SetFundOutputSerialId(  // line separate
+    const uint64_t& fund_output_serial_id) {  // NOLINT
+    this->fund_output_serial_id_ = fund_output_serial_id;
+  }
+  /**
+   * @brief Get data type of fundOutputSerialId
+   * @return Data type of fundOutputSerialId
+   */
+  static std::string GetFundOutputSerialIdFieldType() {
+    return "uint64_t";
+  }
+  /**
+   * @brief Get json string of fundOutputSerialId field.
+   * @param[in,out] obj     class object.
+   * @return JSON string
+   */
+  static std::string GetFundOutputSerialIdString(  // line separate
+      const CreateFundTransactionRequest& obj) {  // NOLINT
+    return cfd::core::ConvertToString(obj.fund_output_serial_id_);
+  }
+  /**
+   * @brief Set json object to fundOutputSerialId field.
+   * @param[in,out] obj     class object.
+   * @param[in] json_value  JSON object.
+   */
+  static void SetFundOutputSerialIdString(  // line separate
+      CreateFundTransactionRequest& obj,  // NOLINT
+      const UniValue& json_value) {
+    cfd::core::ConvertFromUniValue(  // line separate
+      obj.fund_output_serial_id_, json_value);
   }
 
   /**
@@ -6009,37 +6219,69 @@ class CreateFundTransactionRequest
   std::set<std::string> ignore_items;
 
   /**
-   * @brief JsonAPI(localPubkey) value
+   * @brief JsonAPI(offerPubkey) value
    */
-  std::string local_pubkey_ = "";
+  std::string offer_pubkey_ = "";
   /**
-   * @brief JsonAPI(remotePubkey) value
+   * @brief JsonAPI(acceptPubkey) value
    */
-  std::string remote_pubkey_ = "";
+  std::string accept_pubkey_ = "";
   /**
-   * @brief JsonAPI(outputAmount) value
+   * @brief JsonAPI(offerCollateralAmount) value
    */
-  uint64_t output_amount_ = 0;
+  uint64_t offer_collateral_amount_ = 0;
   /**
-   * @brief JsonAPI(localInputs) value
+   * @brief JsonAPI(acceptCollateralAmount) value
    */
-  JsonObjectVector<TxInRequest, TxInRequestStruct> local_inputs_;  // NOLINT
+  uint64_t accept_collateral_amount_ = 0;
   /**
-   * @brief JsonAPI(localChange) value
+   * @brief JsonAPI(offerInputs) value
    */
-  TxOutRequest local_change_;  // NOLINT
+  JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct> offer_inputs_;  // NOLINT
   /**
-   * @brief JsonAPI(remoteInputs) value
+   * @brief JsonAPI(acceptInputs) value
    */
-  JsonObjectVector<TxInRequest, TxInRequestStruct> remote_inputs_;  // NOLINT
+  JsonObjectVector<TxInInfoRequest, TxInInfoRequestStruct> accept_inputs_;  // NOLINT
   /**
-   * @brief JsonAPI(remoteChange) value
+   * @brief JsonAPI(offerChangeScriptPubkey) value
    */
-  TxOutRequest remote_change_;  // NOLINT
+  std::string offer_change_script_pubkey_ = "";
+  /**
+   * @brief JsonAPI(offerChangeSerialId) value
+   */
+  uint64_t offer_change_serial_id_ = 0;
+  /**
+   * @brief JsonAPI(acceptChangeScriptPubkey) value
+   */
+  std::string accept_change_script_pubkey_ = "";
+  /**
+   * @brief JsonAPI(acceptChangeSerialId) value
+   */
+  uint64_t accept_change_serial_id_ = 0;
+  /**
+   * @brief JsonAPI(offerPayoutScriptPubkey) value
+   */
+  std::string offer_payout_script_pubkey_ = "";
+  /**
+   * @brief JsonAPI(offerPayoutSerialId) value
+   */
+  uint64_t offer_payout_serial_id_ = 0;
+  /**
+   * @brief JsonAPI(acceptPayoutScriptPubkey) value
+   */
+  std::string accept_payout_script_pubkey_ = "";
+  /**
+   * @brief JsonAPI(acceptPayoutSerialId) value
+   */
+  uint64_t accept_payout_serial_id_ = 0;
   /**
    * @brief JsonAPI(feeRate) value
    */
   int64_t fee_rate_ = 1;
+  /**
+   * @brief JsonAPI(fundOutputSerialId) value
+   */
+  uint64_t fund_output_serial_id_ = 0;
   /**
    * @brief JsonAPI(optionDest) value
    */
@@ -6209,175 +6451,175 @@ class CreateRefundTransactionRequest
   static void CollectFieldName();
 
   /**
-   * @brief Get of localFinalScriptPubkey
-   * @return localFinalScriptPubkey
+   * @brief Get of offerFinalScriptPubkey
+   * @return offerFinalScriptPubkey
    */
-  std::string GetLocalFinalScriptPubkey() const {
-    return local_final_script_pubkey_;
+  std::string GetOfferFinalScriptPubkey() const {
+    return offer_final_script_pubkey_;
   }
   /**
-   * @brief Set to localFinalScriptPubkey
-   * @param[in] local_final_script_pubkey    setting value.
+   * @brief Set to offerFinalScriptPubkey
+   * @param[in] offer_final_script_pubkey    setting value.
    */
-  void SetLocalFinalScriptPubkey(  // line separate
-    const std::string& local_final_script_pubkey) {  // NOLINT
-    this->local_final_script_pubkey_ = local_final_script_pubkey;
+  void SetOfferFinalScriptPubkey(  // line separate
+    const std::string& offer_final_script_pubkey) {  // NOLINT
+    this->offer_final_script_pubkey_ = offer_final_script_pubkey;
   }
   /**
-   * @brief Get data type of localFinalScriptPubkey
-   * @return Data type of localFinalScriptPubkey
+   * @brief Get data type of offerFinalScriptPubkey
+   * @return Data type of offerFinalScriptPubkey
    */
-  static std::string GetLocalFinalScriptPubkeyFieldType() {
+  static std::string GetOfferFinalScriptPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localFinalScriptPubkey field.
+   * @brief Get json string of offerFinalScriptPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalFinalScriptPubkeyString(  // line separate
+  static std::string GetOfferFinalScriptPubkeyString(  // line separate
       const CreateRefundTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_final_script_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_final_script_pubkey_);
   }
   /**
-   * @brief Set json object to localFinalScriptPubkey field.
+   * @brief Set json object to offerFinalScriptPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalFinalScriptPubkeyString(  // line separate
+  static void SetOfferFinalScriptPubkeyString(  // line separate
       CreateRefundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_final_script_pubkey_, json_value);
+      obj.offer_final_script_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remoteFinalScriptPubkey
-   * @return remoteFinalScriptPubkey
+   * @brief Get of acceptFinalScriptPubkey
+   * @return acceptFinalScriptPubkey
    */
-  std::string GetRemoteFinalScriptPubkey() const {
-    return remote_final_script_pubkey_;
+  std::string GetAcceptFinalScriptPubkey() const {
+    return accept_final_script_pubkey_;
   }
   /**
-   * @brief Set to remoteFinalScriptPubkey
-   * @param[in] remote_final_script_pubkey    setting value.
+   * @brief Set to acceptFinalScriptPubkey
+   * @param[in] accept_final_script_pubkey    setting value.
    */
-  void SetRemoteFinalScriptPubkey(  // line separate
-    const std::string& remote_final_script_pubkey) {  // NOLINT
-    this->remote_final_script_pubkey_ = remote_final_script_pubkey;
+  void SetAcceptFinalScriptPubkey(  // line separate
+    const std::string& accept_final_script_pubkey) {  // NOLINT
+    this->accept_final_script_pubkey_ = accept_final_script_pubkey;
   }
   /**
-   * @brief Get data type of remoteFinalScriptPubkey
-   * @return Data type of remoteFinalScriptPubkey
+   * @brief Get data type of acceptFinalScriptPubkey
+   * @return Data type of acceptFinalScriptPubkey
    */
-  static std::string GetRemoteFinalScriptPubkeyFieldType() {
+  static std::string GetAcceptFinalScriptPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteFinalScriptPubkey field.
+   * @brief Get json string of acceptFinalScriptPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteFinalScriptPubkeyString(  // line separate
+  static std::string GetAcceptFinalScriptPubkeyString(  // line separate
       const CreateRefundTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_final_script_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_final_script_pubkey_);
   }
   /**
-   * @brief Set json object to remoteFinalScriptPubkey field.
+   * @brief Set json object to acceptFinalScriptPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteFinalScriptPubkeyString(  // line separate
+  static void SetAcceptFinalScriptPubkeyString(  // line separate
       CreateRefundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_final_script_pubkey_, json_value);
+      obj.accept_final_script_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of localAmount
-   * @return localAmount
+   * @brief Get of offerAmount
+   * @return offerAmount
    */
-  uint64_t GetLocalAmount() const {
-    return local_amount_;
+  uint64_t GetOfferAmount() const {
+    return offer_amount_;
   }
   /**
-   * @brief Set to localAmount
-   * @param[in] local_amount    setting value.
+   * @brief Set to offerAmount
+   * @param[in] offer_amount    setting value.
    */
-  void SetLocalAmount(  // line separate
-    const uint64_t& local_amount) {  // NOLINT
-    this->local_amount_ = local_amount;
+  void SetOfferAmount(  // line separate
+    const uint64_t& offer_amount) {  // NOLINT
+    this->offer_amount_ = offer_amount;
   }
   /**
-   * @brief Get data type of localAmount
-   * @return Data type of localAmount
+   * @brief Get data type of offerAmount
+   * @return Data type of offerAmount
    */
-  static std::string GetLocalAmountFieldType() {
+  static std::string GetOfferAmountFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of localAmount field.
+   * @brief Get json string of offerAmount field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalAmountString(  // line separate
+  static std::string GetOfferAmountString(  // line separate
       const CreateRefundTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_amount_);
+    return cfd::core::ConvertToString(obj.offer_amount_);
   }
   /**
-   * @brief Set json object to localAmount field.
+   * @brief Set json object to offerAmount field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalAmountString(  // line separate
+  static void SetOfferAmountString(  // line separate
       CreateRefundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_amount_, json_value);
+      obj.offer_amount_, json_value);
   }
 
   /**
-   * @brief Get of remoteAmount
-   * @return remoteAmount
+   * @brief Get of acceptAmount
+   * @return acceptAmount
    */
-  uint64_t GetRemoteAmount() const {
-    return remote_amount_;
+  uint64_t GetAcceptAmount() const {
+    return accept_amount_;
   }
   /**
-   * @brief Set to remoteAmount
-   * @param[in] remote_amount    setting value.
+   * @brief Set to acceptAmount
+   * @param[in] accept_amount    setting value.
    */
-  void SetRemoteAmount(  // line separate
-    const uint64_t& remote_amount) {  // NOLINT
-    this->remote_amount_ = remote_amount;
+  void SetAcceptAmount(  // line separate
+    const uint64_t& accept_amount) {  // NOLINT
+    this->accept_amount_ = accept_amount;
   }
   /**
-   * @brief Get data type of remoteAmount
-   * @return Data type of remoteAmount
+   * @brief Get data type of acceptAmount
+   * @return Data type of acceptAmount
    */
-  static std::string GetRemoteAmountFieldType() {
+  static std::string GetAcceptAmountFieldType() {
     return "uint64_t";
   }
   /**
-   * @brief Get json string of remoteAmount field.
+   * @brief Get json string of acceptAmount field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteAmountString(  // line separate
+  static std::string GetAcceptAmountString(  // line separate
       const CreateRefundTransactionRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_amount_);
+    return cfd::core::ConvertToString(obj.accept_amount_);
   }
   /**
-   * @brief Set json object to remoteAmount field.
+   * @brief Set json object to acceptAmount field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteAmountString(  // line separate
+  static void SetAcceptAmountString(  // line separate
       CreateRefundTransactionRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_amount_, json_value);
+      obj.accept_amount_, json_value);
   }
 
   /**
@@ -6579,21 +6821,21 @@ class CreateRefundTransactionRequest
   std::set<std::string> ignore_items;
 
   /**
-   * @brief JsonAPI(localFinalScriptPubkey) value
+   * @brief JsonAPI(offerFinalScriptPubkey) value
    */
-  std::string local_final_script_pubkey_ = "";
+  std::string offer_final_script_pubkey_ = "";
   /**
-   * @brief JsonAPI(remoteFinalScriptPubkey) value
+   * @brief JsonAPI(acceptFinalScriptPubkey) value
    */
-  std::string remote_final_script_pubkey_ = "";
+  std::string accept_final_script_pubkey_ = "";
   /**
-   * @brief JsonAPI(localAmount) value
+   * @brief JsonAPI(offerAmount) value
    */
-  uint64_t local_amount_ = 0;
+  uint64_t offer_amount_ = 0;
   /**
-   * @brief JsonAPI(remoteAmount) value
+   * @brief JsonAPI(acceptAmount) value
    */
-  uint64_t remote_amount_ = 0;
+  uint64_t accept_amount_ = 0;
   /**
    * @brief JsonAPI(lockTime) value
    */
@@ -7763,89 +8005,89 @@ class GetRawRefundTxSignatureRequest
   }
 
   /**
-   * @brief Get of localFundPubkey
-   * @return localFundPubkey
+   * @brief Get of offerFundPubkey
+   * @return offerFundPubkey
    */
-  std::string GetLocalFundPubkey() const {
-    return local_fund_pubkey_;
+  std::string GetOfferFundPubkey() const {
+    return offer_fund_pubkey_;
   }
   /**
-   * @brief Set to localFundPubkey
-   * @param[in] local_fund_pubkey    setting value.
+   * @brief Set to offerFundPubkey
+   * @param[in] offer_fund_pubkey    setting value.
    */
-  void SetLocalFundPubkey(  // line separate
-    const std::string& local_fund_pubkey) {  // NOLINT
-    this->local_fund_pubkey_ = local_fund_pubkey;
+  void SetOfferFundPubkey(  // line separate
+    const std::string& offer_fund_pubkey) {  // NOLINT
+    this->offer_fund_pubkey_ = offer_fund_pubkey;
   }
   /**
-   * @brief Get data type of localFundPubkey
-   * @return Data type of localFundPubkey
+   * @brief Get data type of offerFundPubkey
+   * @return Data type of offerFundPubkey
    */
-  static std::string GetLocalFundPubkeyFieldType() {
+  static std::string GetOfferFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localFundPubkey field.
+   * @brief Get json string of offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalFundPubkeyString(  // line separate
+  static std::string GetOfferFundPubkeyString(  // line separate
       const GetRawRefundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_fund_pubkey_);
   }
   /**
-   * @brief Set json object to localFundPubkey field.
+   * @brief Set json object to offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalFundPubkeyString(  // line separate
+  static void SetOfferFundPubkeyString(  // line separate
       GetRawRefundTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_fund_pubkey_, json_value);
+      obj.offer_fund_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remoteFundPubkey
-   * @return remoteFundPubkey
+   * @brief Get of acceptFundPubkey
+   * @return acceptFundPubkey
    */
-  std::string GetRemoteFundPubkey() const {
-    return remote_fund_pubkey_;
+  std::string GetAcceptFundPubkey() const {
+    return accept_fund_pubkey_;
   }
   /**
-   * @brief Set to remoteFundPubkey
-   * @param[in] remote_fund_pubkey    setting value.
+   * @brief Set to acceptFundPubkey
+   * @param[in] accept_fund_pubkey    setting value.
    */
-  void SetRemoteFundPubkey(  // line separate
-    const std::string& remote_fund_pubkey) {  // NOLINT
-    this->remote_fund_pubkey_ = remote_fund_pubkey;
+  void SetAcceptFundPubkey(  // line separate
+    const std::string& accept_fund_pubkey) {  // NOLINT
+    this->accept_fund_pubkey_ = accept_fund_pubkey;
   }
   /**
-   * @brief Get data type of remoteFundPubkey
-   * @return Data type of remoteFundPubkey
+   * @brief Get data type of acceptFundPubkey
+   * @return Data type of acceptFundPubkey
    */
-  static std::string GetRemoteFundPubkeyFieldType() {
+  static std::string GetAcceptFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteFundPubkey field.
+   * @brief Get json string of acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteFundPubkeyString(  // line separate
+  static std::string GetAcceptFundPubkeyString(  // line separate
       const GetRawRefundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_fund_pubkey_);
   }
   /**
-   * @brief Set json object to remoteFundPubkey field.
+   * @brief Set json object to acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteFundPubkeyString(  // line separate
+  static void SetAcceptFundPubkeyString(  // line separate
       GetRawRefundTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_fund_pubkey_, json_value);
+      obj.accept_fund_pubkey_, json_value);
   }
 
   /**
@@ -7977,13 +8219,13 @@ class GetRawRefundTxSignatureRequest
    */
   uint32_t fund_vout_ = 0;
   /**
-   * @brief JsonAPI(localFundPubkey) value
+   * @brief JsonAPI(offerFundPubkey) value
    */
-  std::string local_fund_pubkey_ = "";
+  std::string offer_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(remoteFundPubkey) value
+   * @brief JsonAPI(acceptFundPubkey) value
    */
-  std::string remote_fund_pubkey_ = "";
+  std::string accept_fund_pubkey_ = "";
   /**
    * @brief JsonAPI(fundInputAmount) value
    */
@@ -8321,89 +8563,89 @@ class SignCetRequest
   }
 
   /**
-   * @brief Get of localFundPubkey
-   * @return localFundPubkey
+   * @brief Get of offerFundPubkey
+   * @return offerFundPubkey
    */
-  std::string GetLocalFundPubkey() const {
-    return local_fund_pubkey_;
+  std::string GetOfferFundPubkey() const {
+    return offer_fund_pubkey_;
   }
   /**
-   * @brief Set to localFundPubkey
-   * @param[in] local_fund_pubkey    setting value.
+   * @brief Set to offerFundPubkey
+   * @param[in] offer_fund_pubkey    setting value.
    */
-  void SetLocalFundPubkey(  // line separate
-    const std::string& local_fund_pubkey) {  // NOLINT
-    this->local_fund_pubkey_ = local_fund_pubkey;
+  void SetOfferFundPubkey(  // line separate
+    const std::string& offer_fund_pubkey) {  // NOLINT
+    this->offer_fund_pubkey_ = offer_fund_pubkey;
   }
   /**
-   * @brief Get data type of localFundPubkey
-   * @return Data type of localFundPubkey
+   * @brief Get data type of offerFundPubkey
+   * @return Data type of offerFundPubkey
    */
-  static std::string GetLocalFundPubkeyFieldType() {
+  static std::string GetOfferFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localFundPubkey field.
+   * @brief Get json string of offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalFundPubkeyString(  // line separate
+  static std::string GetOfferFundPubkeyString(  // line separate
       const SignCetRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_fund_pubkey_);
   }
   /**
-   * @brief Set json object to localFundPubkey field.
+   * @brief Set json object to offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalFundPubkeyString(  // line separate
+  static void SetOfferFundPubkeyString(  // line separate
       SignCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_fund_pubkey_, json_value);
+      obj.offer_fund_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remoteFundPubkey
-   * @return remoteFundPubkey
+   * @brief Get of acceptFundPubkey
+   * @return acceptFundPubkey
    */
-  std::string GetRemoteFundPubkey() const {
-    return remote_fund_pubkey_;
+  std::string GetAcceptFundPubkey() const {
+    return accept_fund_pubkey_;
   }
   /**
-   * @brief Set to remoteFundPubkey
-   * @param[in] remote_fund_pubkey    setting value.
+   * @brief Set to acceptFundPubkey
+   * @param[in] accept_fund_pubkey    setting value.
    */
-  void SetRemoteFundPubkey(  // line separate
-    const std::string& remote_fund_pubkey) {  // NOLINT
-    this->remote_fund_pubkey_ = remote_fund_pubkey;
+  void SetAcceptFundPubkey(  // line separate
+    const std::string& accept_fund_pubkey) {  // NOLINT
+    this->accept_fund_pubkey_ = accept_fund_pubkey;
   }
   /**
-   * @brief Get data type of remoteFundPubkey
-   * @return Data type of remoteFundPubkey
+   * @brief Get data type of acceptFundPubkey
+   * @return Data type of acceptFundPubkey
    */
-  static std::string GetRemoteFundPubkeyFieldType() {
+  static std::string GetAcceptFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteFundPubkey field.
+   * @brief Get json string of acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteFundPubkeyString(  // line separate
+  static std::string GetAcceptFundPubkeyString(  // line separate
       const SignCetRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_fund_pubkey_);
   }
   /**
-   * @brief Set json object to remoteFundPubkey field.
+   * @brief Set json object to acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteFundPubkeyString(  // line separate
+  static void SetAcceptFundPubkeyString(  // line separate
       SignCetRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_fund_pubkey_, json_value);
+      obj.accept_fund_pubkey_, json_value);
   }
 
   /**
@@ -8622,13 +8864,13 @@ class SignCetRequest
    */
   uint32_t fund_vout_ = 0;
   /**
-   * @brief JsonAPI(localFundPubkey) value
+   * @brief JsonAPI(offerFundPubkey) value
    */
-  std::string local_fund_pubkey_ = "";
+  std::string offer_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(remoteFundPubkey) value
+   * @brief JsonAPI(acceptFundPubkey) value
    */
-  std::string remote_fund_pubkey_ = "";
+  std::string accept_fund_pubkey_ = "";
   /**
    * @brief JsonAPI(fundInputAmount) value
    */
@@ -9352,49 +9594,6 @@ class VerifyCetAdaptorSignatureRequest
   }
 
   /**
-   * @brief Get of adaptorProof
-   * @return adaptorProof
-   */
-  std::string GetAdaptorProof() const {
-    return adaptor_proof_;
-  }
-  /**
-   * @brief Set to adaptorProof
-   * @param[in] adaptor_proof    setting value.
-   */
-  void SetAdaptorProof(  // line separate
-    const std::string& adaptor_proof) {  // NOLINT
-    this->adaptor_proof_ = adaptor_proof;
-  }
-  /**
-   * @brief Get data type of adaptorProof
-   * @return Data type of adaptorProof
-   */
-  static std::string GetAdaptorProofFieldType() {
-    return "std::string";
-  }
-  /**
-   * @brief Get json string of adaptorProof field.
-   * @param[in,out] obj     class object.
-   * @return JSON string
-   */
-  static std::string GetAdaptorProofString(  // line separate
-      const VerifyCetAdaptorSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.adaptor_proof_);
-  }
-  /**
-   * @brief Set json object to adaptorProof field.
-   * @param[in,out] obj     class object.
-   * @param[in] json_value  JSON object.
-   */
-  static void SetAdaptorProofString(  // line separate
-      VerifyCetAdaptorSignatureRequest& obj,  // NOLINT
-      const UniValue& json_value) {
-    cfd::core::ConvertFromUniValue(  // line separate
-      obj.adaptor_proof_, json_value);
-  }
-
-  /**
    * @brief Get of messages.
    * @return messages
    */
@@ -9439,89 +9638,89 @@ class VerifyCetAdaptorSignatureRequest
   }
 
   /**
-   * @brief Get of localFundPubkey
-   * @return localFundPubkey
+   * @brief Get of offerFundPubkey
+   * @return offerFundPubkey
    */
-  std::string GetLocalFundPubkey() const {
-    return local_fund_pubkey_;
+  std::string GetOfferFundPubkey() const {
+    return offer_fund_pubkey_;
   }
   /**
-   * @brief Set to localFundPubkey
-   * @param[in] local_fund_pubkey    setting value.
+   * @brief Set to offerFundPubkey
+   * @param[in] offer_fund_pubkey    setting value.
    */
-  void SetLocalFundPubkey(  // line separate
-    const std::string& local_fund_pubkey) {  // NOLINT
-    this->local_fund_pubkey_ = local_fund_pubkey;
+  void SetOfferFundPubkey(  // line separate
+    const std::string& offer_fund_pubkey) {  // NOLINT
+    this->offer_fund_pubkey_ = offer_fund_pubkey;
   }
   /**
-   * @brief Get data type of localFundPubkey
-   * @return Data type of localFundPubkey
+   * @brief Get data type of offerFundPubkey
+   * @return Data type of offerFundPubkey
    */
-  static std::string GetLocalFundPubkeyFieldType() {
+  static std::string GetOfferFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localFundPubkey field.
+   * @brief Get json string of offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalFundPubkeyString(  // line separate
+  static std::string GetOfferFundPubkeyString(  // line separate
       const VerifyCetAdaptorSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_fund_pubkey_);
   }
   /**
-   * @brief Set json object to localFundPubkey field.
+   * @brief Set json object to offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalFundPubkeyString(  // line separate
+  static void SetOfferFundPubkeyString(  // line separate
       VerifyCetAdaptorSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_fund_pubkey_, json_value);
+      obj.offer_fund_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remoteFundPubkey
-   * @return remoteFundPubkey
+   * @brief Get of acceptFundPubkey
+   * @return acceptFundPubkey
    */
-  std::string GetRemoteFundPubkey() const {
-    return remote_fund_pubkey_;
+  std::string GetAcceptFundPubkey() const {
+    return accept_fund_pubkey_;
   }
   /**
-   * @brief Set to remoteFundPubkey
-   * @param[in] remote_fund_pubkey    setting value.
+   * @brief Set to acceptFundPubkey
+   * @param[in] accept_fund_pubkey    setting value.
    */
-  void SetRemoteFundPubkey(  // line separate
-    const std::string& remote_fund_pubkey) {  // NOLINT
-    this->remote_fund_pubkey_ = remote_fund_pubkey;
+  void SetAcceptFundPubkey(  // line separate
+    const std::string& accept_fund_pubkey) {  // NOLINT
+    this->accept_fund_pubkey_ = accept_fund_pubkey;
   }
   /**
-   * @brief Get data type of remoteFundPubkey
-   * @return Data type of remoteFundPubkey
+   * @brief Get data type of acceptFundPubkey
+   * @return Data type of acceptFundPubkey
    */
-  static std::string GetRemoteFundPubkeyFieldType() {
+  static std::string GetAcceptFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteFundPubkey field.
+   * @brief Get json string of acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteFundPubkeyString(  // line separate
+  static std::string GetAcceptFundPubkeyString(  // line separate
       const VerifyCetAdaptorSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_fund_pubkey_);
   }
   /**
-   * @brief Set json object to remoteFundPubkey field.
+   * @brief Set json object to acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteFundPubkeyString(  // line separate
+  static void SetAcceptFundPubkeyString(  // line separate
       VerifyCetAdaptorSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_fund_pubkey_, json_value);
+      obj.accept_fund_pubkey_, json_value);
   }
 
   /**
@@ -9741,46 +9940,46 @@ class VerifyCetAdaptorSignatureRequest
   }
 
   /**
-   * @brief Get of verifyRemote
-   * @return verifyRemote
+   * @brief Get of verifyAccept
+   * @return verifyAccept
    */
-  bool GetVerifyRemote() const {
-    return verify_remote_;
+  bool GetVerifyAccept() const {
+    return verify_accept_;
   }
   /**
-   * @brief Set to verifyRemote
-   * @param[in] verify_remote    setting value.
+   * @brief Set to verifyAccept
+   * @param[in] verify_accept    setting value.
    */
-  void SetVerifyRemote(  // line separate
-    const bool& verify_remote) {  // NOLINT
-    this->verify_remote_ = verify_remote;
+  void SetVerifyAccept(  // line separate
+    const bool& verify_accept) {  // NOLINT
+    this->verify_accept_ = verify_accept;
   }
   /**
-   * @brief Get data type of verifyRemote
-   * @return Data type of verifyRemote
+   * @brief Get data type of verifyAccept
+   * @return Data type of verifyAccept
    */
-  static std::string GetVerifyRemoteFieldType() {
+  static std::string GetVerifyAcceptFieldType() {
     return "bool";
   }
   /**
-   * @brief Get json string of verifyRemote field.
+   * @brief Get json string of verifyAccept field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetVerifyRemoteString(  // line separate
+  static std::string GetVerifyAcceptString(  // line separate
       const VerifyCetAdaptorSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.verify_remote_);
+    return cfd::core::ConvertToString(obj.verify_accept_);
   }
   /**
-   * @brief Set json object to verifyRemote field.
+   * @brief Set json object to verifyAccept field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetVerifyRemoteString(  // line separate
+  static void SetVerifyAcceptString(  // line separate
       VerifyCetAdaptorSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.verify_remote_, json_value);
+      obj.verify_accept_, json_value);
   }
 
   /**
@@ -9861,21 +10060,17 @@ class VerifyCetAdaptorSignatureRequest
    */
   std::string adaptor_signature_ = "";
   /**
-   * @brief JsonAPI(adaptorProof) value
-   */
-  std::string adaptor_proof_ = "";
-  /**
    * @brief JsonAPI(messages) value
    */
   JsonValueVector<std::string> messages_;  // NOLINT
   /**
-   * @brief JsonAPI(localFundPubkey) value
+   * @brief JsonAPI(offerFundPubkey) value
    */
-  std::string local_fund_pubkey_ = "";
+  std::string offer_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(remoteFundPubkey) value
+   * @brief JsonAPI(acceptFundPubkey) value
    */
-  std::string remote_fund_pubkey_ = "";
+  std::string accept_fund_pubkey_ = "";
   /**
    * @brief JsonAPI(oraclePubkey) value
    */
@@ -9897,9 +10092,9 @@ class VerifyCetAdaptorSignatureRequest
    */
   uint64_t fund_input_amount_ = 0;
   /**
-   * @brief JsonAPI(verifyRemote) value
+   * @brief JsonAPI(verifyAccept) value
    */
-  bool verify_remote_ = true;
+  bool verify_accept_ = true;
 };
 
 // ------------------------------------------------------------------------
@@ -10105,47 +10300,47 @@ class VerifyCetAdaptorSignaturesRequest
   }
 
   /**
-   * @brief Get of adaptorPairs.
-   * @return adaptorPairs
+   * @brief Get of adaptorSignatures.
+   * @return adaptorSignatures
    */
-  JsonObjectVector<AdaptorPair, AdaptorPairStruct>& GetAdaptorPairs() {  // NOLINT
-    return adaptor_pairs_;
+  JsonValueVector<std::string>& GetAdaptorSignatures() {  // NOLINT
+    return adaptor_signatures_;
   }
   /**
-   * @brief Set to adaptorPairs.
-   * @param[in] adaptor_pairs    setting value.
+   * @brief Set to adaptorSignatures.
+   * @param[in] adaptor_signatures    setting value.
    */
-  void SetAdaptorPairs(  // line separate
-      const JsonObjectVector<AdaptorPair, AdaptorPairStruct>& adaptor_pairs) {  // NOLINT
-    this->adaptor_pairs_ = adaptor_pairs;
+  void SetAdaptorSignatures(  // line separate
+      const JsonValueVector<std::string>& adaptor_signatures) {  // NOLINT
+    this->adaptor_signatures_ = adaptor_signatures;
   }
   /**
-   * @brief Get data type of adaptorPairs.
-   * @return Data type of adaptorPairs.
+   * @brief Get data type of adaptorSignatures.
+   * @return Data type of adaptorSignatures.
    */
-  static std::string GetAdaptorPairsFieldType() {
-    return "JsonObjectVector<AdaptorPair, AdaptorPairStruct>";  // NOLINT
+  static std::string GetAdaptorSignaturesFieldType() {
+    return "JsonValueVector<std::string>";  // NOLINT
   }
   /**
-   * @brief Get json string of adaptorPairs field.
+   * @brief Get json string of adaptorSignatures field.
    * @param[in,out] obj     class object
    * @return JSON string.
    */
-  static std::string GetAdaptorPairsString(  // line separate
+  static std::string GetAdaptorSignaturesString(  // line separate
       const VerifyCetAdaptorSignaturesRequest& obj) {  // NOLINT
     // Do not set to const, because substitution of member variables
     // may occur in pre / post processing inside Serialize
-    return obj.adaptor_pairs_.Serialize();
+    return obj.adaptor_signatures_.Serialize();
   }
   /**
-   * @brief Set json object to adaptorPairs field.
+   * @brief Set json object to adaptorSignatures field.
    * @param[in,out] obj     class object
    * @param[in] json_value  JSON object
    */
-  static void SetAdaptorPairsString(  // line separate
+  static void SetAdaptorSignaturesString(  // line separate
       VerifyCetAdaptorSignaturesRequest& obj,  // NOLINT
       const UniValue& json_value) {
-    obj.adaptor_pairs_.DeserializeUniValue(json_value);
+    obj.adaptor_signatures_.DeserializeUniValue(json_value);
   }
 
   /**
@@ -10193,89 +10388,89 @@ class VerifyCetAdaptorSignaturesRequest
   }
 
   /**
-   * @brief Get of localFundPubkey
-   * @return localFundPubkey
+   * @brief Get of offerFundPubkey
+   * @return offerFundPubkey
    */
-  std::string GetLocalFundPubkey() const {
-    return local_fund_pubkey_;
+  std::string GetOfferFundPubkey() const {
+    return offer_fund_pubkey_;
   }
   /**
-   * @brief Set to localFundPubkey
-   * @param[in] local_fund_pubkey    setting value.
+   * @brief Set to offerFundPubkey
+   * @param[in] offer_fund_pubkey    setting value.
    */
-  void SetLocalFundPubkey(  // line separate
-    const std::string& local_fund_pubkey) {  // NOLINT
-    this->local_fund_pubkey_ = local_fund_pubkey;
+  void SetOfferFundPubkey(  // line separate
+    const std::string& offer_fund_pubkey) {  // NOLINT
+    this->offer_fund_pubkey_ = offer_fund_pubkey;
   }
   /**
-   * @brief Get data type of localFundPubkey
-   * @return Data type of localFundPubkey
+   * @brief Get data type of offerFundPubkey
+   * @return Data type of offerFundPubkey
    */
-  static std::string GetLocalFundPubkeyFieldType() {
+  static std::string GetOfferFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localFundPubkey field.
+   * @brief Get json string of offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalFundPubkeyString(  // line separate
+  static std::string GetOfferFundPubkeyString(  // line separate
       const VerifyCetAdaptorSignaturesRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_fund_pubkey_);
   }
   /**
-   * @brief Set json object to localFundPubkey field.
+   * @brief Set json object to offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalFundPubkeyString(  // line separate
+  static void SetOfferFundPubkeyString(  // line separate
       VerifyCetAdaptorSignaturesRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_fund_pubkey_, json_value);
+      obj.offer_fund_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remoteFundPubkey
-   * @return remoteFundPubkey
+   * @brief Get of acceptFundPubkey
+   * @return acceptFundPubkey
    */
-  std::string GetRemoteFundPubkey() const {
-    return remote_fund_pubkey_;
+  std::string GetAcceptFundPubkey() const {
+    return accept_fund_pubkey_;
   }
   /**
-   * @brief Set to remoteFundPubkey
-   * @param[in] remote_fund_pubkey    setting value.
+   * @brief Set to acceptFundPubkey
+   * @param[in] accept_fund_pubkey    setting value.
    */
-  void SetRemoteFundPubkey(  // line separate
-    const std::string& remote_fund_pubkey) {  // NOLINT
-    this->remote_fund_pubkey_ = remote_fund_pubkey;
+  void SetAcceptFundPubkey(  // line separate
+    const std::string& accept_fund_pubkey) {  // NOLINT
+    this->accept_fund_pubkey_ = accept_fund_pubkey;
   }
   /**
-   * @brief Get data type of remoteFundPubkey
-   * @return Data type of remoteFundPubkey
+   * @brief Get data type of acceptFundPubkey
+   * @return Data type of acceptFundPubkey
    */
-  static std::string GetRemoteFundPubkeyFieldType() {
+  static std::string GetAcceptFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteFundPubkey field.
+   * @brief Get json string of acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteFundPubkeyString(  // line separate
+  static std::string GetAcceptFundPubkeyString(  // line separate
       const VerifyCetAdaptorSignaturesRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_fund_pubkey_);
   }
   /**
-   * @brief Set json object to remoteFundPubkey field.
+   * @brief Set json object to acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteFundPubkeyString(  // line separate
+  static void SetAcceptFundPubkeyString(  // line separate
       VerifyCetAdaptorSignaturesRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_fund_pubkey_, json_value);
+      obj.accept_fund_pubkey_, json_value);
   }
 
   /**
@@ -10495,46 +10690,46 @@ class VerifyCetAdaptorSignaturesRequest
   }
 
   /**
-   * @brief Get of verifyRemote
-   * @return verifyRemote
+   * @brief Get of verifyAccept
+   * @return verifyAccept
    */
-  bool GetVerifyRemote() const {
-    return verify_remote_;
+  bool GetVerifyAccept() const {
+    return verify_accept_;
   }
   /**
-   * @brief Set to verifyRemote
-   * @param[in] verify_remote    setting value.
+   * @brief Set to verifyAccept
+   * @param[in] verify_accept    setting value.
    */
-  void SetVerifyRemote(  // line separate
-    const bool& verify_remote) {  // NOLINT
-    this->verify_remote_ = verify_remote;
+  void SetVerifyAccept(  // line separate
+    const bool& verify_accept) {  // NOLINT
+    this->verify_accept_ = verify_accept;
   }
   /**
-   * @brief Get data type of verifyRemote
-   * @return Data type of verifyRemote
+   * @brief Get data type of verifyAccept
+   * @return Data type of verifyAccept
    */
-  static std::string GetVerifyRemoteFieldType() {
+  static std::string GetVerifyAcceptFieldType() {
     return "bool";
   }
   /**
-   * @brief Get json string of verifyRemote field.
+   * @brief Get json string of verifyAccept field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetVerifyRemoteString(  // line separate
+  static std::string GetVerifyAcceptString(  // line separate
       const VerifyCetAdaptorSignaturesRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.verify_remote_);
+    return cfd::core::ConvertToString(obj.verify_accept_);
   }
   /**
-   * @brief Set json object to verifyRemote field.
+   * @brief Set json object to verifyAccept field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetVerifyRemoteString(  // line separate
+  static void SetVerifyAcceptString(  // line separate
       VerifyCetAdaptorSignaturesRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.verify_remote_, json_value);
+      obj.verify_accept_, json_value);
   }
 
   /**
@@ -10611,21 +10806,21 @@ class VerifyCetAdaptorSignaturesRequest
    */
   JsonValueVector<std::string> cets_hex_;  // NOLINT
   /**
-   * @brief JsonAPI(adaptorPairs) value
+   * @brief JsonAPI(adaptorSignatures) value
    */
-  JsonObjectVector<AdaptorPair, AdaptorPairStruct> adaptor_pairs_;  // NOLINT
+  JsonValueVector<std::string> adaptor_signatures_;  // NOLINT
   /**
    * @brief JsonAPI(messagesList) value
    */
   JsonObjectVector<Messages, MessagesStruct> messages_list_;  // NOLINT
   /**
-   * @brief JsonAPI(localFundPubkey) value
+   * @brief JsonAPI(offerFundPubkey) value
    */
-  std::string local_fund_pubkey_ = "";
+  std::string offer_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(remoteFundPubkey) value
+   * @brief JsonAPI(acceptFundPubkey) value
    */
-  std::string remote_fund_pubkey_ = "";
+  std::string accept_fund_pubkey_ = "";
   /**
    * @brief JsonAPI(oraclePubkey) value
    */
@@ -10647,9 +10842,9 @@ class VerifyCetAdaptorSignaturesRequest
    */
   uint64_t fund_input_amount_ = 0;
   /**
-   * @brief JsonAPI(verifyRemote) value
+   * @brief JsonAPI(verifyAccept) value
    */
-  bool verify_remote_ = true;
+  bool verify_accept_ = true;
 };
 
 // ------------------------------------------------------------------------
@@ -11408,89 +11603,89 @@ class VerifyRefundTxSignatureRequest
   }
 
   /**
-   * @brief Get of localFundPubkey
-   * @return localFundPubkey
+   * @brief Get of offerFundPubkey
+   * @return offerFundPubkey
    */
-  std::string GetLocalFundPubkey() const {
-    return local_fund_pubkey_;
+  std::string GetOfferFundPubkey() const {
+    return offer_fund_pubkey_;
   }
   /**
-   * @brief Set to localFundPubkey
-   * @param[in] local_fund_pubkey    setting value.
+   * @brief Set to offerFundPubkey
+   * @param[in] offer_fund_pubkey    setting value.
    */
-  void SetLocalFundPubkey(  // line separate
-    const std::string& local_fund_pubkey) {  // NOLINT
-    this->local_fund_pubkey_ = local_fund_pubkey;
+  void SetOfferFundPubkey(  // line separate
+    const std::string& offer_fund_pubkey) {  // NOLINT
+    this->offer_fund_pubkey_ = offer_fund_pubkey;
   }
   /**
-   * @brief Get data type of localFundPubkey
-   * @return Data type of localFundPubkey
+   * @brief Get data type of offerFundPubkey
+   * @return Data type of offerFundPubkey
    */
-  static std::string GetLocalFundPubkeyFieldType() {
+  static std::string GetOfferFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of localFundPubkey field.
+   * @brief Get json string of offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetLocalFundPubkeyString(  // line separate
+  static std::string GetOfferFundPubkeyString(  // line separate
       const VerifyRefundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.local_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.offer_fund_pubkey_);
   }
   /**
-   * @brief Set json object to localFundPubkey field.
+   * @brief Set json object to offerFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetLocalFundPubkeyString(  // line separate
+  static void SetOfferFundPubkeyString(  // line separate
       VerifyRefundTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.local_fund_pubkey_, json_value);
+      obj.offer_fund_pubkey_, json_value);
   }
 
   /**
-   * @brief Get of remoteFundPubkey
-   * @return remoteFundPubkey
+   * @brief Get of acceptFundPubkey
+   * @return acceptFundPubkey
    */
-  std::string GetRemoteFundPubkey() const {
-    return remote_fund_pubkey_;
+  std::string GetAcceptFundPubkey() const {
+    return accept_fund_pubkey_;
   }
   /**
-   * @brief Set to remoteFundPubkey
-   * @param[in] remote_fund_pubkey    setting value.
+   * @brief Set to acceptFundPubkey
+   * @param[in] accept_fund_pubkey    setting value.
    */
-  void SetRemoteFundPubkey(  // line separate
-    const std::string& remote_fund_pubkey) {  // NOLINT
-    this->remote_fund_pubkey_ = remote_fund_pubkey;
+  void SetAcceptFundPubkey(  // line separate
+    const std::string& accept_fund_pubkey) {  // NOLINT
+    this->accept_fund_pubkey_ = accept_fund_pubkey;
   }
   /**
-   * @brief Get data type of remoteFundPubkey
-   * @return Data type of remoteFundPubkey
+   * @brief Get data type of acceptFundPubkey
+   * @return Data type of acceptFundPubkey
    */
-  static std::string GetRemoteFundPubkeyFieldType() {
+  static std::string GetAcceptFundPubkeyFieldType() {
     return "std::string";
   }
   /**
-   * @brief Get json string of remoteFundPubkey field.
+   * @brief Get json string of acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetRemoteFundPubkeyString(  // line separate
+  static std::string GetAcceptFundPubkeyString(  // line separate
       const VerifyRefundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.remote_fund_pubkey_);
+    return cfd::core::ConvertToString(obj.accept_fund_pubkey_);
   }
   /**
-   * @brief Set json object to remoteFundPubkey field.
+   * @brief Set json object to acceptFundPubkey field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetRemoteFundPubkeyString(  // line separate
+  static void SetAcceptFundPubkeyString(  // line separate
       VerifyRefundTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.remote_fund_pubkey_, json_value);
+      obj.accept_fund_pubkey_, json_value);
   }
 
   /**
@@ -11623,46 +11818,46 @@ class VerifyRefundTxSignatureRequest
   }
 
   /**
-   * @brief Get of verifyRemote
-   * @return verifyRemote
+   * @brief Get of verifyAccept
+   * @return verifyAccept
    */
-  bool GetVerifyRemote() const {
-    return verify_remote_;
+  bool GetVerifyAccept() const {
+    return verify_accept_;
   }
   /**
-   * @brief Set to verifyRemote
-   * @param[in] verify_remote    setting value.
+   * @brief Set to verifyAccept
+   * @param[in] verify_accept    setting value.
    */
-  void SetVerifyRemote(  // line separate
-    const bool& verify_remote) {  // NOLINT
-    this->verify_remote_ = verify_remote;
+  void SetVerifyAccept(  // line separate
+    const bool& verify_accept) {  // NOLINT
+    this->verify_accept_ = verify_accept;
   }
   /**
-   * @brief Get data type of verifyRemote
-   * @return Data type of verifyRemote
+   * @brief Get data type of verifyAccept
+   * @return Data type of verifyAccept
    */
-  static std::string GetVerifyRemoteFieldType() {
+  static std::string GetVerifyAcceptFieldType() {
     return "bool";
   }
   /**
-   * @brief Get json string of verifyRemote field.
+   * @brief Get json string of verifyAccept field.
    * @param[in,out] obj     class object.
    * @return JSON string
    */
-  static std::string GetVerifyRemoteString(  // line separate
+  static std::string GetVerifyAcceptString(  // line separate
       const VerifyRefundTxSignatureRequest& obj) {  // NOLINT
-    return cfd::core::ConvertToString(obj.verify_remote_);
+    return cfd::core::ConvertToString(obj.verify_accept_);
   }
   /**
-   * @brief Set json object to verifyRemote field.
+   * @brief Set json object to verifyAccept field.
    * @param[in,out] obj     class object.
    * @param[in] json_value  JSON object.
    */
-  static void SetVerifyRemoteString(  // line separate
+  static void SetVerifyAcceptString(  // line separate
       VerifyRefundTxSignatureRequest& obj,  // NOLINT
       const UniValue& json_value) {
     cfd::core::ConvertFromUniValue(  // line separate
-      obj.verify_remote_, json_value);
+      obj.verify_accept_, json_value);
   }
 
   /**
@@ -11743,13 +11938,13 @@ class VerifyRefundTxSignatureRequest
    */
   std::string signature_ = "";
   /**
-   * @brief JsonAPI(localFundPubkey) value
+   * @brief JsonAPI(offerFundPubkey) value
    */
-  std::string local_fund_pubkey_ = "";
+  std::string offer_fund_pubkey_ = "";
   /**
-   * @brief JsonAPI(remoteFundPubkey) value
+   * @brief JsonAPI(acceptFundPubkey) value
    */
-  std::string remote_fund_pubkey_ = "";
+  std::string accept_fund_pubkey_ = "";
   /**
    * @brief JsonAPI(fundTxId) value
    */
@@ -11763,9 +11958,9 @@ class VerifyRefundTxSignatureRequest
    */
   uint64_t fund_input_amount_ = 0;
   /**
-   * @brief JsonAPI(verifyRemote) value
+   * @brief JsonAPI(verifyAccept) value
    */
-  bool verify_remote_ = true;
+  bool verify_accept_ = true;
 };
 
 // ------------------------------------------------------------------------

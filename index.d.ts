@@ -1,19 +1,14 @@
 /* eslint-disable max-len */
 /* eslint-disable indent */
 
-export interface AdaptorPair {
-    signature: string;
-    proof: string;
-}
-
 /** Add signatures to a refund transaction */
 export interface AddSignaturesToRefundTxRequest {
     refundTxHex: string;
     signatures: string[];
     fundTxId: string;
     fundVout?: number;
-    localFundPubkey: string;
-    remoteFundPubkey: string;
+    offerFundPubkey: string;
+    acceptFundPubkey: string;
 }
 
 export interface AddSignaturesToRefundTxResponse {
@@ -39,8 +34,8 @@ export interface CreateCetAdaptorSignatureRequest {
     privkey: string;
     fundTxId: string;
     fundVout?: number;
-    localFundPubkey: string;
-    remoteFundPubkey: string;
+    offerFundPubkey: string;
+    acceptFundPubkey: string;
     oraclePubkey: string;
     oracleRValues: string[];
     fundInputAmount: bigint | number;
@@ -49,7 +44,6 @@ export interface CreateCetAdaptorSignatureRequest {
 
 export interface CreateCetAdaptorSignatureResponse {
     signature: string;
-    proof: string;
 }
 
 /** Create an adaptor signature for a CET */
@@ -58,8 +52,8 @@ export interface CreateCetAdaptorSignaturesRequest {
     privkey: string;
     fundTxId: string;
     fundVout?: number;
-    localFundPubkey: string;
-    remoteFundPubkey: string;
+    offerFundPubkey: string;
+    acceptFundPubkey: string;
     oraclePubkey: string;
     oracleRValues: string[];
     fundInputAmount: bigint | number;
@@ -67,17 +61,19 @@ export interface CreateCetAdaptorSignaturesRequest {
 }
 
 export interface CreateCetAdaptorSignaturesResponse {
-    adaptorPairs: AdaptorPair[];
+    adaptorSignatures: string[];
 }
 
 /** Create a CET */
 export interface CreateCetRequest {
-    localFundPubkey: string;
-    remoteFundPubkey: string;
-    localFinalAddress: string;
-    remoteFinalAddress: string;
-    localPayout: bigint | number;
-    remotePayout: bigint | number;
+    offerFundPubkey: string;
+    acceptFundPubkey: string;
+    offerFinalAddress: string;
+    acceptFinalAddress: string;
+    offerPayout: bigint | number;
+    acceptPayout: bigint | number;
+    offerPayoutSerialId: bigint | number;
+    acceptPayoutSerialId: bigint | number;
     fundTxId: string;
     fundVout?: number;
     lockTime: bigint | number;
@@ -90,20 +86,25 @@ export interface CreateCetResponse {
 /** Create Dlc transactions */
 export interface CreateDlcTransactionsRequest {
     payouts: PayoutRequest[];
-    localFundPubkey: string;
-    localFinalScriptPubkey: string;
-    remoteFundPubkey: string;
-    remoteFinalScriptPubkey: string;
-    localInputAmount: bigint | number;
-    localCollateralAmount: bigint | number;
-    remoteInputAmount: bigint | number;
-    remoteCollateralAmount: bigint | number;
+    offerFundPubkey: string;
+    offerPayoutScriptPubkey: string;
+    offerPayoutSerialId: bigint | number;
+    acceptFundPubkey: string;
+    acceptPayoutScriptPubkey: string;
+    acceptPayoutSerialId: bigint | number;
+    offerInputAmount: bigint | number;
+    offerCollateralAmount: bigint | number;
+    acceptInputAmount: bigint | number;
+    acceptCollateralAmount: bigint | number;
     refundLocktime: bigint | number;
-    localInputs: TxInInfoRequest[];
-    localChangeScriptPubkey: string;
-    remoteInputs: TxInInfoRequest[];
-    remoteChangeScriptPubkey: string;
+    offerInputs: TxInInfoRequest[];
+    offerChangeScriptPubkey: string;
+    offerChangeSerialId: bigint | number;
+    acceptInputs: TxInInfoRequest[];
+    acceptChangeScriptPubkey: string;
+    acceptChangeSerialId: bigint | number;
     feeRate: number;
+    fundOutputSerialId: bigint | number;
     cetLockTime?: bigint | number;
     fundLockTime?: bigint | number;
     optionDest?: string;
@@ -114,18 +115,28 @@ export interface CreateDlcTransactionsResponse {
     fundTxHex: string;
     cetsHex: string[];
     refundTxHex: string;
+    fundingScriptPubkey: string;
+    fundVout: number;
 }
 
 /** Create a fund transaction */
 export interface CreateFundTransactionRequest {
-    localPubkey: string;
-    remotePubkey: string;
-    outputAmount: bigint | number;
-    localInputs: TxInRequest[];
-    localChange: TxOutRequest;
-    remoteInputs: TxInRequest[];
-    remoteChange: TxOutRequest;
+    offerPubkey: string;
+    acceptPubkey: string;
+    offerCollateralAmount: bigint | number;
+    acceptCollateralAmount: bigint | number;
+    offerInputs: TxInInfoRequest[];
+    acceptInputs: TxInInfoRequest[];
+    offerChangeScriptPubkey: string;
+    offerChangeSerialId: bigint | number;
+    acceptChangeScriptPubkey: string;
+    acceptChangeSerialId: bigint | number;
+    offerPayoutScriptPubkey: string;
+    offerPayoutSerialId: bigint | number;
+    acceptPayoutScriptPubkey: string;
+    acceptPayoutSerialId: bigint | number;
     feeRate: bigint | number;
+    fundOutputSerialId: bigint | number;
     optionDest?: string;
     optionPremium?: bigint | number;
 }
@@ -136,10 +147,10 @@ export interface CreateFundTransactionResponse {
 
 /** Create a refund transaction */
 export interface CreateRefundTransactionRequest {
-    localFinalScriptPubkey: string;
-    remoteFinalScriptPubkey: string;
-    localAmount: bigint | number;
-    remoteAmount: bigint | number;
+    offerFinalScriptPubkey: string;
+    acceptFinalScriptPubkey: string;
+    offerAmount: bigint | number;
+    acceptAmount: bigint | number;
     lockTime: bigint | number;
     fundTxId: string;
     fundVout?: number;
@@ -172,8 +183,8 @@ export interface GetRawRefundTxSignatureRequest {
     privkey: string;
     fundTxId: string;
     fundVout?: number;
-    localFundPubkey: string;
-    remoteFundPubkey: string;
+    offerFundPubkey: string;
+    acceptFundPubkey: string;
     fundInputAmount: bigint | number;
 }
 
@@ -192,8 +203,8 @@ export interface Messages {
 }
 
 export interface PayoutRequest {
-    local: bigint | number;
-    remote: bigint | number;
+    offer: bigint | number;
+    accept: bigint | number;
 }
 
 /** Sign a CET */
@@ -202,8 +213,8 @@ export interface SignCetRequest {
     fundPrivkey: string;
     fundTxId: string;
     fundVout?: number;
-    localFundPubkey: string;
-    remoteFundPubkey: string;
+    offerFundPubkey: string;
+    acceptFundPubkey: string;
     fundInputAmount: bigint | number;
     adaptorSignature: string;
     oracleSignatures: string[];
@@ -231,32 +242,22 @@ export interface TxInInfoRequest {
     vout: number;
     redeemScript?: string;
     maxWitnessLength: number;
-}
-
-export interface TxInRequest {
-    txid: string;
-    vout: number;
-}
-
-export interface TxOutRequest {
-    amount: bigint | number;
-    address: string;
+    serialId: bigint | number;
 }
 
 /** Verify a signature for a CET */
 export interface VerifyCetAdaptorSignatureRequest {
     cetHex: string;
     adaptorSignature: string;
-    adaptorProof: string;
     messages: string[];
-    localFundPubkey: string;
-    remoteFundPubkey: string;
+    offerFundPubkey: string;
+    acceptFundPubkey: string;
     oraclePubkey: string;
     oracleRValues: string[];
     fundTxId: string;
     fundVout?: number;
     fundInputAmount: bigint | number;
-    verifyRemote: boolean;
+    verifyAccept: boolean;
 }
 
 export interface VerifyCetAdaptorSignatureResponse {
@@ -266,16 +267,16 @@ export interface VerifyCetAdaptorSignatureResponse {
 /** Verify a set of signatures for a set of CET */
 export interface VerifyCetAdaptorSignaturesRequest {
     cetsHex: string[];
-    adaptorPairs: AdaptorPair[];
+    adaptorSignatures: string[];
     messagesList: Messages[];
-    localFundPubkey: string;
-    remoteFundPubkey: string;
+    offerFundPubkey: string;
+    acceptFundPubkey: string;
     oraclePubkey: string;
     oracleRValues: string[];
     fundTxId: string;
     fundVout?: number;
     fundInputAmount: bigint | number;
-    verifyRemote: boolean;
+    verifyAccept: boolean;
 }
 
 export interface VerifyCetAdaptorSignaturesResponse {
@@ -300,12 +301,12 @@ export interface VerifyFundTxSignatureResponse {
 export interface VerifyRefundTxSignatureRequest {
     refundTxHex: string;
     signature: string;
-    localFundPubkey: string;
-    remoteFundPubkey: string;
+    offerFundPubkey: string;
+    acceptFundPubkey: string;
     fundTxId: string;
     fundVout?: number;
     fundInputAmount: bigint | number;
-    verifyRemote: boolean;
+    verifyAccept: boolean;
 }
 
 export interface VerifyRefundTxSignatureResponse {
