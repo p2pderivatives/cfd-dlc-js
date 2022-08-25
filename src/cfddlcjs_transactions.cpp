@@ -54,10 +54,10 @@ static TxInputInfo ParseTxInRequest(TxInInfoRequestStruct& input_info) {
   Txid txid(input_info.txid);
   if (input_info.redeem_script != "") {
     TxIn input(txid, input_info.vout, 0, Script(input_info.redeem_script));
-    return {input, input_info.max_witness_length};
+    return {input, input_info.max_witness_length, input_info.serial_id};
   } else {
     TxIn input(txid, input_info.vout, 0);
-    return {input, input_info.max_witness_length};
+    return {input, input_info.max_witness_length, input_info.serial_id};
   }
 }
 
@@ -322,7 +322,7 @@ CreateDlcTransactionsResponseStruct DlcTransactionsApi::CreateDlcTransactions(
                                 offer_inputs,
                                 offer_input_amount,
                                 offer_collateral_amount};
-    PartyParams accept_params = {offer_fund_pubkey,
+    PartyParams accept_params = {accept_fund_pubkey,
                                  accept_change_script_pubkey,
                                  request.accept_change_serial_id,
                                  accept_payout_script_pubkey,
@@ -341,6 +341,8 @@ CreateDlcTransactionsResponseStruct DlcTransactionsApi::CreateDlcTransactions(
       result.cets_hex.push_back(cet.GetHex());
     }
     result.fund_vout = transactions.fund_vout;
+    result.funding_script_pubkey =
+        transactions.fundind_script_pubkey.GetData().GetHex();
     return result;
   };
   CreateDlcTransactionsResponseStruct result;
